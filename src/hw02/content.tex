@@ -1,0 +1,313 @@
+\section*{Question 1}
+
+Let $L, K$ be two regular languages on an alphabet $A$.
+Prove that the set of words $t \in A^*$ that can be written as $$ t = xy^R = u^R z $$ for some $x,u \in L$ and $y, z \in K$ is a regular language.
+
+\section*{Solution}
+
+To prove set of words $t \in A^*$ is a regular language, we take advantage of the fact that a language is regular, if and only if it can be recognized with a transition system. The objective would now be to construct a transition system $\mathcal{T}$ that recognizes the language.
+Such a transition system is depicted in Figure \ref{fig:DR1}.
+
+\begin{figure}[H]\centering
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+		\tikzstyle{final}=[circle,thick,draw=black,fill=gray!20,text=black]
+		\node[state,initial] (0) {$q_0$};
+		\node[state] (1) [below left of=0] {$q_1$};
+		\node[state,final] (2) [below right of=0] {$q_2$};
+		\node[state,accepting] (3) [below of=1] {$q_3$};
+		\node[state,final,accepting] (4) [below of=2] {$q_4$};
+		\node[draw=black, fit= (1) (2), inner sep=0.5cm, dotted] {};
+		\node[draw=black, fit= (3) (4), inner sep=0.5cm, dotted] {};
+		\node[draw=black, fit= (0)(1)(2)(3)(4), inner sep=1cm, dashed] {};
+		\node[yshift=1.25cm, xshift=-1.25cm, black] at (1) {$\mathcal{L}$};
+		\node[yshift=1.25cm, xshift=-1.25cm, black] at (3) {$\mathcal{K}$};
+		\node[yshift=1.25cm, xshift=-4cm, black] at (0) {$\mathcal{T}$};
+		\path
+			(0) edge [bend left] node {$\lambda$} (2)
+				edge [bend right]node {$\lambda$} (1)
+			(1) edge [bend right=0]node {$\lambda$} (3)
+			(2)	edge [bend left=0] node {$\lambda$} (4);
+		\path[dashed]
+			(1) edge [bend left=20] node {x}	(2)
+				edge [bend right=20]node {u}	(2)
+			(3) edge [bend left=20] node {y}	(4)
+				edge [bend right=20]node {z}	(4);
+	\end{tikzpicture}
+	\caption{A schematic representation of transition system $\mathcal{T}$}
+	\label{fig:DR1}
+\end{figure}
+
+For simplicity of representation, only initial and set of final states of transition systems $\mathcal{L}$ and $\mathcal{K}$ are shown, where $\mathcal{L}(m)=L$ and $\mathcal{K}(m)=K$.
+States $q_1$ and $q_3$ respectively represent initial states of $\mathcal{L}$ and $\mathcal{K}$.
+Without loss of generality, it is assumed that there is only one final state for $\mathcal{L}$ and $\mathcal{K}$.
+These final states are colored in gray.
+As words $x,u \in L$ are accepted by the language, inputs $x,u$ are shown with dashed lines, only to suggest there are paths $x$ and $u$ from initial state $q_1$ to set of final states $q_2$.
+Similarly $y,z \in K$ are shown with dashed lines.
+
+As the new transition system $\mathcal{T}$ must accept inputs of the form $t = xy^R$ and $t = u^Rz$, spontaneous transitions $\lambda$ are introduced between initial states and final states of $\mathcal{L}$ and $\mathcal{K}$.
+We can now start from $q_1$, apply $x$, $\lambda$ and $y^R$ and end up in $q_3$.
+We can also start from $q_2$, apply $u^R$,$\lambda$ and $z$ and end up in $q_4$.
+States $q_3$ and $q_4$ are therefore assigned as final states of $\mathcal{T}$ and are shown with double-circles.
+As we cannot have multiple initial states, a new state $q_0$ is introduced to the system and is assigned the initial state.
+
+We can now argue that the set of words $t \in A^*$ where $t = xy^R = u^Rz$ can all be accepted by the transition system $\mathcal{T}$.
+As we constructed a system that recognizes the language, it is proven that the language is regular.
+
+\section*{Question 2}
+
+Let $A$ be an alphabet and let $b$ be a symbol such that $b \notin A$.
+
+\begin{enumerate}[label=(\alph*)]
+	\item construct a transition system that accepts the language $ L = b A^* b $.
+	\item construct an equivalent deterministic finite automaton that accepts $L$.
+\end{enumerate}
+
+\section*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+
+	\item
+	A transition system that accepts the language $b A^* b$ is shown in Figure \ref{fig:DR2}.
+	Starting from initial state $q_0$, a word is accepted by this transition system only if it starts with $b$, follows a possible number of symbols in alphabet $A$ and end with $b$.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial] (0) {$q_0$};
+			\node[state] (1) [right of=0] {$q_1$};
+			\node[state, final] (2) [right of=1] {$q_2$};
+			\path
+				(0) edge [bend left=0] node {b} (1)
+				(1) edge [loop above] node {$A$} (1)
+					edge [bend left=0] node {b} (2);
+		\end{tikzpicture}
+		\caption{Graph of a transition system that accepts the language $bA^*b$}
+		\label{fig:DR2}
+	\end{figure}
+
+	\item
+	To achieve an equivalent \textit{dfa} with minimal number of states, we take advantage of the fact that the transition system given in Figure \ref{fig:DR2} has no $\lambda$-transition.
+	Therefore, it is also a non-deterministic finite automaton.
+	To construct an equivalent \textit{dfa} from the transition system/\textit{ndfa} given in Figure \ref{fig:DR2}, Table \ref{tab:TB1} is constructed where $\mathcal{K}\left(S\right)$ is set of all accessible states.
+
+	\begin{table}[H]\centering
+		\begin{tabular}{|c|c||c|c|}
+			\hline
+			S & $\mathcal{K}\left(S\right)$ & S & $\mathcal{K}\left(S\right)$ \\
+			\hline
+			$\emptyset$ & $\emptyset$ & $\{q_0,q_1\}$ & $Q$ \\
+			$\{q_0\}$ & $Q$ & $\{q_1,q_2\}$ & $\{q_1,q_2\}$ \\
+			$\{q_1\}$ & $\{q_1,q_2\}$ & $\{q_0,q_2\}$ & $Q$ \\
+			$\{q_2\}$ & $\{q_2\}$ & $\{q_0,q_1,q_2\}$ & $Q$\\
+			\hline
+		\end{tabular}
+		\caption{Accessible States From All Possible Sets of States}
+		\label{tab:TB1}
+	\end{table}
+
+	Based on Table \ref{tab:TB1}, set of states in an equivalent \textit{dfa} will be extracted as $\{Q,\{q1,q2\}, \{q2\}, \emptyset\}$ \ref{tab:TB1}.
+	The equivalent \textit{dfa} can now be constructed by assigning $Q$ as initial state and $q_2$ as final state.
+	The graph of such equivalent \textit{dfa} has been given in Figure \ref{fig:DR3}.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial] (0) {$Q$};
+			\node[state] (1) [right of=0] {$\{q_1,q_2\}$};
+			\node[state, final] (2) [right of=1] {$\{q_2\}$};
+			\node[state] (3) [right of=2] {$\emptyset$};
+			\path
+				(0) edge [bend right=0] node {b} (1)
+					edge [bend left=40] node {A} (3)
+				(1) edge [loop above] node {$A$} (1)
+					edge [bend right=0] node {b} (2)
+				(2) edge [bend right=0] node {$\{b\} \cup A$} (3)
+				(3) edge [loop right] node {$\{b\} \cup A$} (3);
+		\end{tikzpicture}
+		\caption{Graph of an equivalent \textit{dfa} that accepts te language $bA^*b$}
+		\label{fig:DR3}
+	\end{figure}
+
+\end{enumerate}
+
+\section*{Question 3}
+
+Consider the \textit{dfa} $\mathcal{M} = \left( \{a,b\}, \{q_0,q_1,q_2\}, \delta, q_0, \{q_1\} \right) $ whose graph is given in Figure \ref{fig:DR4}. Determine the language accepted by the automaton $\mathcal{M}$.
+
+\begin{figure}[H]\centering
+	\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=3cm, semithick]
+		\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+		\node[state, initial]	(0) 	  				{$q_0$};
+		\node[state] 			(2)	[above right of=0]	  	{$q_2$};
+		\node[state, final]   (1) [below right of=2] 	  	{$q_1$};
+		\path
+			(0) edge [bend left]	node {b} (2)
+				edge [bend right]	node {a} (1)
+			(1) edge [loop right] 	node {b} (1)
+				edge [bend left]  	node {a} (2)
+			(2) edge [bend left]  	node {b} (1)
+				edge [loop above] 	node {a} (2);
+	\end{tikzpicture}
+	\caption{Graph of the Deterministic Finite Automaton $\mathcal{M}$}
+	\label{fig:DR4}
+\end{figure}
+
+\section*{Solution}
+
+By definition, the language accepted by the given Deterministic Finite Automaton (\textit{dfa}) is the set $ L \left( \mathcal{M} \right) = \{ x \in \{a\}^*\{b\}^* | \delta ^* \left( q_0,x \right) \in \{q1\} \}$.
+The final state $q_1$ can be reached from initial state $q_0$ either directly or through $q_2$.
+Final state can be reached directly from state $q_0$ using the symbol $a$ or indirectly by state $q_1$ using words of the form $b\{a\}^*b$.
+Once $q_1$ is reached, we can stay in $q_1$ by any arbitrary number of $b$ and/or any arbitrary number of loops of the form $a\{a\}^*b$.
+Therefore, the language $L(\mathcal{M})$ accepted by the \textit{dfa} $\mathcal{M}$ would be
+
+\begin{equation}
+	L(\mathcal{M}) = \{a \cup b\{a\}^*b\}\{b\}^*\{a\{a\}^*b\}^*\{b\}^*
+\end{equation}
+
+\section*{Question 4}
+
+Construct deterministic finite automata that accept the following languages over the alphabet $A = \{a,b,c\}$:
+\begin{enumerate}[label=(\alph*)]
+	\item The set of all words that begin with $ab$ and end with $ba$.
+	\item The set $\{bab\}$.
+	\item The set $A^* - \{bab\}$.
+	\item The set of all words $x \in A^*$ that contain at least three $a$s.
+\end{enumerate}
+
+\section*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+
+	\item
+	The \textit{dfa} that recognizes the language of the set of words that begin with $ab$ and end with $ba$ represented by $abA^*ba \cup \{aba\}$ is shown in Figure \ref{fig:DR5}.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state] (2) {$q_2$};
+			\node[state,initial] (0) [above left of =2] {$q_0$};
+			\node[state] (1) [below left of=2] {$q_1$};
+			\node[state] (3) [right of=2] {$q_3$};
+			\node[state] (4) [above right of=3] {$q_4$};
+			\node[state, final] (5) [below right of=3] {$q_5$};
+			\path
+				(0) edge [bend left] node {a} (2)
+					edge [bend right] node {b,c} (1)
+				(1) edge [loop left] node {a,b,c} (1)
+				(2) edge [bend left]  node {a,c} (1)
+					edge [bend left]  node {b} (3)
+				(3) edge [loop left] node {b} (3)
+					edge [bend right] node {c} (4)
+					edge [bend left]  node {a} (5)
+				(4) edge [loop right] node {a,c} (4)
+					edge [bend right]  node {b} (3)
+				(5) edge [bend right]  node {a,c} (4)
+					edge [bend left]  node {b} (3);
+		\end{tikzpicture}
+		\caption{Graph of a \textit{dfa} accepting the set of words that begin with $ab$ and end with $ba$}
+		\label{fig:DR5}
+	\end{figure}
+
+	\item
+	The \textit{dfa} that recognizes the language of the set $\{bab\}$ is shown in Figure \ref{fig:DR6}.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial] (0) {$q_0$};
+			\node[state] (1) [above right of=0] {$q_1$};
+			\node[state] (2) [below right of=1] {$q_2$};
+			\node[state] (3) [above right of=2] {$q_3$};
+			\node[state, final] (4) [below right of=3] {$q_4$};
+			\path
+				(0) edge [bend left] node {b} (1)
+					edge [bend right] node {a,c} (2)
+				(1) edge [bend left=15] node {a} (3)
+					edge [bend right] node {b,c} (2)
+				(2) edge [loop below] node {a,b,c} (2)
+				(3) edge [bend left] node {b} (4)
+					edge [bend left] node {a,c} (2)
+				(4) edge [bend left] node {a,b,c} (2);
+		\end{tikzpicture}
+		\caption{Graph of a \textit{dfa} accepting the set $\{bab\}$}
+		\label{fig:DR6}
+	\end{figure}
+
+	\item
+	the \textit{dfa} that recognizes the language of the set $A^* - \{bab\}$ is shown in Figure \ref{fig:DR7}.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial,final] (0) {$q_0$};
+			\node[state,final] (1) [above right of=0] {$q_1$};
+			\node[state,final] (2) [below right of=1] {$q_2$};
+			\node[state,final] (3) [above right of=2] {$q_3$};
+			\node[state] (4) [below right of=3] {$q_4$};
+			\path
+				(0) edge [bend left] node {b} (1)
+					edge [bend right] node {a,c} (2)
+				(1) edge [bend left] node {a} (3)
+					edge [bend right] node {b,c} (2)
+				(2) edge [loop below] node {a,b,c} (2)
+				(3) edge [bend left] node {b} (4)
+					edge [bend left] node {a,c} (2)
+				(4) edge [bend left] node {a,b,c} (2);
+		\end{tikzpicture}
+		\caption{Graph of a \textit{dfa} accepting the set $A^* -\{bab\}$}
+		\label{fig:DR7}
+	\end{figure}
+
+	\item
+	The set of all words that contain at least three $a$s can be described as set of all words of the form $A^*aA^*aA^*aA^*$.
+	\textit{dfa} that recognizes such language would have a final state $q_3$ to be reached from $q_0$ by three symbols $a$.
+	Proposed \textit{dfa} is shown in Figure \ref{fig:DR8} where state $q_i$ is reached by the words with at least $i$ symbol $a$.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial] (0) {$q_0$};
+			\node[state] (1) [right of=0] {$q_1$};
+			\node[state] (2) [right of=1] {$q_2$};
+			\node[state,final] (3) [right of=2] {$q_3$};
+			\path
+				(0) edge [loop below] node {b,c} (0)
+					edge [bend left] node {a} (1)
+				(1) edge [loop below] node {b,c} (1)
+					edge [bend left] node {a} (2)
+				(2) edge [loop below] node {b,c} (2)
+					edge [bend left] node {a} (3)
+				(3) edge [loop below] node {a,b,c} (3);
+		\end{tikzpicture}
+		\caption{Graph of a \textit{dfa} accepting the set $A^*aA^*aA^*aA^*$}
+		\label{fig:DR8}
+	\end{figure}
+
+\end{enumerate}
+
+\section*{Question 5}
+
+Let $L$ be a regular language over an alphabet $A$.
+Prove that the set of all words $z \in A^*$ for which there exist $u,v \in L$ such that $u = zx$ and $v=yz$ for some $x,y \in A^*$ is a regular language.
+
+\section*{Solution}
+
+We assume $S_1$ as set of all words $z \in A^*$ for which there exist $u \in L$ such that $u=zx$ for some $x \in K \subseteq A^*$.
+We can represent $S_1$ as shown in Equation \ref{Eq1}.
+
+\begin{equation}\label{Eq1}
+	S_1 = LK^{-1} = \{z\in A^* | \exists x\in K, zx\in L\}
+\end{equation}
+
+Also, we assume $S_2$ as set of all words $z \in A^*$ for which there exists $v \in L$ such that $v = yz$ for some $y \in K \subseteq A^*$.
+We can represent $S_2$ as shown in Equation \ref{Eq2}.
+
+\begin{equation}\label{Eq2}
+	S_2 = K^{-1}L = \{z\in A^* | \exists y\in K, yz\in L\}
+\end{equation}
+
+It has been proven \cite{simovici1999theory} that for every language $K$, both the right and the left quotients $LK^{-1}$ and $K^{-1}L$ are regular, if $L$ is a regular language over alphabet $A$.
+Based on this theorem, $S_1$ and $S_2$ would both be regular.
+
+Since any word $z \in A^*$ for which there exist $u,v \in L$ such that $u = zx$ and $v=yz$ for some $x,y \in A^*$ should be an element of $S_1$ and $S_2$, set of all such words will be the intersection of $S_1$ and $S_2$.
+As regular languages $\mathcal{R}$ are closed with respect to intersection, it is proven that the desired set is a regular language.
