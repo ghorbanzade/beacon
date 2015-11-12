@@ -9,7 +9,7 @@
 	<property name="classes.dir" value="${bin.dir}/classes" />
 	<property name="test.dir" value="${src.dir}/test" />
 	<property name="report.dir" value="${bin.dir}/report" />
-	<property name="junit.dir" value="${report.dir}/junit" />
+	<property name="junit.report.dir" value="${report.dir}/junit" />
 	<property name="main-class"  value="edu.umb.cs680.hw01.HelloWorld"/>
 
 	<property name="ivy.install.version" value="2.4.0" />
@@ -88,22 +88,29 @@
 		</java>
 	</target>
 
-	<target name="test" depends="jar">
-		<mkdir dir="${junit.dir}"/>
-		<junit fork="true" printsummary="yes" haltonfailure="no">
-			<test name="edu.umb.cs680.hw01.HelloWorldTest" />
+	<target name="junit" depends="jar">
+		<mkdir dir="${junit.report.dir}"/>
+		<junit fork="true" printsummary="yes" haltonfailure="no" haltonerror="yes">
+			<test name="edu.umb.cs680.hw01.HelloWorldTest" todir="${junit.report.dir}" />
 			<classpath>
 				<path refid="classpath.lib"/>
 				<path refid="classpath.test"/>
 			</classpath>
-			<formatter type="brief" usefile="false"/>
-			<batchtest>
+			<formatter type="xml"/>
+			<batchtest todir="${junit.report.dir}">
 				<fileset dir="${test.dir}" includes="*Test.java"/>
 			</batchtest>
 		</junit>
 	</target>
 
-	<target name="dist" depends="clean, test">
+	<target name="report" depends="junit">
+		<junitreport todir="${junit.report.dir}">
+			<fileset dir="${junit.report.dir}" includes="TEST-*.xml"/>
+			<report todir="${junit.report.dir}"/>
+		</junitreport>
+	</target>
+
+	<target name="dist" depends="clean, report">
 	</target>
 
 </project>
