@@ -27,9 +27,9 @@ $(OUT_DIR):
 clean: tidy
 	rm -rf $(OUT_DIR)
 
-tidy:
-	find . -name '*.log' -delete
-	find . -name '*.aux' -delete
-	find . -name '*.out' -delete
-	find . -name '*.fls' -delete
-	find . -name '*.fdb_latexmk' -delete
+tidy: $(OUT_DIR)
+	find $(OUT_DIR) -name '*.log' -delete
+	find $(OUT_DIR) -name '*.aux' -delete
+	find $(OUT_DIR) -name '*.out' -delete
+	find $(OUT_DIR) -name '*.fls' -delete
+	find $(OUT_DIR) -name '*.fdb_latexmk' -delete

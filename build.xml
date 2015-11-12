@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="UMB-CS680-2015F" default="test" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="UMB-CS680-2015F" default="dist" basedir=".">
 
+	<property name="src.dir" value="src" />
+	<property name="bin.dir" value="bin" />
 	<property name="lib.dir" value="lib" />
-	<property name="hw01.bin.dir" value="bin" />
-	<property name="hw01.src.dir" value="src/main/java" />
-	<property name="hw01.bin.test.dir" value="bin" />
-	<property name="hw01.src.test.dir" value="src/test/java" />
+	<property name="doc.dir" value="doc" />
+	<property name="jar.dir" value="${bin.dir}/jar" />
+	<property name="classes.dir" value="${bin.dir}/classes" />
+	<property name="test.dir" value="${src.dir}/test" />
+	<property name="report.dir" value="${bin.dir}/report" />
+	<property name="junit.dir" value="${report.dir}/junit" />
+	<property name="main-class"  value="edu.umb.cs680.hw01.HelloWorld"/>
 
 	<property name="ivy.install.version" value="2.4.0" />
 	<condition property="ivy.home" value="${env.IVY_HOME}">
@@ -14,17 +19,6 @@
 	<property name="ivy.home" value="${user.home}/.ant" />
 	<property name="ivy.jar.dir" value="${ivy.home}/lib" />
 	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
-
-	<path id="classpath.test">
-		<pathelement location="${lib.dir}/junit-4.12.jar" />
-		<pathelement location="${lib.dir}/hamcrest-core-1.3.jar" />
-	</path>
-
-	<path id="classpath.hw01">
-		<pathelement location="${hw01.bin.dir}" />
-		<pathelement location="${hw01.bin.test.dir}" />
-		<path refid="classpath.test" />
-	</path>
 
 	<target name="download-ivy" unless="offline">
 		<mkdir dir="${ivy.jar.dir}"/>
@@ -45,34 +39,71 @@
 		<ivy:cachepath pathid="test.path" conf="test" />
 	</target>
 
+	<path id="classpath.main">
+		<pathelement location="${jar.dir}/${ant.project.name}.jar"/>
+	</path>
+
+	<path id="classpath.test">
+		<pathelement location="${jar.dir}/${ant.project.name}-test.jar"/>
+	</path>
+
+	<path id="classpath.lib">
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
+
+	<target name="clean">
+		<delete dir="${bin.dir}" />
+		<delete dir="${lib.dir}" />
+	</target>
+
 	<target name="compile" depends="resolve">
-		<mkdir dir="${hw01.bin.dir}" />
-		<mkdir dir="${hw01.bin.test.dir}" />
-		<javac srcdir="${hw01.src.dir}" destdir="${hw01.bin.dir}" includeantruntime="false">
-			<classpath refid="classpath.hw01" />
-		</javac>
-		<javac srcdir="${hw01.src.test.dir}" destdir="${hw01.bin.test.dir}" includeantruntime="false">
-			<classpath refid="classpath.hw01" />
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+			<classpath>
+				<path refid="classpath.lib" />
+			</classpath>
 		</javac>
 	</target>
 
-	<target name="test" depends="compile">
-		<junit fork="true" printsummary="yes" haltonfailure="yes">
-			<classpath refid="classpath.hw01"/>
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" excludes="**/*Test.class">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+		<jar destfile="${jar.dir}/${ant.project.name}-test.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="jar">
+		<java fork="true" classname="${main-class}">
+			<classpath>
+				<path refid="classpath.lib" />
+				<path refid="classpath.main" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="test" depends="jar">
+		<mkdir dir="${junit.dir}"/>
+		<junit fork="true" printsummary="yes" haltonfailure="no">
+			<test name="edu.umb.cs680.hw01.HelloWorldTest" />
+			<classpath>
+				<path refid="classpath.lib"/>
+				<path refid="classpath.test"/>
+			</classpath>
+			<formatter type="brief" usefile="false"/>
 			<batchtest>
-				<fileset dir="${hw01.src.test.dir}" includes="**/*Test.java"/>
+				<fileset dir="${test.dir}" includes="*Test.java"/>
 			</batchtest>
-			<formatter type='brief' usefile='no'/>
 		</junit>
 	</target>
 
-	<target name="findbugs" depends="test">
-
-	</target>
-
-	<target name="clean">
-		<delete dir="${hw01.bin.dir}" />
-		<delete dir="${lib.dir}" />
+	<target name="dist" depends="clean, test">
 	</target>
 
 </project>
