@@ -1,0 +1,81 @@
+
+\ProvidesPackage{assignment}
+
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\@ifundefined{docTitle}{}{\title{\docTitle}}
+\@ifundefined{myName}{}{\author{\myName}}
+
+\fancyhead[LO,RE]{}
+\fancyhead[LE]{\thepage \hspace{0.2cm} \docTitle}
+\fancyhead[RO]{\courseName \hspace{0.2cm} \thepage}
+\fancyfoot[C]{}
+
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{1mm}
+
+\pagestyle{fancy}
+
+\newcommand{\header}{
+	\begingroup
+		\pagestyle{empty}
+		\begin{titlepage}
+			\begin{center}
+				\textsc{\large \courseUniversity}\\\vspace{12pt}
+				{\courseDepartment}\\\vspace{80pt}
+				{\bf \courseName}\\\vspace{12pt}
+				{\docTitle}\\\vspace{80pt}
+				Instructor\\
+				\textbf{\instructorName}\\
+				\instructorEmail\\
+				\vspace{60pt}
+				Prepared By\\
+				\@ifundefined{myName}{}{\textbf{\myName}\\}
+				\@ifundefined{myEmail}{}{\myEmail}
+				\vfill
+				\@ifundefined{docDateSub}{}{\docDateSub}
+			\end{center}
+		\end{titlepage}
+		\pagestyle{fancy}
+	\endgroup
+}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{light-gray}{gray}{0.95}
+\lstset{frame=tb,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\tiny\color{black},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=5
+}
+
+\lstnewenvironment{darkListing}
+{\lstset{
+	backgroundcolor=\color{light-gray},
+	basicstyle=\small\ttfamily,
+	numbers=none,
+	xleftmargin=1cm,
+	framexleftmargin=10mm,
+	framextopmargin=2mm,
+	framexbottommargin=2mm,
+	frame=tb,
+	framerule=0pt
+}}
+{}

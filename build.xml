@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="UMB-CS680-2015F" default="test" basedir=".">
+
+	<property name="lib.dir" value="lib" />
+	<property name="hw01.bin.dir" value="bin" />
+	<property name="hw01.src.dir" value="src/main/java" />
+	<property name="hw01.bin.test.dir" value="bin" />
+	<property name="hw01.src.test.dir" value="src/test/java" />
+
+	<property name="ivy.install.version" value="2.4.0" />
+	<condition property="ivy.home" value="${env.IVY_HOME}">
+		<isset property="env.IVY_HOME" />
+	</condition>
+	<property name="ivy.home" value="${user.home}/.ant" />
+	<property name="ivy.jar.dir" value="${ivy.home}/lib" />
+	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
+
+	<path id="classpath.test">
+		<pathelement location="${lib.dir}/junit-4.12.jar" />
+		<pathelement location="${lib.dir}/hamcrest-core-1.3.jar" />
+	</path>
+
+	<path id="classpath.hw01">
+		<pathelement location="${hw01.bin.dir}" />
+		<pathelement location="${hw01.bin.test.dir}" />
+		<path refid="classpath.test" />
+	</path>
+
+	<target name="download-ivy" unless="offline">
+		<mkdir dir="${ivy.jar.dir}"/>
+		<get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" dest="${ivy.jar.file}" usetimestamp="true"/>
+	</target>
+
+	<target name="init-ivy" depends="download-ivy">
+		<path id="ivy.lib.path">
+			<fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+	</target>
+
+	<target name="resolve" depends="init-ivy">
+		<ivy:retrieve />
+		<ivy:cachepath pathid="compile.path" conf="compile" />
+		<ivy:cachepath pathid="runtime.path" conf="runtime" />
+		<ivy:cachepath pathid="test.path" conf="test" />
+	</target>
+
+	<target name="compile" depends="resolve">
+		<mkdir dir="${hw01.bin.dir}" />
+		<mkdir dir="${hw01.bin.test.dir}" />
+		<javac srcdir="${hw01.src.dir}" destdir="${hw01.bin.dir}" includeantruntime="false">
+			<classpath refid="classpath.hw01" />
+		</javac>
+		<javac srcdir="${hw01.src.test.dir}" destdir="${hw01.bin.test.dir}" includeantruntime="false">
+			<classpath refid="classpath.hw01" />
+		</javac>
+	</target>
+
+	<target name="test" depends="compile">
+		<junit fork="true" printsummary="yes" haltonfailure="yes">
+			<classpath refid="classpath.hw01"/>
+			<batchtest>
+				<fileset dir="${hw01.src.test.dir}" includes="**/*Test.java"/>
+			</batchtest>
+			<formatter type='brief' usefile='no'/>
+		</junit>
+	</target>
+
+	<target name="findbugs" depends="test">
+
+	</target>
+
+	<target name="clean">
+		<delete dir="${hw01.bin.dir}" />
+		<delete dir="${lib.dir}" />
+	</target>
+
+</project>

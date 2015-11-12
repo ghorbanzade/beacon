@@ -1,0 +1,21 @@
+\def \topDirectory {.}
+\def \javaDirectory {\topDirectory/..}
+
+
+\documentclass[12pt,letterpaper,twoside]{article}
+\usepackage{\topDirectory/sty/directives}
+\usepackage{\topDirectory/sty/assignment}
+\input{\topDirectory/tex/config}
+
+\usepackage{\topDirectory/lib/pgf-umlcd/pgf-umlcd}
+
+\begin{document}
+
+\doc{title}{Solutions to Assignments}
+\doc{date-sub}{\today}
+
+\header
+
+\input{\topDirectory/tex/content}
+
+\end{document}

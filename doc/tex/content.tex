@@ -1,0 +1,82 @@
+\tableofcontents
+
+\section*{Question 1}
+
+Figure \ref{fig1} shown below has errors/typos.
+Identify the errors and explain them.
+Describe how the program design should have been to maximize the degree of encapsulation.
+
+\begin{figure}[H]
+\centering
+	\begin{tikzpicture}
+		\begin{class}[text width=5cm]{Employee}{0, 0}
+			\attribute{- yearsOfService: float}
+			\attribute{- lastName: String}
+			\attribute{- firstName: String}
+			\attribute{- socSecNum: String}
+			\attribute{- employeeID: String}
+			\operation{...}
+		\end{class}
+	\end{tikzpicture}
+\caption{UML Diagram for Question 1}\label{fig1}
+\end{figure}
+
+\lstset{language=java, tabsize=4}
+\begin{lstlisting}[caption=]
+public class Employee {
+	public static void main(String[] args) {
+		private float yearsOfService;
+		public String lastName;
+		public String firstName;
+		public String socSecNum;
+		public String employeeID;
+		// ...
+	}
+}
+\end{lstlisting}
+
+\subsection*{Solution}
+
+The given code snippet is inconsistent with its corresponding UML diagram depicted in Figure \ref{fig1}.
+Even though all attributes are shown as private, they have been assigned \texttt{public} modifiers in the corresponding code snippet.
+In addition, attributes such as \texttt{socSecNum} and \texttt{employeeID} are declared with \texttt{String} data type whereas it makes more sense to declare them as \texttt{int}.
+Figure \ref{fig2} provides a revised version of the UML diagram in which a few possible methods have been included.
+
+\begin{figure}[H]
+\centering
+	\begin{tikzpicture}
+		\begin{class}[text width=5cm]{Employee}{0, 0}
+			\attribute{- yearsOfService: float}
+			\attribute{- lastName: String}
+			\attribute{- firstName: String}
+			\attribute{- socSecNum: int}
+			\attribute{- employeeID: int}
+			\operation{+ getYears(): float}
+			\operation{+ getName: String}
+			\operation{+ getSecNum(): int}
+			\operation{+ getId(): int}
+			\operation{...}
+		\end{class}
+	\end{tikzpicture}
+\caption{Revised UML Diagram for Figure \ref{fig1}}\label{fig2}
+\end{figure}
+
+Java source code is also slightly modified to conform the revised UML diagram.
+
+\begin{lstlisting}
+public class Employee {
+	public static void main(String[] args) {
+		private float yearsOfService;
+		private String lastName;
+		private String firstName;
+		private int socSecNum;
+		private int employeeID;
+		// ...
+	}
+}
+\end{lstlisting}
+
+\begin{appendix}
+	\listoffigures
+	\listoftables
+\end{appendix}
