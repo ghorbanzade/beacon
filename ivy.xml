@@ -1,11 +1,13 @@
 <ivy-module version="2.0">
 	<info organisation="org.apache" module="UMB-CS680-2015F" />
 	<configurations>
-		<conf name="compile"/>
-		<conf name="runtime" extends="compile"/>
-		<conf name="test" extends="runtime"/>
+		<conf name="build" />
+		<conf name="compile" />
+		<conf name="runtime" extends="compile" />
+		<conf name="test" extends="runtime" />
 	</configurations>
 	<dependencies>
+		<dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="build->default"/>
 		<dependency org="junit" name="junit" rev="4.12" conf="test->default" />
 	</dependencies>
 </ivy-module>
