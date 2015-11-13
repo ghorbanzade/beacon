@@ -17,7 +17,6 @@ all: docs tidy
 docs: $(OUT_DIR) $(PDF)
 
 $(PDF): $(OUT_DIR)/%.pdf : $(SRC_DIR)/%.tex
-	mkdir -p $(@D)
 	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -output-directory=$(@D) -use-make $<
 
 $(OUT_DIR):
@@ -29,7 +28,10 @@ clean: tidy
 
 tidy: $(OUT_DIR)
 	find $(OUT_DIR) -name '*.log' -delete
+	find $(OUT_DIR) -name '*.lof' -delete
+	find $(OUT_DIR) -name '*.lot' -delete
 	find $(OUT_DIR) -name '*.aux' -delete
 	find $(OUT_DIR) -name '*.out' -delete
+	find $(OUT_DIR) -name '*.toc' -delete
 	find $(OUT_DIR) -name '*.fls' -delete
 	find $(OUT_DIR) -name '*.fdb_latexmk' -delete

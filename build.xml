@@ -133,8 +133,10 @@
 	</target>
 
 	<target name="clean">
-		<delete dir="${bin.dir}" />
 		<delete dir="${lib.dir}" />
+		<delete dir="${jar.dir}" />
+		<delete dir="${report.dir}" />
+		<delete dir="${classes.dir}" />
 	</target>
 
 	<target name="clean-all" depends="clean">
