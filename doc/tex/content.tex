@@ -1,6 +1,6 @@
 \tableofcontents
 
-\section*{Question 1}
+\section{Question 1}
 
 Figure \ref{fig1} shown below has errors/typos.
 Identify the errors and explain them.
@@ -75,6 +75,154 @@ public class Employee {
 	}
 }
 \end{lstlisting}
+
+\section{Question 2}
+
+The following code snippet is syntactically correct.
+
+\begin{darkListing}
+ArrayList<Student> al = new ArrayList<Student>();
+al.add(new OutStateStudent(2000));
+System.out.println(al.get(0).getTuition());
+\end{darkListing}
+
+However, the code snippet given below has compilation errors and cannot be executed.
+
+\begin{darkListing}
+ArrayList al = new ArrayList();
+al.add(new OutStateStudent(2000));
+System.out.println(al.get(0).getTuition());
+\end{darkListing}
+
+Identify and resolve the compilation error in latter code snippet.
+
+\subsection*{Solution}
+
+TODO! Class \texttt{ArrayList} accepts a generic type \texttt{<E>}.
+
+\begin{lstlisting}
+import java.util.ArrayList;
+public class StudentTest {
+	public static void main(String[] args) {
+		ArrayList al = new ArrayList();
+		al.add(new Student("Pejman"));
+		Student student = (Student) al.get(0);
+		System.out.println(student.getName());
+	}
+}
+\end{lstlisting}
+
+TODO! Where Student class is simply defined as follows.
+
+\begin{lstlisting}
+public class Student {
+	private String name;
+	public Student(String name) {
+		this.name = name;
+	}
+	public String getName() {
+		return this.name;
+	}
+}
+\end{lstlisting}
+
+\section{Question 3}
+
+Figure \ref{fig3} shows the relationship between Polygon interface and three classes implementing it.
+Develop the interface \texttt{Polygon} and its two implementation claseses \texttt{Triangle} and \texttt{Rectangle}.
+Implement \texttt{getPoints()} and \texttt{getArea()} in the two subclasses.
+
+In the main method, write test code that makes two different triangles and two different rectangles.
+Include the four polygons in a collection (e.g. \texttt{ArrayList}) using generics.
+Print out area for each polygon using an iterator.
+Keep the encapsulation principle in mind: All data fields must be declared \textit{private} and no mutator is required.
+
+\begin{figure}[H]
+\centering
+	\begin{tikzpicture}
+		\begin{interface}[text width=7cm]{Polygon}{0,0}
+			\operation{+ getPoints(): ArrayList$<$Point$>$}
+			\operation[0]{+ getArea(): double}
+		\end{interface}
+		\begin{class}[text width=4cm]{Triangle}{-5,-4}
+			\implement{Polygon}
+			\operation{+ getArea(): double}
+		\end{class}
+		\begin{class}[text width=4cm]{Rectangle}{0,-4}
+			\implement{Polygon}
+			\operation{+ getArea(): double}
+		\end{class}
+		\begin{class}[text width=4cm]{Pentagon}{5,-4}
+			\implement{Polygon}
+			\operation{+ getArea(): double}
+		\end{class}
+	\end{tikzpicture}
+\caption{UML Diagram for Question 3}\label{fig3}
+\end{figure}
+
+\subsection*{Solution}
+
+TODO! Following is the \ref{App:AppendixA}
+
+TODO! However, there are \ref{App:AppendixB}
+
+\begin{figure}[H]
+\centering
+	\begin{tikzpicture}
+		\begin{class}[text width=7cm]{Polygon}{0,0}
+			\operation{+ getPoints(): ArrayList$<$Point2D$>$}
+			\operation[0]{+ getArea(): double}
+			\operation{+ getCentroid(): Point2D}
+		\end{class}
+		\begin{class}[text width=4cm]{Triangle}{-5,-3.5}
+			\implement{Polygon}
+			\attribute{- points: ArrayList$<$Point2D$>$}
+			\operation{+ getArea(): double}
+		\end{class}
+		\begin{class}[text width=4cm]{Rectangle}{0,-3.5}
+			\implement{Polygon}
+			\attribute{- points: ArrayList$<$Point2D$>$}
+			\operation{+ getArea(): double}
+		\end{class}
+		\begin{class}[text width=4cm]{Pentagon}{5,-3.5}
+			\implement{Polygon}
+			\attribute{- points: ArrayList$<$Point2D$>$}
+			\operation{+ getArea(): double}
+		\end{class}
+	\end{tikzpicture}
+\caption{UML Diagram for Question 4}\label{fig4}
+\end{figure}
+
+\newpage
+\appendix
+
+\section{Polygon, Revision 1}\label{App:AppendixA}
+
+\begin{enumerate}
+	\item Class \texttt{Polygon}
+	\lstinputlisting{\srcDirectory/main/java/hw01/rev1/Polygon.java}
+	\item Class \texttt{Triangle}
+	\lstinputlisting{\srcDirectory/main/java/hw01/rev1/Triangle.java}
+	\item Class \texttt{Rectangle}
+	\lstinputlisting{\srcDirectory/main/java/hw01/rev1/Rectangle.java}
+	\item Class \texttt{PolygonMain}
+	\lstinputlisting{\srcDirectory/main/java/hw01/rev1/PolygonMain.java}
+\end{enumerate}
+
+\section{Polygon, Revision 2}\label{App:AppendixB}
+
+\begin{enumerate}
+	\item Class \texttt{Polygon}
+	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/Polygon.java}
+	\item Class \texttt{Triangle}
+	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/Triangle.java}
+	\item Class \texttt{Rectangle}
+	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/Rectangle.java}
+	\item Class \texttt{PolygonMain}
+	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/PolygonMain.java}
+	\item Class \texttt{Polygon}
+	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/PointComp.java}
+\end{enumerate}
 
 \begin{appendix}
 	\listoffigures

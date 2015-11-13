@@ -1,13 +1,13 @@
-\def \topDirectory {.}
-\def \javaDirectory {\topDirectory/..}
-
+\def \topDirectory {..}
+\def \docDirectory {\topDirectory/doc}
+\def \srcDirectory {\topDirectory/src}
 
 \documentclass[12pt,letterpaper,twoside]{article}
-\usepackage{\topDirectory/sty/directives}
-\usepackage{\topDirectory/sty/assignment}
-\input{\topDirectory/tex/config}
+\usepackage{\docDirectory/sty/directives}
+\usepackage{\docDirectory/sty/assignment}
+\input{\docDirectory/tex/config}
 
-\usepackage{\topDirectory/lib/pgf-umlcd/pgf-umlcd}
+\usepackage{\docDirectory/lib/pgf-umlcd/pgf-umlcd}
 
 \begin{document}
 
@@ -16,6 +16,6 @@
 
 \header
 
-\input{\topDirectory/tex/content}
+\input{\docDirectory/tex/content}
 
 \end{document}
