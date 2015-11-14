@@ -9,8 +9,10 @@
 	<property name="classes.dir" value="${bin.dir}/classes" />
 	<property name="test.dir" value="${src.dir}/test" />
 	<property name="report.dir" value="${bin.dir}/report" />
+	<property name="pmd.report.dir" value="${report.dir}/pmd" />
 	<property name="junit.report.dir" value="${report.dir}/junit" />
 	<property name="jacoco.report.dir" value="${report.dir}/jacoco" />
+	<property name="pmd.report.file" value="${pmd.report.dir}/pmd-report.html" />
 	<property name="jacoco.report.file" value="${jacoco.report.dir}/jacoco-file" />
 
 	<property name="organization" value="edu.umb.cs680" />
@@ -62,14 +64,11 @@
 		<taskdef uri="antlib:net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml">
 			<classpath path="${lib.dir}/ant-contrib-1.0b3.jar" />
 		</taskdef>
+		<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpathref="classpath.lib" />
 		<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
 			<classpath path="${lib.dir}/findbugs-3.0.1.jar" />
 		</taskdef>
-		<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-			<classpath>
-				<fileset dir="${lib.dir}"/>
-			</classpath>
-		</taskdef>
+		<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="classpath.lib" />
 	</target>
 
 	<target name="compile" depends="taskdefs">
@@ -131,9 +130,6 @@
 			</jacoco:coverage>
 			</sequential>
 		</ant:for>
-	</target>
-
-	<target name="report" depends="junit">
 		<junitreport todir="${junit.report.dir}">
 			<fileset dir="${junit.report.dir}" includes="TEST-*.xml"/>
 			<report todir="${junit.report.dir}"/>
@@ -157,7 +153,15 @@
 	<target name="findbugs" depends="jar">
 	</target>
 
-	<target name="dist" depends="clean, junit, findbugs">
+	<target name="pmd" depends="jar">
+		<mkdir dir="${pmd.report.dir}" />
+		<pmd rulesetfiles="rulesets/java/design.xml">
+			<formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" toFile="${pmd.report.file}"/>
+			<fileset dir="${src.dir}" />
+		</pmd>
+	</target>
+
+	<target name="dist" depends="clean, junit, findbugs, pmd">
 	</target>
 
 	<target name="clean">

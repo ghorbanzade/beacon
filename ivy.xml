@@ -8,8 +8,9 @@
 	</configurations>
 	<dependencies>
 		<dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="build->default"/>
-		<dependency org="junit" name="junit" rev="4.12" conf="test->default" />
-		<dependency org="com.google.code.findbugs" name="findbugs" rev="3.0.1" conf="test->default" />
-		<dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.5.201505241946" />
+		<dependency org="net.sourceforge.pmd" name="pmd" rev="5.1.2" conf="build->default"/>
+		<dependency org="junit" name="junit" rev="4.12" conf="test->default"/>
+		<dependency org="com.google.code.findbugs" name="findbugs" rev="3.0.1" conf="test->default"/>
+		<dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.5.201505241946" conf="test->default"/>
 	</dependencies>
 </ivy-module>
