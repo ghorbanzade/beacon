@@ -1,12 +1,14 @@
 \tableofcontents
 
+\newpage
+
 \section{Question 1}
 
 Figure \ref{fig1} shown below has errors/typos.
 Identify the errors and explain them.
 Describe how the program design should have been to maximize the degree of encapsulation.
 
-\begin{figure}[H]
+\begin{figure}
 \centering
 	\begin{tikzpicture}
 		\begin{class}[text width=5cm]{Employee}{0, 0}
@@ -42,7 +44,7 @@ Even though all attributes are shown as private, they have been assigned \texttt
 In addition, attributes such as \texttt{socSecNum} and \texttt{employeeID} are declared with \texttt{String} data type whereas it makes more sense to declare them as \texttt{int}.
 Figure \ref{fig2} provides a revised version of the UML diagram in which a few possible methods have been included.
 
-\begin{figure}[H]
+\begin{figure}
 \centering
 	\begin{tikzpicture}
 		\begin{class}[text width=5cm]{Employee}{0, 0}
@@ -98,7 +100,18 @@ Identify and resolve the compilation error in latter code snippet.
 
 \subsection*{Solution}
 
-TODO! Class \texttt{ArrayList} accepts a generic type \texttt{<E>}.
+Since Java v1.5 and introduction of Generics, the \texttt{ArrayList} class accepts a generic type \texttt{<E>}.
+To maintain backward compatibility, explicit type declartion for classes that accept generics is not required.
+
+Declaring the type of objects to be given to the \texttt{ArrayList}, as is done in the first code snippet, will necessitate compile-time type checking which may initially be regarded as an additional restriction.
+The advantage, however, is that compiler will \textit{understand} the type of objects the \texttt{ArrayList} is holding.
+As a result, all calls to methods defined for declared data type will thereafter be validated.
+This justifies why the method \texttt{getTuition()} in third statement of the first code snippet is acknowledged and validated by the compiler.
+
+As for the second code snippet, since the type of objects passed to \texttt{ArrayList} is not declared, the \texttt{ArrayList} will be regarded merely as container of \texttt{Objects}.
+Therefore, even if a subclass of \texttt{Student} is passes to the \texttt{ArrayList}, the compiler will treat all elements as \texttt{Objects} and none of the methods defined for \texttt{Student} will be recognized.
+
+A possible workaround to fix the compilation error caused due to illegal call to \texttt{getTuition()} is explicit type casting from \texttt{Object} to \texttt{Student} as is shown in the code below.
 
 \begin{lstlisting}
 import java.util.ArrayList;
@@ -112,7 +125,7 @@ public class StudentTest {
 }
 \end{lstlisting}
 
-TODO! Where Student class is simply defined as follows.
+Where Student class is simply defined as follows.
 
 \begin{lstlisting}
 public class Student {
@@ -126,6 +139,8 @@ public class Student {
 }
 \end{lstlisting}
 
+However such type casting is dangerous and the proposed workaround is not recommended.
+
 \section{Question 3}
 
 Figure \ref{fig3} shows the relationship between Polygon interface and three classes implementing it.
@@ -137,7 +152,7 @@ Include the four polygons in a collection (e.g. \texttt{ArrayList}) using generi
 Print out area for each polygon using an iterator.
 Keep the encapsulation principle in mind: All data fields must be declared \textit{private} and no mutator is required.
 
-\begin{figure}[H]
+\begin{figure}
 \centering
 	\begin{tikzpicture}
 		\begin{interface}[text width=7cm]{Polygon}{0,0}
@@ -162,66 +177,31 @@ Keep the encapsulation principle in mind: All data fields must be declared \text
 
 \subsection*{Solution}
 
-TODO! Following is the \ref{App:AppendixA}
+\begin{enumerate}
+	\item Class \texttt{Polygon}
+	\lstinputlisting{\srcDirectory/main/java/hw01/Polygon.java}
+	\item Class \texttt{Triangle}
+	\lstinputlisting{\srcDirectory/main/java/hw01/Triangle.java}
+	\item Class \texttt{Rectangle}
+	\lstinputlisting{\srcDirectory/main/java/hw01/Rectangle.java}
+	\item Class \texttt{PolygonMain}
+	\lstinputlisting{\srcDirectory/main/java/hw01/PolygonMain.java}
+\end{enumerate}
 
-TODO! However, there are \ref{App:AppendixB}
+Source code for unit tests related to this question are provided in Appendix \ref{App:AppendixA}.
 
-\begin{figure}[H]
-\centering
-	\begin{tikzpicture}
-		\begin{class}[text width=7cm]{Polygon}{0,0}
-			\operation{+ getPoints(): ArrayList$<$Point2D$>$}
-			\operation[0]{+ getArea(): double}
-			\operation{+ getCentroid(): Point2D}
-		\end{class}
-		\begin{class}[text width=4cm]{Triangle}{-5,-3.5}
-			\implement{Polygon}
-			\attribute{- points: ArrayList$<$Point2D$>$}
-			\operation{+ getArea(): double}
-		\end{class}
-		\begin{class}[text width=4cm]{Rectangle}{0,-3.5}
-			\implement{Polygon}
-			\attribute{- points: ArrayList$<$Point2D$>$}
-			\operation{+ getArea(): double}
-		\end{class}
-		\begin{class}[text width=4cm]{Pentagon}{5,-3.5}
-			\implement{Polygon}
-			\attribute{- points: ArrayList$<$Point2D$>$}
-			\operation{+ getArea(): double}
-		\end{class}
-	\end{tikzpicture}
-\caption{UML Diagram for Question 4}\label{fig4}
-\end{figure}
+\section{Question 4}
 
 \newpage
 \appendix
 
-\section{Polygon, Revision 1}\label{App:AppendixA}
+\section{Unit Tests for Question 3}\label{App:AppendixA}
 
 \begin{enumerate}
-	\item Class \texttt{Polygon}
-	\lstinputlisting{\srcDirectory/main/java/hw01/rev1/Polygon.java}
-	\item Class \texttt{Triangle}
-	\lstinputlisting{\srcDirectory/main/java/hw01/rev1/Triangle.java}
-	\item Class \texttt{Rectangle}
-	\lstinputlisting{\srcDirectory/main/java/hw01/rev1/Rectangle.java}
-	\item Class \texttt{PolygonMain}
-	\lstinputlisting{\srcDirectory/main/java/hw01/rev1/PolygonMain.java}
-\end{enumerate}
-
-\section{Polygon, Revision 2}\label{App:AppendixB}
-
-\begin{enumerate}
-	\item Class \texttt{Polygon}
-	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/Polygon.java}
-	\item Class \texttt{Triangle}
-	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/Triangle.java}
-	\item Class \texttt{Rectangle}
-	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/Rectangle.java}
-	\item Class \texttt{PolygonMain}
-	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/PolygonMain.java}
-	\item Class \texttt{Polygon}
-	\lstinputlisting{\srcDirectory/main/java/hw01/rev2/PointComp.java}
+	\item Class \texttt{TriangleTest}
+	\lstinputlisting{\srcDirectory/test/java/hw01/TriangleTest.java}
+	\item Class \texttt{RectangleTest}
+	\lstinputlisting{\srcDirectory/test/java/hw01/RectangleTest.java}
 \end{enumerate}
 
 \begin{appendix}
