@@ -13,7 +13,6 @@ public class Rectangle extends Polygon {
 		Point2D min = this.points.first();
 		double width = max.getX() - min.getX();
 		double height = max.getY() - min.getY();
-		double area = height * width;
-		return area;
+		return height * width;
 	}
 }

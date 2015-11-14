@@ -1,4 +1,4 @@
-package edu.umb.cs680.hw01.rev1;
+package edu.umb.cs680.hw01;
 
 import java.util.ArrayList;
 import java.awt.Point;

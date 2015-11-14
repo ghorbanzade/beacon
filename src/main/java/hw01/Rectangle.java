@@ -1,4 +1,4 @@
-package edu.umb.cs680.hw01.rev1;
+package edu.umb.cs680.hw01;
 
 import java.util.ArrayList;
 import java.awt.Point;
@@ -22,8 +22,7 @@ public class Rectangle implements Polygon {
 		}
 		double width = max.getX() - min.getX();
 		double height = max.getY() - min.getY();
-		double area = height * width;
-		return area;
+		return height * width;
 	}
 	public ArrayList<Point> getPoints() {
 		return points;
