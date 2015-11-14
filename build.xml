@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:ant="antlib:net.sf.antcontrib" name="UMB-CS680-2015F" default="dist" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:ant="antlib:net.sf.antcontrib" xmlns:jacoco="antlib:org.jacoco.ant" name="UMB-CS680-2015F" default="dist" basedir=".">
 
 	<property name="src.dir" value="src" />
 	<property name="bin.dir" value="bin" />
@@ -10,6 +10,8 @@
 	<property name="test.dir" value="${src.dir}/test" />
 	<property name="report.dir" value="${bin.dir}/report" />
 	<property name="junit.report.dir" value="${report.dir}/junit" />
+	<property name="jacoco.report.dir" value="${report.dir}/jacoco" />
+	<property name="jacoco.report.file" value="${jacoco.report.dir}/jacoco-file" />
 
 	<property name="organization" value="edu.umb.cs680" />
 	<property name="main-class-list" value="hw01.HelloWorld" />
@@ -57,16 +59,22 @@
 	</path>
 
 	<target name="taskdefs" depends="resolve">
-		<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<taskdef uri="antlib:net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml">
+			<classpath path="${lib.dir}/ant-contrib-1.0b3.jar" />
+		</taskdef>
+		<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+			<classpath path="${lib.dir}/findbugs-3.0.1.jar" />
+		</taskdef>
+		<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
 			<classpath>
-				<pathelement location="${lib.dir}/ant-contrib-1.0b3.jar"/>
+				<fileset dir="${lib.dir}"/>
 			</classpath>
 		</taskdef>
 	</target>
 
 	<target name="compile" depends="taskdefs">
 		<mkdir dir="${classes.dir}" />
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" debuglevel="lines,vars,source" includeantruntime="false">
 			<classpath>
 				<path refid="classpath.lib" />
 			</classpath>
@@ -75,7 +83,7 @@
 
 	<target name="jar" depends="compile">
 		<mkdir dir="${jar.dir}"/>
-		<for list="${main-class-list}" param="main-class" trim="yes">
+		<ant:for list="${main-class-list}" param="main-class" trim="yes">
 			<sequential>
 				<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" excludes="**/*Test.class">
 					<manifest>
@@ -88,11 +96,11 @@
 					</manifest>
 				</jar>
 			</sequential>
-		</for>
+		</ant:for>
 	</target>
 
 	<target name="run" depends="jar">
-		<for list="${main-class-list}" param="main-class" trim="yes">
+		<ant:for list="${main-class-list}" param="main-class" trim="yes">
 			<sequential>
 				<java fork="true" classname="${organization}.@{main-class}">
 					<classpath>
@@ -101,13 +109,15 @@
 					</classpath>
 				</java>
 			</sequential>
-		</for>
+		</ant:for>
 	</target>
 
 	<target name="junit" depends="jar">
 		<mkdir dir="${junit.report.dir}"/>
-		<for list="${test-suit-list}" param="test-suit" trim="yes">
+		<mkdir dir="${jacoco.report.dir}"/>
+		<ant:for list="${test-suit-list}" param="test-suit" trim="yes">
 			<sequential>
+			<jacoco:coverage destfile="${jacoco.report.file}">
 				<junit fork="true" printsummary="yes" haltonfailure="no" haltonerror="yes">
 					<test name="${organization}.@{test-suit}" todir="${junit.report.dir}" />
 					<classpath>
@@ -118,8 +128,9 @@
 						<fileset dir="${test.dir}" includes="*Test.java"/>
 					</batchtest>
 				</junit>
+			</jacoco:coverage>
 			</sequential>
-		</for>
+		</ant:for>
 	</target>
 
 	<target name="report" depends="junit">
@@ -127,9 +138,26 @@
 			<fileset dir="${junit.report.dir}" includes="TEST-*.xml"/>
 			<report todir="${junit.report.dir}"/>
 		</junitreport>
+		<jacoco:report>
+			<executiondata>
+				<file file="${jacoco.report.file}" />
+			</executiondata>
+			<structure name="${ant.project.name}">
+				<classfiles>
+					<fileset dir="${classes.dir}" />
+				</classfiles>
+				<sourcefiles>
+					<fileset dir="${src.dir}" />
+				</sourcefiles>
+			</structure>
+			<html destdir="${jacoco.report.dir}" />
+		</jacoco:report>
 	</target>
 
-	<target name="dist" depends="clean, junit">
+	<target name="findbugs" depends="jar">
+	</target>
+
+	<target name="dist" depends="clean, junit, findbugs">
 	</target>
 
 	<target name="clean">

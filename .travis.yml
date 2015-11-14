@@ -1,11 +1,15 @@
 language: java
+sudo: false
+addons:
+  apt:
+    packages:
+    - texlive-latex-base
+jdk:
+  - oraclejdk8
 before_install:
   - ant init-ivy
 install:
   - ant resolve
-jdk:
-  - oraclejdk8
-sudo: false
 script:
   - make clean
   - make
