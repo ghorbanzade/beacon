@@ -127,10 +127,12 @@
 	<target name="checkstyle" depends="jar">
 		<mkdir dir="${cs.report.dir}"/>
 		<get src="${cs.config.remote}" dest="${cs.config.file}" usetimestamp="true"/>
+		<get src="${cs.report.style.remote}" dest="${cs.report.style.file}" usetimestamp="true"/>
 		<cs:checkstyle config="${cs.config.file}" failOnViolation="false">
 			<fileset dir="${src.dir}" includes="**/*.java"/>
-			<formatter type="xml" toFile="${cs.report.file}"/>
+			<formatter type="xml" toFile="${cs.report.xml}"/>
 		</cs:checkstyle>
+		<xslt in="${cs.report.xml}" out="${cs.report.html}" style="${cs.report.style.file}"/>
 	</target>
 
 	<target name="pmd" depends="jar">
