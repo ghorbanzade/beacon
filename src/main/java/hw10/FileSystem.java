@@ -15,6 +15,7 @@ import java.util.Date;
 * lazy instantiation of one single FileSystem object.
 *
 * @author     Pejman Ghorbanzade
+* @see        FSElement
 */
 public final class FileSystem {
   private static FileSystem instance = null;

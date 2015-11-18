@@ -1,3 +1,10 @@
+//
+// CS680: Object Oriented Design and Programming
+// Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+// Released under the terms of MIT License
+// https://github.com/ghorbanzade/UMB-CS680-2015F/blob/master/LICENSE
+//
+
 package edu.umb.cs680.hw01;
 
 import java.awt.Point;
@@ -13,7 +20,7 @@ import java.util.Iterator;
 * @see      Rectangle
 * @see      Triangle
 */
-public class PolygonMain {
+public final class PolygonMain {
 
   /**
   * This main method tests the program design by creating 4 polygons,
@@ -46,8 +53,13 @@ public class PolygonMain {
     Iterator<Polygon> it = polygons.iterator();
     Polygon nextP = it.next();
     while (it.hasNext()) {
-      System.out.println(nextP.getPoints());
       System.out.println(nextP.getArea());
     }
+  }
+
+  /**
+  * This class must not be instantiated.
+  */
+  private PolygonMain() {
   }
 }

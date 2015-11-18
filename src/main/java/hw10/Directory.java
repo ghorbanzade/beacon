@@ -15,6 +15,8 @@ import java.util.Date;
 * files and other directories.
 *
 * @author     Pejman Ghorbanzade
+* @see        FSElement
+* @see        File
 */
 public final class Directory extends FSElement {
   /**

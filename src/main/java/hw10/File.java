@@ -14,6 +14,8 @@ import java.util.Date;
 * This class defines the file as a filesystem element with no children.
 *
 * @author     Pejman Ghorbanzade
+* @see        FSElement
+* @see        Directory
 */
 public final class File extends FSElement {
   /**
