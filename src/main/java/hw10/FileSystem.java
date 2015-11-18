@@ -16,9 +16,9 @@ import java.util.Date;
 *
 * @author     Pejman Ghorbanzade
 */
-public class FileSystem {
+public final class FileSystem {
   private static FileSystem instance = null;
-  private static Directory rootDir;
+  private static Directory rootDir = null;
 
   /**
   * To disallow instantiation of our singleton class constructor is defined
@@ -47,7 +47,7 @@ public class FileSystem {
   }
 
   /**
-  * This method will print the directory structure starting from the rootDir
+  * This method will print the directory structure starting from the root
   * directory.
   */
   public void showAllElements() {

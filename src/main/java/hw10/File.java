@@ -11,13 +11,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
-*
+* This class defines the file as a filesystem element with no children.
 *
 * @author     Pejman Ghorbanzade
 */
-public class File extends FSElement {
+public final class File extends FSElement {
   /**
+  * Construcor of a file object.
   *
+  * @param name name of the file
+  * @param owner owner of the file
+  * @param created date at which the file is created
+  * @param size size of the file
   */
   public File(String name, String owner, Date created, int size) {
     super(name, owner, created, size);

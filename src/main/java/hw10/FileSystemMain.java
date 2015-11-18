@@ -36,7 +36,7 @@ public final class FileSystemMain {
   */
   public static void main(String[] args) {
     FileSystem fs = initFileSystem();
-    System.out.printf("size of root is: %d\n", fs.getRoot().getSize());
+    System.out.printf("size of root is: %d%n", fs.getRoot().getSize());
     fs.showAllElements();
   }
 
@@ -59,5 +59,11 @@ public final class FileSystemMain {
     ((Directory) ((Directory) fs.getRoot().getChildren().get(1)).getChildren().get(1)).appendChild(new File("e", user, new Date(), 8));
     ((Directory) ((Directory) fs.getRoot().getChildren().get(1)).getChildren().get(1)).appendChild(new File("f", user, new Date(), 28));
     return fs;
+  }
+
+  /**
+  * This class is to test the design and must be allowed to be instantiated.
+  */
+  private FileSystemMain() {
   }
 }
