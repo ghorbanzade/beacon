@@ -7,7 +7,7 @@
 
 package edu.umb.cs680.hw01;
 
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 * @see      Triangle
 */
 public class Rectangle implements Polygon {
-  ArrayList<Point> points = new ArrayList<Point>();
+  ArrayList<Point2D> points = new ArrayList<Point2D>();
 
   /**
   * A rectangle is constructed by giving coordinates of its four vertices.
@@ -29,7 +29,10 @@ public class Rectangle implements Polygon {
   * @param pointC coordinates of vertex C of the rectangle
   * @param pointD coordinates of vertex D of the rectangle
   */
-  public Rectangle(Point pointA, Point pointB, Point pointC, Point pointD) {
+  public Rectangle(Point2D pointA,
+                   Point2D pointB,
+                   Point2D pointC,
+                   Point2D pointD) {
     this.points.add(pointA);
     this.points.add(pointB);
     this.points.add(pointC);
@@ -43,9 +46,9 @@ public class Rectangle implements Polygon {
   * @return area of the rectangle
   */
   public double getArea() {
-    Point max = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
-    Point min = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
-    for (Point point: points) {
+    Point2D max = new Point2D.Double(Double.MIN_VALUE, Double.MIN_VALUE);
+    Point2D min = new Point2D.Double(Double.MAX_VALUE, Double.MAX_VALUE);
+    for (Point2D point: points) {
       if (point.getX() > max.getX() && point.getY() > max.getY()) {
         max.setLocation(point);
       }
@@ -64,7 +67,7 @@ public class Rectangle implements Polygon {
   *
   * @return coordinates of vertices of the rectangle
   */
-  public ArrayList<Point> getPoints() {
+  public ArrayList<Point2D> getPoints() {
     return points;
   }
 }

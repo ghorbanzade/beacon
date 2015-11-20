@@ -1,11 +1,9 @@
 BIN_DIR = bin
 DOC_DIR = doc
 
-.PHONY: all devel docs code slide clean
+.PHONY: all docs code clean
 
 all: code
-
-devel: docs code
 
 docs:
 	@$(MAKE) -C $(DOC_DIR)

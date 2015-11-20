@@ -7,7 +7,7 @@
 
 package edu.umb.cs680.hw01;
 
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -31,30 +31,30 @@ public final class PolygonMain {
   public static void main(String[] args) {
     ArrayList<Polygon> polygons = new ArrayList<Polygon>();
     polygons.add(new Triangle(
-        new Point(0, 0),
-        new Point(2, 2),
-        new Point(1, 3)
+        new Point2D.Double(0, 0),
+        new Point2D.Double(2, 2),
+        new Point2D.Double(1, 3)
     ));
     polygons.add(new Rectangle(
-        new Point(0, 0),
-        new Point(0, 2),
-        new Point(4, 0),
-        new Point(4, 2)
+        new Point2D.Double(0, 0),
+        new Point2D.Double(0, 2),
+        new Point2D.Double(4, 0),
+        new Point2D.Double(4, 2)
     ));
     polygons.add(new Triangle(
-        new Point(1, 1),
-        new Point(3, 1),
-        new Point(2, 2)
+        new Point2D.Double(1, 1),
+        new Point2D.Double(3, 1),
+        new Point2D.Double(2, 2)
     ));
     polygons.add(new Rectangle(
-        new Point(1, 1),
-        new Point(3, 1),
-        new Point(1, 6),
-        new Point(3, 6)
+        new Point2D.Double(1, 1),
+        new Point2D.Double(3, 1),
+        new Point2D.Double(1, 6),
+        new Point2D.Double(3, 6)
     ));
     Iterator<Polygon> it = polygons.iterator();
-    Polygon nextP = it.next();
     while (it.hasNext()) {
+      Polygon nextP = it.next();
       System.out.println(nextP.getArea());
     }
   }

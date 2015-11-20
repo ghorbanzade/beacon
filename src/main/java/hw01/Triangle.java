@@ -7,7 +7,7 @@
 
 package edu.umb.cs680.hw01;
 
-import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 * @see      Rectangle
 */
 public class Triangle implements Polygon {
-  ArrayList<Point> points = new ArrayList<Point>();
+  ArrayList<Point2D> points = new ArrayList<Point2D>();
 
   /**
   * A triangle is constructed by giving coordinates of its three vertices.
@@ -28,7 +28,9 @@ public class Triangle implements Polygon {
   * @param pointB coordinates of vertex B of the triangle
   * @param pointC coordinates of vertex C of the triangle
   */
-  public Triangle(Point pointA, Point pointB, Point pointC) {
+  public Triangle(Point2D pointA,
+                  Point2D pointB,
+                  Point2D pointC) {
     this.points.add(pointA);
     this.points.add(pointB);
     this.points.add(pointC);
@@ -51,12 +53,12 @@ public class Triangle implements Polygon {
   }
 
   /**
-  * This getter method returns an ArrayList coordinates of vertices of the
-  * triangle.
+  * This getter method returns an ArrayList containing coordinates of vertices
+  * of the triangle.
   *
   * @return coordinates of vertices of the triangle
   */
-  public ArrayList<Point> getPoints() {
+  public ArrayList<Point2D> getPoints() {
     return points;
   }
 }
