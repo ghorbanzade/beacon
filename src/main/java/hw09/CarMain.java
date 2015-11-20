@@ -81,4 +81,10 @@ public final class CarMain {
     }
     System.out.println();
   }
+
+  /**
+  * This class is to test the design and must be allowed to be instantiated.
+  */
+  private CarMain() {
+  }
 }

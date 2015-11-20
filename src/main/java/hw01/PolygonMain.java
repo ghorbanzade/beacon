@@ -25,6 +25,8 @@ public final class PolygonMain {
   /**
   * This main method tests the program design by creating 4 polygons,
   * two triangles and two rectangles.
+  *
+  * @param args command line arguments given to this program
   */
   public static void main(String[] args) {
     ArrayList<Polygon> polygons = new ArrayList<Polygon>();

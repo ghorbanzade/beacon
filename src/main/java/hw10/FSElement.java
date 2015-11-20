@@ -144,7 +144,7 @@ public abstract class FSElement {
   * updates the last modified date for current element and all its ancestors.
   * This method is not used and it only provided for extensibility.
   *
-  * @param the new name for current system element
+  * @param name the new name for current system element
   */
   public void setName(String name) {
     this.name = name;

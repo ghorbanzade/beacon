@@ -34,6 +34,8 @@ public final class FileSystemMain {
   * Main method of the program that first initalizes the file system
   * and then prints the size of the root and a verbose presentation of
   * all the elements within the filesystem.
+  *
+  * @param args command line arguments given to this program.
   */
   public static void main(String[] args) {
     FileSystem fs = initFileSystem();
