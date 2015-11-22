@@ -56,7 +56,8 @@
 
 	<target name="compile" depends="taskdefs">
 		<mkdir dir="${class.dir}"/>
-		<javac srcdir="${src.dir}" destdir="${class.dir}" debug="on" debuglevel="lines,vars,source" includeantruntime="false" classpathref="classpath.test"/>
+		<javac srcdir="${java.main.src.dir}" destdir="${class.dir}" debug="on" debuglevel="lines,vars,source" includeantruntime="false" classpathref="classpath.main"/>
+		<javac srcdir="${java.test.src.dir}" destdir="${class.dir}" debug="on" debuglevel="lines,vars,source" includeantruntime="false" classpathref="classpath.test"/>
 	</target>
 
 	<target name="jar" depends="compile">
@@ -110,7 +111,7 @@
 					</classpath>
 					<formatter type="xml"/>
 					<batchtest todir="${junit.report.dir}">
-						<fileset dir="${test.dir}" includes="*Test.java"/>
+						<fileset dir="${test.src.dir}" includes="*Test.java"/>
 					</batchtest>
 				</junit>
 			</jacoco:coverage>
@@ -141,7 +142,7 @@
 		<get src="${cs.config.remote}" dest="${cs.config.file}" usetimestamp="true"/>
 		<get src="${cs.report.style.remote}" dest="${cs.report.style.file}" usetimestamp="true"/>
 		<cs:checkstyle config="${cs.config.file}" failOnViolation="false">
-			<fileset dir="${src.dir}" includes="**/*.java"/>
+			<fileset dir="${java.main.src.dir}" includes="**/*.java"/>
 			<formatter type="xml" toFile="${cs.report.xml}"/>
 		</cs:checkstyle>
 		<xslt in="${cs.report.xml}" out="${cs.report.html}" style="${cs.report.style.file}"/>
@@ -151,7 +152,7 @@
 		<mkdir dir="${pmd.report.dir}"/>
 		<pmd rulesetfiles="rulesets/java/design.xml">
 			<formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" toFile="${pmd.report.file}"/>
-			<fileset dir="${src.dir}"/>
+			<fileset dir="${java.main.src.dir}"/>
 		</pmd>
 	</target>
 
@@ -169,7 +170,7 @@
 		<untar src="${findbugs.home.tar}" dest="${findbugs.home.dir}" compression="gzip"/>
 		<findbugs home="${findbugs.home.src}" output="xml:withMessages" outputFile="${findbugs.report.xml}">
 			<auxClasspath refid="classpath.test"/>
-			<sourcePath path="${src.dir}"/>
+			<sourcePath path="${java.main.src.dir}"/>
 			<class location="${class.dir}"/>
 		</findbugs>
 		<xslt in="${findbugs.report.xml}" out="${findbugs.report.html}" style="${findbugs.report.style}"/>
