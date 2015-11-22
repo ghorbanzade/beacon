@@ -22,7 +22,7 @@ public final class Directory extends FSElement {
   /**
   * Children of a directory are held within an arraylist.
   */
-  private ArrayList<FSElement> children = new ArrayList<FSElement>();
+  private final ArrayList<FSElement> children = new ArrayList<FSElement>();
 
   /**
   * This constructor allows instantiating a new directory by specifying its
@@ -37,7 +37,7 @@ public final class Directory extends FSElement {
   * @param created the date at which the directory is created.
   */
   public Directory(String name, String owner, Date created) {
-    super(name, owner, created, 0);
+    super(name, owner, created);
   }
 
   /**
@@ -62,6 +62,20 @@ public final class Directory extends FSElement {
   */
   public ArrayList<FSElement> getChildren() {
     return this.children;
+  }
+
+  /**
+  * This method gives access to the total size of file system elements within
+  * current directory.
+  *
+  * @return the size of all file system elements within current directory.
+  */
+  public int getSize() {
+    int size = 0;
+    for (FSElement element: this.getChildren()) {
+      size += element.getSize();
+    }
+    return size;
   }
 
   /**

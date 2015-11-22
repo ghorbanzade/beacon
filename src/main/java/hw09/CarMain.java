@@ -75,7 +75,7 @@ public final class CarMain {
   */
   public static void printSortedList(ArrayList<Car> cars, CarComparator comparator) {
     Collections.sort(cars, comparator);
-    System.out.printf("Cars sorted using %s comparator:\n", comparator.getName());
+    System.out.printf("Cars sorted using %s comparator:%n", comparator.getName());
     for (Car car: cars) {
       System.out.println(car);
     }

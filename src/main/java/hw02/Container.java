@@ -25,12 +25,12 @@ import java.util.ArrayList;
 * @see      Cone
 * @see      Cup
 */
-public abstract class Container {
-  private ArrayList<Scoop> scoops = new ArrayList<Scoop>();
-  private String type;
-  private float price;
-  private Size size;
-  private int capacity;
+public class Container {
+  private final ArrayList<Scoop> scoops = new ArrayList<Scoop>();
+  private final String type;
+  private final float price;
+  private final Size size;
+  private final int capacity;
 
   /**
   * This constructor initializes price and size of the container.
@@ -41,7 +41,7 @@ public abstract class Container {
   * @param type name of the subclass calling this constructor
   * @param size size of the container
   */
-  public Container(String type, Size size) {
+  protected Container(String type, Size size) {
     this.type = type;
     this.size = size;
     IceCreamConfig config = IceCreamConfig.getInstance();

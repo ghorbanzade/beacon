@@ -26,10 +26,10 @@ public class Scoop {
   * The scoop has a flavor and a list of toppings.
   */
   private float price;
-  private int layerNum;
-  private Flavor flavor;
+  private final int layerNum;
+  private final Flavor flavor;
   private Scoop upper = null;
-  private ArrayList<Topping> toppings = new ArrayList<Topping>();
+  private final ArrayList<Topping> toppings = new ArrayList<Topping>();
 
   /**
   * This constructor is used to add new scoops that could sit on the container.

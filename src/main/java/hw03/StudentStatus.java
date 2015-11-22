@@ -16,11 +16,11 @@ package edu.umb.cs680.hw03;
 * @see OutStateStudent
 * @see IntlStudent
 */
-public abstract class StudentStatus {
+public class StudentStatus {
   /**
   * Regardless of their status, all students are supposed to pay a tuition fee.
   */
-  private float tuition;
+  private final float tuition;
 
   /**
   * This constructor gets the required tuition fee from constructors of the
@@ -28,7 +28,7 @@ public abstract class StudentStatus {
   *
   * @param tuition the tuition fee specified for particular student status
   */
-  public StudentStatus(float tuition) {
+  protected StudentStatus(float tuition) {
     this.tuition = tuition;
   }
 

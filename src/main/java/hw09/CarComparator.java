@@ -22,7 +22,7 @@ public abstract class CarComparator<T extends Car> implements Comparator<T> {
   /**
   * Every comparator used to compare two cars has a name.
   */
-  private String name;
+  private final String name;
 
   /**
   * The constructor will initialize the name of comparators defined for Cars.

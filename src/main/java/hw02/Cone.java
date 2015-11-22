@@ -39,12 +39,14 @@ public final class Cone extends Container {
   * @throws IceCreamException in case topping is already set
   */
   public void setTopping(Topping topping) throws IceCreamException {
-    if (this.topping != null) {
-      throw new IceCreamException("Topping is already set.");
-    } else if (this.getScoops().isEmpty() == false) {
-      throw new IceCreamException("Cone is not empty.");
+    if (this.topping == null) {
+      if (this.getScoops().isEmpty()) {
+        this.topping = topping;
+      } else {
+        throw new IceCreamException("Cone is not empty.");
+      }
     } else {
-      this.topping = topping;
+      throw new IceCreamException("Topping is already set.");
     }
   }
 

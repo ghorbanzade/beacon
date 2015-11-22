@@ -18,7 +18,7 @@ import java.util.ArrayList;
 * @see Student
 * @see StudentStatus
 */
-public class StudentMain {
+public final class StudentMain {
   /**
   * The main method instantiates three students with different status
   * and prints tuition for each one.
@@ -33,5 +33,11 @@ public class StudentMain {
     for (Student student: students) {
       System.out.printf("Tuition for %s: %.2f%n", student.getName(), student.getTuition());
     }
+  }
+
+  /**
+  * This class must not be instantiated.
+  */
+  private StudentMain() {
   }
 }

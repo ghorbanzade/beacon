@@ -10,6 +10,7 @@ package edu.umb.cs680.hw10;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 /**
 * This class is a super class of Directory and File and is defined as abstract.
@@ -21,7 +22,7 @@ import java.util.Date;
 */
 public abstract class FSElement {
   /**
-  * Each file system element has a name, an owner, a size, date of creation
+  * Each file system element has a name, an owner, date of creation
   * and a date that the element is last modified. In addition, a file system
   * elemenet may have a parent which is set once the element is added to the
   * filesystem instance.
@@ -30,7 +31,6 @@ public abstract class FSElement {
   private String owner;
   private final Date created;
   private Date lastModified;
-  private int size;
   private Directory parent = null;
 
   /**
@@ -43,15 +43,12 @@ public abstract class FSElement {
   * @param name name of the file system element
   * @param owner name of the user who created the file system element
   * @param created the date at which the file system element is created
-  * @param size size of the file system element. If the file system element is
-  *             a drectory, the size is zero.
   */
-  public FSElement(String name, String owner, Date created, int size) {
+  public FSElement(String name, String owner, Date created) {
     this.name = name;
     this.owner = owner;
     this.created = created;
     this.lastModified = created;
-    this.size = size;
   }
 
   /**
@@ -116,17 +113,7 @@ public abstract class FSElement {
   * @return the size of the file system element including the size of its
   *         children.
   */
-  public int getSize() {
-    if (this instanceof File) {
-      return this.size;
-    } else {
-      int size = 0;
-      for (FSElement element: ((Directory) this).getChildren()) {
-        size += element.getSize();
-      }
-      return size;
-    }
-  }
+  public abstract int getSize();
 
   /**
   * This method gets the parent directory of the current file system element.
@@ -172,7 +159,7 @@ public abstract class FSElement {
   */
   protected void updateLastModified() {
     this.lastModified = new Date();
-    while (this.getParent() != null) {
+    if (this.getParent() != null) {
       this.getParent().updateLastModified();
     }
   }
@@ -200,7 +187,7 @@ public abstract class FSElement {
   @Override
   public String toString() {
     String typeIndicator = (this instanceof File) ? "file" : "directory";
-    SimpleDateFormat df = new SimpleDateFormat("MMM dd kk:mm");
+    SimpleDateFormat df = new SimpleDateFormat("MMM dd kk:mm", Locale.US);
     StringBuilder entry = new StringBuilder();
     entry.append(String.format("%-10s %-8s %4d %12s %s",
         typeIndicator, this.owner, this.getSize(),

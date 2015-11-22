@@ -23,7 +23,7 @@ import java.util.Properties;
 */
 public final class StudentConfig {
   private static StudentConfig instance = null;
-  private static Properties config = null;
+  private Properties config = null;
 
   /**
   * To disallow instantiation of our singleton class constructor is defined
@@ -33,7 +33,6 @@ public final class StudentConfig {
   private StudentConfig() {
     try {
       InputStream fis = StudentConfig.class.getResourceAsStream("student.properties");
-      // FileInputStream fis = new FileInputStream(FILENAME);
       this.config = new Properties();
       this.config.load(fis);
       fis.close();

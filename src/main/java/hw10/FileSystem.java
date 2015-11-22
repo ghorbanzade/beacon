@@ -19,7 +19,7 @@ import java.util.Date;
 */
 public final class FileSystem {
   private static FileSystem instance = null;
-  private static Directory rootDir = null;
+  private Directory rootDir = null;
 
   /**
   * To disallow instantiation of our singleton class constructor is defined

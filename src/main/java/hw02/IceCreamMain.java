@@ -12,7 +12,7 @@ package edu.umb.cs680.hw02;
 *
 * @author Pejman Ghorbanzade
 */
-public class IceCreamMain {
+public final class IceCreamMain {
   /**
   * This main method demonstrates how to make an ice cream using the proposed
   * design. Since some methods may throw exceptions depending on the order and
@@ -34,5 +34,11 @@ public class IceCreamMain {
     } catch (IceCreamException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+  * This class must not be instantiated.
+  */
+  private IceCreamMain() {
   }
 }

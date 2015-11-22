@@ -19,6 +19,12 @@ import java.util.Date;
 */
 public final class File extends FSElement {
   /**
+  * Each file has a size. Based on problem requirements, the size of a
+  * file is fixed.
+  */
+  private final int size;
+
+  /**
   * Construcor of a file object.
   *
   * @param name name of the file
@@ -27,6 +33,17 @@ public final class File extends FSElement {
   * @param size size of the file
   */
   public File(String name, String owner, Date created, int size) {
-    super(name, owner, created, size);
+    super(name, owner, created);
+    this.size = size;
+  }
+
+  /**
+  * This method implements getSize() method of FSElement object by simply
+  * returning the size of the file.
+  *
+  * @return size of the file
+  */
+  public int getSize() {
+    return this.size;
   }
 }

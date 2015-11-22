@@ -45,8 +45,7 @@ public enum StudentStatus {
   * @return the tuition a student has to pay based on his status
   */
   public float getTuition() {
-    StudentConfig config = StudentConfig.getInstance();
-    String str = config.get("tuition.%s", this.name);
+    String str = StudentConfig.getInstance().get("tuition.%s", this.name);
     return str.isEmpty() ? 0 : Float.parseFloat(str);
   }
 }

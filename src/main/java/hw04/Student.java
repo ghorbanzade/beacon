@@ -20,8 +20,8 @@ public class Student {
   * Each student has a name and a status which is one of the possibilities
   * defined in StudentStatus enum class.
   */
-  private String name;
-  private StudentStatus status;
+  private final String name;
+  private final StudentStatus status;
 
   /*
   * The constructor will take name and status of a student. The tuition of
