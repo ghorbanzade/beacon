@@ -17,17 +17,16 @@ import java.util.Date;
 * accompanied document) and then prints the size of the root and a verbose
 * listing of all the elements within the filesystem.
 *
+* <p>Although our design allows for having different owners for different
+* filesystem elements, for simplicy, we assume the owner of all filesystem
+* elements is initaly a hard coded user. To maintain the rule of generality
+* each filesystem element is provided a mutator method to specify a new
+* owner.
+*
 * @author     Pejman Ghorbanzade
 * @see        FileSystem
 */
 public final class FileSystemMain {
-  /**
-  * Although our design allows for having different owners for different
-  * filesystem elements, for simplicy, we assume the owner of all filesystem
-  * elements is initaly a hard coded user. To maintain the rule of generality
-  * each filesystem element is provided a mutator method to specify a new
-  * owner.
-  */
   public static final String user = "pejman";
 
   /**
