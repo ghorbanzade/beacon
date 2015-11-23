@@ -27,9 +27,9 @@ public final class StudentMain {
   */
   public static void main(String[] args) {
     ArrayList<Student> students = new ArrayList<Student>();
-    students.add(Student.createInStateStudent("John"));
-    students.add(Student.createOutStateStudent("Joe"));
-    students.add(Student.createIntlStudent("Jack"));
+    students.add(StudentFactory.createInStateStudent("John"));
+    students.add(StudentFactory.createOutStateStudent("Joe"));
+    students.add(StudentFactory.createIntlStudent("Jack"));
     for (Student student: students) {
       System.out.printf("Tuition for %s: %.2f%n", student.getName(), student.getTuition());
     }

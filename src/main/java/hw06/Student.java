@@ -31,39 +31,9 @@ public class Student {
   * @param name name of the student
   * @param status status of the student
   */
-  private Student(String name, StudentStatus status) {
+  protected Student(String name, StudentStatus status) {
     this.name = name;
     this.status = status;
-  }
-
-  /**
-  * This static factory method will return a new in-state student with specified
-  * name.
-  *
-  * @param name of the new in-state student.
-  */
-  public static Student createInStateStudent(String name) {
-    return new Student(name, StudentStatus.INSTATE);
-  }
-
-  /**
-  * This static factory method will return a new out-state student with
-  * specified name.
-  *
-  * @param name of the new out-state student.
-  */
-  public static Student createOutStateStudent(String name) {
-    return new Student(name, StudentStatus.OUTSTATE);
-  }
-
-  /**
-  * This static factory method will return a new international student
-  * with the specified name.
-  *
-  * @param name name of the new international student
-  */
-  public static Student createIntlStudent(String name) {
-    return new Student(name, StudentStatus.INTL);
   }
 
   /**
