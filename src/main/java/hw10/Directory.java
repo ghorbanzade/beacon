@@ -37,7 +37,7 @@ public final class Directory extends FSElement {
   * @param created the date at which the directory is created.
   */
   public Directory(String name, String owner, Date created) {
-    super(name, owner, created);
+    super(FSElementType.DIRECTORY, name, owner, created);
   }
 
   /**
@@ -73,25 +73,11 @@ public final class Directory extends FSElement {
   public int getSize() {
     int size = 0;
     for (FSElement element: this.getChildren()) {
-      size += element.getSize();
+      if (element instanceof Link == false) {
+        size += element.getSize();
+      }
     }
     return size;
-  }
-
-  /**
-  * This method find the full directory path resulting from a walk from root
-  * to the current node.
-  *
-  * @return the full path of current directory, starting from root
-  */
-  public String getFullPath() {
-    StringBuilder path = new StringBuilder(this.getName());
-    Directory dir = this;
-    while (dir.getParent() != null) {
-      dir = dir.getParent();
-      path.insert(0, dir.getName() + "/");
-    }
-    return path.toString();
   }
 
   /**

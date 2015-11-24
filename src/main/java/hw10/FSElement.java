@@ -16,17 +16,19 @@ import java.util.Locale;
 * This class is a super class of Directory and File and is defined as abstract.
 * A file system element can be added to the file system instance.
 *
-* @author     Pejman Ghorbanzade
-* @see        Directory
-* @see        File
+* @author Pejman Ghorbanzade
+* @see FSElementType
+* @see Directory
+* @see File
 */
 public abstract class FSElement {
   /**
-  * Each file system element has a name, an owner, date of creation
+  * Each file system element has a type, name, an owner, date of creation
   * and a date that the element is last modified. In addition, a file system
   * elemenet may have a parent which is set once the element is added to the
   * filesystem instance.
   */
+  private final FSElementType type;
   private String name;
   private String owner;
   private final Date created;
@@ -40,11 +42,13 @@ public abstract class FSElement {
   * filesystem element is added to the filesystem via appendChild() method of
   * a directory object.
   *
+  * @param type one of enum values defined in FSElementType class
   * @param name name of the file system element
   * @param owner name of the user who created the file system element
   * @param created the date at which the file system element is created
   */
-  public FSElement(String name, String owner, Date created) {
+  public FSElement(FSElementType type, String name, String owner, Date created) {
+    this.type = type;
     this.name = name;
     this.owner = owner;
     this.created = created;
@@ -177,6 +181,22 @@ public abstract class FSElement {
   }
 
   /**
+  * This method find the full directory path resulting from a walk from root
+  * to the current node.
+  *
+  * @return the full path of current file system element, starting from root
+  */
+  public String getFullPath() {
+    StringBuilder path = new StringBuilder(this.getName());
+    FSElement dir = this;
+    while (dir.getParent() != null) {
+      dir = dir.getParent();
+      path.insert(0, dir.getName() + "/");
+    }
+    return path.toString();
+  }
+
+  /**
   * This method defines how a file system element will be printed on the
   * console. This method is used to show all elements of a directory or the
   * file system instance.
@@ -186,12 +206,15 @@ public abstract class FSElement {
   */
   @Override
   public String toString() {
-    String typeIndicator = (this instanceof File) ? "file" : "directory";
     SimpleDateFormat df = new SimpleDateFormat("MMM dd kk:mm", Locale.US);
     StringBuilder entry = new StringBuilder();
     entry.append(String.format("%-10s %-8s %4d %12s %s",
-        typeIndicator, this.owner, this.getSize(),
+        this.type.getName(), this.owner, this.getSize(),
         df.format(this.lastModified), this.name));
+    if (this instanceof Link) {
+      String name = ((Link) this).getTarget().getFullPath();
+      entry.append(String.format(" --> %s", name));
+    }
     return entry.toString();
   }
 }

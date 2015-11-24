@@ -33,7 +33,7 @@ public final class File extends FSElement {
   * @param size size of the file
   */
   public File(String name, String owner, Date created, int size) {
-    super(name, owner, created);
+    super(FSElementType.FILE, name, owner, created);
     this.size = size;
   }
 
