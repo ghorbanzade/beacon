@@ -7,6 +7,7 @@
 
 package edu.umb.cs680.hw09;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Comparator;
 * @author       Pejman Ghorbanzade
 * @see          Car
 */
-public abstract class CarComparator<T extends Car> implements Comparator<T> {
+public abstract class CarComparator<T extends Car> implements Comparator<T>, Serializable {
   /**
   * Every comparator used to compare two cars has a name.
   */

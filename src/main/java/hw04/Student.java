@@ -27,6 +27,9 @@ public class Student {
   * The constructor will take name and status of a student. The tuition of
   * the student is initialized immediately according to the configuraiton
   * provided in student.properties file.
+  *
+  * @param name name of the student
+  * @param status status of the student
   */
   public Student(String name, StudentStatus status) {
     this.name = name;

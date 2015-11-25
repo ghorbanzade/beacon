@@ -51,8 +51,8 @@ public abstract class FSElement {
     this.type = type;
     this.name = name;
     this.owner = owner;
-    this.created = created;
-    this.lastModified = created;
+    this.created = (Date) created.clone();
+    this.lastModified = (Date) created.clone();
   }
 
   /**
@@ -94,7 +94,7 @@ public abstract class FSElement {
   * @return the date at which the file system element is created.
   */
   public Date getCreated() {
-    return this.created;
+    return (Date) this.created.clone();
   }
 
   /**
@@ -106,7 +106,7 @@ public abstract class FSElement {
   *         is updated.
   */
   public Date getLastModified() {
-    return this.lastModified;
+    return (Date) this.lastModified.clone();
   }
 
   /**

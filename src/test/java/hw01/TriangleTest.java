@@ -25,4 +25,18 @@ public class TriangleTest {
     );
     assertThat(triangle.getArea(), is(closeTo(2.0, 0.01)));
   }
+
+  @Test
+  public void testGetPoints() {
+    ArrayList<Point> array = new ArrayList<Point>();
+    array.add(new Point(-1, -1));
+    array.add(new Point(-1, 1));
+    array.add(new Point(1, -1));
+    Triangle triangle = new Triangle(
+        array.get(0),
+        array.get(1),
+        array.get(2)
+    );
+    assertThat(triangle.getPoints(), is(array));
+  }
 }
