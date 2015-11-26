@@ -31,7 +31,7 @@ public final class FileSystem {
   * at which initalization takes place.
   */
   private FileSystem() {
-    this.rootDir = new Directory("root", "root", new Date());
+    this.rootDir = new Directory("root", "root");
   }
 
   /**

@@ -45,26 +45,25 @@ public abstract class FSElement {
   * @param type one of enum values defined in FSElementType class
   * @param name name of the file system element
   * @param owner name of the user who created the file system element
-  * @param created the date at which the file system element is created
   */
-  public FSElement(FSElementType type, String name, String owner, Date created) {
+  public FSElement(FSElementType type, String name, String owner) {
     this.type = type;
     this.name = name;
     this.owner = owner;
-    this.created = (Date) created.clone();
-    this.lastModified = (Date) created.clone();
+    this.created = new Date();
+    this.lastModified = new Date();
   }
 
   /**
-  * A method which determines if the current file system element is a leaf
-  * or not. In case the element is a File, it is definitely a leaf. In case
-  * the element is a Directory, it is a leaf if it has no child.
+  * This method determines if the current file system element is a leaf
+  * or not. In case the element is a File or Link, it is definitely a leaf.
+  * In case the element is a Directory, it is a leaf if it has no child.
   *
-  * @return true if the object is an instance of file or if the object is a
-  *               directory with no children.
+  * @return true if the object is an instance of file or link
+  *         or if the object is a directory with no children.
   */
   public boolean isLeaf() {
-    return (this instanceof File || ((Directory) this).getChildren().isEmpty());
+    return (this instanceof File || this instanceof Link || ((Directory) this).getChildren().isEmpty());
   }
 
   /**

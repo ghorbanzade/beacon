@@ -29,11 +29,10 @@ public final class File extends FSElement {
   *
   * @param name name of the file
   * @param owner owner of the file
-  * @param created date at which the file is created
   * @param size size of the file
   */
-  public File(String name, String owner, Date created, int size) {
-    super(FSElementType.FILE, name, owner, created);
+  public File(String name, String owner, int size) {
+    super(FSElementType.FILE, name, owner);
     this.size = size;
   }
 

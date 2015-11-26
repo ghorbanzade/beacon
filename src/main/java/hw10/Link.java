@@ -29,11 +29,10 @@ public final class Link extends FSElement {
   *
   * @param name name of the link
   * @param owner owner of the link
-  * @param created date at which the link is created
   * @param target target of the link
   */
-  public Link(String name, String owner, Date created, FSElement target) {
-    super(FSElementType.LINK, name, owner, created);
+  public Link(String name, String owner, FSElement target) {
+    super(FSElementType.LINK, name, owner);
     this.target = target;
   }
 

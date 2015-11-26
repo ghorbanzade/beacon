@@ -34,10 +34,9 @@ public final class Directory extends FSElement {
   *
   * @param name name of the directory.
   * @param owner owner of the directory.
-  * @param created the date at which the directory is created.
   */
-  public Directory(String name, String owner, Date created) {
-    super(FSElementType.DIRECTORY, name, owner, created);
+  public Directory(String name, String owner) {
+    super(FSElementType.DIRECTORY, name, owner);
   }
 
   /**

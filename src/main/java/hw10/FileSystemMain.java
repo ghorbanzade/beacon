@@ -49,18 +49,18 @@ public final class FileSystemMain {
   * @return an initialized singleton filesystem
   */
   public static FileSystem initFileSystem() {
-    Directory dir1 = new Directory("pictures", user, new Date());
-    File file1 = new File("e", user, new Date(), 8);
+    Directory dir1 = new Directory("pictures", user);
+    File file1 = new File("e", user, 8);
     dir1.appendChild(file1);
-    dir1.appendChild(new File("f", user, new Date(), 28));
-    dir1.appendChild(new Link("y", user, new Date(), file1));
-    Directory dir2 = new Directory("system", user, new Date());
-    dir2.appendChild(new File("a", user, new Date(), 256));
-    dir2.appendChild(new File("b", user, new Date(), 12));
-    dir2.appendChild(new File("c", user, new Date(), 64));
-    Directory dir3 = new Directory("home", user, new Date());
-    dir3.appendChild(new File("d", user, new Date(), 56));
-    dir3.appendChild(new Link("x", user, new Date(), dir2));
+    dir1.appendChild(new File("f", user, 28));
+    dir1.appendChild(new Link("y", user, file1));
+    Directory dir2 = new Directory("system", user);
+    dir2.appendChild(new File("a", user, 256));
+    dir2.appendChild(new File("b", user, 12));
+    dir2.appendChild(new File("c", user, 64));
+    Directory dir3 = new Directory("home", user);
+    dir3.appendChild(new File("d", user, 56));
+    dir3.appendChild(new Link("x", user, dir2));
     dir3.appendChild(dir1);
     FileSystem fs = FileSystem.getFileSystem();
     fs.getRoot().appendChild(dir2);
