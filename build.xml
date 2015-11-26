@@ -110,7 +110,7 @@
 					<fileset dir="${jar.dir}" includes="*-test.jar"/>
 				</classfiles>
 				<sourcefiles>
-					<fileset dir="${src.dir}"/>
+					<fileset dir="${java.main.src.dir}"/>
 				</sourcefiles>
 			</structure>
 			<html destdir="${jacoco.report.dir}"/>

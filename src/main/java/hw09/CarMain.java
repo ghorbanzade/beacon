@@ -28,7 +28,7 @@ public final class CarMain {
   */
   public static void main(String[] args) {
     ArrayList<Car> cars = initializeCars();
-    ArrayList<CarComparator<Car>> comparators = initializeComparators();
+    ArrayList<CarComparator> comparators = initializeComparators();
     for (CarComparator comparator: comparators) {
       printSortedList(cars, comparator);
     }
@@ -56,8 +56,8 @@ public final class CarMain {
   *
   * @return a list of comperators to compare Car objects
   */
-  public static ArrayList<CarComparator<Car>> initializeComparators() {
-    ArrayList<CarComparator<Car>> comparators = new ArrayList<CarComparator<Car>>();
+  public static ArrayList<CarComparator> initializeComparators() {
+    ArrayList<CarComparator> comparators = new ArrayList<CarComparator>();
     comparators.add(new PriceComparator());
     comparators.add(new MileageComparator());
     comparators.add(new YearComparator());

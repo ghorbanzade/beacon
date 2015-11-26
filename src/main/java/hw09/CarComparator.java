@@ -19,7 +19,7 @@ import java.util.Comparator;
 * @author       Pejman Ghorbanzade
 * @see          Car
 */
-public abstract class CarComparator<T extends Car> implements Comparator<T>, Serializable {
+public abstract class CarComparator implements Comparator<Car>, Serializable {
   /**
   * Every comparator used to compare two cars has a name.
   */
