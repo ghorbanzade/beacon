@@ -3,9 +3,6 @@
 
 	<property file="build.properties"/>
 
-	<property name="main-class-list" value="hw01.PolygonMain"/>
-	<property name="test-suit-list" value="hw01.RectangleTest,hw01.TriangleTest"/>
-
 	<property name="ivy.install.version" value="2.4.0"/>
 	<condition property="ivy.home" value="${env.IVY_HOME}">
 		<isset property="env.IVY_HOME"/>
@@ -32,10 +29,6 @@
 		<ivy:cachepath pathid="test.path" conf="test"/>
 	</target>
 
-	<path id="classpath.main">
-		<pathelement location="${jar.dir}/${ant.project.name}.jar"/>
-	</path>
-
 	<path id="classpath.test">
 		<pathelement location="${jar.dir}/${ant.project.name}-test.jar"/>
 		<pathelement location="${antlib.dir}/junit-4.12.jar"/>
@@ -56,26 +49,18 @@
 
 	<target name="compile" depends="taskdefs">
 		<mkdir dir="${class.dir}"/>
-		<javac srcdir="${java.main.src.dir}" destdir="${class.dir}" debug="on" debuglevel="lines,vars,source" includeantruntime="false" classpathref="classpath.main"/>
+		<javac srcdir="${java.main.src.dir}" destdir="${class.dir}" debug="on" debuglevel="lines,vars,source" includeantruntime="false"/>
 		<javac srcdir="${java.test.src.dir}" destdir="${class.dir}" debug="on" debuglevel="lines,vars,source" includeantruntime="false" classpathref="classpath.test"/>
 	</target>
 
 	<target name="jar" depends="compile">
 		<mkdir dir="${jar.dir}"/>
-		<ant:for list="${main-class-list}" param="main-class" trim="yes">
+		<ant:for list="${package-list}" param="package" trim="yes">
 			<sequential>
-				<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${class.dir}" excludes="**/*Test.class">
-					<manifest>
-						<attribute name="Main-Class" value="${organization}.@{main-class}"/>
-					</manifest>
-				</jar>
-				<jar destfile="${jar.dir}/${ant.project.name}-test.jar" basedir="${class.dir}">
-					<manifest>
-						<attribute name="Main-Class" value="${organization}.@{main-class}"/>
-					</manifest>
-				</jar>
+				<jar destfile="${jar.dir}/${ant.project.name}-@{package}.jar" basedir="${class.dir}" includes="${organization-path}/@{package}/*.class" excludes="**/*Test.class"/>
 			</sequential>
 		</ant:for>
+		<jar destfile="${jar.dir}/${ant.project.name}-test.jar" basedir="${class.dir}" excludes="**/*Main.class"/>
 	</target>
 
 	<target name="javadoc" depends="jar">
@@ -91,11 +76,6 @@
 	</target>
 
 	<target name="run" depends="jar">
-		<ant:for list="${main-class-list}" param="main-class" trim="yes">
-			<sequential>
-				<java fork="true" classname="${organization}.@{main-class}" classpathref="classpath.main"/>
-			</sequential>
-		</ant:for>
 	</target>
 
 	<target name="junit" depends="jar">
@@ -104,14 +84,14 @@
 		<ant:for list="${test-suit-list}" param="test-suit" trim="yes">
 			<sequential>
 			<jacoco:coverage destfile="${jacoco.report.file}">
-				<junit fork="true" printsummary="yes" haltonfailure="no" haltonerror="yes">
+				<junit fork="true" printsummary="yes" haltonfailure="yes" haltonerror="yes">
 					<test name="${organization}.@{test-suit}" todir="${junit.report.dir}"/>
 					<classpath>
 						<path refid="classpath.test"/>
 					</classpath>
 					<formatter type="xml"/>
 					<batchtest todir="${junit.report.dir}">
-						<fileset dir="${test.src.dir}" includes="*Test.java"/>
+						<fileset dir="${java.test.src.dir}" includes="*Test.java"/>
 					</batchtest>
 				</junit>
 			</jacoco:coverage>
@@ -127,7 +107,7 @@
 			</executiondata>
 			<structure name="${ant.project.name}">
 				<classfiles>
-					<fileset dir="${class.dir}"/>
+					<fileset dir="${jar.dir}" includes="*-test.jar"/>
 				</classfiles>
 				<sourcefiles>
 					<fileset dir="${src.dir}"/>
