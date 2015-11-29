@@ -28,7 +28,7 @@ public class CarTest {
   public void checkStringRepresentationOfCar() {
     Car car = new Car(10, 20, 30);
     assertThat(car.toString(), stringContainsInOrder(
-      Arrays.asList("Price", "10", "Mileage", "20", "Year", "30")
+        Arrays.asList("Price", "10", "Mileage", "20", "Year", "30")
     ));
   }
 

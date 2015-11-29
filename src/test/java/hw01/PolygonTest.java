@@ -1,20 +1,20 @@
 package edu.umb.cs680.hw01;
 
-import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.closeTo;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
 import java.awt.Point;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
 * This class unit tests getArea() and getPoints() methods for Rectangle class.
 *
 * @author   Pejman Ghorbanzade
-* @see      Rectangle
+* @see      Polygon
 */
 public class PolygonTest {
   @Test

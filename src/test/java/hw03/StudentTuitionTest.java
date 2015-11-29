@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 /**
-*
+* Unit tests for student tuition question.
 *
 * @author Pejman Ghorbanzade
 */

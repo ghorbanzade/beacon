@@ -2,18 +2,23 @@ package edu.umb.cs680.hw10;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
-* Unit test suit for file system question.
+* Unit tests for file system question.
 *
 * @author Pejman Ghorbanzade
 */
@@ -30,6 +35,25 @@ public class FileSystemTest {
     FileSystem fs = FileSystem.getFileSystem();
     assertThat(fs.getRoot(), is(not(nullValue())));
     assertThat(fs.getRoot(), is(instanceOf(Directory.class)));
+  }
+
+  @Test
+  public void showAllElementsOfFileSystem() {
+    try {
+      ByteArrayOutputStream sink1 = new ByteArrayOutputStream();
+      FileSystem fs = FileSystem.getFileSystem();
+      System.setOut(new PrintStream(sink1, true, "UTF-8"));
+      fs.showAllElements();
+      String result1 = new String(sink1.toByteArray(), "UTF-8");
+      ByteArrayOutputStream sink2 = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(sink2, true, "UTF-8"));
+      fs.getRoot().showAllElements();
+      String result2 = new String(sink2.toByteArray(), "UTF-8");
+      assertThat(result1, is(result2));
+      System.setOut(null);
+    } catch (UnsupportedEncodingException e) {
+      fail(e.getMessage());
+    }
   }
 
   @Test
@@ -237,4 +261,159 @@ public class FileSystemTest {
     assertThat(type.getName(), is("file"));
   }
 
+  @Test
+  public void valuesOfFSElementType() {
+    assertThat(FSElementType.valueOf("FILE"), is(FSElementType.FILE));
+  }
+
+  @Test
+  public void changeOwnerOfFile() {
+    File file = new File("file", "owner", 100);
+    file.setOwner("newOwner");
+    assertThat(file.getOwner(), is("newOwner"));
+  }
+
+  @Test
+  public void changeOwnerOfDirectory() {
+    Directory dir = new Directory("directory", "owner");
+    dir.setOwner("newOwner");
+    assertThat(dir.getOwner(), is("newOwner"));
+  }
+
+  @Test
+  public void changeOwnerOfLink() {
+    File file = new File("file", "owner", 100);
+    Link link = new Link("link", "owner", file);
+    link.setOwner("newOwner");
+    assertThat(link.getOwner(), is("newOwner"));
+  }
+
+  @Test
+  public void changeNameOfFile() {
+    File file = new File("file", "owner", 100);
+    file.setName("newName");
+    assertThat(file.getName(), is("newName"));
+  }
+
+  @Test
+  public void changeNameOfDirectory() {
+    Directory dir = new Directory("directory", "owner");
+    dir.setName("newName");
+    assertThat(dir.getName(), is("newName"));
+  }
+
+  @Test
+  public void changeNameOfLink() {
+    File file = new File("file", "owner", 100);
+    Link link = new Link("link", "owner", file);
+    link.setName("newName");
+    assertThat(link.getName(), is("newName"));
+  }
+
+  @Test
+  public void fullPathOfIsolatedFile() {
+    File file = new File("file", "owner", 100);
+    assertThat(file.getFullPath(), is("file"));
+  }
+
+  @Test
+  public void fullPathOfIsolatedDirectory() {
+    Directory dir = new Directory("directory", "owner");
+    assertThat(dir.getFullPath(), is("directory"));
+  }
+
+  @Test
+  public void fullPathOfDirectory() {
+    Directory dir1 = new Directory("directory1", "owner");
+    Directory dir2 = new Directory("directory2", "owner");
+    File file = new File("file", "owner", 100);
+    Link link = new Link("link", "owner", file);
+    dir1.appendChild(file);
+    dir1.appendChild(dir2);
+    dir2.appendChild(link);
+    assertThat(dir1.getFullPath(), is("directory1"));
+    assertThat(file.getFullPath(), is("directory1/file"));
+    assertThat(dir2.getFullPath(), is("directory1/directory2"));
+    assertThat(link.getFullPath(), is("directory1/directory2/link"));
+  }
+
+  @Test
+  public void lastModifiedFile() {
+    FSElement file = new File("file", "owner", 100);
+    Date date = new Date();
+    long diff = Math.abs(file.getLastModified().getTime() - date.getTime());
+    assertThat(diff, is(lessThan(1000L)));
+  }
+
+  @Test
+  public void lastModifiedDirectory() {
+    FSElement directory = new Directory("directory", "owner");
+    Date date = new Date();
+    long diff = Math.abs(directory.getLastModified().getTime() - date.getTime());
+    assertThat(diff, is(lessThan(1000L)));
+  }
+
+  @Test
+  public void lastModifiedLink() {
+    FSElement file = new File("file", "owner", 100);
+    FSElement link = new Link("link", "owner", file);
+    Date date = new Date();
+    long diff = Math.abs(link.getLastModified().getTime() - date.getTime());
+    assertThat(diff, is(lessThan(1000L)));
+  }
+
+  @Test
+  public void displayInfoForFile() {
+    FSElement file = new File("file", "owner", 100);
+    assertThat(file.toString(), containsString(FSElementType.FILE.getName()));
+    assertThat(file.toString(), containsString(file.getOwner()));
+    assertThat(file.toString(), containsString(Integer.toString(file.getSize())));
+    assertThat(file.toString(), containsString(file.getName()));
+  }
+
+  @Test
+  public void displayInfoForLink() {
+    File file = new File("file", "owner", 100);
+    Link link = new Link("link", "owner", file);
+    assertThat(link.toString(), containsString("-->"));
+    assertThat(link.toString(), containsString(link.getTarget().getFullPath()));
+  }
+
+  @Test
+  public void showAllElementsOfEmptyDirectory() {
+    try {
+      ByteArrayOutputStream sink = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(sink, true, "UTF-8"));
+      Directory dir = new Directory("directory", "owner");
+      dir.showAllElements();
+      String result = new String(sink.toByteArray(), "UTF-8");
+      assertThat(result, containsString(dir.getFullPath()));
+      assertThat(result, containsString(Integer.toString(dir.getSize())));
+      System.setOut(null);
+    } catch (UnsupportedEncodingException e) {
+      fail(e.getMessage());
+    }
+  }
+
+  @Test
+  public void showAllElementsOfNonEmptyDirectory() {
+    try {
+      ByteArrayOutputStream sink = new ByteArrayOutputStream();
+      System.setOut(new PrintStream(sink, true, "UTF-8"));
+      Directory dir1 = new Directory("directory1", "owner1");
+      Directory dir2 = new Directory("directory2", "owner2");
+      File file = new File("file", "owner3", 100);
+      dir2.appendChild(file);
+      dir1.appendChild(dir2);
+      dir1.showAllElements();
+      String result = new String(sink.toByteArray(), "UTF-8");
+      assertThat(result, containsString(dir1.getFullPath()));
+      assertThat(result, containsString(Integer.toString(dir1.getSize())));
+      assertThat(result, containsString(dir2.getName()));
+      assertThat(result, containsString(file.getName()));
+      System.setOut(null);
+    } catch (UnsupportedEncodingException e) {
+      fail(e.getMessage());
+    }
+  }
 }
