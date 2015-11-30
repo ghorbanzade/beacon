@@ -31,7 +31,7 @@ public final class StudentConfig {
   * object will be initialized.
   */
   private StudentConfig() {
-    try (InputStream fis = StudentConfig.class.getResourceAsStream("student.properties")) {
+    try (InputStream fis = StudentConfig.class.getResourceAsStream("/student.properties")) {
       this.config = new Properties();
       this.config.load(fis);
       fis.close();
