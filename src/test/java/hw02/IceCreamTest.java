@@ -200,7 +200,6 @@ public class IceCreamTest {
   @Test
   public void upperLayerOfScoop() {
     try {
-      Container cone = new Cone(Size.SMALL);
       Scoop scoop = new Scoop(Flavor.VANILLA);
       assertThat(scoop.getUpperLayer(), is(nullValue()));
       scoop.addScoop(Flavor.CHOCOLATE);
@@ -214,7 +213,6 @@ public class IceCreamTest {
   @Test
   public void layerNumberOfScoop() {
     try {
-      Container cone = new Cone(Size.SMALL);
       Scoop scoop = new Scoop(Flavor.VANILLA);
       assertThat(scoop.getLayerNum(), is(1));
       scoop.addScoop(Flavor.CHOCOLATE);
