@@ -9,6 +9,8 @@ package edu.umb.cs680.hw12;
 
 import java.lang.NumberFormatException;
 import java.lang.UnsupportedOperationException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -41,7 +43,7 @@ public final class Cli {
     this.history = new History();
     String defaultDirStr = config.get("cli.homedir");
     Directory defaultDir = (Directory) FileSystem.getInstance()
-        .getElementByFullPath(defaultDirStr);
+        .getElementByFullPath(this.getFullPath(defaultDirStr));
     this.setCurrentDirectory(defaultDir);
     this.commands.put("exit", new ExitCommand());
     this.commands.put("ls", new ListCommand());
@@ -94,8 +96,16 @@ public final class Cli {
   * @param path
   * @return
   */
-  public String getFullPath(String path) {
-    return "/";
+  public ArrayList<String> getFullPath(String path) {
+    String newPath = (path.charAt(0) == '/') ? path.substring(1) : path;
+    ArrayList<String> names =
+        new ArrayList<String>(Arrays.asList(newPath.split("/")));
+    if (path.charAt(0) != '/') {
+      names.addAll(0, new ArrayList<String>(Arrays.asList(
+          this.currentDirectory.getFullPath().substring(1).split("/")
+      )));
+    }
+    return names;
   }
 
   /**

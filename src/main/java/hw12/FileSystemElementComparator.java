@@ -24,6 +24,7 @@ public abstract class FileSystemElementComparator
   *
   * @param element1 the file system element we are comparing against
   * @param element2 the file system element we are comparing with
+  * @return
   */
   @Override
   public abstract int compare(FileSystemElement element1,

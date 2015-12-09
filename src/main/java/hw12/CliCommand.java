@@ -26,6 +26,8 @@ public final class CliCommand implements Command {
         throws UnsupportedOperationException {
     if (instruction.getArguments().size() == 0) {
       System.out.printf("%s%n", cli.getName());
+    } else {
+      throw new UnsupportedOperationException();
     }
   }
 }

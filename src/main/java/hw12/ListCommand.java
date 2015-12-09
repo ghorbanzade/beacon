@@ -40,8 +40,7 @@ public final class ListCommand implements Command {
     }
     else {
       String path = instruction.getArguments().get(0);
-      String fullPath = cli.getFullPath(path);
-      target = FileSystem.getInstance().getElementByFullPath(fullPath);
+      target = FileSystem.getInstance().getElementByFullPath(cli.getFullPath(path));
     }
     return target;
   }

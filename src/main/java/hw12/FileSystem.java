@@ -7,14 +7,19 @@
 
 package edu.umb.cs680.hw12;
 
+import java.util.ArrayList;
+
 /**
 *
 *
 * @author Pejman Ghorbanzade
 */
 public final class FileSystem {
-  private static final String INITIAL_USER = "root";
+  /**
+  *
+  */
   private static FileSystem instance = null;
+  private final String INITIAL_USER = "root";
   private Directory rootDir = null;
 
   /**
@@ -43,7 +48,8 @@ public final class FileSystem {
   *
   *
   */
-  public FileSystemElement getElementByFullPath(String fullPath) {
+  public FileSystemElement getElementByFullPath(ArrayList<String> fullPath) {
+    System.out.println(fullPath);
     return this.rootDir; // TODO
   }
 

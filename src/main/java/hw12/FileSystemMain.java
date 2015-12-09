@@ -24,20 +24,17 @@ public final class FileSystemMain {
   * @param args command line arguments given to this program.
   */
   public static void main(String[] args) {
-    FileSystem fs = FileSystem.getInstance();
-    ArrayList<Cli> cliList = new ArrayList<Cli>();
-    cliList.add(new Cli(CliConfig.getInstance().get("cli.name")));
     try {
       Scanner input = new Scanner(System.in);
+      Cli cli = new Cli(CliConfig.getInstance().get("cli.name"));
       while (true) {
-        Cli cli = cliList.get(0);
         System.out.printf(cli.getPrompt());
         String strCommand = input.nextLine();
         if (strCommand.isEmpty()) {
           continue;
         }
-        Instruction instruction = new Instruction(strCommand);
         try {
+          Instruction instruction = new Instruction(strCommand);
           cli.record(instruction);
           Command command = cli.parse(instruction.getName());
           cli.execute(command, instruction);

@@ -27,8 +27,8 @@ public final class ChangeDirectoryCommand implements Command {
     String path = instruction.getArguments().size() == 0
         ? CliConfig.getInstance().get("cli.homedir")
         : instruction.getArguments().get(0);
-    String fullPath = (path.charAt(0) == '/') ? path : cli.getFullPath(path);
-    FileSystemElement element = FileSystem.getInstance().getElementByFullPath(fullPath);
+    FileSystemElement element =
+        FileSystem.getInstance().getElementByFullPath(cli.getFullPath(path));
     if (element instanceof Directory) {
       cli.setCurrentDirectory((Directory) element);
     } else {
