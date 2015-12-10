@@ -8,6 +8,7 @@
 package edu.umb.cs680.hw12;
 
 import java.util.ArrayList;
+import java.lang.UnsupportedOperationException;
 
 /**
 *
@@ -46,11 +47,26 @@ public final class FileSystem {
   /**
   *
   *
-  *
+  * @param path
+  * @return
   */
-  public FileSystemElement getElementByFullPath(ArrayList<String> fullPath) {
-    System.out.println(fullPath);
-    return this.rootDir; // TODO
+  public FileSystemElement getElementByFullPath(ArrayList<String> path) throws UnsupportedOperationException {
+    System.out.println(path);
+    Directory directory = this.rootDir;
+    FileSystemElement target = this.rootDir;
+    while (path.size() > 1) {
+      FileSystemElement element = directory.getChild(path.remove(0));
+      if (element instanceof Directory) {
+        directory = (Directory) element;
+      } else {
+        String message = String.format("%s not a directory", element.getName());
+        throw new UnsupportedOperationException(message);
+      }
+    }
+    if (path.size() == 1) {
+      target = directory.getChild(path.remove(0));
+    }
+    return target;
   }
 
   /**

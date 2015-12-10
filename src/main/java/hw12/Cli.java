@@ -105,6 +105,16 @@ public final class Cli {
           this.currentDirectory.getFullPath().substring(1).split("/")
       )));
     }
+    while (names.contains(".")) {
+      names.remove(names.indexOf("."));
+    }
+    while (names.contains("..")) {
+      int index = names.indexOf("..");
+      names.remove(index);
+      if (index > 0) {
+        names.remove(index - 1);
+      }
+    }
     return names;
   }
 
@@ -118,7 +128,7 @@ public final class Cli {
     String homedir = CliConfig.getInstance().get("cli.homedir");
     String path = this.currentDirectory.getFullPath();
     if (path.startsWith(homedir)) {
-      path = path.substring(homedir.length());
+      path = "~" + path.substring(homedir.length());
     }
     sb.append(String.format("%s@%s:%s$ ", this.user, this.group, path));
     return sb.toString();
