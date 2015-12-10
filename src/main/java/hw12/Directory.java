@@ -84,14 +84,27 @@ public final class Directory extends FileSystemElement {
   * @param name
   * @return
   */
-  public FileSystemElement getChild(String name)
-        throws UnsupportedOperationException {
+  public boolean contains(String name) {
+    for (FileSystemElement child: this.children) {
+      if (child.getName().equals(name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+  *
+  *
+  * @param name
+  * @return
+  */
+  public FileSystemElement getChild(String name) {
     for (FileSystemElement child: this.children) {
       if (child.getName().equals(name)) {
         return child;
       }
     }
-    String message = String.format("element %s not found", name);
-    throw new UnsupportedOperationException(message);
+    return null;
   }
 }

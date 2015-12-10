@@ -51,12 +51,15 @@ public final class FileSystem {
   * @return
   */
   public FileSystemElement getElementByFullPath(ArrayList<String> path) throws UnsupportedOperationException {
-    System.out.println(path);
     Directory directory = this.rootDir;
     FileSystemElement target = this.rootDir;
     while (path.size() > 1) {
-      FileSystemElement element = directory.getChild(path.remove(0));
-      if (element instanceof Directory) {
+      String elementName = path.remove(0);
+      FileSystemElement element = directory.getChild(elementName);
+      if (element == null) {
+        String message = String.format("element %s not found", elementName);
+        throw new UnsupportedOperationException(message);
+      } else if (element instanceof Directory) {
         directory = (Directory) element;
       } else {
         String message = String.format("%s not a directory", element.getName());
@@ -64,7 +67,14 @@ public final class FileSystem {
       }
     }
     if (path.size() == 1) {
-      target = directory.getChild(path.remove(0));
+      String elementName = path.remove(0);
+      FileSystemElement element = directory.getChild(elementName);
+      if (element == null) {
+        String message = String.format("%s not exists", elementName);
+        throw new UnsupportedOperationException(message);
+      } else {
+        target = element;
+      }
     }
     return target;
   }

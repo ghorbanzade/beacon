@@ -23,7 +23,14 @@ public final class ListCommand implements Command {
   */
   public void execute(Cli cli, Instruction instruction) {
     FileSystemElement target = this.getTarget(cli, instruction);
-    System.out.printf("%s%n", target);
+    ArrayList<FileSystemElement> tray = new ArrayList<FileSystemElement>();
+    if (target instanceof Directory) {
+      Directory parent = (Directory) target;
+      tray.addAll(parent.getChildren());
+    } else {
+      tray.add(target);
+    }
+    this.showResult(tray, instruction.getOptions());
   }
 
   /**
@@ -43,5 +50,39 @@ public final class ListCommand implements Command {
       target = FileSystem.getInstance().getElementByFullPath(cli.getFullPath(path));
     }
     return target;
+  }
+
+  /**
+  *
+  *
+  * @param elements
+  * @param options
+  */
+  private void showResult(ArrayList<FileSystemElement> elements,
+                          ArrayList<String> options) {
+    if (elements.isEmpty() == false) {
+      if (options.contains("l")) {
+        int totalSize = 0;
+        for (FileSystemElement element: elements) {
+          totalSize += element.getSize();
+        }
+        System.out.printf("total %d%n", totalSize);
+        for (FileSystemElement element: elements) {
+          System.out.printf("%s%n", element);
+        }
+      } else {
+        for (FileSystemElement element: elements) {
+          System.out.printf("%s%n", element.getName());
+        }
+      }
+      if (options.contains("R")) {
+        for (FileSystemElement element: elements) {
+          if (element instanceof Directory) {
+            Directory directory = (Directory) element;
+            showResult(directory.getChildren(), options);
+          }
+        }
+      }
+    }
   }
 }

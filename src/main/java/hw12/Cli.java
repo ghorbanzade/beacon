@@ -51,6 +51,7 @@ public final class Cli {
     this.commands.put("pwd", new CurrentDirectoryCommand());
     this.commands.put("cli", new CliCommand());
     this.commands.put("history", new HistoryCommand());
+    this.commands.put("mkdir", new MakeDirectoryCommand());
   }
 
   /**
@@ -97,6 +98,7 @@ public final class Cli {
   * @return
   */
   public ArrayList<String> getFullPath(String path) {
+    // this code is buggy for rootdir and should be fixed
     String newPath = (path.charAt(0) == '/') ? path.substring(1) : path;
     ArrayList<String> names =
         new ArrayList<String>(Arrays.asList(newPath.split("/")));
@@ -105,6 +107,7 @@ public final class Cli {
           this.currentDirectory.getFullPath().substring(1).split("/")
       )));
     }
+    // the rest is good
     while (names.contains(".")) {
       names.remove(names.indexOf("."));
     }

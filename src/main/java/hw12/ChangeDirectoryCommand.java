@@ -24,7 +24,7 @@ public final class ChangeDirectoryCommand implements Command {
   */
   public void execute(Cli cli, Instruction instruction)
         throws UnsupportedOperationException {
-    String path = instruction.getArguments().size() == 0
+    String path = instruction.getArguments().isEmpty()
         ? CliConfig.getInstance().get("cli.homedir")
         : instruction.getArguments().get(0);
     FileSystemElement element =

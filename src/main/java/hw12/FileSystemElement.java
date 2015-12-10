@@ -189,15 +189,13 @@ public abstract class FileSystemElement {
   * @return the full path of current file system element, starting from root
   */
   public String getFullPath() {
-    String path = this.getName();
+    StringBuilder sb = new StringBuilder();
     FileSystemElement dir = this;
     while (dir.getParent() != null) {
+      sb.insert(0, "/" + dir.getName());
       dir = dir.getParent();
-      if (dir.getParent() != null) {
-        path = dir.getName() + "/" + path;
-      }
     }
-    return "/" + path;
+    return (sb.length() == 0) ? "/" : sb.toString();
   }
 
   /**
