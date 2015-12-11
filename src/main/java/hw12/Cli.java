@@ -25,9 +25,11 @@ public final class Cli {
   private String user;
   private String group;
   private History history;
+  private String comparator;
   private Directory currentDirectory;
-  private FileSystemElementComparator comparator;
   private HashMap<String, Command> commands = new HashMap<String, Command>();
+  private HashMap<String, FileSystemElementComparator> comparators =
+        new HashMap<String, FileSystemElementComparator>();
 
   /**
   *
@@ -52,6 +54,11 @@ public final class Cli {
     this.commands.put("cli", new CliCommand());
     this.commands.put("history", new HistoryCommand());
     this.commands.put("mkdir", new MakeDirectoryCommand());
+    this.comparators.put("name", new NameComparator());
+    this.comparators.put("time", new TimeComparator());
+    this.comparators.put("size", new SizeComparator());
+    this.comparators.put("default", new DefaultComparator());
+    this.comparator = config.get("cli.list.sort");
   }
 
   /**
@@ -135,6 +142,17 @@ public final class Cli {
     }
     sb.append(String.format("%s@%s:%s$ ", this.user, this.group, path));
     return sb.toString();
+  }
+
+  /**
+  *
+  *
+  * @return
+  */
+  public FileSystemElementComparator getSortComparator() {
+    return this.comparators.containsKey(this.comparator)
+          ? this.comparators.get(this.comparator)
+          : this.comparators.get("default");
   }
 
   /**

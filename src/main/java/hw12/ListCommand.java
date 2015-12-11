@@ -8,6 +8,7 @@
 package edu.umb.cs680.hw12;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
 *
@@ -30,6 +31,7 @@ public final class ListCommand implements Command {
     } else {
       tray.add(target);
     }
+    Collections.sort(tray, cli.getSortComparator());
     this.showResult(tray, instruction.getOptions());
   }
 

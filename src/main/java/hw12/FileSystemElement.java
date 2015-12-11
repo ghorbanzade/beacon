@@ -160,6 +160,15 @@ public abstract class FileSystemElement {
   }
 
   /**
+  *
+  *
+  * @return
+  */
+  public FileSystemElementType getType() {
+    return this.type;
+  }
+
+  /**
   * This method recursively updates the last modified date for current file
   * system element and all of its ancestors.
   */
