@@ -47,13 +47,14 @@ public final class Cli {
     Directory defaultDir = (Directory) FileSystem.getInstance()
         .getElementByFullPath(this.getFullPath(defaultDirStr));
     this.setCurrentDirectory(defaultDir);
-    this.commands.put("exit", new ExitCommand());
     this.commands.put("ls", new ListCommand());
-    this.commands.put("cd", new ChangeDirectoryCommand());
-    this.commands.put("pwd", new CurrentDirectoryCommand());
     this.commands.put("cli", new CliCommand());
+    this.commands.put("set", new SetCommand());
+    this.commands.put("exit", new ExitCommand());
     this.commands.put("history", new HistoryCommand());
+    this.commands.put("cd", new ChangeDirectoryCommand());
     this.commands.put("mkdir", new MakeDirectoryCommand());
+    this.commands.put("pwd", new CurrentDirectoryCommand());
     this.comparators.put("name", new NameComparator());
     this.comparators.put("time", new TimeComparator());
     this.comparators.put("size", new SizeComparator());
