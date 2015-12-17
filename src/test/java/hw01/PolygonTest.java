@@ -2,6 +2,7 @@ package edu.umb.cs680.hw01;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
@@ -52,7 +53,7 @@ public class PolygonTest {
         array.get(3)
     );
     assertThat(rectangle.getPoints().size(), is(4));
-    assertThat(rectangle.getPoints(), is(array));
+    assertThat(rectangle.getPoints().toArray(), is(equalTo(array.toArray())));
   }
 
   @Test
@@ -67,7 +68,6 @@ public class PolygonTest {
         array.get(2)
     );
     assertThat(triangle.getPoints().size(), is(3));
-    assertThat(triangle.getPoints(), is(array));
+    assertThat(triangle.getPoints().toArray(), is(equalTo(array.toArray())));
   }
-
 }

@@ -237,14 +237,16 @@ public class FileSystemTest {
   public void targetOfLinkPointingToFile() {
     File file = new File("file", "owner", 100);
     Link link = new Link("link", "owner", file);
-    assertThat(link.getTarget(), is(file));
+    assertThat(link.getTarget(), is(instanceOf(File.class)));
+    assertThat((File) link.getTarget(), is(file));
   }
 
   @Test
   public void targetOfLinkPointingToDirectory() {
     File file = new File("file", "owner", 100);
     Link link = new Link("link", "owner", file);
-    assertThat(link.getTarget(), is(file));
+    assertThat(link.getTarget(), is(instanceOf(File.class)));
+    assertThat((File) link.getTarget(), is(file));
   }
 
   @Test
@@ -252,7 +254,8 @@ public class FileSystemTest {
     File file = new File("file", "owner", 100);
     Link link1 = new Link("link1", "owner", file);
     Link link2 = new Link("link2", "owner", link1);
-    assertThat(link2.getTarget(), is(file));
+    assertThat(link2.getTarget(), is(instanceOf(File.class)));
+    assertThat((File) link2.getTarget(), is(file));
   }
 
   @Test

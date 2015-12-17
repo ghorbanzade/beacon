@@ -244,14 +244,16 @@ public class FileSystemTest {
   public void targetOfLinkPointingToFile() {
     File file = new File("file", "owner", 100);
     Link link = new Link("link", "owner", file);
-    assertThat(link.getTarget(), is(file));
+    assertThat(link.getTarget(), is(instanceOf(File.class)));
+    assertThat((File) link.getTarget(), is(file));
   }
 
   @Test
   public void targetOfLinkPointingToDirectory() {
     File file = new File("file", "owner", 100);
     Link link = new Link("link", "owner", file);
-    assertThat(link.getTarget(), is(file));
+    assertThat(link.getTarget(), is(instanceOf(File.class)));
+    assertThat((File) link.getTarget(), is(file));
   }
 
   @Test
@@ -259,7 +261,8 @@ public class FileSystemTest {
     File file = new File("file", "owner", 100);
     Link link1 = new Link("link1", "owner", file);
     Link link2 = new Link("link2", "owner", link1);
-    assertThat(link2.getTarget(), is(file));
+    assertThat(link2.getTarget(), is(instanceOf(File.class)));
+    assertThat((File) link2.getTarget(), is(file));
   }
 
   @Test
@@ -492,8 +495,9 @@ public class FileSystemTest {
     NameSearchVisitor visitor = new NameSearchVisitor("il");
     File file = new File("file", "owner", 10);
     file.accept(visitor);
-    assertThat(visitor.getResult().get(0), is(file));
     assertThat(visitor.getResult().size(), is(1));
+    assertThat(visitor.getResult().get(0), is(instanceOf(File.class)));
+    assertThat((File) visitor.getResult().get(0), is(file));
   }
 
   @Test
@@ -512,8 +516,10 @@ public class FileSystemTest {
     dir.appendChild(file);
     dir.accept(visitor);
     assertThat(visitor.getResult().size(), is(2));
-    assertThat(visitor.getResult().get(0), is(dir));
-    assertThat(visitor.getResult().get(1), is(file));
+    assertThat(visitor.getResult().get(0), is(instanceOf(Directory.class)));
+    assertThat((Directory) visitor.getResult().get(0), is(dir));
+    assertThat(visitor.getResult().get(1), is(instanceOf(File.class)));
+    assertThat((File) visitor.getResult().get(1), is(file));
   }
 
   @Test
@@ -526,7 +532,7 @@ public class FileSystemTest {
     dir.appendChild(link);
     dir.accept(visitor);
     assertThat(visitor.getResult().size(), is(1));
-    assertThat(visitor.getResult().get(0), is(link));
+    assertThat((Link) visitor.getResult().get(0), is(link));
   }
 
   @Test
