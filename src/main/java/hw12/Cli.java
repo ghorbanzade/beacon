@@ -152,9 +152,7 @@ public final class Cli {
   * @return
   */
   public FileSystemElementComparator getSortMethod() {
-    return this.sortMethods.containsKey(this.sortMethod)
-          ? this.sortMethods.get(this.sortMethod)
-          : this.sortMethods.get("default");
+    return this.sortMethod;
   }
 
   /**

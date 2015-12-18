@@ -30,7 +30,6 @@ public final class FileSystemMain {
       while (true) {
         try {
           Instruction instruction = getUserInput(input, cli);
-          cli.record(instruction);
           Command command = cli.parse(instruction.getName());
           cli.execute(command, instruction);
         } catch (InvalidCommandException e) {
@@ -46,15 +45,26 @@ public final class FileSystemMain {
     }
   }
 
+  /**
+  * This method allows user to give a one-liner input to the
+  * program. The method returns an instruction object which
+  * is not guaranteed to be valid. This instruction is recorded
+  * in cli and added to the history of the cli.
+  *
+  * @param input scanner object to use for getting input
+  * @param cli active cli object that user is interacting with
+  * @return a user instruction given to the program
+  */
   private static Instruction getUserInput(Scanner input, Cli cli) {
     while (true) {
       System.out.printf(cli.getPrompt());
       String strCommand = input.nextLine();
       if (strCommand.isEmpty() == false) {
-        break;
+        Instruction instruction = new Instruction(strCommand);
+        cli.record(instruction);
+        return instruction;
       }
     }
-    return new Instruction(strCommand);
   }
 
   /**

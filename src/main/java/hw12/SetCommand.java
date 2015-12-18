@@ -28,11 +28,11 @@ public final class SetCommand implements Command {
       String key = instruction.getArguments().get(0);
       String value = instruction.getArguments().get(1);
       if (key.equals("sort")) {
-        this.setSortMethod(value);
+        cli.setSortMethod(value);
       }
     } else {
       throw new UnsupportedOperationException(
-        "insufficient number of arguments"
+        "set: arguments should be a key value pair"
       );
     }
   }
