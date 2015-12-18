@@ -23,13 +23,17 @@ public final class SetCommand implements Command {
   * @throws UnsupportedOperationException
   */
   public void execute(Cli cli, Instruction instruction)
-        throws UnsupportedOperationException {
+              throws UnsupportedOperationException {
     if (instruction.getArguments().size() == 2) {
       String key = instruction.getArguments().get(0);
       String value = instruction.getArguments().get(1);
+      if (key.equals("sort")) {
+        this.setSortMethod(value);
+      }
     } else {
-      throw new UnsupportedOperationException("insufficient number of arguments");
+      throw new UnsupportedOperationException(
+        "insufficient number of arguments"
+      );
     }
   }
 }
-

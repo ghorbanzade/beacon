@@ -28,13 +28,8 @@ public final class FileSystemMain {
       Scanner input = new Scanner(System.in);
       Cli cli = new Cli(CliConfig.getInstance().get("cli.name"));
       while (true) {
-        System.out.printf(cli.getPrompt());
-        String strCommand = input.nextLine();
-        if (strCommand.isEmpty()) {
-          continue;
-        }
         try {
-          Instruction instruction = new Instruction(strCommand);
+          Instruction instruction = getUserInput(input, cli);
           cli.record(instruction);
           Command command = cli.parse(instruction.getName());
           cli.execute(command, instruction);
@@ -45,10 +40,21 @@ public final class FileSystemMain {
         }
       }
     } catch (GracefulTerminationException e) {
-      //
+      // show logout banner
     } catch (Exception e) {
       System.err.printf("%s%n", e.getMessage());
     }
+  }
+
+  private static Instruction getUserInput(Scanner input, Cli cli) {
+    while (true) {
+      System.out.printf(cli.getPrompt());
+      String strCommand = input.nextLine();
+      if (strCommand.isEmpty() == false) {
+        break;
+      }
+    }
+    return new Instruction(strCommand);
   }
 
   /**

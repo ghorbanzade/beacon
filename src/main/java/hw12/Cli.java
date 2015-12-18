@@ -25,10 +25,10 @@ public final class Cli {
   private String user;
   private String group;
   private History history;
-  private String comparator;
   private Directory currentDirectory;
+  private FileSystemElementComparator sortMethod;
   private HashMap<String, Command> commands = new HashMap<String, Command>();
-  private HashMap<String, FileSystemElementComparator> comparators =
+  private HashMap<String, FileSystemElementComparator> sortMethods =
         new HashMap<String, FileSystemElementComparator>();
 
   /**
@@ -55,11 +55,11 @@ public final class Cli {
     this.commands.put("cd", new ChangeDirectoryCommand());
     this.commands.put("mkdir", new MakeDirectoryCommand());
     this.commands.put("pwd", new CurrentDirectoryCommand());
-    this.comparators.put("name", new NameComparator());
-    this.comparators.put("time", new TimeComparator());
-    this.comparators.put("size", new SizeComparator());
-    this.comparators.put("default", new DefaultComparator());
-    this.comparator = config.get("cli.list.sort");
+    this.sortMethods.put("name", new NameComparator());
+    this.sortMethods.put("time", new TimeComparator());
+    this.sortMethods.put("size", new SizeComparator());
+    this.sortMethods.put("default", new DefaultComparator());
+    this.setSortMethod(config.get("cli.list.sort"));
   }
 
   /**
@@ -103,19 +103,20 @@ public final class Cli {
   *
   *
   * @param path
-  * @return
+  * @return a list of directories starting from root directory
   */
   public ArrayList<String> getFullPath(String path) {
-    // this code is buggy for rootdir and should be fixed
     String newPath = (path.charAt(0) == '/') ? path.substring(1) : path;
-    ArrayList<String> names =
-        new ArrayList<String>(Arrays.asList(newPath.split("/")));
+    ArrayList<String> names = new ArrayList<String>();
+    names.addAll(Arrays.asList(newPath.split("/")));
     if (path.charAt(0) != '/') {
-      names.addAll(0, new ArrayList<String>(Arrays.asList(
-          this.currentDirectory.getFullPath().substring(1).split("/")
-      )));
+      String currentDir = this.currentDirectory.getFullPath();
+      if (currentDir.equals("/") == false) {
+        names.addAll(0, new ArrayList<String>(Arrays.asList(
+            currentDir.substring(1).split("/")
+        )));
+      }
     }
-    // the rest is good
     while (names.contains(".")) {
       names.remove(names.indexOf("."));
     }
@@ -150,10 +151,10 @@ public final class Cli {
   *
   * @return
   */
-  public FileSystemElementComparator getSortComparator() {
-    return this.comparators.containsKey(this.comparator)
-          ? this.comparators.get(this.comparator)
-          : this.comparators.get("default");
+  public FileSystemElementComparator getSortMethod() {
+    return this.sortMethods.containsKey(this.sortMethod)
+          ? this.sortMethods.get(this.sortMethod)
+          : this.sortMethods.get("default");
   }
 
   /**
@@ -208,5 +209,20 @@ public final class Cli {
   */
   public void setCurrentDirectory(Directory directory) {
     this.currentDirectory = directory;
+  }
+
+  /**
+  *
+  *
+  * @param key
+  */
+  public void setSortMethod(String key)
+              throws UnsupportedOperationException {
+    FileSystemElementComparator value = this.sortMethods.get(key);
+    if (value == null) {
+      throw new UnsupportedOperationException("comparator key not found");
+    } else {
+      this.sortMethod = value;
+    }
   }
 }

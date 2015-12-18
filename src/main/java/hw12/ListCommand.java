@@ -31,7 +31,7 @@ public final class ListCommand implements Command {
     } else {
       tray.add(target);
     }
-    Collections.sort(tray, cli.getSortComparator());
+    Collections.sort(tray, cli.getSortMethod());
     this.showResult(tray, instruction.getOptions());
   }
 

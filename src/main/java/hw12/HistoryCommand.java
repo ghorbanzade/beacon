@@ -27,7 +27,7 @@ public final class HistoryCommand implements Command {
     SimpleDateFormat df = new SimpleDateFormat("MMM dd kk:mm:ss", Locale.US);
     for (Instruction instruct: cli.getHistory().getInstructions()) {
       System.out.printf("%s. %s %s%n", instruct.getId(),
-          df.format(instruct.getDate()), instruct);
+                        df.format(instruct.getDate()), instruct);
     }
   }
 }
