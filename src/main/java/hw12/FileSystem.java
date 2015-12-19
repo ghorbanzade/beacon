@@ -7,7 +7,7 @@
 
 package edu.umb.cs680.hw12;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.lang.UnsupportedOperationException;
 
 /**
@@ -50,30 +50,24 @@ public final class FileSystem {
   * @param path
   * @return
   */
-  public FileSystemElement getElementByFullPath(ArrayList<String> path) throws UnsupportedOperationException {
-    Directory directory = this.rootDir;
+  public FileSystemElement getElementByFullPath(List<String> path)
+      throws UnsupportedOperationException {
     FileSystemElement target = this.rootDir;
-    while (path.size() > 1) {
-      String elementName = path.remove(0);
-      FileSystemElement element = directory.getChild(elementName);
-      if (element == null) {
-        String message = String.format("element %s not found", elementName);
+    Directory directory = this.rootDir;
+    for (int i = 0; i < path.size(); i++) {
+      FileSystemElement child = directory.getChild(path.get(i));
+      if (child == null) {
+        String message = String.format("element %s not found", path.get(i));
         throw new UnsupportedOperationException(message);
-      } else if (element instanceof Directory) {
-        directory = (Directory) element;
+      } else if (i < path.size() - 1) {
+        if (child instanceof Directory) {
+          directory = (Directory) child;
+        } else {
+          String message = String.format("%s not a directory", child.getName());
+          throw new UnsupportedOperationException(message);
+        }
       } else {
-        String message = String.format("%s not a directory", element.getName());
-        throw new UnsupportedOperationException(message);
-      }
-    }
-    if (path.size() == 1) {
-      String elementName = path.remove(0);
-      FileSystemElement element = directory.getChild(elementName);
-      if (element == null) {
-        String message = String.format("%s not exists", elementName);
-        throw new UnsupportedOperationException(message);
-      } else {
-        target = element;
+        target = child;
       }
     }
     return target;
