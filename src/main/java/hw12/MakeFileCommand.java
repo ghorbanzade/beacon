@@ -15,7 +15,7 @@ import java.util.ArrayList;
 *
 * @author Pejman Ghorbanzade
 */
-public final class MakeDirectoryCommand implements Command {
+public final class MakeFileCommand implements Command {
   /**
   *
   *
@@ -37,7 +37,7 @@ public final class MakeDirectoryCommand implements Command {
       for (String arg: instruction.getArguments()) {
         try {
           String path = arg.startsWith("/") ? arg : currentDirectory.concat(arg);
-          this.makeDirectory(cli, instruction, arg);
+          this.makeFile(cli, instruction, arg);
         } catch (UnsupportedOperationException e) {
           System.out.printf("%s: failed to create '%s': %s%n",
               instruction.getName(), arg, e.getMessage()
@@ -63,19 +63,18 @@ public final class MakeDirectoryCommand implements Command {
   * @param
   * @return
   */
-  private void makeDirectory(Cli cli, Instruction instruction, String path) {
+  private void makeFile(Cli cli, Instruction instruction, String path) {
     ArrayList<String> dirs = cli.getFullPath(path);
     FileSystemElement element = FileSystem.getInstance()
         .getElementByFullPath(dirs.subList(0, dirs.size() - 1));
     if (element instanceof Directory) {
       Directory dir = (Directory) element;
-      String newDirName = dirs.get(dirs.size() - 1);
-      FileSystemElement child = dir.getChild(newDirName);
+      String newFileName = dirs.get(dirs.size() - 1);
+      FileSystemElement child = dir.getChild(newFileName);
       if (child == null) {
-        dir.appendChild(new Directory(newDirName, cli.getUser()));
+        dir.appendChild(new File(newFileName, cli.getUser(), 100));
       } else {
-        String message = "Element already exists";
-        throw new UnsupportedOperationException(message);
+        // gracefully ignore operation.
       }
     } else {
       throw new UnsupportedOperationException("Not a directory");

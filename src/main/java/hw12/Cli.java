@@ -53,6 +53,7 @@ public final class Cli {
     this.commands.put("exit", new ExitCommand());
     this.commands.put("history", new HistoryCommand());
     this.commands.put("cd", new ChangeDirectoryCommand());
+    this.commands.put("touch", new MakeFileCommand());
     this.commands.put("mkdir", new MakeDirectoryCommand());
     this.commands.put("pwd", new CurrentDirectoryCommand());
     this.commands.put("rmdir", new RemoveDirectoryCommand());
