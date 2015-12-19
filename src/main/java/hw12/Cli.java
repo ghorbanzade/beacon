@@ -55,6 +55,7 @@ public final class Cli {
     this.commands.put("cd", new ChangeDirectoryCommand());
     this.commands.put("mkdir", new MakeDirectoryCommand());
     this.commands.put("pwd", new CurrentDirectoryCommand());
+    this.commands.put("rmdir", new RemoveDirectoryCommand());
     this.sortMethods.put("name", new NameComparator());
     this.sortMethods.put("time", new TimeComparator());
     this.sortMethods.put("size", new SizeComparator());
