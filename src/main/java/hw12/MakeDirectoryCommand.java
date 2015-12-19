@@ -33,28 +33,52 @@ public final class MakeDirectoryCommand implements Command {
       if (currentDirectory.equals("/") == false) {
         currentDirectory += "/";
       }
+      boolean caughtException = false;
       for (String arg: instruction.getArguments()) {
-        String path = arg.startsWith("/") ? arg : currentDirectory.concat(arg);
-        ArrayList<String> dirs = cli.getFullPath(path);
-        FileSystemElement element = FileSystem.getInstance()
-            .getElementByFullPath(dirs.subList(0, dirs.size() - 1));
-        if (element instanceof Directory) {
-          Directory dir = (Directory) element;
-          String newDirName = dirs.get(dirs.size() - 1);
-          FileSystemElement child = dir.getChild(newDirName);
-          if (child == null) {
-            dir.appendChild(new Directory(newDirName, cli.getUser()));
-          } else if (child instanceof Directory) {
-            String message = String.format("%s already exists", child.getName());
-            throw new UnsupportedOperationException(message);
-          } else {
-            dir.appendChild(new Directory(newDirName, cli.getUser()));
-          }
-        } else {
-          String message = String.format("%s not a directory", element.getName());
-          throw new UnsupportedOperationException(message);
+        try {
+          String path = arg.startsWith("/") ? arg : currentDirectory.concat(arg);
+          this.makeDirectory(cli, instruction, arg);
+        } catch (UnsupportedOperationException e) {
+          System.out.printf("%s: failed to create '%s': %s%n",
+              instruction.getName(), arg, e.getMessage()
+          );
+          caughtException = true;
         }
       }
+      if (caughtException) {
+        String message = String.format(
+            "%s: command failed for at least one argument",
+            instruction.getName()
+        );
+        throw new UnsupportedOperationException(message);
+      }
+    }
+  }
+
+  /**
+  *
+  *
+  * @param
+  * @param
+  * @param
+  * @return
+  */
+  private void makeDirectory(Cli cli, Instruction instruction, String path) {
+    ArrayList<String> dirs = cli.getFullPath(path);
+    FileSystemElement element = FileSystem.getInstance()
+        .getElementByFullPath(dirs.subList(0, dirs.size() - 1));
+    if (element instanceof Directory) {
+      Directory dir = (Directory) element;
+      String newDirName = dirs.get(dirs.size() - 1);
+      FileSystemElement child = dir.getChild(newDirName);
+      if (child == null) {
+        dir.appendChild(new Directory(newDirName, cli.getUser()));
+      } else {
+        String message = "Directory already exists";
+        throw new UnsupportedOperationException(message);
+      }
+    } else {
+      throw new UnsupportedOperationException("Not a directory");
     }
   }
 }
