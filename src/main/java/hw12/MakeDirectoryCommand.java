@@ -72,7 +72,9 @@ public final class MakeDirectoryCommand implements Command {
       String newDirName = dirs.get(dirs.size() - 1);
       FileSystemElement child = dir.getChild(newDirName);
       if (child == null) {
-        dir.appendChild(new Directory(newDirName, cli.getUser()));
+        dir.appendChild(
+            new Directory(newDirName, cli.getUser().getUsername())
+        );
       } else {
         String message = "Element already exists";
         throw new UnsupportedOperationException(message);

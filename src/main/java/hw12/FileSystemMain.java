@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
-*
+* This class provides the main method of the program.
 *
 * @author Pejman Ghorbanzade
+* @see FileSystem
+* @see Cli
 */
 public final class FileSystemMain {
 
@@ -30,8 +32,7 @@ public final class FileSystemMain {
       while (true) {
         try {
           Instruction instruction = getUserInput(input, cli);
-          Command command = cli.parse(instruction.getName());
-          cli.execute(command, instruction);
+          cli.execute(instruction);
         } catch (InvalidCommandException e) {
           System.err.printf("%s%n", e.getMessage());
         } catch (UnsupportedOperationException e) {

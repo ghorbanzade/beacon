@@ -72,7 +72,9 @@ public final class MakeFileCommand implements Command {
       String newFileName = dirs.get(dirs.size() - 1);
       FileSystemElement child = dir.getChild(newFileName);
       if (child == null) {
-        dir.appendChild(new File(newFileName, cli.getUser(), 100));
+        dir.appendChild(
+            new File(newFileName, cli.getUser().getUsername(), 100)
+        );
       } else {
         // gracefully ignore operation.
       }

@@ -81,7 +81,9 @@ public final class MakeLinkCommand implements Command {
         if (srcParentDir.contains(linkName)) {
           throw new UnsupportedOperationException("Element already exists");
         } else {
-          srcParentDir.appendChild(new Link(linkName, cli.getUser(), dstElement));
+          srcParentDir.appendChild(
+              new Link(linkName, cli.getUser().getUsername(), dstElement)
+          );
         }
       } else {
         String message = String.format(

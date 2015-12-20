@@ -7,8 +7,8 @@
 
 package edu.umb.cs680.hw12;
 
-import java.util.List;
 import java.lang.UnsupportedOperationException;
+import java.util.List;
 
 /**
 *
@@ -32,8 +32,8 @@ public final class FileSystem {
   }
 
   /**
-  * This static method is used to access the one and only instance of the
-  * FileSystem class.
+  * This static method is used to access the one and only instance
+  * of the FileSystem class.
   *
   * @return one and only one instance of the FileSystem
   */
@@ -45,10 +45,14 @@ public final class FileSystem {
   }
 
   /**
+  * This method takes a path list of file system element names and
+  * returns the file system element the path is pointing to.
   *
-  *
-  * @param path
-  * @return
+  * @param path a list of file system element names beginning from
+  *        the root directory to the target file system element
+  * @return the file system element located in the given path list
+  * @throws UnsupportedOperationException in case the path list is
+  *         inconsistent with file system directory structure
   */
   public FileSystemElement getElementByFullPath(List<String> path)
       throws UnsupportedOperationException {

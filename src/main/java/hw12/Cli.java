@@ -7,23 +7,29 @@
 
 package edu.umb.cs680.hw12;
 
-import java.lang.NumberFormatException;
 import java.lang.UnsupportedOperationException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 /**
+* This class defines command line interface instances to interact with
+* the file system. The class has been designed in a way to support
+* multiple cli instances working with the same file system at the same
+* time.
 *
 * @author Pejman Ghorbanzade
+* @see CliConfig
 */
 public final class Cli {
   /**
-  *
+  * Each cli instance has a name, a history, a set of commands and a set of
+  * methods for comparing file system elements. Each instance keeps track
+  * of the active directory and the user interacting with it.
   */
   private String name;
-  private String user;
-  private String group;
+  private User user;
+  private String hostname;
   private History history;
   private Directory currentDirectory;
   private FileSystemElementComparator sortMethod;
@@ -32,21 +38,35 @@ public final class Cli {
         new HashMap<String, FileSystemElementComparator>();
 
   /**
+  * This constructor creates a CLI object of specified name.
+  * Initially, the instance belongs to the default user and
+  * works on the default hostname. It has an empty History
+  * object. The constructor loads all known commands and all
+  * known sort methods.
   *
-  *
-  * @param name
-  * @throws NumberFormatException
+  * @param name an identifier for each cli object
   */
-  public Cli(String name) throws NumberFormatException {
+  public Cli(String name) {
     CliConfig config = CliConfig.getInstance();
     this.name = name;
-    this.user = config.get("cli.user");
-    this.group = config.get("cli.group");
+    this.user = new User(config.get("cli.user"));
+    this.hostname = config.get("cli.hostname");
     this.history = new History();
     String defaultDirStr = config.get("cli.homedir");
     Directory defaultDir = (Directory) FileSystem.getInstance()
         .getElementByFullPath(this.getFullPath(defaultDirStr));
     this.setCurrentDirectory(defaultDir);
+    this.initCommands();
+    this.initSortMethods();
+    this.setSortMethod(config.get("cli.list.sort"));
+  }
+
+  /**
+  * This helper method introduces known commands and the command
+  * class they associate with. This method is used by constructor
+  * to initialize known commands for the CLI object.
+  */
+  private void initCommands() {
     this.commands.put("ls", new ListCommand());
     this.commands.put("cli", new CliCommand());
     this.commands.put("set", new SetCommand());
@@ -58,21 +78,36 @@ public final class Cli {
     this.commands.put("mkdir", new MakeDirectoryCommand());
     this.commands.put("pwd", new CurrentDirectoryCommand());
     this.commands.put("rmdir", new RemoveDirectoryCommand());
+  }
+
+  /**
+  * This helper method introduces known sort methods for sorting
+  * file system elements. This method is used by constructor
+  * to initialize known sort methods for the CLI object.
+  */
+  private void initSortMethods() {
     this.sortMethods.put("name", new NameComparator());
     this.sortMethods.put("time", new TimeComparator());
     this.sortMethods.put("size", new SizeComparator());
     this.sortMethods.put("default", new DefaultComparator());
-    this.setSortMethod(config.get("cli.list.sort"));
   }
 
   /**
+  * Once an instruction instance is created upon one-liner user
+  * inputs, the name of the instruction is passed to the parse
+  * method to retrieve the coorresponding command to that name.
+  * If the command requested by the user is not recognized by the
+  * cli instance, a proper exception would be thrown.
   *
-  *
-  * @param name
-  * @return command to be executed
-  * @throws InvalidCommandException
+  * @param instruction the instruction instance corresponding to
+  *        the one-liner user input
+  * @return a Command instance associated with command to be executed
+  * @throws InvalidCommandException in case the requested command
+  *         is not recognized by CLI object.
   */
-  public Command parse(String name) throws InvalidCommandException {
+  private Command parse(Instruction instruction)
+      throws InvalidCommandException {
+    String name = instruction.getName();
     if (this.commands.containsKey(name)) {
       return this.commands.get(name);
     } else {
@@ -82,30 +117,36 @@ public final class Cli {
   }
 
   /**
+  * This method takes a user instruction, parses it to take its corresponding
+  * command and tries to execute that command. 
   *
-  *
-  * @param command
-  * @param instruction
-  * @throws InvalidCommandException
+  * @param instruction the instruction instance cooresponding to the user input
+  * @throws InvalidCommandException in case no command is found for
+  *         the user-specified input
+  * @throws GracefulTerminationException in case the user-specified command
+  *         requires a controlled program termination
+  * @throws UnsupportedOperationException in case user input is not
+  *         in proper form to be executed
   */
-  public void execute(Command command, Instruction instruction)
-        throws UnsupportedOperationException, GracefulTerminationException {
+  public void execute(Instruction instruction)
+      throws UnsupportedOperationException,
+             InvalidCommandException,
+             GracefulTerminationException {
+    Command command = this.parse(instruction);
     command.execute(this, instruction);
   }
 
   /**
+  * This method takes a path to a file system element and breaks
+  * it into a list of components, resolving '..' and '.' parts.
+  * This method does not validate the path, therefore the list
+  * given as full path to the element may not point to an existing
+  * file system element.
   *
-  *
-  * @param instruction
-  */
-  public void record(Instruction instruction) {
-    this.history.add(instruction);
-  }
-
-  /**
-  *
-  *
-  * @param path
+  * @param path a string literal representing the full path to
+  *        an element within the file system. The string literal
+  *        is special in that it is a mixture of full and
+  *        relative paths as it contains '..' and '.' components.
   * @return a list of directories starting from root directory
   */
   public ArrayList<String> getFullPath(String path) {
@@ -134,7 +175,20 @@ public final class Cli {
   }
 
   /**
+  * This method records the user instruction in the history of
+  * the cli object. The instructions are recorded regardless of
+  * their validity.
   *
+  * @param instruction the new user instruction to be recorded
+  */
+  public void record(Instruction instruction) {
+    this.history.add(instruction);
+  }
+
+  /**
+  * This accessor method returns the cli prompt to be printed on the console.
+  * The cli prompt shows the user, the hostname and the path of the active
+  * directory of the cli.
   *
   * @return prompt of the command line interface
   */
@@ -145,21 +199,24 @@ public final class Cli {
     if (path.startsWith(homedir)) {
       path = "~" + path.substring(homedir.length());
     }
-    sb.append(String.format("%s@%s:%s$ ", this.user, this.group, path));
+    sb.append(String.format(
+        "%s@%s:%s$ ", this.user.getUsername(), this.hostname, path
+    ));
     return sb.toString();
   }
 
   /**
+  * This accessor method returns the comparator currently in use for sorting
+  * file system elements.
   *
-  *
-  * @return
+  * @return current method in use for sorting file system elements.
   */
   public FileSystemElementComparator getSortMethod() {
     return this.sortMethod;
   }
 
   /**
-  *
+  * This accessor method returns the name assigned to the active cli instance.
   *
   * @return the name of the current cli object
   */
@@ -168,25 +225,26 @@ public final class Cli {
   }
 
   /**
+  * This accessor method returns the user currently logged into the cli.
   *
-  *
-  * @return the name of the current user
+  * @return the name of the user currently logged into the cli.
   */
-  public String getUser() {
+  public User getUser() {
     return this.user;
   }
 
   /**
+  * This accessor method returns the hostname of the file system.
+  * At the moment, this method is only used in forming prompt of the cli.
   *
-  *
-  * @return the name of the group current user belongs to
+  * @return the hostname
   */
-  public String getGroup() {
-    return this.group;
+  public String getHostname() {
+    return this.hostname;
   }
 
   /**
-  *
+  * This accessor method returns the active directory of the cli instance.
   *
   * @return the directory command line interface is currently set on
   */
@@ -195,27 +253,34 @@ public final class Cli {
   }
 
   /**
+  * This accessor method returns the history of the cli instance.
   *
-  *
-  * @return
+  * @return a History object holding last few instructions given by the user.
   */
   public History getHistory() {
     return this.history;
   }
 
   /**
+  * The client is able to set any directory as the active directoryin its
+  * cli instance. Having active directory in Cli class instead of FileSystem
+  * class allows working on different directories of the same file system
+  * using multiple cli instances.
   *
-  *
-  * @param directory
+  * @param directory the directory to be set as the current directory.
   */
   public void setCurrentDirectory(Directory directory) {
     this.currentDirectory = directory;
   }
 
   /**
+  * The client is able to set the method for sorting file system
+  * elements as in listing elements in a specified directory.
   *
-  *
-  * @param key
+  * @param key the name of the comparator to be used for sorting
+  *        file system elements.
+  * @throws UnsupportedOperationException in case no sorting method
+  *         is found for the given key.
   */
   public void setSortMethod(String key)
               throws UnsupportedOperationException {
