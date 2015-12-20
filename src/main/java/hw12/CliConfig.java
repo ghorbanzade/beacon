@@ -17,6 +17,7 @@ import java.util.Properties;
 *
 *
 * @author Pejman Ghorbanzade
+* @see Cli
 */
 public final class CliConfig {
   /**
@@ -43,7 +44,7 @@ public final class CliConfig {
   /**
   *
   *
-  *
+  * @return
   */
   public static CliConfig getInstance() {
     if (instance == null) {

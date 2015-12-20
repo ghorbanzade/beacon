@@ -51,7 +51,8 @@ public final class Cli {
     this.name = name;
     this.user = new User(config.get("cli.user"));
     this.hostname = config.get("cli.hostname");
-    this.history = new History();
+    String res = CliConfig.getInstance().get("cli.history.size");
+    this.history = new History(Integer.parseInt(res));
     String defaultDirStr = config.get("cli.homedir");
     Directory defaultDir = (Directory) FileSystem.getInstance()
         .getElementByFullPath(this.getFullPath(defaultDirStr));

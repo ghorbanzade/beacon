@@ -12,29 +12,32 @@ import java.util.Arrays;
 import java.util.Date;
 
 /**
-*
+* The instruction class interprets each one-liner user command
+* as an instruction object. Passing this object to the cli would
+* allow a more organized processing of the user input.
 *
 * @author Pejman Ghorbanzade
+* @see Cli
 */
 public final class Instruction {
   /**
-  *
+  * Each instance of instruction contains the command name, a list
+  * of arguments and a list of options. The object also includes
+  * the date the object is instantiated.
   */
-  private static int number = 1;
   private Date date;
-  private int identifier;
   private String name;
   private ArrayList<String> arguments = new ArrayList<String>();
   private ArrayList<String> options = new ArrayList<String>();
 
   /**
+  * This constructor takes the one-liner command given by the user
+  * and creates the instruction instance for it.
   *
-  *
-  * @param string
+  * @param string the one-liner user-input as is
   */
   public Instruction(String string) {
     this.date = new Date();
-    this.identifier = number;
     String[] strings = string.split("\\s+");
     ArrayList<String> words = new ArrayList<String>(Arrays.asList(strings));
     this.name = words.remove(0);
@@ -45,58 +48,53 @@ public final class Instruction {
         this.arguments.add(word);
       }
     }
-    number++;
   }
 
   /**
+  * This accessor method returns the date the instruction instance
+  * has been created.
   *
-  *
-  * @return
+  * @return the date the instruction has been issued
   */
   public Date getDate() {
     return this.date;
   }
 
   /**
+  * This accessor method returns the name of the command wrapped
+  * in the instruction instance.
   *
-  *
-  * @return
-  */
-  public int getId() {
-    return this.identifier;
-  }
-
-  /**
-  *
-  *
-  * @return
+  * @return the name of the command
   */
   public String getName() {
     return this.name;
   }
 
   /**
+  * This accessor method returns the arguments passed to the command.
   *
-  *
-  * @return
+  * @return the list of arguments of the command
   */
   public ArrayList<String> getArguments() {
     return this.arguments;
   }
 
   /**
+  * This accessor method returns the options the command has
+  * been invoked with.
   *
-  *
-  * @return
+  * @return the list of options of the command
   */
   public ArrayList<String> getOptions() {
     return this.options;
   }
 
   /**
+  * This method defines how the instruction object should be
+  * printed. This method is used in printing history of the
+  * cli instance.
   *
-  *
-  * @return
+  * @return the string representation of an instruction instance
   */
   public String toString() {
     StringBuilder sb = new StringBuilder(this.name);

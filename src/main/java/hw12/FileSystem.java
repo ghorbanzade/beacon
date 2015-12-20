@@ -20,15 +20,15 @@ public final class FileSystem {
   *
   */
   private static FileSystem instance = null;
-  private final String INITIAL_USER = "root";
+  private final String INITUSER = "root";
   private Directory rootDir = null;
 
   /**
   *
   */
   private FileSystem() {
-    this.rootDir = new Directory("root", INITIAL_USER);
-    this.rootDir.appendChild(new Directory("home", INITIAL_USER));
+    this.rootDir = new Directory("root", INITUSER);
+    this.rootDir.appendChild(new Directory("home", INITUSER));
   }
 
   /**

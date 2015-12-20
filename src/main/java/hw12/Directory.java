@@ -25,11 +25,10 @@ public final class Directory extends FileSystemElement {
 
   /**
   * This constructor allows instantiating a new directory by specifying its
-  * name and its owner. This design gives liberty for the client to set the
-  * date of creation of the directory to any arbitrary time. Although it was
-  * possible to allow this time to be set to current instantiation time, this
-  * is done so we can have different creation times in the demonstration of
-  * the project. As stated in problem, size of the directory is zero.
+  * name and its owner. Although it was possible to allow this time to be set
+  * to current instantiation time, this is done so we can have different
+  * creation times in the demonstration of the project. As stated in problem,
+  * size of the directory is zero.
   *
   * @param name name of the directory.
   * @param owner owner of the directory.
@@ -79,10 +78,11 @@ public final class Directory extends FileSystemElement {
   }
 
   /**
+  * This method checks wheter any immediate child of the directory
+  * instance contains an element with the specified name.
   *
-  *
-  * @param name
-  * @return
+  * @param name the name of the element to be checked
+  * @return whether a child of the current directory has the specified name
   */
   public boolean contains(String name) {
     for (FileSystemElement child: this.children) {
@@ -94,10 +94,13 @@ public final class Directory extends FileSystemElement {
   }
 
   /**
+  * This method allows access to the file system element under current directory
+  * that has the given name. In case no such element exists, the method
+  * returns null.
   *
-  *
-  * @param name
-  * @return
+  * @param name the name of the child we are looking for
+  * @return the child of the current directory with given name or null
+  *         if the child does not exist
   */
   public FileSystemElement getChild(String name) {
     for (FileSystemElement child: this.children) {

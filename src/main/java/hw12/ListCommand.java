@@ -46,8 +46,7 @@ public final class ListCommand implements Command {
     FileSystemElement target;
     if (instruction.getArguments().isEmpty()) {
       target = cli.getCurrentDirectory();
-    }
-    else {
+    } else {
       String path = instruction.getArguments().get(0);
       target = FileSystem.getInstance().getElementByFullPath(cli.getFullPath(path));
     }
