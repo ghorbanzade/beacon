@@ -11,20 +11,26 @@ import java.lang.UnsupportedOperationException;
 import java.util.List;
 
 /**
-*
+* This singleton class defines the file system that hosts all the
+* file system elements.
 *
 * @author Pejman Ghorbanzade
+* @see FileSystemElement
+* @see Cli
 */
 public final class FileSystem {
   /**
-  *
+  * Each file system instance will have a root directory that
+  * is initialized upon instantiation.
   */
+  private static final String INITUSER = "root";
   private static FileSystem instance = null;
-  private final String INITUSER = "root";
   private Directory rootDir = null;
 
   /**
-  *
+  * There is only one instance of File System during the runtime
+  * of the program. Defining constructor as private will ensure
+  * this class will not be directly instantiated.
   */
   private FileSystem() {
     this.rootDir = new Directory("root", INITUSER);

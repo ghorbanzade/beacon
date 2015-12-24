@@ -160,9 +160,10 @@ public abstract class FileSystemElement {
   }
 
   /**
+  * This accessor method will return the type of the file system element
+  * as an enumeration item.
   *
-  *
-  * @return
+  * @return an enumeration element corresponding to the type of the file system
   */
   public FileSystemElementType getType() {
     return this.type;

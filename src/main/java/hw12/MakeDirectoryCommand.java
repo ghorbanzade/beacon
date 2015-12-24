@@ -11,17 +11,27 @@ import java.lang.UnsupportedOperationException;
 import java.util.ArrayList;
 
 /**
-*
+* This class defines the functionality of the command for making a
+* new directory in the file system.
 *
 * @author Pejman Ghorbanzade
+* @see Command
+* @see Cli
 */
 public final class MakeDirectoryCommand implements Command {
   /**
+  * This method provides the functionality of the command by
+  * implementing execute method of the Command interface.
   *
+  * <p>Based on current implementation, the user may create
+  * multiple directories by providing multiple arguments. These
+  * arguments may be in form of relative or absolute paths.
   *
-  * @param cli
-  * @param instruction
-  * @throws UnsupportedOperationException
+  * @param cli the CLI instance used to create new directories
+  * @param instruction the instruction instance created based
+  *        on the user input
+  * @throws UnsupportedOperationException in case the specified
+  *         target directory has a non-existant ancestor
   */
   public void execute(Cli cli, Instruction instruction)
         throws UnsupportedOperationException {
@@ -29,15 +39,10 @@ public final class MakeDirectoryCommand implements Command {
       String message = String.format("%s: missing operand", instruction.getName());
       throw new UnsupportedOperationException(message);
     } else {
-      String currentDirectory = cli.getCurrentDirectory().getFullPath();
-      if (currentDirectory.equals("/") == false) {
-        currentDirectory += "/";
-      }
       boolean caughtException = false;
       for (String arg: instruction.getArguments()) {
         try {
-          String path = arg.startsWith("/") ? arg : currentDirectory.concat(arg);
-          this.makeDirectory(cli, instruction, arg);
+          this.makeDirectory(cli, arg);
         } catch (UnsupportedOperationException e) {
           System.out.printf("%s: failed to create '%s': %s%n",
               instruction.getName(), arg, e.getMessage()
@@ -56,14 +61,17 @@ public final class MakeDirectoryCommand implements Command {
   }
 
   /**
+  * This helper method creates a new directory based on a given
+  * relative or absolute path.
   *
-  *
-  * @param
-  * @param
-  * @param
-  * @return
+  * @param cli the CLI instance used for creating a new directory
+  * @param arg a relative or absolute path to new directory
+  * @throws UnsupportedOperationException in case the specified
+  *         target directory has a non-existant ancestor
   */
-  private void makeDirectory(Cli cli, Instruction instruction, String path) {
+  private void makeDirectory(Cli cli, String arg)
+      throws UnsupportedOperationException {
+    String path = cli.toFullPath(arg);
     ArrayList<String> dirs = cli.getFullPath(path);
     FileSystemElement element = FileSystem.getInstance()
         .getElementByFullPath(dirs.subList(0, dirs.size() - 1));

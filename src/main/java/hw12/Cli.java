@@ -138,6 +138,22 @@ public final class Cli {
   }
 
   /**
+  * The method takes the path given by the user and converts it
+  * to a full path ready to be given to getFullPath method.
+  * This method is used in many different file system commands.
+  *
+  * @param arg a relative or full path
+  * @return the full path starting from the root directory
+  */
+  public String toFullPath(String arg) {
+    String currentDir  = this.currentDirectory.getFullPath();
+    if (currentDir.equals("/") == false) {
+      currentDir += "/";
+    }
+    return arg.startsWith("/") ? arg : currentDir.concat(arg);
+  }
+
+  /**
   * This method takes a path to a file system element and breaks
   * it into a list of components, resolving '..' and '.' parts.
   * This method does not validate the path, therefore the list

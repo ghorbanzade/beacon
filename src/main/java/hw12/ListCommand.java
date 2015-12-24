@@ -11,16 +11,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
-*
+* This class defines the functionality of the command to list the
+* file system elements that are children of a specified file
+* system element.
 *
 * @author Pejman Ghorbanzade
+* @see Command
+* @see Cli
 */
 public final class ListCommand implements Command {
   /**
+  * This method provides the functionality of the command by
+  * implementing execute method of the Command interface.
   *
-  *
-  * @param cli
-  * @param instruction
+  * @param cli active CLI instance user is interacting with
+  * @param instruction the instruction instance created based on the user input
   */
   public void execute(Cli cli, Instruction instruction) {
     FileSystemElement target = this.getTarget(cli, instruction);
@@ -32,15 +37,17 @@ public final class ListCommand implements Command {
       tray.add(target);
     }
     Collections.sort(tray, cli.getSortMethod());
-    this.showResult(tray, instruction.getOptions());
+    this.showResult(tray, instruction);
   }
 
   /**
+  * This helper function determines the directory whose children
+  * should be listed.
   *
-  *
-  * @param cli
-  * @param instruction
-  * @return
+  * @param cli the CLI instance used to invoke this command
+  * @param instruction the instruction instance created based on
+  *        the user input
+  * @return the file system element whose children should be listed
   */
   private FileSystemElement getTarget(Cli cli, Instruction instruction) {
     FileSystemElement target;
@@ -48,19 +55,25 @@ public final class ListCommand implements Command {
       target = cli.getCurrentDirectory();
     } else {
       String path = instruction.getArguments().get(0);
-      target = FileSystem.getInstance().getElementByFullPath(cli.getFullPath(path));
+      target = FileSystem.getInstance().getElementByFullPath(
+          cli.getFullPath(path)
+      );
     }
     return target;
   }
 
   /**
+  * This helper method determines how a list of elements should
+  * be presented to the user, based on options given in the
+  * instruction.
   *
-  *
-  * @param elements
-  * @param options
+  * @param elements the file system elements to be listed
+  * @param instruction the instruction instance created based on
+  *        the user input
   */
   private void showResult(ArrayList<FileSystemElement> elements,
-                          ArrayList<String> options) {
+                          Instruction instruction) {
+    ArrayList<String> options = instruction.getOptions();
     if (elements.isEmpty() == false) {
       if (options.contains("l")) {
         int totalSize = 0;
@@ -80,7 +93,7 @@ public final class ListCommand implements Command {
         for (FileSystemElement element: elements) {
           if (element instanceof Directory) {
             Directory directory = (Directory) element;
-            showResult(directory.getChildren(), options);
+            showResult(directory.getChildren(), instruction);
           }
         }
       }

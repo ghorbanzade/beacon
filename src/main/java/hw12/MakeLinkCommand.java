@@ -12,28 +12,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-*
+* This class defines the functionality of the command for creating
+* a new link in the file system.
 *
 * @author Pejman Ghorbanzade
+* @see Command
+* @see Cli
 */
 public final class MakeLinkCommand implements Command {
   /**
+  * This method provides the functionality of the command by
+  * implementing execute method of the Command interface.
   *
+  * <p>Based on current implementation, this command accepts two
+  * arguments which are paths (relative or absolute) to target and
+  * new link, respectively.
   *
-  * @param cli
-  * @param instruction
-  * @throws UnsupportedOperationException
+  * @param cli the CLI instance used to create the link
+  * @param instruction the instruction instance created based on the user input
+  * @throws UnsupportedOperationException in case a non-existant
+  *         file system is specified as target element and the path
+  *         to new link is valid
   */
   public void execute(Cli cli, Instruction instruction)
-        throws UnsupportedOperationException {
+      throws UnsupportedOperationException {
     if (instruction.getArguments().size() == 2) {
-      String dst = this.constructPath(cli, instruction.getArguments().get(0));
-      String src = this.constructPath(cli, instruction.getArguments().get(1));
+      String dst = cli.toFullPath(instruction.getArguments().get(0));
+      String src = cli.toFullPath(instruction.getArguments().get(1));
       try {
         this.makeLink(cli, dst, src);
       } catch (UnsupportedOperationException e) {
         System.out.printf("%s: failed to create link '%s': %s%n",
-            instruction.getName(), instruction.getArguments().get(1), e.getMessage()
+            instruction.getName(), instruction.getArguments().get(1),
+            e.getMessage()
         );
       }
     } else {
@@ -43,26 +54,15 @@ public final class MakeLinkCommand implements Command {
   }
 
   /**
+  * This helper method takes full paths of target and location of
+  * the new link element and creates the link element in case the
+  * target exists and all ancestors of the new link exist.
   *
-  *
-  * @param cli
-  * @param arg
-  * @return
-  */
-  private String constructPath(Cli cli, String arg) {
-    String currentDirectory = cli.getCurrentDirectory().getFullPath();
-    if (currentDirectory.equals("/") == false) {
-      currentDirectory += "/";
-    }
-    return arg.startsWith("/") ? arg : currentDirectory.concat(arg);
-  }
-
-  /**
-  *
-  *
-  * @param cli
-  * @param dst
-  * @param src
+  * @param cli the CLI instance used to create the new link
+  * @param dst the full path to target element
+  * @param src the full path to the new link
+  * @throws UnsupportedOperationException in case a non-existant
+  *         path is given for the target of the link
   */
   private void makeLink(Cli cli, String dst, String src)
       throws UnsupportedOperationException {
