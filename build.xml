@@ -141,10 +141,14 @@
 		<mkdir dir="${cs.report.dir}"/>
 		<get src="${cs.config.remote}" dest="${cs.config.file}" usetimestamp="true"/>
 		<get src="${cs.report.style.remote}" dest="${cs.report.style.file}" usetimestamp="true"/>
-		<cs:checkstyle config="${cs.config.file}" failOnViolation="false">
-			<fileset dir="${java.main.src.dir}" includes="**/*.java"/>
-			<formatter type="xml" toFile="${cs.report.xml}"/>
-		</cs:checkstyle>
+		<ant:for list="${package-list}" param="package" trim="yes">
+			<sequential>
+				<cs:checkstyle config="${cs.config.file}" failOnViolation="false">
+					<fileset dir="${java.main.src.dir}/@{package}" includes="*.java"/>
+					<formatter type="xml" toFile="${cs.report.xml}"/>
+				</cs:checkstyle>
+			</sequential>
+		</ant:for>
 		<xslt in="${cs.report.xml}" out="${cs.report.html}" style="${cs.report.style.file}"/>
 	</target>
 
