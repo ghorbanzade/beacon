@@ -7,8 +7,6 @@
 
 package edu.umb.cs680.hw14;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,29 +32,25 @@ public final class StockFileHandler {
   * not contain any stock event information, this method will
   * return an empty list.
   *
-  *
   * @return a list of stock events where each stock event
   *         corresponds to one line of the stock info file.
   */
   public static ArrayList<StockEvent> loadEvents() {
     ArrayList<StockEvent> events = new ArrayList<StockEvent>();
-    try {
-      String filename = StockConfig.getInstance().get("file.stockquote");
-      String filepath = filename;
-      File file = new File(filepath);
-      Scanner lineReader = new Scanner(file);
-      while (lineReader.hasNext()) {
-        String line = lineReader.nextLine();
-        if (line.isEmpty() == false && line.trim().charAt(0) != '#') {
-          Scanner tokenReader = new Scanner(line).useDelimiter("\\s*, \\s*");
-          String name = tokenReader.next();
-          String symbol = tokenReader.next();
-          float quote = tokenReader.nextFloat();
-          events.add(new StockEvent(new StockTrademark(symbol, name), quote));
-        }
+    String filename =
+        StockConfig.getInstance().get("file.stockquote");
+    Scanner lineReader = new Scanner(
+        StockConfig.class.getResourceAsStream("/" + filename)
+    );
+    while (lineReader.hasNext()) {
+      String line = lineReader.nextLine();
+      if (line.isEmpty() == false && line.trim().charAt(0) != '#') {
+        Scanner tokenReader = new Scanner(line).useDelimiter("\\s*, \\s*");
+        String name = tokenReader.next();
+        String symbol = tokenReader.next();
+        float quote = tokenReader.nextFloat();
+        events.add(new StockEvent(new StockTrademark(symbol, name), quote));
       }
-    } catch (FileNotFoundException e) {
-      // TODO: Should not leave exception unnoticed.
     }
     return events;
   }

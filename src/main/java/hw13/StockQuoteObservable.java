@@ -53,7 +53,7 @@ public final class StockQuoteObservable extends Observable {
   *
   * @param symbol the symbol of the stock event with updated quote
   * @param quote the new quote of the stock event whose symbol is
-  *              given
+  *        given
   */
   public void updateEvent(String symbol, float quote)
       throws UnsupportedOperationException {
@@ -64,7 +64,6 @@ public final class StockQuoteObservable extends Observable {
     } else {
       this.events.get(index).setQuote(quote);
       setChanged();
-      notifyObservers();
     }
   }
 

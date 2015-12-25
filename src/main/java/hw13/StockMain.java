@@ -22,8 +22,8 @@ public final class StockMain {
   /**
   * This program creates a stock market as an observable object
   * with three observer classes watching its data. The program
-  * uses a timer to refresh stock data and display updated date
-  * in observer classes.
+  * uses a timer to refresh stock data and display updated data
+  * in observer classes, using the observer design pattern.
   *
   * @param args command line arguments given to this program
   */

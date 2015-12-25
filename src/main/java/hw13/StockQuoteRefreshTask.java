@@ -58,6 +58,7 @@ public final class StockQuoteRefreshTask extends TimerTask {
         float quote = coeff * event.getQuote();
         this.market.updateEvent(event.getTrademark().getSymbol(), quote);
       }
+      this.market.notifyObservers();
     } else {
       this.timer.cancel();
     }
