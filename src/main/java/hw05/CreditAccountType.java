@@ -7,13 +7,13 @@
 
 package edu.umb.cs680.hw05;
 
-import java.util.ArrayList;
+public enum CreditAccountType {
+  REWARDS("rewards"),
+  TRAVEL("travel");
 
-/**
-*
-*
-* @author Pejman Ghorbanzade
-*/
-public final class CreditCardType {
+  private final String name;
 
+  private CreditAccountType(String name) {
+    this.name = name;
+  }
 }

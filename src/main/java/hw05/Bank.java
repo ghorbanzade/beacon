@@ -7,9 +7,11 @@
 
 package edu.umb.cs680.hw05;
 
-public class Customer extends Client {
+public class Bank {
 
-  public Customer(String name) {
-    super(name);
+  private String name;
+
+  public Bank(String name) {
+    this.name = name;
   }
 }

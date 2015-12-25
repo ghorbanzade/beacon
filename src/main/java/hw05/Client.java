@@ -7,9 +7,15 @@
 
 package edu.umb.cs680.hw05;
 
-public class Customer extends Client {
+public abstract class Client {
 
-  public Customer(String name) {
-    super(name);
+  private String name;
+
+  public Client(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return this.name;
   }
 }

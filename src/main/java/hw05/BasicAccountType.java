@@ -7,9 +7,13 @@
 
 package edu.umb.cs680.hw05;
 
-public class Customer extends Client {
+public enum BasicAccountType {
+  CHECKING("checking"),
+  SAVING("saving");
 
-  public Customer(String name) {
-    super(name);
+  private final String name;
+
+  private BasicAccountType(String name) {
+    this.name = name;
   }
 }

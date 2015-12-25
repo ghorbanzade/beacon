@@ -9,15 +9,55 @@ package edu.umb.cs680.hw05;
 
 import java.util.ArrayList;
 
-/**
-*
-*
-* @author Pejman Ghorbanzade
-*/
-public final class CreditAccount {
-	private ArrayList<CreditCard> cards = new ArrayList<CreditCard>();
+public class CreditAccount extends BankAccount {
 
-	public ArrayList<CreditCard> getCards() {
-		return this.cards;
-	}
+  private CreditAccountType type;
+  private float currentlimit;
+  private float maxLimit;
+  private ArrayList<CreditCard> cards = new ArrayList<CreditCard>();
+
+  public CreditAccount(Bank bank, Customer customer,
+                       CreditAccountType type, float limit) {
+    super(bank, customer);
+    this.type = type;
+    this.currentLimit = limit;
+    this.maxLimit = limit;
+  }
+
+  @Override
+  public void withdraw(Client client, float amount)
+      throws UnsupportedOperationException {
+    super.authorize(client);
+    if (this.getBalance() - amount > this.currentLimit) {
+      super.withdraw(client, amount);
+    } else {
+      throw new UnsupportedOperationException(
+          "amount exceeded current credit limit"
+      );
+    }
+  }
+
+  public void setCreditLimit(Client client, float limit)
+      throws UnsupportedOperationException {
+    super.authorize(client);
+    if (limit < this.maxLimit) {
+      this.currentLimit = limit;
+    } else {
+      throw new UnsupportedOperationException(
+          "limit exceeds maximum credit limit"
+      );
+    }
+  }
+
+  public float getCreditLimit(Client client)
+      throws UnsupportedOperationException {
+    super.authorize(client);
+    return this.limit;
+  }
+
+  public CreditAccountType getType(Client client)
+      throws UnsupportedOperationException {
+    super.authorize(client);
+    return this.type;
+  }
 }
