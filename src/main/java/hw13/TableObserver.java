@@ -11,22 +11,25 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
-*
+* This class defines TableObserver as one of the several observers
+* that can display stock information stored in an instance of
+* StockQuoteObservable.
 *
 * @author Pejman Ghorbanzade
+* @see StockQuoteObservable
 */
 public final class TableObserver implements Observer {
   /**
-  *
+  * This class has a default constructor.
   */
   public TableObserver() {
   }
 
   /**
+  * This method is called whenever the observable object is updated.
   *
-  *
-  * @param observable
-  * @param arg
+  * @param observable the object whose data are of concern
+  * @param arg the argument passed to the notifyObservers method
   */
   @Override
   public void update(Observable observable, Object arg) {
@@ -34,10 +37,10 @@ public final class TableObserver implements Observer {
       StockQuoteObservable obs = (StockQuoteObservable) observable;
       System.out.println("Table Observer:");
       System.out.printf(" %3s | %-6s | %-10s | %-6s%n", "Row", "Symbol", "Name", "Quote");
-      int i = 1;
+      int row = 1;
       for (StockEvent event: obs.getEvents()) {
         System.out.printf(" %3d | %-6s | %-10s | %-4.2f%n",
-                          i++, event.getTrademark().getSymbol(),
+                          row++, event.getTrademark().getSymbol(),
                           event.getTrademark().getName(),
                           event.getQuote());
       }

@@ -1,4 +1,4 @@
-
+//
 // CS680: Object Oriented Design and Programming
 // Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
 // Released under the terms of MIT License
@@ -8,21 +8,26 @@
 package edu.umb.cs680.hw13;
 
 /**
+* This class defines a stock event as a stock entry of a trademark
+* with a specified quote.
 *
 * @author Pejman Ghorbanzade
+* @see StockQuoteObservable
 */
 public final class StockEvent {
   /**
-  *
+  * Each stock event has a trademark and an actual quote.
   */
   private StockTrademark mark;
   private float quote;
 
   /**
+  * This constructor allows creating stock entries while
+  * simultaneously specifying their quotes.
   *
-  *
-  * @param mark
-  * @param quote
+  * @param mark trademark of the company associated with the stock
+  *             entry
+  * @param quote quote of the stock entry
   */
   public StockEvent(StockTrademark mark, float quote) {
     this.mark = mark;
@@ -30,36 +35,43 @@ public final class StockEvent {
   }
 
   /**
+  * This accessor method returns the trademark instance of a stock
+  * event. This trademark instance may in turn be used to print
+  * the name and symbol of an event.
   *
-  *
-  * @return
+  * @return the trademark instance of a stock entry
   */
   public StockTrademark getTrademark() {
     return this.mark;
   }
 
   /**
+  * This accessor method returns the actual quote of the stock
+  * event.
   *
-  *
-  * @return
+  * @return current quote of the stock event
   */
   public float getQuote() {
     return this.quote;
   }
 
   /**
+  * This mutator method allows updating quote of a stock event
+  * object.
   *
-  *
-  *
+  * @param quote the new quote of the stock event
   */
   public void setQuote(float quote) {
     this.quote = quote;
   }
 
   /**
+  * To compare two stock events, equals method has been overriden
+  * so that stock events be compared for equality based on their
+  * trademarks and not on their quotes.
   *
-  *
-  * return whether the event matches a given event
+  * @param obj the object to be checked for equality
+  * @return whether the event matches another given event
   */
   @Override
   public boolean equals(Object obj) {
@@ -72,9 +84,13 @@ public final class StockEvent {
   }
 
   /**
+  * Since equals method has been overriden, this method overrides
+  * the hashCode method of stock event to allow possiblity of
+  * using stock events in a hashmap (although not used in this
+  * program). Bassd on current implementatoin, hashcode is
+  * generated based on the trademark of a stock event.
   *
-  *
-  * @return hashcode of the symbol of the event instance
+  * @return hashcode of trademark of the event instance
   */
   @Override
   public int hashCode() {

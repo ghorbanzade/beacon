@@ -14,28 +14,28 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
-* This singleton class provides a bridge that allows separating program
-* configurations from the source code. This class fetches configurations
-* from a java properties file, given the key to that configuration.
+* This singleton class provides a bridge that allows separating
+* program configurations from the source code. This class fetches
+* configurations from a java properties file.
 *
 * @author Pejman Ghorbanzade
-* @see Stock
 */
 public final class StockConfig {
   /**
-  * This class will have a single instance that has a properties object
-  * to include program configurations.
+  * This class will have a single instance that has a properties
+  * object to include program configurations.
   */
   private static StockConfig instance = null;
   private Properties config = null;
 
   /**
-  * To ensure this class can be instantiated only once, the constructor
-  * is declared as private. Upon instantiation, the constructor loads
-  * the configuration file.
+  * To ensure this class can be instantiated only once, the
+  * constructor is declared as private. Upon instantiation, the
+  * constructor loads the configuration file.
   */
   private StockConfig() {
-    try (InputStream fis = StockConfig.class.getResourceAsStream("/stock.properties")) {
+    try (InputStream fis = StockConfig.class.getResourceAsStream(
+        "/stock.properties")) {
       this.config = new Properties();
       this.config.load(fis);
       fis.close();
@@ -60,9 +60,10 @@ public final class StockConfig {
   }
 
   /**
-  * The instance of StockConfig class will allow retrieval of configurations
-  * using a string format of the key. In case the key is not found in the
-  * configuration file, the method would return null.
+  * The instance of StockConfig class will allow retrieval of
+  * configurations using a string format of the key. In case the
+  * key is not found in the configuration file, the method would
+  * return null.
   *
   * @param format the format that the key would be given
   * @param arguments the argumnts to the format of the key
