@@ -9,6 +9,11 @@ package edu.umb.cs680.hw05;
 
 import java.util.ArrayList;
 
+/**
+*
+*
+* @author Pejman Ghorbanzade
+*/
 public class CreditAccount extends BankAccount {
 
   private final CreditAccountType type;

@@ -7,6 +7,11 @@
 
 package edu.umb.cs680.hw05;
 
+/**
+*
+*
+* @author Pejman Ghorbanzade
+*/
 public class Bank {
 
   private final String name;

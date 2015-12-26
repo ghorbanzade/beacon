@@ -7,6 +7,11 @@
 
 package edu.umb.cs680.hw05;
 
+/**
+*
+*
+* @author Pejman Ghorbanzade
+*/
 public final class CreditCardMain {
   public static void main(String[] args) {
     try {
