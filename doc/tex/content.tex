@@ -1,7 +1,3 @@
-\tableofcontents
-
-\newpage
-
 \section{Question 1}
 
 Figure \ref{fig1} shown below has errors/typos.
@@ -142,69 +138,3 @@ public class Student {
 However such type casting is dangerous and the proposed workaround is not recommended.
 
 \section{Question 3}
-
-Figure \ref{fig3} shows the relationship between Polygon interface and three classes implementing it.
-Develop the interface \texttt{Polygon} and its two implementation claseses \texttt{Triangle} and \texttt{Rectangle}.
-Implement \texttt{getPoints()} and \texttt{getArea()} in the two subclasses.
-
-In the main method, write test code that makes two different triangles and two different rectangles.
-Include the four polygons in a collection (e.g. \texttt{ArrayList}) using generics.
-Print out area for each polygon using an iterator.
-Keep the encapsulation principle in mind: All data fields must be declared \textit{private} and no mutator is required.
-
-\begin{figure}
-\centering
-	\begin{tikzpicture}
-		\begin{interface}[text width=7cm]{Polygon}{0,0}
-			\operation{+ getPoints(): ArrayList$<$Point$>$}
-			\operation[0]{+ getArea(): double}
-		\end{interface}
-		\begin{class}[text width=4cm]{Triangle}{-5,-4}
-			\implement{Polygon}
-			\operation{+ getArea(): double}
-		\end{class}
-		\begin{class}[text width=4cm]{Rectangle}{0,-4}
-			\implement{Polygon}
-			\operation{+ getArea(): double}
-		\end{class}
-		\begin{class}[text width=4cm]{Pentagon}{5,-4}
-			\implement{Polygon}
-			\operation{+ getArea(): double}
-		\end{class}
-	\end{tikzpicture}
-\caption{UML Diagram for Question 3}\label{fig3}
-\end{figure}
-
-\subsection*{Solution}
-
-\begin{enumerate}
-	\item Class \texttt{Polygon}
-	\lstinputlisting{\srcDirectory/main/java/hw01/Polygon.java}
-	\item Class \texttt{Triangle}
-	\lstinputlisting{\srcDirectory/main/java/hw01/Triangle.java}
-	\item Class \texttt{Rectangle}
-	\lstinputlisting{\srcDirectory/main/java/hw01/Rectangle.java}
-	\item Class \texttt{PolygonMain}
-	\lstinputlisting{\srcDirectory/main/java/hw01/PolygonMain.java}
-\end{enumerate}
-
-Source code for unit tests related to this question are provided in Appendix \ref{App:AppendixA}.
-
-\section{Question 4}
-
-\newpage
-\appendix
-
-\section{Unit Tests for Question 3}\label{App:AppendixA}
-
-\begin{enumerate}
-	\item Class \texttt{TriangleTest}
-	\lstinputlisting{\srcDirectory/test/java/hw01/TriangleTest.java}
-	\item Class \texttt{RectangleTest}
-	\lstinputlisting{\srcDirectory/test/java/hw01/RectangleTest.java}
-\end{enumerate}
-
-\begin{appendix}
-	\listoffigures
-	\listoftables
-\end{appendix}
