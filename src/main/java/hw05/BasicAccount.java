@@ -21,10 +21,12 @@ public class BasicAccount extends BankAccount {
   public void withdraw(Client client, float amount)
       throws UnsupportedOperationException {
     super.authorize(client);
-    if (this.getBalance() > amount) {
+    if (this.getBalance(client) > amount) {
       super.withdraw(client, amount);
     } else {
-      throw new UnsupportedOperationException("insufficient balance");
+      throw new UnsupportedOperationException(
+          "insufficient balance"
+      );
     }
   }
 

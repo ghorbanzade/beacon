@@ -13,22 +13,21 @@ public class CreditAccount extends BankAccount {
 
   private CreditAccountType type;
   private float currentlimit;
-  private float maxLimit;
+  private float limit;
   private ArrayList<CreditCard> cards = new ArrayList<CreditCard>();
 
   public CreditAccount(Bank bank, Customer customer,
                        CreditAccountType type, float limit) {
     super(bank, customer);
     this.type = type;
-    this.currentLimit = limit;
-    this.maxLimit = limit;
+    this.limit = limit;
   }
 
   @Override
   public void withdraw(Client client, float amount)
       throws UnsupportedOperationException {
     super.authorize(client);
-    if (this.getBalance() - amount > this.currentLimit) {
+    if (this.getBalance(client) - amount + this.limit > 0) {
       super.withdraw(client, amount);
     } else {
       throw new UnsupportedOperationException(
@@ -37,16 +36,12 @@ public class CreditAccount extends BankAccount {
     }
   }
 
-  public void setCreditLimit(Client client, float limit)
+  public CreditCard addCreditCard(Customer customer)
       throws UnsupportedOperationException {
-    super.authorize(client);
-    if (limit < this.maxLimit) {
-      this.currentLimit = limit;
-    } else {
-      throw new UnsupportedOperationException(
-          "limit exceeds maximum credit limit"
-      );
-    }
+    super.authorize(customer);
+    CreditCard card = new CreditCard(this, customer);
+    this.cards.add(card);
+    return card;
   }
 
   public float getCreditLimit(Client client)

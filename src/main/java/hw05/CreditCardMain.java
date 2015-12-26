@@ -18,9 +18,9 @@ public final class CreditCardMain {
       BankAccount account2 = customer.getBasicAccounts().get(1);
       display(customer.getBalance(account1));
       display(customer.getBalance(account2));
-      customer.deposit(account1, 1000);
-      customer.deposit(account2, 1000);
-      customer.withdraw(account2, 500);
+      customer.deposit(account1, 1000F);
+      customer.deposit(account2, 1000F);
+      customer.withdraw(account2, 500F);
       display(customer.getBalance(account1));
       display(customer.getBalance(account2));
       customer.newCreditAccount(bank, CreditAccountType.REWARDS);
@@ -31,15 +31,13 @@ public final class CreditCardMain {
       display(customer.getBalance(account4));
       customer.newCreditCard(account3);
       CreditCard card1 = customer.getCreditCards().get(0);
-      CreditCard card2 = customer.getCreditCards().get(1);
       display(customer.getCreditLimit(card1));
-      display(customer.getCreditLimit(card2));
-      customer.setCreditLimit(card1, 300);
-      customer.purchase(card1, 100);
-      display(customer.getRewards(account3));
-      customer.redeem(account3, customer.getRewards(account3));
+      customer.setCreditLimit(card1, 300F);
+      customer.purchase(card1, 100F);
+      display(customer.getRewards(card1));
+      customer.redeem(card1, customer.getRewards(card1));
       display(customer.getBalance(account3));
-      customer.transfer(account1, account3, 200);
+      customer.transfer(account1, account3, 200F);
       display(customer.getBalance(account1));
       display(customer.getBalance(account3));
     } catch (UnsupportedOperationException e) {
@@ -47,8 +45,8 @@ public final class CreditCardMain {
     }
   }
 
-  private void display(Object object) {
-    System.out.print(object.toString());
+  private static void display(Object object) {
+    System.out.println(object.toString());
   }
 
   private CreditCardMain() {
