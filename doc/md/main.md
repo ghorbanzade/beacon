@@ -4,7 +4,7 @@
 
 ## Introduction
 This repository contains the source code developed for _CS680: Object-Oriented Design and Programming_ course at [University of Massachusetts Boston].
-It includes +4.5K high quality source lines of Java code and +100 pages of documentation that provide solution to 14 problems using different software design patterns.
+It includes +4.5K high quality source lines of Java code that provide solution to 14 problems using different software design patterns.
 
 All solutions are unit tested with +95% coverage using JUnit, and all source codes are extensively documented using Javadoc.
 

@@ -137,4 +137,12 @@ public class Student {
 
 However such type casting is dangerous and the proposed workaround is not recommended.
 
-\section{Question 3}
+\section{Question 4}
+Explain how the Decorator design pattern can eliminate a long sequence of conditional statements.
+
+\subsection*{Solution}
+
+Using the decorator design pattern, objects of different classes that implement an interface can be wrapped into objects of a single class.
+This way, instead of passing objects of different classes, the wrapped object will be passed to other methods of concern.
+This removes the need for checking whether the passed object is of the certain class using conditional statements.
+In short, Decorator design pattern will add a level of abstraction to the design that will help hide the internal implementation of methods of concern and summarize the object to the methods other APIs are interested to work with.
