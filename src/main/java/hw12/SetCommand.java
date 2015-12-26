@@ -36,7 +36,7 @@ public final class SetCommand implements Command {
     if (instruction.getArguments().size() == 2) {
       String key = instruction.getArguments().get(0);
       String value = instruction.getArguments().get(1);
-      if (key.equals("sort")) {
+      if ("sort".equals(key)) {
         cli.setSortMethod(value);
       }
     } else {

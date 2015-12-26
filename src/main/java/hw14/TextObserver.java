@@ -20,6 +20,7 @@ public final class TextObserver implements StockEventObserver {
   * This class has a default constructor.
   */
   public TextObserver() {
+    // intentionally left empty.
   }
 
   /**

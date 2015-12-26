@@ -9,7 +9,7 @@ package edu.umb.cs680.hw05;
 
 public class BasicAccount extends BankAccount {
 
-  private BasicAccountType type;
+  private final BasicAccountType type;
 
   public BasicAccount(Bank bank, Customer customer,
                       BasicAccountType type) {

@@ -20,7 +20,7 @@ public final class ElementCountVisitor implements FileSystemVisitor {
   /**
   * a hashmap to hold counters for different file system element types.
   */
-  private HashMap<FileSystemElementType, Integer> counts =
+  private final HashMap<FileSystemElementType, Integer> counts =
       new HashMap<FileSystemElementType, Integer>();
 
   /**

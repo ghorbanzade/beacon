@@ -24,7 +24,7 @@ public final class History {
   * instance.
   */
   private int limit;
-  private ArrayList<Instruction> instructions;
+  private final ArrayList<Instruction> instructions;
 
   /**
   * The constructor for this class will create a list of instructions

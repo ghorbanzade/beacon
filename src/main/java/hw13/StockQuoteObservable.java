@@ -25,7 +25,7 @@ public final class StockQuoteObservable extends Observable {
   * events. Observers of the instance can access the list for
   * presentation purposes.
   */
-  private ArrayList<StockEvent> events = new ArrayList<StockEvent>();
+  private final ArrayList<StockEvent> events = new ArrayList<StockEvent>();
 
   /**
   * The constructor of stock quote observable calls the static

@@ -27,14 +27,14 @@ public final class Cli {
   * methods for comparing file system elements. Each instance keeps track
   * of the active directory and the user interacting with it.
   */
-  private String name;
-  private User user;
-  private String hostname;
-  private History history;
+  private final String name;
+  private final User user;
+  private final String hostname;
+  private final History history;
   private Directory currentDirectory;
   private FileSystemElementComparator sortMethod;
-  private HashMap<String, Command> commands = new HashMap<String, Command>();
-  private HashMap<String, FileSystemElementComparator> sortMethods =
+  private final HashMap<String, Command> commands = new HashMap<String, Command>();
+  private final HashMap<String, FileSystemElementComparator> sortMethods =
         new HashMap<String, FileSystemElementComparator>();
 
   /**
@@ -147,7 +147,7 @@ public final class Cli {
   */
   public String toFullPath(String arg) {
     String currentDir  = this.currentDirectory.getFullPath();
-    if (currentDir.equals("/") == false) {
+    if (!"/".equals(currentDir)) {
       currentDir += "/";
     }
     return arg.startsWith("/") ? arg : currentDir.concat(arg);
@@ -172,7 +172,7 @@ public final class Cli {
     names.addAll(Arrays.asList(newPath.split("/")));
     if (path.charAt(0) != '/') {
       String currentDir = this.currentDirectory.getFullPath();
-      if (currentDir.equals("/") == false) {
+      if (!"/".equals(currentDir)) {
         names.addAll(0, new ArrayList<String>(Arrays.asList(
             currentDir.substring(1).split("/")
         )));

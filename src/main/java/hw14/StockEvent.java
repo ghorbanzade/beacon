@@ -18,7 +18,7 @@ public final class StockEvent {
   /**
   * Each stock event has a trademark and an actual quote.
   */
-  private StockTrademark mark;
+  private final StockTrademark mark;
   private float quote;
 
   /**

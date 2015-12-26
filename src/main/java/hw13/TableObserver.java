@@ -23,6 +23,7 @@ public final class TableObserver implements Observer {
   * This class has a default constructor.
   */
   public TableObserver() {
+    // intentionally left empty.
   }
 
   /**

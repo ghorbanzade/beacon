@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public abstract class BankAccount {
 
   private float balance;
-  private Bank bank;
-  private ArrayList<Customer> customers = new ArrayList<Customer>();
+  private final Bank bank;
+  private final ArrayList<Customer> customers = new ArrayList<Customer>();
 
   public BankAccount(Bank bank, Customer customer) {
     this.balance = 0;
@@ -37,6 +37,12 @@ public abstract class BankAccount {
     return this.balance;
   }
 
+  public Bank getBanke(Client client)
+      throws UnsupportedOperationException {
+    authorize(client);
+    return this.bank;
+  }
+
   public void addCustomer(Client client, Customer customer)
       throws UnsupportedOperationException {
     authorize(client);
@@ -52,7 +58,7 @@ public abstract class BankAccount {
         isAuthorized = true;
       }
     }
-    if (isAuthorized == false) {
+    if (!isAuthorized) {
       throw new UnsupportedOperationException("client unauthorized");
     }
   }

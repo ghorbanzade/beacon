@@ -74,7 +74,7 @@ public final class ListCommand implements Command {
   private void showResult(ArrayList<FileSystemElement> elements,
                           Instruction instruction) {
     ArrayList<String> options = instruction.getOptions();
-    if (elements.isEmpty() == false) {
+    if (!elements.isEmpty()) {
       if (options.contains("l")) {
         int totalSize = 0;
         for (FileSystemElement element: elements) {

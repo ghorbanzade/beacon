@@ -24,6 +24,7 @@ public final class PieChartObserver implements Observer {
   * This class has a default constructor.
   */
   public PieChartObserver() {
+    // inentionally left empty.
   }
 
   /**

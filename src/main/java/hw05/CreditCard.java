@@ -9,8 +9,8 @@ package edu.umb.cs680.hw05;
 
 public class CreditCard {
 
-  private CreditAccount account;
-  private Customer customer;
+  private final CreditAccount account;
+  private final Customer customer;
   private float limit;
   private float rewards;
 
@@ -73,7 +73,7 @@ public class CreditCard {
         isAuthorized = true;
       }
     }
-    if (isAuthorized == false) {
+    if (!isAuthorized) {
       throw new UnsupportedOperationException(
         "unauthorized client"
       );

@@ -23,9 +23,9 @@ public final class StockEventObservable {
   * Each stock observable instance has a list of stock events and
   * a list of observers watching those events.
   */
-  private ArrayList<StockEventObserver> observers =
+  private final ArrayList<StockEventObserver> observers =
       new ArrayList<StockEventObserver>();
-  private ArrayList<StockEvent> events = new ArrayList<StockEvent>();
+  private final ArrayList<StockEvent> events = new ArrayList<StockEvent>();
 
   /**
   * The constructor of stock observable calls the static method

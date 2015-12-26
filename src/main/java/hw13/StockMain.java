@@ -37,4 +37,11 @@ public final class StockMain {
     Timer timer = new Timer();
     timer.schedule(new StockQuoteRefreshTask(timer, market), 0, refreshRate);
   }
+
+  /**
+  * This class must not be instantiated.
+  */
+  private StockMain() {
+    // intentionally left empty.
+  }
 }

@@ -20,7 +20,7 @@ public final class StockTrademark {
   * Each trademark has a [unique] symbol and a name.
   */
   private String name;
-  private String symbol;
+  private final String symbol;
 
   /**
   * A trademark can be constructed simply by providing a symbol.

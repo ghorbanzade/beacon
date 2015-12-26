@@ -20,6 +20,7 @@ public final class TableObserver implements StockEventObserver {
   * This class has a default constructor.
   */
   public TableObserver() {
+    // intentionally left empty.
   }
 
   /**

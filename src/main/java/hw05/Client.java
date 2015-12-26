@@ -9,7 +9,7 @@ package edu.umb.cs680.hw05;
 
 public abstract class Client {
 
-  private String name;
+  private final String name;
 
   public Client(String name) {
     this.name = name;

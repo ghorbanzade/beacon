@@ -25,10 +25,10 @@ public final class StockQuoteRefreshTask extends TimerTask {
   * should be executed, the timer that has scheduled the task and
   * the observable instance to be updated at each run.
   */
-  private StockQuoteObservable market;
-  private Timer timer;
-  private long tic;
-  private long runtime;
+  private final StockQuoteObservable market;
+  private final Timer timer;
+  private final long tic;
+  private final long runtime;
 
   /**
   * Each instance of this class needs to know the timer that scheduled

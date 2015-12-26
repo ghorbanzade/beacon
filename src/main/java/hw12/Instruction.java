@@ -25,10 +25,10 @@ public final class Instruction {
   * of arguments and a list of options. The object also includes
   * the date the object is instantiated.
   */
-  private Date date;
-  private String name;
-  private ArrayList<String> arguments = new ArrayList<String>();
-  private ArrayList<String> options = new ArrayList<String>();
+  private final Date date;
+  private final String name;
+  private final ArrayList<String> arguments = new ArrayList<String>();
+  private final ArrayList<String> options = new ArrayList<String>();
 
   /**
   * This constructor takes the one-liner command given by the user
@@ -57,7 +57,7 @@ public final class Instruction {
   * @return the date the instruction has been issued
   */
   public Date getDate() {
-    return this.date;
+    return (Date) this.date.clone();
   }
 
   /**

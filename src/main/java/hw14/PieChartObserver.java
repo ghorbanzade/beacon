@@ -20,6 +20,7 @@ public final class PieChartObserver implements StockEventObserver {
   * This class has a default constructor.
   */
   public PieChartObserver() {
+    // intentionally left empty.
   }
 
   /**

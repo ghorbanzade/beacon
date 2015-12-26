@@ -25,6 +25,7 @@ public final class TextObserver implements Observer {
   * This class has a default constructor.
   */
   public TextObserver() {
+    // intentionally left empty.
   }
 
   /**

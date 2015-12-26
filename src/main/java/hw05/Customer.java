@@ -35,7 +35,7 @@ public class Customer extends Client {
       );
     } else {
       this.creditAccounts.add(
-        new CreditAccount(bank, this, type, 500F)
+          new CreditAccount(bank, this, type, 500F)
       );
     }
   }

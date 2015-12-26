@@ -11,10 +11,9 @@ import java.util.ArrayList;
 
 public class CreditAccount extends BankAccount {
 
-  private CreditAccountType type;
-  private float currentlimit;
-  private float limit;
-  private ArrayList<CreditCard> cards = new ArrayList<CreditCard>();
+  private final CreditAccountType type;
+  private final float limit;
+  private final ArrayList<CreditCard> cards = new ArrayList<CreditCard>();
 
   public CreditAccount(Bank bank, Customer customer,
                        CreditAccountType type, float limit) {

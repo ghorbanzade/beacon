@@ -27,7 +27,7 @@ public final class FileSystemMain {
   */
   public static void main(String[] args) {
     try {
-      Scanner input = new Scanner(System.in);
+      Scanner input = new Scanner(System.in, "UTF-8");
       Cli cli = new Cli(CliConfig.getInstance().get("cli.name"));
       while (true) {
         try {
@@ -60,7 +60,7 @@ public final class FileSystemMain {
     while (true) {
       System.out.printf(cli.getPrompt());
       String strCommand = input.nextLine();
-      if (strCommand.isEmpty() == false) {
+      if (!strCommand.isEmpty()) {
         Instruction instruction = new Instruction(strCommand);
         cli.record(instruction);
         return instruction;

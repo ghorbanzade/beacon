@@ -44,7 +44,7 @@ public final class StockFileHandler {
     );
     while (lineReader.hasNext()) {
       String line = lineReader.nextLine();
-      if (line.isEmpty() == false && line.trim().charAt(0) != '#') {
+      if (!line.isEmpty() && line.trim().charAt(0) != '#') {
         Scanner tokenReader = new Scanner(line).useDelimiter("\\s*, \\s*");
         String name = tokenReader.next();
         String symbol = tokenReader.next();

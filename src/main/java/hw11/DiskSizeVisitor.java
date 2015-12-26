@@ -28,6 +28,7 @@ public final class DiskSizeVisitor implements FileSystemVisitor {
   * the constructor for this class is an empty one.
   */
   public DiskSizeVisitor() {
+    // intentionally left empty.
   }
 
   /**
@@ -51,6 +52,7 @@ public final class DiskSizeVisitor implements FileSystemVisitor {
   * @param directory the directory on which the policy should be applied.
   */
   public void visit(Directory directory) {
+    // intentionally left empty.
   }
 
   /**
@@ -61,6 +63,7 @@ public final class DiskSizeVisitor implements FileSystemVisitor {
   * @param link the link on which the policy should be applied
   */
   public void visit(Link link) {
+    // intentionally left empty.
   }
 
   /**

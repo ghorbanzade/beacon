@@ -22,8 +22,8 @@ public final class NameSearchVisitor implements FileSystemVisitor {
   * file system elements that contains the elements whose name contains
   * the given phrase.
   */
-  private String key;
-  private ArrayList<FileSystemElement> result = new ArrayList<FileSystemElement>();
+  private final String key;
+  private final ArrayList<FileSystemElement> result = new ArrayList<FileSystemElement>();
 
   /**
   * Upon instantiation, a name search visitor should know what phrase it is
