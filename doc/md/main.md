@@ -32,6 +32,23 @@ Once the build is complete, you can execute each program by adding the path to i
 java -cp UMB-CS680-2015F-hw12.jar edu.umb.cs680.hw12.FileSystemMain
 ```
 
+### Building Documents
+
+You can build all documents by issuing `make docs` in the top-level directory.
+
+The following packages are needed to successfully build all documents.
+
+```
+sudo apt-get install texlive-latex-base
+sudo apt-get install texlive-latex-extra
+```
+
+Also make sure that you have the submodule(s) of the repository:
+
+```
+git submodule update --init --recursive
+```
+
 ## Contribution
 Content of this repository is __not__ subject to change.
 Bug reports however are immensely appreciated.
