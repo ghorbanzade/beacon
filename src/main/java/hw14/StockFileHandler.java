@@ -40,7 +40,7 @@ public final class StockFileHandler {
     String filename =
         StockConfig.getInstance().get("file.stockquote");
     Scanner lineReader = new Scanner(
-        StockConfig.class.getResourceAsStream("/" + filename)
+        StockConfig.class.getResourceAsStream("/" + filename), "UTF-8"
     );
     while (lineReader.hasNext()) {
       String line = lineReader.nextLine();

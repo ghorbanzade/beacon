@@ -50,6 +50,8 @@ public final class StockQuoteObservable extends Observable {
   * This method updates the quote of a stock event whose symbol is
   * given. In case no stock event with specified symbol exists,
   * the method will throw an unsupported operation exception.
+  * Note that updating an event will not trigger notifyObservers
+  * method.
   *
   * @param symbol the symbol of the stock event with updated quote
   * @param quote the new quote of the stock event whose symbol is
