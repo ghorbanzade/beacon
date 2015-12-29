@@ -16,8 +16,16 @@ public enum CreditAccountType {
   REWARDS("rewards"),
   TRAVEL("travel");
 
+  /**
+  *
+  */
   private final String name;
 
+  /**
+  *
+  *
+  * @param name
+  */
   private CreditAccountType(String name) {
     this.name = name;
   }

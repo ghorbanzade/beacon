@@ -16,8 +16,17 @@ public enum BasicAccountType {
   CHECKING("checking"),
   SAVING("saving");
 
+  /**
+  *
+  */
   private final String name;
 
+  /**
+  *
+  *
+  * @param name
+  * @return
+  */
   private BasicAccountType(String name) {
     this.name = name;
   }

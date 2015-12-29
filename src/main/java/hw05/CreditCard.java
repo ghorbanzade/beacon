@@ -13,18 +13,32 @@ package edu.umb.cs680.hw05;
 * @author Pejman Ghorbanzade
 */
 public class CreditCard {
-
+  /**
+  *
+  */
   private final CreditAccount account;
   private final Customer customer;
   private float limit;
   private float rewards;
 
+  /**
+  *
+  *
+  * @param account
+  * @param customer
+  */
   public CreditCard(CreditAccount account, Customer customer) {
     this.account = account;
     this.customer = customer;
     this.limit = account.getCreditLimit(customer);
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @param amount
+  */
   public void purchase(Client client, float amount)
       throws UnsupportedOperationException {
     this.authorize(client);
@@ -32,6 +46,12 @@ public class CreditCard {
     this.rewards += amount * 0.05F;
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @param limit
+  */
   public void setCreditLimit(Client client, float limit)
       throws UnsupportedOperationException {
     this.authorize(client);
@@ -44,18 +64,36 @@ public class CreditCard {
     }
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @return
+  */
   public float getCreditLimit(Client client)
       throws UnsupportedOperationException {
     this.authorize(client);
     return this.limit;
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @return
+  */
   public float getRewards(Client client)
       throws UnsupportedOperationException {
     this.authorize(client);
     return this.rewards;
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @param amount
+  */
   public void redeem(Client client, float amount)
       throws UnsupportedOperationException {
     this.authorize(client);
@@ -69,6 +107,11 @@ public class CreditCard {
     }
   }
 
+  /**
+  *
+  *
+  * @param client
+  */
   private void authorize(Client client)
       throws UnsupportedOperationException {
     boolean isAuthorized = false;

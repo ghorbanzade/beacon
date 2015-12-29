@@ -15,11 +15,21 @@ import java.util.ArrayList;
 * @author Pejman Ghorbanzade
 */
 public class CreditAccount extends BankAccount {
-
+  /**
+  *
+  */
   private final CreditAccountType type;
   private final float limit;
   private final ArrayList<CreditCard> cards = new ArrayList<CreditCard>();
 
+  /**
+  *
+  *
+  * @param bank
+  * @param customer
+  * @param type
+  * @param limit
+  */
   public CreditAccount(Bank bank, Customer customer,
                        CreditAccountType type, float limit) {
     super(bank, customer);
@@ -27,6 +37,12 @@ public class CreditAccount extends BankAccount {
     this.limit = limit;
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @param amount
+  */
   @Override
   public void withdraw(Client client, float amount)
       throws UnsupportedOperationException {
@@ -40,6 +56,12 @@ public class CreditAccount extends BankAccount {
     }
   }
 
+  /**
+  *
+  *
+  * @param customer
+  * @return
+  */
   public CreditCard addCreditCard(Customer customer)
       throws UnsupportedOperationException {
     super.authorize(customer);
@@ -48,12 +70,24 @@ public class CreditAccount extends BankAccount {
     return card;
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @return
+  */
   public float getCreditLimit(Client client)
       throws UnsupportedOperationException {
     super.authorize(client);
     return this.limit;
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @return
+  */
   public CreditAccountType getType(Client client)
       throws UnsupportedOperationException {
     super.authorize(client);

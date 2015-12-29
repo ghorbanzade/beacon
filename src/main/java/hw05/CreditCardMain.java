@@ -13,6 +13,11 @@ package edu.umb.cs680.hw05;
 * @author Pejman Ghorbanzade
 */
 public final class CreditCardMain {
+  /**
+  *
+  *
+  * @param args command line arguments given to this program
+  */
   public static void main(String[] args) {
     try {
       Customer customer = new Customer("customer-name");

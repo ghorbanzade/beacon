@@ -13,15 +13,30 @@ package edu.umb.cs680.hw05;
 * @author Pejman Ghorbanzade
 */
 public class BasicAccount extends BankAccount {
-
+  /**
+  *
+  */
   private final BasicAccountType type;
 
+  /**
+  *
+  *
+  * @param bank
+  * @param customer
+  * @param type
+  */
   public BasicAccount(Bank bank, Customer customer,
                       BasicAccountType type) {
     super(bank, customer);
     this.type = type;
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @param amount
+  */
   @Override
   public void withdraw(Client client, float amount)
       throws UnsupportedOperationException {
@@ -35,6 +50,12 @@ public class BasicAccount extends BankAccount {
     }
   }
 
+  /**
+  *
+  *
+  * @param client
+  * @return
+  */
   public BasicAccountType getType(Client client)
       throws UnsupportedOperationException {
     super.authorize(client);
