@@ -6,10 +6,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def \topDirectory {../..}
-\def \texDirectory {\topDirectory/src/tex}
-\def \pngDirectory {\topDirectory/bin/png}
+\def \srcDirectory {\topDirectory/src}
+\def \binDirectory {\topDirectory/bin}
+\def \texDirectory {\srcDirectory/tex}
+\def \pngDirectory {\binDirectory/png}
 
-\documentclass[12pt,letterpaper,draft,twoside]{article}
+\documentclass[12pt,letterpaper,twoside]{article}
 
 \usepackage{\texDirectory/directives}
 \usepackage{\texDirectory/report}
@@ -25,10 +27,137 @@
 
 \section*{Question}
 
-Hello World!
+Profit of stores of a coffeehouse chain has been recorded and provided in \texttt{data.txt} file, along with population of the city they are in.
+
+The coffeehouse is planning an expansion and is deciding which city to expand to.
+
+Objective is to use the dataset to predict profit of the new store given population of the city in which it will operate.
 
 \subsection*{Solution}
 
-Hello World!
+To understand the data, profit of the stores based on population of the city they operate in is visualized in Figure \ref{fig1}.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-01.png}
+\caption{Profit of Coffee Shop based on Population of the City}\label{fig1}
+\end{figure}
+
+Correlation of the dataset is calculated at 0.837 which ensures there is a correlation between the profit (dependant variable) and the city population (independant variable).
+
+As there is only one single feature in our dataset, the hypothesis function for linear regression will be of the form shown in Eq. \ref{eq1}.
+
+\begin{equation}\label{eq1}
+h(x) = \theta_0 + \theta_1 x
+\end{equation}
+
+Applying linear regression on the dataset, coefficients $\theta_0$ and $\theta_1$ of the hypothesis function will be obtained.
+
+\begin{equation}\label{eq2}
+\begin{split}
+\theta_0 = -3.89578\\
+\theta_1 = -1.19303
+\end{split}
+\end{equation}
+
+\begin{terminal}
+lm.out <- lm(data$profit ~ data$population)
+theta <- coef(lm.out)
+\end{terminal}
+
+Thus, the best fitted regression line will be as depicted in Fig. \ref{fig2}.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-03.png}
+\caption{Best-Fitted Regression Line for the Dataset}\label{fig2}
+\end{figure}
+
+Using previously obtained $\theta_0$ and $\theta_1$, the cost function can be obtained as shown in Eq. \ref{eq3}.
+
+\begin{equation}\label{eq3}
+\begin{split}
+J(\theta_0, \theta_1) & = \frac{1}{2m}\sum\limits_{i=1}^m \left(h_{\theta}(x^{(i)})-y^{(i)}\right)^{2} \\
+ & = \frac{1}{2 \times 97}\sum\limits_{i=1}^{97} \left({-3.90} + {1.19}x^{(i)} - y^{(i)}\right)\\
+ & = 4.476971
+\end{split}
+\end{equation}
+
+\begin{terminal}
+cost <- sum((x%*%theta)-y)^2)/(2*m)
+\end{terminal}
+
+\subsubsection*{Cost Function Minimization using Gradient Descent}
+
+To measure the impact of the learning rate, the cost function is minimized using gradient descent as shown in Eq. \ref{eq4}.
+
+\begin{equation}\label{eq4}
+\theta_j := \theta_j - \alpha \frac{\partial}{\partial\theta_j}J(\theta_0, \theta_1)
+\end{equation}
+
+Taking $\alpha = 0.02$ and the number of iterations $i = 500$, final values for $\theta_0$ and $\theta_1$ are obtained as $\theta_0 = 3.261$ and $\theta_1 = 1.130$.
+Meanwhile, using the same number of iterations, choosing $\alpha = 0.005$ will result in $\theta_0 = -1.367$ and $\theta_1 = 0.939$ which is much closer to the values obtained using linear regression tool in Eq. \ref{eq2}.
+
+\begin{terminal}
+gradient_descent <- function(x, y, alpha) {
+	x <- cbind(1, x)
+	iterations <- 500
+	theta <- c(0, 0)
+	for (i in 1:iterations)
+	{
+		theta[1] <- theta[1] - alpha * (1/m) * sum(((x%*%theta)- y))
+		theta[2] <- theta[2] - alpha * (1/m) * sum(((x%*%theta)- y)*x[,2])
+	}
+	return(theta)
+}
+theta <- gradient_descent(data$population, data$profit, 0.02)
+theta <- gradient_descent(data$population, data$profit, 0.005)
+\end{terminal}
+
+To better illustrate the impact of the learning rate, Fig. \ref{fig3} is presented in which $\theta_i$ values obtained by applying gradient descent model with 500 iterations are plotted for different values of $\alpha$.
+
+\begin{figure}\centering
+\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-05.png}
+\caption{$\theta_0$ and $\theta_1$ values obtained from gradient descent algorithm for different learning rates and fixed number of iterations}\label{fig3}
+\end{figure}
+
+We can also investigate changes in normalized error of coefficient values obtained by gradient descent algorithm for different learning rates, as shown in Fig. \ref{fig4}.
+
+\begin{figure}\centering
+\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-06.png}
+\caption{Normalized error of gradient descent algorithm for different learning rates with fixed number of iterations}\label{fig4}
+\end{figure}
+
+As is clearly deducted from Fig. \ref{fig4}, if the learning rate $\alpha$ is too small, more iterations will be needed to achieve the same level of accuracy.
+To visualize this point, Fig. \ref{fig5} is provided where number if iterations to achieve errors of less than 1\% (compared to values obtained in Eq. \ref{eq2}) is plotted for different learning rates $\alpha$.
+
+\begin{figure}\centering
+\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-07.png}
+\caption{Number of required iterations for different learning rates to achieve the same level of accuracy}\label{fig5}
+\end{figure}
+
+\newpage
+
+\subsubsection*{Linear Regression Model to Predict Profit based on Population}
+
+Given the linear regression line shown in Fig. \ref{fig2} and values given in Eq. \ref{eq2}, it is easy to predict profit of a future store, given the population of the city in which it is going to operate.
+As an instance, given that Boston has a population of 645966, profit of the store can be projected as follows.
+
+\begin{equation}\label{eq5}
+\begin{split}
+\mathit{profit}_\mathit{Boston} & = \theta_0 + \theta_1 \times \mathit{population}_\mathit{Boston} \\
+ & = -3.89578 + 1.19303 * 64.5966 \\
+ & = 3.81081
+\end{split}
+\end{equation}
+
+Therefore, based on current dataset, a new store for the coffee house chain is projected to have \$381081 profit.
+
+\cleardoublepage
+
+\section*{Appendices}
+
+\subsection*{Source Code}
+
+\lstset{language=r,tabsize=4}
+\lstinputlisting[firstline=1]{\srcDirectory/r/hw02.r}
 
 \end{document}
