@@ -8,7 +8,7 @@ It includes +4.5K high quality source lines of Java code that provide solution t
 
 All solutions are unit tested with +95% coverage using JUnit, and all source codes are extensively documented using Javadoc.
 
-The software uses `ant` and `make` build automation tools to build source code to build source codes and documentations, respectively.
+The software uses `ant` and `make` build automation tools to build source codes and documentations, respectively.
 The automation tool is configured to build the source code, package programs in separate jar files, run all unit tests, measure code coverage and initiate a number of other software development tools such as _javadoc_, _checkstyle_, _pmd_ and _findbugs_.
 
 ## Build Instructions
