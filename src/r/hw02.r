@@ -19,7 +19,7 @@ colnames(data) <- c('population', 'profit')
 # visualize dataset
 ##
 png(filename="bin/png/hw02-01.png",
-	height=480, width=640, units="px", bg="white")
+	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(floor(min(data$population)/5)*5,
 	ceiling(max(data$population)/5)*5,
@@ -51,7 +51,7 @@ with(data, cor.test(data$population, data$profit, alternative="greater", conf.le
 # data variables in pairs to check for correlation easily
 ##
 png(filename="bin/png/hw02-02.png",
-	height=480, width=640, units="px", bg="white")
+	height=768, width=1024, res=150, units="px", bg="white")
 pairs(data)
 trash <- dev.off()
 
@@ -65,7 +65,7 @@ summary(lm.out)
 # Plot regression line on the dataset
 ##
 png(filename="bin/png/hw02-03.png",
-	height=480, width=640, units="px", bg="white")
+	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(floor(min(data$population)/5)*5,
 	ceiling(max(data$population)/5)*5,
@@ -93,7 +93,7 @@ trash <- dev.off()
 # plot linear regression model summary
 ##
 png(filename="bin/png/hw02-04.png",
-    height=480, width=640, units="px", bg="white")
+    height=768, width=1024, res=150, units="px", bg="white")
 par(mfrow=c(2,2))
 plot(lm.out)
 trash <- dev.off()
@@ -150,7 +150,7 @@ for (i in 1:length(alpha)) {
 # Plot theta_0 and theta_1 for different learning rates
 ##
 png(filename="bin/png/hw02-05.png",
-	height=480, width=640, units="px", bg="white")
+	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(min(alpha),
 	max(alpha),
@@ -168,7 +168,7 @@ abline(h=realtheta[1], col="blue", lty=3)
 abline(h=realtheta[2], col="red", lty=3)
 axis(1, at=xrange, labels=round(xrange, 3))
 axis(2, at=yrange, labels=round(yrange, 3))
-legend(0.001, -2.25,
+legend(0.015, 0.5,
 	cex=1,
 	c(expression(paste(theta[0], " gradient descent")),
 		expression(paste(theta[1], " gradient descent")),
@@ -190,7 +190,7 @@ trash <- dev.off()
 # Plot normalized gradient descent error for different learning rates
 ##
 png(filename="bin/png/hw02-06.png",
-	height=480, width=640, units="px", bg="white")
+	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(min(alpha), max(alpha), length.out=5)
 yrange <- seq(0, 100, length.out=6)
@@ -247,7 +247,7 @@ for (i in 1:length(alpha)) {
 # plot required number of iterations for different learning rates
 ##
 png(filename="bin/png/hw02-07.png",
-	height=480, width=640, units="px", bg="white")
+	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(min(alpha), max(alpha), length.out=5)
 yrange <- seq(floor(min(iterations)/5000)*5000,

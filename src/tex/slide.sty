@@ -1,0 +1,90 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS638: Applied Machine Learning
+% Copyright 2016 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs638-2016s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{slide}
+
+% Packages
+\usepackage{lastpage}
+\usepackage{listings}
+
+% Listings
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{light-gray}{gray}{0.95}
+\lstset{frame=tb,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\tiny\color{black},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=5,
+	escapeinside={@*}{*@}
+}
+
+%% Colors
+\definecolor{myDark}{HTML}{003333}
+\definecolor{myLight}{HTML}{006666}
+%
+%% Font Colors
+\setbeamercolor{frametitle}{fg=white, bg=myDark}
+%\setbeamercolor{block title}{fg=myLightTeal}
+%\setbeamercolor{alerted text}{fg=myLightTeal}
+%\setbeamercolor{caption name}{fg=myLightTeal}
+\setbeamercolor{footlinecolor}{fg=white, bg=myDark}
+
+%% Font Sizes
+\setbeamerfont{caption}{size=\scriptsize}
+\setbeamerfont{frametitle}{size=\normalsize}
+\setbeamerfont{footline}{size=\tiny}
+%\setbeamerfont{block title}{size=\large}
+
+% Define Slide
+\newenvironment{slide}
+	{\begin{frame}[fragile,environment=slide]\frametitle{\inserttitle}}
+	{\end{frame}}
+
+% Define Terminal
+\lstnewenvironment{terminal}
+{\lstset{
+	backgroundcolor=\color{light-gray},
+	basicstyle=\small\ttfamily,
+	numbers=none,
+	xleftmargin=1cm,
+	framexleftmargin=10mm,
+	framextopmargin=2mm,
+	framexbottommargin=2mm,
+	frame=tb,
+	framerule=0pt
+}}
+{}
+
+%% Captions
+\setbeamertemplate{caption label separator}{: }
+
+% Footline
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{
+	\begin{beamercolorbox}[sep=3pt,leftskip=0.5cm,rightskip=0.5cm]{footlinecolor}
+	\courseId: \courseName, \courseUniversity, \courseSemester \hfill \myName \hfill \thepage\ of \pageref{LastPage}
+	\end{beamercolorbox}
+}
+
+% Line Height
+\linespread{1.15}
+
+% Document Configurations
+\title{docNumber}
+\author{\myName}
