@@ -270,6 +270,39 @@ trash <- dev.off()
 ##
 # predict profit of store, given population of the city
 ##
-given_population <- 645966 * 1e-5
+given_population <- 645966 * 1e-4
 predicted_profit <- c(1, given_population) %*% realtheta
-cat(predicted_profit)
+predicted_profit
+
+new_row <- cbind(given_population, predicted_profit)
+colnames(new_row) <- c('population', 'profit')
+new_data <- rbind(data, new_row)
+
+##
+# visualize dataset and include the estimated profit for Boston
+##
+png(filename="bin/png/hw02-08.png",
+	height=768, width=1024, res=150, units="px", bg="white")
+
+xrange <- seq(floor(min(new_data$population)/5)*5,
+	ceiling(max(new_data$population)/5)*5,
+	length.out=5
+	)
+yrange <- seq(floor(min(new_data$profit)/5)*5,
+	ceiling(max(new_data$profit)/5)*5,
+	length.out=7
+	)
+plot(0, 0, type="n", axes=F, ann=F,
+	xlim=range(xrange), ylim=range(yrange))
+points(data$population, data$profit, type="p", col="blue")
+abline(lm(data$profit ~ data$population), col="red")
+points(new_row[1], new_row[2], type="p", col="green")
+axis(1, at=xrange, labels=round(xrange, 3))
+axis(2, at=yrange, labels=round(yrange, 3))
+
+grid(10, 10)
+box()
+title(main="Profit of Coffee Shop Based on City's Population", font.main=1)
+title(xlab="Population in 10,000", col.lab='black')
+title(ylab="Profit in $10,000", col.lab='black')
+trash <- dev.off()

@@ -1,4 +1,4 @@
-DOCS = hw02-slide hw02-report
+DOCS = hw02-report hw02-slide
 CODS = hw02
 
 TOP_DIR = .
@@ -16,7 +16,7 @@ COD_PNG = $(foreach NUM, $(CODS), $(PNG_DIR)/$(NUM)-01.png)
 
 .PHONY: all dirs code docs bind tidy clean
 
-all: dirs code docs tidy
+all: dirs code docs bind tidy
 
 dirs:
 	@mkdir -p $(BIN_DIR)
