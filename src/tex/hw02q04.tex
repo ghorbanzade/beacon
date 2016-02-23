@@ -1,0 +1,15 @@
+\section*{Question 4}
+
+Let $\mathcal{C}_\infty$, $\mathcal{C}_\epsilon$ be two collections of sets. Define  $\mathcal{C}_\infty \wedge \mathcal{C}_\epsilon = \{ \mathcal{C}_\infty \cap \mathcal{C}_\epsilon | \mathcal{C}_\infty \in \mathcal{C}_\infty, \mathcal{C}_\epsilon \in \mathcal{C}_\epsilon \}$. Show that $\prod_\mathcal{C}(m) \leq \prod_{\mathcal{C}_\infty}(m) \prod_{\mathcal{C}_\epsilon}(m)$.
+
+\subsection*{Solution}
+
+We assume an arbitrary set $X$ of size $m$. Let $Y_1, ..., Y_k$ be the set of intersections of concepts of $C_1$ with $X$.
+By definition of $\prod_{C_1}(X)$,
+$k \leq \prod_{C_1}(X) \leq \prod_{C_1}(m)$.
+Similarly, from definition of $\prod_{C_2}(Y_i)$, the intersections of the concepts from $C_2$ with $Y_i$ are at most $\prod_{C_2}(Y_i) \leq \prod_{C_2}(m)$.
+
+Therefore, the number of sets intersections of concepts of $C$ with $X$ is at most
+$k \prod_{C_2} (Y_i) \leq \prod_{C_1}(m) \prod_{C_2}(m)$.
+Since we already showed $\prod_{C_1}(X)$,
+$k \leq \prod_{C_1}(X)$, therefore, the proof is complete and $\prod_\mathcal{C}(m) \leq \prod_{\mathcal{C}_\infty}(m) \prod_{\mathcal{C}_\epsilon}(m)$.

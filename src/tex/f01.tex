@@ -1,0 +1,70 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS671: Machine Learning
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def \topDirectory {../..}
+\def \srcDirectory {\topDirectory/src}
+\def \binDirectory {\topDirectory/bin}
+\def \texDirectory {\srcDirectory/tex}
+\def \pngDirectory {\binDirectory/png}
+
+\documentclass[12pt,letterpaper,twoside]{article}
+
+\usepackage{\texDirectory/directives}
+\input{\texDirectory/config}
+\usepackage{\texDirectory/homework}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{pgfplots}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{light-gray}{gray}{0.95}
+\lstset{frame=tb,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\tiny\color{black},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=5
+}
+\lstnewenvironment{terminal}
+{\lstset{
+	backgroundcolor=\color{light-gray},
+	basicstyle=\small\ttfamily,
+	numbers=none,
+	xleftmargin=1cm,
+	framexleftmargin=10mm,
+	framextopmargin=2mm,
+	framexbottommargin=2mm,
+	frame=tb,
+	framerule=0pt
+}}
+{}
+
+\begin{document}
+
+\doc{title}{Solution to Final Exam}
+
+\frontPage
+
+\input{\texDirectory/f01q01}
+\input{\texDirectory/f01q02}
+\input{\texDirectory/f01q03}
+
+\end{document}

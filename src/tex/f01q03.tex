@@ -1,0 +1,9 @@
+\section*{Question 3}
+
+What happens if the perceptron algorithm is applied to the training dataset shown in Figure \ref{fig1}? Modify the \texttt{perceptron} function to stop when a time limit is reached. The limit should be added as a parameter to the \texttt{perceptron} function.
+
+\subsection*{Solution}
+
+Since the \texttt{perceptron} kernel function requires subsets of positive and negative samples in training dataset to be completely separable, application of the \texttt{perceptron} function on the training dataset given in \ref{fig1} will not yield to any result. Since there exists one negative sample which is surrounded by positive samples, it is not possible for any vector to divide the training dataset to two sets of positive and negative samples. Consequently, the \texttt{perceptron} function will continue to calculate the distances in a never-ending sequence.
+
+The kernel can be modified to cease after a specified duration of time, using an iterator which imposes a limit to number of allowed computations in the kernel. However, the resulting vector would not be accurate and cannot be used. This hints of the advantage of SVM-classifiers over the \texttt{perceptron} function.

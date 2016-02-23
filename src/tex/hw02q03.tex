@@ -1,0 +1,26 @@
+\section*{Question 3}
+
+Consider the hypothesis family of sin functions of the form $f_\omega(x) = \sin \omega x$. These functions can be used to classify the points in $\mathbb{R}$ as follows. A point is labeled as positive if it is above the curve, and negative otherwise.
+\begin{enumerate}[label=(\alph*)]
+\item For $m > 0$, consider the set of points $S = \{x_1, x_2, ..., x_m\}$ with arbitrary labels $y_1, y_2, ... y_m \in \{-1, 1\}$. A subset of $S$ is defined by a choice of the parameters $y_i$ and it consists of those $x_i$ such that $y_i = 1$. Define
+\begin{equation}\label{eq31}
+\omega = \pi (1 + \sum_{i=1}^{m} 2^{i}y_{i}^{\prime})
+\end{equation}
+where $y_i^\prime = \frac{1-y}{2}$. Prove that with this choice of $\omega$ the set $S$ is shattered, that is, for every subset $T$ of $S$ there would be an $\omega$ such that $T$ equals the set of positive examples.
+
+\item What is the Vapnik-Chervonenkis dimension of this classifier?
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}
+\item As $S$ is defined based on $y_i$ which in turn depend on $x_i$ based on the function $F_w(x)$, we can simplify the problem by using the function. By substituting $y_i^\prime$ in Equation \ref{eq31}, we'll get
+
+\begin{equation}\label{eq32}
+S = \{2 ^ {-j} | 1 \leq j \leq m\}
+\end{equation}
+
+Since we can choose $w$ as we like, we can move any arbitrary point that we choose to below or above the sine curve. Therefore, the set $S$ can be shattered for all subsets of $S$ with arbitrary size.
+
+\item The class of $f_w(x)$ functions can shatter any arbitrary number of points. Therefore, Vapnik-Chervonenkis Dimension for this class is infinite.
+\end{enumerate}

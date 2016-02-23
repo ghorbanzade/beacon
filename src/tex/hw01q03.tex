@@ -1,0 +1,69 @@
+\section*{Question 3}
+
+Consider a learning problem where each instance is described by a conjunction of $n$ boolean attributes $A_1$, ..., $A_n$. Here, a boolean attribute is an attribute whose domain consists of two values, \textbf{t} and \textbf{f}. Thus, a typical instance would be as given in Expression \ref{eq31}.
+
+\begin{equation}\label{eq31}
+(A_1 = \textbf{t}) \wedge (A_2 = \textbf{f}) \wedge ... \wedge (A_n = \textbf{t})
+\end{equation}
+
+Consider a hypothesis space \textit{H} in which each hypothesis is a disjunction of constraints over these attributes. For example, a typical hypothesis would be as given in Expression \ref{eq32}.
+
+\begin{equation}\label{eq32}
+(A_1 = \textbf{t}) \vee (A_5 = \textbf{f}) \vee (A_7 = \textbf{t})
+\end{equation}
+
+Design an algorithm that accepts a series of training examples and outputs a consistent hypothesis \textit{if one exists}. Your algorithm should run in time that is polynomial in \textit{n} (the number of attributes) and in \textit{m}, the number of training examples.
+
+\subsection*{Solution}
+
+Suppose $\mathcal{C}_i$ is the concept class containing set of conjunctions of Boolean literals $x_1$, $x_2$, ..., $x_n$, $\bar{x_1}$, $\bar{x_2}$, ..., $\bar{x_n}$. The series of training examples can therefore be defined as shown in Equation \ref{eq33}.
+
+\begin{equation}\label{eq33}
+\mathcal{C} = \{\prod_{j=1}^{n} a_i | 1 \leq i \leq m, a_i \in \{x_i, \bar{x_i}, 1\}\}
+\end{equation}
+
+Using fundamental \textit{De Morgan}'s laws in boolean algebra, the proposed algorithm would output the consistent hypothesis $\mathcal{H}$ by taking the complement of the inconsistent hypothesis as shown in Equation \ref{eq34}.
+
+\begin{equation}\label{eq34}
+\mathcal{H} = \overline{(\overline{C_1}\wedge \overline{C_2} \wedge ... \wedge \overline{C_m})}
+\end{equation}
+
+As $C_i$ is based on conjunction of Boolean literals corresponding to attributes of training instances, we will define $D_i$ as $\bar{C_i}$ and call it disjunctions of Boolean literals, in conformance to Expression \ref{eq32}. We can thus rewrite Equation \ref{eq34} as given below.
+
+\begin{equation}\label{eq35}
+\mathcal{H} = \overline{(D_1 \wedge D_2 \wedge ... \wedge D_m)}
+\end{equation}
+
+Therefore, to obtain the concept target it suffices to find disjunctions of $n$ boolean literals for each $D_i$ when $1 \leq i \leq m$. To achieve this objective \textsc{Disjunct} is proposed in Algorithm 2 that outputs disjunctions of Boolean Literals for both positive or negative concepts $C$.
+
+\begin{algorithm}[H]
+\caption{\textsc{Disjunct}($C$, $i$)}
+\begin{algorithmic}[1]
+\If {(example is positive \textbf{and} $C(a_i) = 0$) \textbf{or} (example negative \textbf{and} $C(a_i) = 1$)}
+\State $term \leftarrow X_i$
+\Else
+\State $term \leftarrow \overline{X_i}$
+\EndIf
+
+\If {i = 1}
+\State \textbf{return} term
+\Else
+\State \textbf{return} \textsc{Disjunct}($C$, $i-1$) $\vee$ term
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+By obtaining disjunctions of boolean literals of concept $C$ using \textsc{Disjunct}($C$, $i$), the main proposed algorithm can be given in Algorithm 3.
+
+\begin{algorithm}[H]
+\caption{\textsc{Find-Target-Concept}}
+\begin{algorithmic}[1]
+\State hypothesis $\leftarrow 1$
+\For {$i \leftarrow 1$ to $m$}
+\State hypothesis $\leftarrow$ hypothesis $\wedge$ Disjunct($C_i$, $m$)
+\EndFor
+\State \textbf{return} compliment of hypothesis.
+\end{algorithmic}
+\end{algorithm}
+
+As \textsc{Disjunct} is a recursive algorithm that calls itself $n$ times for a concept of $n$ attributes, its runtime is $\mathcal{O}(n)$. Since \textsc{Disjunct} is called once for each $m$ examples, the total runtime of the proposed algorithm would be $\mathcal{O}(n) + \mathcal{O}(m) = \mathcal{O}(nm)$.
