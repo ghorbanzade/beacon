@@ -1,0 +1,78 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS681: Object-Oriented Software Development
+% Copyright 2016 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% https://github.com/ghorbanzade/UMB-CS681-2016S/blob/master/LICENSE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\course}[2]{
+	\def \argId {id}
+	\def \argName {name}
+	\def \argVenue {venue}
+	\def \argSemester {semester}
+	\def \argDepartment {department}
+	\def \argUniversity {university}
+	\def \argGiven {#1}
+	\ifx\argGiven\argId
+		\def \courseId {#2}
+	\fi
+	\ifx\argGiven\argName
+		\def \courseName {#2}
+	\fi
+	\ifx\argGiven\argVenue
+		\def \courseVenue {#2}
+	\fi
+	\ifx\argGiven\argSemester
+		\def \courseSemester {#2}
+	\fi
+	\ifx\argGiven\argDepartment
+		\def \courseDepartment {#2}
+	\fi
+	\ifx\argGiven\argUniversity
+		\def \courseUniversity {#2}
+	\fi
+}
+
+\newcommand{\my}[2]{
+	\def \argName {name}
+	\def \argEmail {email}
+	\def \argGiven {#1}
+	\ifx\argGiven\argName
+		\def \myName {#2}
+	\fi
+	\ifx\argGiven\argEmail
+		\def \myEmail {#2}
+	\fi
+}
+
+\newcommand{\instructor}[2]{
+	\def \argName {name}
+	\def \argEmail {email}
+	\def \argGiven {#1}
+	\ifx\argGiven\argName
+		\def \instructorName {#2}
+	\fi
+	\ifx\argGiven\argEmail
+		\def \instructorEmail {#2}
+	\fi
+}
+
+\newcommand{\doc}[2]{
+	\def \argTitle {title}
+	\def \argDatePub {date-pub}
+	\def \argDateDue {date-due}
+	\def \argDateSub {date-sub}
+	\def \argGiven {#1}
+	\ifx\argGiven\argTitle
+		\def \docTitle {#2}
+	\fi
+	\ifx\argGiven\argDatePub
+		\def \docDatePub {#2}
+	\fi
+	\ifx\argGiven\argDateDue
+		\def \docDateDue {#2}
+	\fi
+	\ifx\argGiven\argDateSub
+		\def \docDateSub {#2}
+	\fi
+}
