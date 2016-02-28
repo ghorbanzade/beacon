@@ -1,0 +1,136 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+The recursive algorithm below takes as input an $n$-item array $A$, which stores a binary tree in which the two children of $A[i]$ are $A[2i+1]$ and $A[2i+2]$ (like a heap, but we don't care about key values). In a tree, we say that a subset of vertices is \textit{independent} if it does not contain any parent-child pair. For example, see this illustration showing two different independent sets in a binary tree of 15 nodes, highlighted in black.
+
+\begin{figure}[H]\centering
+\tikzstyle{black}=[circle,draw,minimum size=0.1cm,fill=gray!50]
+\tikzstyle{white}=[circle,draw,minimum size=0.1cm]
+  \begin{subfigure}{0.49\textwidth}\centering
+  \begin{tikzpicture}
+    \node[black] (1) {};
+    \node[white] (2) [below left  = 0.5cm and 1.25cm of 1] {};
+    \node[white] (3) [below right = 0.5cm and 1.25cm of 1] {};
+    \node[black] (4) [below left  = 0.5cm and 0.5cm of 2] {};
+    \node[black] (5) [below right = 0.5cm and 0.5cm of 2] {};
+    \node[black] (6) [below left  = 0.5cm and 0.5cm of 3] {};
+    \node[black] (7) [below right = 0.5cm and 0.5cm of 3] {};
+    \node[white] (8) [below left  = 0.5cm and 0.15cm of 4] {};
+    \node[white] (9) [below right = 0.5cm and 0.15cm of 4] {};
+    \node[white] (10)[below left  = 0.5cm and 0.15cm of 5] {};
+    \node[white] (11)[below right = 0.5cm and 0.15cm of 5] {};
+    \node[white] (12)[below left  = 0.5cm and 0.15cm of 6] {};
+    \node[white] (13)[below right = 0.5cm and 0.15cm of 6] {};
+    \node[white] (14)[below left  = 0.5cm and 0.15cm of 7] {};
+    \node[white] (15)[below right = 0.5cm and 0.15cm of 7] {};
+    \path[draw]
+    (1) edge (2)
+    (1) edge (3)
+    (2) edge (4)
+    (2) edge (5)
+    (3) edge (6)
+    (3) edge (7)
+    (4) edge (8)
+    (4) edge (9)
+    (5) edge (10)
+    (5) edge (11)
+    (6) edge (12)
+    (6) edge (13)
+    (7) edge (14)
+    (7) edge (15)
+	;
+  \end{tikzpicture}
+  \caption{}
+  \label{fig:sfig1}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}\centering
+  \begin{tikzpicture}
+    \node[white] (1) {};
+    \node[black] (2) [below left  = 0.5cm and 1.25cm of 1] {};
+    \node[black] (3) [below right = 0.5cm and 1.25cm of 1] {};
+    \node[white] (4) [below left  = 0.5cm and 0.5cm of 2] {};
+    \node[white] (5) [below right = 0.5cm and 0.5cm of 2] {};
+    \node[white] (6) [below left  = 0.5cm and 0.5cm of 3] {};
+    \node[white] (7) [below right = 0.5cm and 0.5cm of 3] {};
+    \node[black] (8) [below left  = 0.5cm and 0.15cm of 4] {};
+    \node[black] (9) [below right = 0.5cm and 0.15cm of 4] {};
+    \node[black] (10)[below left  = 0.5cm and 0.15cm of 5] {};
+    \node[black] (11)[below right = 0.5cm and 0.15cm of 5] {};
+    \node[black] (12)[below left  = 0.5cm and 0.15cm of 6] {};
+    \node[black] (13)[below right = 0.5cm and 0.15cm of 6] {};
+    \node[black] (14)[below left  = 0.5cm and 0.15cm of 7] {};
+    \node[black] (15)[below right = 0.5cm and 0.15cm of 7] {};
+    \path[draw]
+    (1) edge (2)
+    (1) edge (3)
+    (2) edge (4)
+    (2) edge (5)
+    (3) edge (6)
+    (3) edge (7)
+    (4) edge (8)
+    (4) edge (9)
+    (5) edge (10)
+    (5) edge (11)
+    (6) edge (12)
+    (6) edge (13)
+    (7) edge (14)
+    (7) edge (15)
+	;
+  \end{tikzpicture}
+  \caption{}
+  \label{fig:sfig2}
+  \end{subfigure}  
+\caption{Two Independent Sets for graph $G$}\label{fig31}
+\end{figure}
+
+The algorithm returns the largest independent subset of the subtree rooted at $A[i]$. When called with $i=0$, it returns the maximum size of any independent set in the tree.
+
+Explanation of the code: Either the root is included in the set or not. If it is not (first term of the max), we recursively calculate the maximum independent set of the rest of the tree. Otherwise, we calculate the maximum independent set of the root plus its grandchildren, as the children cannot be part of an independent set containing the root. The figure on the right above has the largest independent set.
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\If {$(i \geqslant n)$}
+\State \Return 0
+\EndIf
+\State \Return $\text{max}$\{\par \textsc{Maxiset($2i+1$)}+\textsc{Maxiset($2i+2$)},\par A[i]+\textsc{Maxiset($4i+3$)}+\textsc{Maxiset($4i+4$)}+\textsc{Maxiset($4i+5$)}+\textsc{Maxiset($4i+6$)}\par\}
+\end{algorithmic}
+\caption{Maxiset(int i)}\label{alg2}
+\end{algorithm}
+
+\begin{enumerate}[label=(\alph*)]
+\item Show that this problem has the optimal substructure property.
+\item Write a dynamic programming pseudo-code for the given algorithm.
+\item What is the run time of your algorithm as a function of $n$ where $n$ is the number of nodes in the tree.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item Maximum independent set for any tree is either maximum independent set of its children or one more than maximum independent set of its grandchildren. Trees rooted either at children or grandchildren are subsets of the original graph and their maximum independent set can be independently computed. Therefore, this problem has the optimal substructure property.
+
+\item As runtime of Algorithm \ref{alg2} is recursive, its runtime is exponential in the size of the binary tree. Starting from the root, finding maximum independent set for each node requires finding maximum independent set of its children as well as maximum independent set of its grandchildren, resulting in many redundant computations. To resolve this issue, a dynamic programming algorithm can be proposed as shown in Algorithm \ref{alg3} that starts from the leaves toward the root. As maximum independent set of the leaves is always one, finding maximum independent set of their parents will have a constant runtime.
+
+Since either parent or its children is in maximum independent set, for each node $x_i$, two attributes $x_i.\text{included}$ and $x_i.\text{excluded}$ are calculated for cases in which $x$ is in maximum independent set or not, respectively.
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+\If {$i \geqslant x.size$}
+\State \Return $0$
+\EndIf
+\For {$i \leftarrow x.size : 1$}
+\State $x_i.\text{included} \leftarrow x_{2i+1}.\text{excluded} + x_{2i+2}.\text{excluded} + 1$
+\State $x_i.\text{excluded} \leftarrow x_{2i+1}.\text{included} + x_{2i+2}.\text{included}$
+\EndFor
+\State \Return $\max\{x_1.\text{included}, x_1.\text{excluded}\}$
+\end{algorithmic}
+\caption{\textsc{Maxiset}($x$)}\label{alg3}
+\end{algorithm}
+
+\item As can be referred from Algorithm \ref{alg3}, the runtime of \textsc{Maxiset($x$)} is linear in the size of the tree $n$, iterating over each node in the tree to calculate $x_i.\text{included}$ and $x_i.\text{excluded}$.
+\end{enumerate}

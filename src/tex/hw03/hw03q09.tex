@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 9}
+Let us guess that perhaps $T(n)$ can be expressed as an affine function of $n$:
+\begin{equation}
+T(n) = \alpha n + \beta
+\end{equation}
+We have already seen that this is a reasonable guess. Substitute equation 3 in the equation 1 and 2 and solve the two resulting equations $\alpha$ and $\beta$.
+\subsection*{Solution}
+To obtain an intuition, we begin by formulating $T(n)$ for $n = 1$ and $n=2$.
+
+If $n = 1$, there are no nodes in left and right subtrees.
+\begin{equation}
+\begin{aligned}
+T(1) &= c + T(0) + T(0) + v\\
+&= (2c + v) \times 1 + c
+\end{aligned}
+\end{equation}
+If $n = 2$, there is 1 node in one subtree and no node in the other subtree.
+\begin{equation}
+\begin{aligned}
+T(2) &= c + T(1) + T(0) + v\\
+&= (2c + v) \times 2 + c
+\end{aligned}
+\end{equation}
+Therefore, we prove the statement by induction on number of nodes $n$. We form the inductive hypothesis as for a tree with $k$ nodes ($k \leq k_t$), $T(n)$ is as described as in Equation \ref{eq93}.
+\begin{equation}
+T(k) = (2c + v) \times k + c
+\label{eq93}
+\end{equation}
+Now we show that the statement holds true for $k = k_t + 1$. In this case, we assume there are $l$ nodes in the left subtree and $r = k_t - l - 1$ nodes in the right subtree. Since $l, r \leq k$, Equation \ref{eq94} would be valid.
+\begin{equation}
+\begin{aligned}
+T(k) &= c + T(l) + T(r) + v\\
+&= c + (2c + v) \times l + c + (2c + v) \times r + c + v\\
+&= (2c + v) + (2c + v)(l + r) + c\\
+&= (2c + v) \times k + c
+\end{aligned}\label{eq94}
+\end{equation}
+Therefore,
+\begin{align}
+\alpha &= 2c + v\\
+\beta &= c
+\end{align}\label{eq95}

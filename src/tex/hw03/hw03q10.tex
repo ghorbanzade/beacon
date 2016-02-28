@@ -1,0 +1,26 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 10}
+Assume that all the keys in a binary search tree are distinct. Let $x$ be a node in a binary search tree. Show that
+\begin{enumerate}
+\item If $a$ is an ancestor of $x$ and $a.key > x.key$, then for any descendant $d$ of $x$, we have $a.key > d.key$.
+
+\item If $a$ is the successor of $x$, then $a$ is either an ancestor or descendant of $x$.
+
+\item If the right subtree of $x$ is nonempty, then the successor of $x$ is just the leftmost node in the right subtree.
+
+\item If the right subtree of $x$ is empty and if $x$ has a successor $y$ (i.e., $x$ is not the largest element in the tree), then $y$ is the lowest ancestor of $x$ whose left child is also an ancestor of $x$.
+
+\item If $x$ has a right child, then the successor of $x$ does not have a left child.
+
+\item Similarly, if $x$ has a left child, then the predecessor of $x$ does not have a right child.
+\end{enumerate}
+\subsection*{Solution}
+\begin{enumerate}
+\item Property of the binary search trees suggest that the key of any node $d$ of a binary search tree is smaller than the key stored in its ancestors. Therefore, for any descendant $d$ of $x$, we have $x.key > d.key$. Since $a.key > x.key$, then $a.key > d.key$ would immediately follow.
+\end{enumerate}

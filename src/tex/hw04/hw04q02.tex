@@ -1,0 +1,31 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Determine the longest common subsequence of $A = \langle 1, 0, 0, 1, 0, 1, 0, 1 \rangle$ and $B = \langle 0, 1, 0, 1, 1, 0, 1, 1, 0 \rangle$.
+
+\subsection*{Solution}
+
+Table \ref{tab11} provides Longest Common Subsequence for different prefixes of sequences $A$ and $B$, according to the \textsc{LCS-Length} algorithm. As is shown, Table \ref{tab11} reveals the longest common subsequence between given sequences $A$ and $B$ is 6. One possible common subsequence is obtained by following shaded cells, leading to $\langle 0, 1, 1, 0, 0, 1 \rangle$. It's clear that such longest common subsequence is not unique.
+
+\begin{table}[H]\centering
+\begin{tabular}{c c l l l l l l l l l l}
+& j & 0       & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+i & & $y_j$   & 0 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 0\\\cline{3-12}
+0 & $x_i$ & 0 & 0\cellcolor{gray!25} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+1 & $1$ & 0 & 0$\uparrow$ & 1$\nwarrow$\cellcolor{gray!25} & 1$\leftarrow$ & 1$\nwarrow$ & 1$\nwarrow$ & 1$\leftarrow$ & 1$\nwarrow$ & 1$\nwarrow$ & 1$\leftarrow$ \\
+2 & $0$ & 0 & 1$\nwarrow$ & 1$\uparrow$ & 2$\nwarrow$\cellcolor{gray!25} & 2$\leftarrow$\cellcolor{gray!25} & 2$\leftarrow$\cellcolor{gray!25} & 2$\nwarrow$ & 2$\leftarrow$ & 2$\leftarrow$ & 2$\nwarrow$\\
+3 & $0$ & 0 & 1$\nwarrow$ & 1$\uparrow$ & 2$\nwarrow$ & 2$\uparrow$ & 2$\uparrow$ & 3$\nwarrow$\cellcolor{gray!25} & 3$\leftarrow$ & 3$\leftarrow$ & 3$\nwarrow$\\
+4 & $1$ & 0 & 1$\uparrow$ & 2$\nwarrow$ & 2$\uparrow$ & 3$\nwarrow$ & 3$\nwarrow$ & 3$\uparrow$ & 4$\nwarrow$\cellcolor{gray!25} & 4$\nwarrow$ & 4$\leftarrow$\\
+5 & $0$ & 0 & 1$\nwarrow$ & 2$\uparrow$ & 3$\nwarrow$ & 3$\uparrow$ & 3$\uparrow$ & 4$\nwarrow$ & 4$\uparrow$\cellcolor{gray!25} & 4$\uparrow$ & 5$\nwarrow$\\
+6 & $1$ & 0 & 1$\uparrow$ & 2$\nwarrow$ & 3$\uparrow$ & 4$\nwarrow$ & 4$\nwarrow$ & 4$\uparrow$ & 5$\nwarrow$ & 5$\nwarrow$\cellcolor{gray!25} & 5$\uparrow$\\
+7 & $0$ & 0 & 1$\nwarrow$ & 2$\uparrow$ & 3$\nwarrow$ & 4$\uparrow$ & 4$\uparrow$ & 5$\nwarrow$ & 5$\uparrow$ & 5$\uparrow$ & 6$\nwarrow$\cellcolor{gray!25}\\
+8 & $1$ & 0 & 1$\uparrow$ & 2$\nwarrow$ & 3$\uparrow$ & 4$\nwarrow$ & 5$\nwarrow$ & 5$\uparrow$ & 6$\nwarrow$ & 6$\nwarrow$ & 6$\uparrow$\cellcolor{gray!25}\\\cline{3-12}
+\end{tabular}
+\caption{Length of Common Subsequences for Different Prefixes of $A$ and $B$}\label{tab11}
+\end{table}

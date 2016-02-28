@@ -1,0 +1,14 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+In a max-heap of size $n$, represented as discussed in class, in what index(es) can the smallest element reside? Explain carefully. Assume all the $n$ numbers are different.
+
+\subsection*{Solution}
+
+Parent elements in a in a max-heap data structure are always larger than their children. Thus, smallest element resides in indices of leaves, i.e. nodes of height $0$. We know some leaves are at height $H$ and some at height $H-1$. Since row $(H-1)$ is inevitably filled out, number of leaves in height $H$ is $n - (2^H - 1)$ and number of leaves in height $(H-1)$ is $(2^H-1)-\lfloor \frac{n}{2} \rfloor$. Therefore, there are $\lceil \frac{n}{2} \rceil$ leaves in total so indices in which smallest element may reside are $A[n - \lceil \frac{n}{2} \rceil]$ to $A[n]$.

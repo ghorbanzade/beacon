@@ -1,0 +1,31 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 6}
+
+Prove that if there are positive constants $a$ and $c$ such that
+\begin{equation}
+T(n) = \sum_{j=2}^{n}(a + (j-1)c)
+\end{equation}
+then there are constants $A$, $B$ and $C$ such that
+\begin{equation}
+T(n) = An^2 + Bn + C
+\end{equation}
+Of course, $A$, $B$ and $C$ depend on $a$ and $c$, but do not depend on $n$. You should show also that $A > 0$.
+
+\subsection*{Solution}
+
+\begin{equation}
+\begin{aligned}
+T(n) &= \sum_{j=2}^{n}(a + (j-1)c)\\
+&=(a-c)\sum_{j=2}^{n}1+c\sum_{j=2}^{n}j\\
+&=(a-c)(n-1)+c\frac{n(n-1)}{2}-c\\
+&=(0.5c)n^2+(a-1.5c)n-a
+\end{aligned}
+\end{equation}
+
+Where $A = 0.5c$, $B = (a - 1.5c)$ and $C = -a$. Since $c$ is positive, $A$ is positive as well.

@@ -1,0 +1,14 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 5}
+
+Prove that to show a problem $A$ is NP-complete, it is enough to show that $A$ is in NP and $B \leq_P A$ for some problem $B$ that is NP-complete.
+
+\subsection*{Solution}
+
+By definition, if $B$ is NP-complete, for any problem $C$ in NP, $C \leq_P B$. Therefore, based on our assumption that $B \leq_P A$ and using the transitive property of polynomial-time reduction, proved in Question 3, $C \leq_P B \leq_P A$ thus $C \leq_P A$. Since we showed for a problem $C$ in NP, $C$ is polynomial reducible to $A$, $A$ is proved to be NP-complete.

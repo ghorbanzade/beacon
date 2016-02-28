@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+If we had an algorithm that finds the median of a sequence in linear time (worst case) - \textsc{findMedian($A$, $p$, $r$)} which returns the index of the median of the sequence $A[p..r]$, describe a worst-case linear time algorithm that finds any order statistics. Provide a brief run-time analysis.
+
+\subsection*{Solution}
+
+To obtain any order statistics of a sequence \textsc{findMedian($A$, $p$, $r$)} can be called to check if order is less than median, as proposed by Algorithm \ref{alg2}.
+
+Although in worst case \textsc{findMedian} is called $\log n$ times, because the length of array that is given to \textsc{findMedian} is different each time, the eventual runtime would be linear in $n$.
+
+\begin{algorithm}[H]
+\caption{\textsc{findOrder($A$, $p$, $r$, $s$)}}\label{alg2}
+\begin{algorithmic}[1]
+\State $q \leftarrow $ \textsc{findMedian($A$, $p$, $r$)}
+\State \textsc{Partition($A$, $p$, $r$, $q$)}
+\If {$s < q$}
+\State \Return \textsc{findMedian($A$, $p$, $q$)}
+\ElsIf {$s = q$}
+\State \Return $A[q]$
+\Else
+\State \Return \textsc{findMedian($A$, $q$, $r$)}
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+where \textsc{Partition($A$, $p$, $r$, $q$)} is a simple algorithm that partitions the array around pivot element with index $q$, as shown in Algorithm \ref{alg3}.
+
+\begin{algorithm}[H]
+\caption{\textsc{Partition($A$, $p$, $r$, $q$)}}\label{alg3}
+\begin{algorithmic}[1]
+\State $i \leftarrow p - 1 $
+\For {$j \leftarrow p$ to $r - 1$}
+\If {$A[j] \leq q$}
+\State $i \leftarrow i + 1$
+\State exchange A[i] with A[j]
+\EndIf
+\State exchange A[i+1] with A[r]
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+A more rigorous run-time analysis can be obtained using recursion $T(n) = T(\frac{n}{2}) + \mathcal{O}(n)$. As $T(\frac{n}{2}) \leq \mathcal{O}(n)$ for all $n$, runtime would be bound by $O(n)$.

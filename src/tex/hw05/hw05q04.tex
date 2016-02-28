@@ -1,0 +1,30 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+Show by induction that the number of degree-2 nodes (nodes with 2 children) in any non-empty binary tree is 1 fewer than the number of leaves. Conclude that the number of internal nodes in a full binary tree is 1 fewer than the number of leaves.
+
+\subsection*{Solution}
+
+Let $n(T)$ be the numebr of nodes, $d(T)$ be the number of nodes with 2 children and $l(T)$ be the number of leaves, in tree $T$. Objective is to prove $l(T) = d(T) + 1$ in any tree $T$.
+Proof is given by induction on number of nodes $n$ in the binary tree $T$.
+
+\begin{itemize}\itemsep=0pt
+\item[] \textit{Base case:} The most trivial binary tree with $n(T)=1$ contains only the root node therefore $l(T) = 0 + 1 = d(T) + 1$.
+\item[] \textit{Inductive Hypothesis:} We form the inductive hypothesis as for any binary tree with $n(T) \leq k$, $l(T) = d(T) + 1$.
+\item[] \textit{Induction Step:} Using the inductive hypothesis, we need to show $l(T) = d(T)+1$ holds true for any tree with $n(T) = k+1$ where $k > 0$. Since $n(T) > 1$, $T$ will have tree cases that follows.
+  \begin{itemize}\itemsep=0pt
+    \item[] If root $r$ in tree $T$ ($n(T) = k+1$) has only a left subtree $T'$, since $r$ is neither a leaf nor a degree-2 node, $l(T) = l(T')$ and $d(T)=d(T')$. However, $n(T') = n(T) - 1 = k$. Thus, using the inductive hypothesis, $l(T') = d(T') + 1$. Therefore, $l(T) = d(T) + 1$.
+    \item[] Similarly, if root $r$ in tree $T$ has only a right subtree $T'$, same reasoning will lead to $l(T') = d(T') + 1$. 
+    \item[] In case both the left subtree ($T'$) and the right subtree ($T''$) of the binary tree $T$ ($n(T) = k+1$) are non-empty, the root $r$ of tree $T$ will be a degree-2 node. Therefore, $l(T) = l(T') + l(T'')$ and $d(T) = d(T') + d(T'') + 1$ will hold.
+    Since both $n(T')$ and $n(T'')$ are less than $k$, using the inductive hypothesis, $l(T') = d(T') + 1$ and $l(T'') = d(T'') + 1$.
+    Therefore, $l(T) = l(T') + l(T'') = d(T') + 1 + d(T'') + 1 = d(T) + 1$ and the induction is complete. 
+  \end{itemize}
+  Therefore number of leaves in tree $T$ is always 1 more than number of degree-2 nodes.
+\end{itemize}
+This prove would immediately lead to conclusion of the second part. Since all non-leaf nodes in a full binary tree are of second degree, number of internal nodes will be one less than the number of leaves.

@@ -1,0 +1,31 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+Prove that if $f = O(g)$ and $g = O(h)$ then $f = O(h)$.
+
+\subsection*{Solution}
+Since $f = O(g)$, there are constants $c$ and $x_0$ such that
+\begin{equation}
+f(x) \leq c \times g(x)
+\label{eq9}
+\end{equation}
+for any $x \geq x_0$.
+
+Since $g = O(h)$, there are constants $d$ and $x_1$ such that
+\begin{equation}
+g(x) \leq d \times h(x)
+\end{equation}
+for any $x \geq x_1$.
+
+We take $x_2 = max(x_0,x_1)$ and $e = c \times d$ as constants with which the following holds true for $x \geq x_2$.
+
+\begin{equation}
+f(x) \leq c \times d \times h(x) = e \times h(x)
+\end{equation}
+
+By definition of Big-Oh, $f = \mathcal{O}(h)$ is proved.

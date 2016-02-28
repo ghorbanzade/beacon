@@ -1,0 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 7}
+Suppose $T$ is a rooted tree with root $r$ and $x \neq r$ is a vertex in $T$.  Further, suppose $a$ and $b$ are both ancestors of $x$. And to make things simple, suppose that $a \neq b$. Prove that either $a$ is an ancestor of $b$ or $b$ is an ancestor of $a$.
+\subsection*{Solution}
+Proof is given by contradiction. Assume distinct nodes $a$ and $b$ have no ancestorhood relationship. Since they are ancestors of $x$ however, there exists a path of the form $r \rightarrow \cdots \rightarrow a \rightarrow \cdots \rightarrow x$ that does not pass node $b$. Similarly, there exists a path of the form $r \rightarrow \cdots \rightarrow b \rightarrow \cdots \rightarrow x$ that does not pass from node $a$. This leads to a simple loop of the form $r \rightarrow \cdots \rightarrow b \rightarrow \cdots \rightarrow x \rightarrow \cdots \rightarrow a \rightarrow \cdots \rightarrow r$ which contradicts definition of the tree. Therefore initial assumption does not hold true and any path of the form $r \rightarrow \cdots \rightarrow a \rightarrow \cdots \rightarrow x$ would pass node $b$ at some point. Hence either $a$ is an ancestor of $b$ or $b$ is an ancestor of $a$ and the proof is complete.

@@ -1,0 +1,18 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+Prove that if $x$ and $y$ are any two distinct vertices in a tree, there is a unique simple path from $x$ to $y$.
+\subsection*{Solution}
+Proof is given by contradiction. Assume the statement is false. The opposite of the claimed statement is either there is no simple path from $x$ to $y$ or there are more than two different simple paths. The former can be rejected simply by going back to definition of the tree which requires all vertices to be connected, reserving a simple path from each node to another. Let us assume there are more than one paths from $x$ to $y$, like $p_1$ and $p_2$.
+\begin{equation}
+p_1: x \rightarrow v_1 \rightarrow v_2 \rightarrow \cdots \rightarrow v_{k-1} \rightarrow y
+\end{equation}
+\begin{equation}
+p_2: x \rightarrow v_{1}^{\prime} \rightarrow v_{2}^{\prime} \rightarrow \cdots \rightarrow v_{k-1}^{\prime} \rightarrow y
+\end{equation}
+As $p_1$ and $p_2$ are necessarily two different paths, they differ at least in one vertex. Let $v_i$ ($1<i<k-1$) be the last vertex common between $p_1$ and $p_2$ ($v_i = v_{i}^{\prime}$). In this case, there will be two simple paths from $v_i$ to $y$, one from vertices in $p_1$ and one from vertices in $p_2$. Therefore, a simple loop of the form $v_i \rightarrow v_{i+1} \rightarrow \cdots v_{k-1} \rightarrow y \rightarrow v_{k-1}^{\prime} \rightarrow \cdots \rightarrow v_{i+1}^{\prime} \rightarrow v_i$ will exist. This violates definition of the tree in which there should be no simple loops. Therefore, the assumption is false and there are no more than one simple path from $x$ to $y$.

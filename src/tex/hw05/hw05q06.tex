@@ -1,0 +1,33 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 6}
+
+Give a counter-example to the conjecture that if a directed graph $G$ contains a path from $u$ to $v$, and if $u.d < v.d$ in a depth-first search of $G$, then $v$ is a descendant of $u$ in the depth-first forest produced.
+
+\subsection*{Solution}
+
+Any directed graph $G$ with a path from $u$ to $v$ through the source vertex $s$ would be considered as counter-example for the proposed statement. Figure \ref{fig61} depicts graph $G$ with source vertex $a$ as one counter-example following required conditions.
+
+\begin{figure}[H]\centering
+\tikzstyle{vertex}=[circle,draw,minimum size=0.7cm]
+  \begin{tikzpicture}
+    \node[vertex] (1) {a};
+    \node[vertex] (2) [below left = 0.5cm and 1.5cm of 1] {b};
+    \node[vertex] (3) [below right = 0.5cm and 1.5cm of 1] {c};
+    \path[draw,thick,->]
+	(1) edge [bend left=30] (2)
+	(1) edge (3)
+    (2) edge [bend left=30] (1)
+	;
+    \path[draw,ultra thick,->]
+    ;
+  \end{tikzpicture}
+\caption{Example that if $u.d < v.d$ and $u$ has path to $v$,  graph $G$}\label{fig61}
+\end{figure}
+
+Starting from $a$, node $a$ is visited first, and vertices $b$ and $c$ are discovered and placed in queue. In next step, if $b$ is the first node to be visited, the depth-first search algorithm will follow by discovering children of $b$. Since $b$ has only one child that is already visited, the depth-first search algorithm continues by visiting vertex $c$. In this case, although there is a path from $b$ to $c$ and $b.d < c.d$, $c$ is not a descendant of $b$.

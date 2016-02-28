@@ -1,0 +1,64 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 6}
+
+Show that there is no comparison sort whose running time is linear for at least half of the $n!$ inputs of length $n$. What about a fraction of $1/n$ of the inputs of length $n$? What about a fraction $1/2^n$?
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item As comparison sorts apply to decision trees, let's assume that the decision tree constructed for $n!$ inputs has height H. Thus for half of $n!$ inputs,
+
+\begin{equation}\label{eq61}
+\frac{n!}{2} \leq n! \leq 2^H
+\end{equation}
+
+Taking logarithms with base 2 from both sides leads to Equation \ref{eq62}
+
+\begin{equation}\label{eq62}
+h \geq \log_2 (\frac{n!}{2})
+\end{equation}
+
+We know that any comparison sort algorithm requires $\Omega(n \log n)$ comparisons in the worst case. Thus we can find a lower bound can be found for $\log_2(\frac{n!}{2})$.
+
+\begin{equation}\label{eq63}
+h \geq \log_2 (n!) - 1 = \mathcal{O}(n \log n) 
+\end{equation}
+
+Therefore, Equation \ref{eq63} proves no comparison sort algorithm would do better than $\mathcal{O}(n\log n)$.
+
+\item With the same reasoning, even for a fraction of $\frac{1}{n}$ elements of the $n!$ inputs, we will have
+
+\begin{equation}\label{eq64}
+h \geq \log_2 \frac{n!}{n} = \log_2 {(n-1)!}
+\end{equation}
+
+Therefore the lower bound would change to the following.
+
+\begin{equation}\label{eq65}
+h \geq \log_2 n! - \log_2 n = \mathcal{O}(n \log n) - \mathcal{O}(\log n) = \mathcal{O}(n \log n)
+\end{equation}
+
+This shows that achieving $\mathcal{O}(n)$ for comparison sort of  even for a fraction of $1/n$ of $n!$ inputs is not possible.
+
+\item Similarly, for fraction of $\frac{1}{2^{n}}$ elements of the $n!$ inputs, we will have
+
+\begin{equation}\label{eq66}
+h \geq \log_2 \frac{n!}{2^{n}} = \log_2 {n!} - \log_2 {2^{n}}
+\end{equation}
+
+Therefore the lower bound would change to the following.
+
+\begin{equation}\label{eq67}
+h \geq \log_2 {n!} - n \geq \mathcal{O}(n \log n) - \mathcal{O}(n) = \mathcal{O}(n \log n)
+\end{equation}
+
+\end{enumerate}
+
+
+

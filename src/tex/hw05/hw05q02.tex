@@ -1,0 +1,376 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Show the $d$ and $\pi$ values that result from running breadth-first search on the undirected graph depicted in Figure \ref{fig21}, using vertex $u$ as the source.
+
+\def\dist{1cm}
+\begin{figure}[H]\centering
+\tikzstyle{vertex}=[circle,draw,minimum size=0.7cm]
+  \begin{tikzpicture}
+    \node[vertex] (1) {r};
+    \node[vertex] (2) [right = \dist of 1] {s};
+    \node[vertex] (3) [right = \dist of 2] {t};
+    \node[vertex] (4) [right = \dist of 3] {u};
+    \node[vertex] (5) [below = \dist of 1] {v};
+    \node[vertex] (6) [right = \dist of 5] {w};
+    \node[vertex] (7) [right = \dist of 6] {x};
+    \node[vertex] (8) [right = \dist of 7] {y};
+    \path[draw,thick]
+    (1) edge (2)
+    (1) edge (5)
+    (2) edge (6)
+    (6) edge (3)
+    (6) edge (7)
+    (3) edge (4)
+    (3) edge (7)
+    (7) edge (4)
+    (7) edge (8)
+    (4) edge (8);
+    \path[draw,ultra thick]
+    ;
+  \end{tikzpicture}
+\caption{Connected Undirected Graph $G$}\label{fig21}
+\end{figure}
+
+\subsection*{Solution}
+
+The running procedure of breadth-first search algorithm on graph $G$ is shown in Figure \ref{fig22}, where values given for each node describes its distance $d$. Based on Figure \ref{fig22}, Table \ref{tab21} is given that shows $d$ and $\pi$ parameters for different nodes of $G$.
+
+\begin{table}[H]\centering
+\begin{tabular}{c c c|c c c}
+node & ($d$) & ($\pi$) & node & ($d$) & ($\pi$)\\
+\hline
+r & 4 & s & v & 5 & r\\
+s & 3 & w & w & 2 & t\\
+t & 1 & u & x & 1 & u\\
+u & 0 & $\emptyset$ & y & 1 & u\\
+\hline
+\end{tabular}
+\caption{Obtained $d$ and $\pi$ values when using BFS on $G$ starting from node $u$}
+\end{table}
+\newpage
+\begin{figure}[H]\centering
+\tikzstyle{vertex}=[circle,draw,minimum size=0.7cm]
+\tikzstyle{not visited}=[]
+\tikzstyle{visited}=[fill=gray!50]
+\tikzstyle{in queue}=[fill=gray!20]
+\tikzstyle{label}=[]
+\tikzstyle{ultra thick}=[line width=0.6mm]
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+      \node[vertex] (1) {$\infty$};
+      \node[vertex] (2) [right = \dist of 1] {$\infty$};
+      \node[vertex] (3) [right = \dist of 2] {$\infty$};
+      \node[vertex,in queue] (4) [right = \dist of 3] {0};
+      \node[vertex] (5) [below = \dist of 1] {$\infty$};
+      \node[vertex] (6) [right = \dist of 5] {$\infty$};
+      \node[vertex] (7) [right = \dist of 6] {$\infty$};
+      \node[vertex] (8) [right = \dist of 7] {$\infty$};
+      
+      \node[label]  (9) [above = 0.1cm of 1] {r};
+      \node[label]  (10) [above = 0.1cm of 2] {s};
+      \node[label]  (11) [above = 0.1cm of 3] {t};
+      \node[label]  (12) [above = 0.1cm of 4] {u};
+      \node[label]  (13) [below = 0.1cm of 5] {v};
+      \node[label]  (14) [below = 0.1cm of 6] {w};
+      \node[label]  (15) [below = 0.1cm of 7] {x};
+      \node[label]  (16) [below = 0.1cm of 8] {y};
+  
+      \path[draw,thick]
+      (1) edge (2)
+      (1) edge (5)
+      (2) edge (6)
+      (6) edge (3)
+      (6) edge (7)
+      (3) edge (4)
+      (3) edge (7)
+      (7) edge (4)
+      (7) edge (8)
+      (4) edge (8);
+      \path[draw,ultra thick]
+      ;
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig1}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+      \node[vertex] (1) {$\infty$};
+      \node[vertex] (2) [right = \dist of 1] {$\infty$};
+      \node[vertex,in queue] (3) [right = \dist of 2] {1};
+      \node[vertex,visited] (4) [right = \dist of 3] {0};
+      \node[vertex] (5) [below = \dist of 1] {$\infty$};
+      \node[vertex] (6) [right = \dist of 5] {$\infty$};
+      \node[vertex,in queue] (7) [right = \dist of 6] {1};
+      \node[vertex,in queue] (8) [right = \dist of 7] {1};
+      
+      \node[label]  (9) [above = 0.1cm of 1] {r};
+      \node[label]  (10) [above = 0.1cm of 2] {s};
+      \node[label]  (11) [above = 0.1cm of 3] {t};
+      \node[label]  (12) [above = 0.1cm of 4] {u};
+      \node[label]  (13) [below = 0.1cm of 5] {v};
+      \node[label]  (14) [below = 0.1cm of 6] {w};
+      \node[label]  (15) [below = 0.1cm of 7] {x};
+      \node[label]  (16) [below = 0.1cm of 8] {y};
+      
+      \path[draw,thick]
+      (1) edge (2)
+      (1) edge (5)
+      (2) edge (6)
+      (6) edge (3)
+      (6) edge (7)
+      (3) edge (4)
+      (3) edge (7)
+      (7) edge (8)
+      ; 
+      \path[draw,ultra thick]
+      (4) edge (8)
+      (3) edge (4)
+      (7) edge (4)
+      ;   
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig2}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+      \node[vertex] (1) {$\infty$};
+      \node[vertex] (2) [right = \dist of 1] {$\infty$};
+      \node[vertex,visited] (3) [right = \dist of 2] {1};
+      \node[vertex,visited] (4) [right = \dist of 3] {0};
+      \node[vertex] (5) [below = \dist of 1] {$\infty$};
+      \node[vertex,in queue] (6) [right = \dist of 5] {2};
+      \node[vertex,in queue] (7) [right = \dist of 6] {1};
+      \node[vertex,in queue] (8) [right = \dist of 7] {1};
+      
+      \node[label]  (9) [above = 0.1cm of 1] {r};
+      \node[label]  (10) [above = 0.1cm of 2] {s};
+      \node[label]  (11) [above = 0.1cm of 3] {t};
+      \node[label]  (12) [above = 0.1cm of 4] {u};
+      \node[label]  (13) [below = 0.1cm of 5] {v};
+      \node[label]  (14) [below = 0.1cm of 6] {w};
+      \node[label]  (15) [below = 0.1cm of 7] {x};
+      \node[label]  (16) [below = 0.1cm of 8] {y};
+      
+      \path[draw,thick]
+      (1) edge (2)
+      (1) edge (5)
+      (2) edge (6)
+      (6) edge (7)
+      (3) edge (4)
+      (3) edge (7)
+      (7) edge (8)
+      ; 
+      \path[draw,ultra thick]
+      (4) edge (8)
+      (3) edge (4)
+      (7) edge (4)
+      (6) edge (3)
+      ;   
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig3}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+      \node[vertex] (1) {$\infty$};
+      \node[vertex] (2) [right = \dist of 1] {$\infty$};
+      \node[vertex,visited] (3) [right = \dist of 2] {1};
+      \node[vertex,visited] (4) [right = \dist of 3] {0};
+      \node[vertex] (5) [below = \dist of 1] {$\infty$};
+      \node[vertex,in queue] (6) [right = \dist of 5] {2};
+      \node[vertex,visited] (7) [right = \dist of 6] {1};
+      \node[vertex,in queue] (8) [right = \dist of 7] {1};
+      
+      \node[label]  (9) [above = 0.1cm of 1] {r};
+      \node[label]  (10) [above = 0.1cm of 2] {s};
+      \node[label]  (11) [above = 0.1cm of 3] {t};
+      \node[label]  (12) [above = 0.1cm of 4] {u};
+      \node[label]  (13) [below = 0.1cm of 5] {v};
+      \node[label]  (14) [below = 0.1cm of 6] {w};
+      \node[label]  (15) [below = 0.1cm of 7] {x};
+      \node[label]  (16) [below = 0.1cm of 8] {y};
+      
+      \path[draw,thick]
+      (1) edge (2)
+      (1) edge (5)
+      (2) edge (6)
+      (6) edge (7)
+      (3) edge (4)
+      (3) edge (7)
+      (7) edge (8)
+      ; 
+      \path[draw,ultra thick]
+      (4) edge (8)
+      (3) edge (4)
+      (7) edge (4)
+      (6) edge (3)
+      ;   
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig4}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+      \node[vertex] (1) {$\infty$};
+      \node[vertex] (2) [right = \dist of 1] {$\infty$};
+      \node[vertex,visited] (3) [right = \dist of 2] {1};
+      \node[vertex,visited] (4) [right = \dist of 3] {0};
+      \node[vertex] (5) [below = \dist of 1] {$\infty$};
+      \node[vertex,in queue] (6) [right = \dist of 5] {2};
+      \node[vertex,visited] (7) [right = \dist of 6] {1};
+      \node[vertex,visited] (8) [right = \dist of 7] {1};
+      
+      \node[label]  (9) [above = 0.1cm of 1] {r};
+      \node[label]  (10) [above = 0.1cm of 2] {s};
+      \node[label]  (11) [above = 0.1cm of 3] {t};
+      \node[label]  (12) [above = 0.1cm of 4] {u};
+      \node[label]  (13) [below = 0.1cm of 5] {v};
+      \node[label]  (14) [below = 0.1cm of 6] {w};
+      \node[label]  (15) [below = 0.1cm of 7] {x};
+      \node[label]  (16) [below = 0.1cm of 8] {y};
+      
+      \path[draw,thick]
+      (1) edge (2)
+      (1) edge (5)
+      (2) edge (6)
+      (6) edge (7)
+      (3) edge (4)
+      (3) edge (7)
+      (7) edge (8)
+      ; 
+      \path[draw,ultra thick]
+      (4) edge (8)
+      (3) edge (4)
+      (7) edge (4)
+      (6) edge (3)
+      ;   
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig5}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+      \node[vertex] (1) {$\infty$};
+      \node[vertex,in queue] (2) [right = \dist of 1] {3};
+      \node[vertex,visited] (3) [right = \dist of 2] {1};
+      \node[vertex,visited] (4) [right = \dist of 3] {0};
+      \node[vertex] (5) [below = \dist of 1] {$\infty$};
+      \node[vertex,visited] (6) [right = \dist of 5] {2};
+      \node[vertex,visited] (7) [right = \dist of 6] {1};
+      \node[vertex,visited] (8) [right = \dist of 7] {1};
+      
+      \node[label]  (9) [above = 0.1cm of 1] {r};
+      \node[label]  (10) [above = 0.1cm of 2] {s};
+      \node[label]  (11) [above = 0.1cm of 3] {t};
+      \node[label]  (12) [above = 0.1cm of 4] {u};
+      \node[label]  (13) [below = 0.1cm of 5] {v};
+      \node[label]  (14) [below = 0.1cm of 6] {w};
+      \node[label]  (15) [below = 0.1cm of 7] {x};
+      \node[label]  (16) [below = 0.1cm of 8] {y};
+      
+      \path[draw,thick]
+      (1) edge (2)
+      (1) edge (5)
+      (6) edge (7)
+      (3) edge (4)
+      (3) edge (7)
+      (7) edge (8)
+      ; 
+      \path[draw,ultra thick]
+      (4) edge (8)
+      (3) edge (4)
+      (7) edge (4)
+      (6) edge (3)
+      (2) edge (6)
+      ;   
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig6}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+      \node[vertex,in queue] (1) {4};
+      \node[vertex,visited] (2) [right = \dist of 1] {3};
+      \node[vertex,visited] (3) [right = \dist of 2] {1};
+      \node[vertex,visited] (4) [right = \dist of 3] {0};
+      \node[vertex] (5) [below = \dist of 1] {$\infty$};
+      \node[vertex,visited] (6) [right = \dist of 5] {2};
+      \node[vertex,visited] (7) [right = \dist of 6] {1};
+      \node[vertex,visited] (8) [right = \dist of 7] {1};
+      
+      \node[label]  (9) [above = 0.1cm of 1] {r};
+      \node[label]  (10) [above = 0.1cm of 2] {s};
+      \node[label]  (11) [above = 0.1cm of 3] {t};
+      \node[label]  (12) [above = 0.1cm of 4] {u};
+      \node[label]  (13) [below = 0.1cm of 5] {v};
+      \node[label]  (14) [below = 0.1cm of 6] {w};
+      \node[label]  (15) [below = 0.1cm of 7] {x};
+      \node[label]  (16) [below = 0.1cm of 8] {y};
+      
+      \path[draw,thick]
+      (1) edge (5)
+      (6) edge (7)
+      (3) edge (4)
+      (3) edge (7)
+      (7) edge (8)
+      ; 
+      \path[draw,ultra thick]
+      (4) edge (8)
+      (3) edge (4)
+      (7) edge (4)
+      (6) edge (3)
+      (2) edge (6)
+      (1) edge (2)
+      ;   
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig7}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+      \node[vertex,visited] (1) {4};
+      \node[vertex,visited] (2) [right = \dist of 1] {3};
+      \node[vertex,visited] (3) [right = \dist of 2] {1};
+      \node[vertex,visited] (4) [right = \dist of 3] {0};
+      \node[vertex,in queue] (5) [below = \dist of 1] {5};
+      \node[vertex,visited] (6) [right = \dist of 5] {2};
+      \node[vertex,visited] (7) [right = \dist of 6] {1};
+      \node[vertex,visited] (8) [right = \dist of 7] {1};
+      
+      \node[label]  (9) [above = 0.1cm of 1] {r};
+      \node[label]  (10) [above = 0.1cm of 2] {s};
+      \node[label]  (11) [above = 0.1cm of 3] {t};
+      \node[label]  (12) [above = 0.1cm of 4] {u};
+      \node[label]  (13) [below = 0.1cm of 5] {v};
+      \node[label]  (14) [below = 0.1cm of 6] {w};
+      \node[label]  (15) [below = 0.1cm of 7] {x};
+      \node[label]  (16) [below = 0.1cm of 8] {y};
+      
+      \path[draw,thick]
+      (6) edge (7)
+      (3) edge (4)
+      (3) edge (7)
+      (7) edge (8)
+      ; 
+      \path[draw,ultra thick]
+      (4) edge (8)
+      (3) edge (4)
+      (7) edge (4)
+      (6) edge (3)
+      (2) edge (6)
+      (1) edge (2)
+      (1) edge (5)
+      ;   
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig8}
+  \end{subfigure}
+  \caption{Breadth-First Search algorithm on graph $G$ of Figure \ref{fig21} starting from node $u$}\label{fig22}
+\end{figure}

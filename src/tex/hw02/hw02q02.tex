@@ -1,0 +1,50 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+Give an $\mathcal{O}(n \log k)$-time algorithm to merge $k$ sorted lists into one sorted list, where $n$ is the total number of elements in all the input lists.
+
+Hint 1: Use a min-heap for $k$-way merging.
+
+Hint 2: Think of the merging part of \texttt{MergeSort} and extend it to multiple lists. Remember that the lists are not necessarily the same size.
+
+\subsection*{Solution}
+
+To merge $k$ sorted lists, we slightly modify the merging function of the original \textsc{MergeSort} algorithm so that it compares first elements of $k$ arrays instead of 2.
+
+With no assumption on size of $k$ lists, we start with first elements of each array and build a min-heap structure.
+
+For any heap structure with $n$ nodes where $n \leq k$ we pop the root element once after a call to \textsc{Heapify} and insert it into the final sorted array. Once all nodes are popped, we take a new element (smallest element) from each $k$ list and repeat the procedure until all elements are inserted into the final sorted array.
+
+A more formal explanation of the algorithm is given in the following Algorithm in which \textsc{Construct}($A$,$i$) would initialize array $A$ with elements in index $i$ of lists $L_1$ through $L_k$.
+
+\begin{algorithm}[H]
+\caption{\textsc{Merge-Sort-k-List}}
+\begin{algorithmic}[1]
+\For {$i \leftarrow 1$ : max($L_1$.length, $L_2$.length, ...,  $L_k$.length)}
+\State \textsc{Construct}($A$, $i$)
+\State \textsc{Build-Heap}($A$)
+\State $A$.heapsize $\leftarrow$ $A$.length
+\For {$j$ $\leftarrow$ $1$ to $A$.heapsize}
+\State $F[k] \leftarrow A[1]$
+\State $k \leftarrow k + 1$
+\State \textsc{Heap-Delete}($A$, $1$)
+\EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+The outer loop of proposed algorithm will be executed $\lceil \frac{n}{k} \rceil$ times while the inner loop is executed (at most) $k$ times. Knowing from previous question that runtime of \textsc{Heap-Delete}($A$, $1$) would be $\log{k}$, the inner loop would give a runtime of $k\log{k}$. Since runtime of \textsc{Build-Heap}($A$) is also known to be $\mathcal{O}(k)$, runtime of the outer loop would be $k \log k + k$.
+
+Thus the runtime of the algorithm would be the runtime of the outer loop times the number of its execution, as given in Equation \ref{eq2}.
+
+\begin{equation}\label{eq2}
+\begin{aligned}
+\mathcal{O}(f) &=
+\mathcal{O}(\frac{n}{k}[(k\log k)+ k])\\ &= \mathcal{O}(n \log k + n)\\ &= \mathcal{O}(n\log k)
+\end{aligned}
+\end{equation}

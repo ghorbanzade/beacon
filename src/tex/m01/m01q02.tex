@@ -1,0 +1,47 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+\begin{enumerate}[label=(\alph*)]
+\item A researcher claimed that she discovered a comparison-based sorting algorithm that runs in $\mathcal{O}(n\log (\sqrt{n}))$. Given the existence of an $\Omega(n\log n)$ lower bound for sorting, how can this be possible?
+
+\item Let $S$ be an unsorted array of $n$ integers. Give an algorithm that finds the pair $x,y \in S$ that maximizes $|x - y|$. Your algorithm must run in $\mathcal{O}(n)$ worst-case time.
+
+\item Explain why your algorithm is indeed $\mathcal{O}(n)$.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item It suffices to show that a comparison-based sorting algorithm with runtime $\mathcal{O}(n\log \sqrt{n})$ does not necessarily violate the lower-bound runtime of sorting algorithms, in which case the researcher's claim will be justified. Using fundamental properties of logarithms,
+\begin{equation}\label{eq31}
+\begin{aligned}
+\mathcal{O}(n\log \sqrt{n}) &= \mathcal{O}(n\log n^{0.5})\\
+&= \mathcal{O}(0.5 n \log n)\\
+&= \mathcal{O}(n\log n)
+\end{aligned}
+\end{equation}
+Therefore, researcher's proposed sorting algorithm is of the same lower-bound run-time and the claim is justified.
+\item Expression $|x-y|$ is maximized when $x$ and $y$ are minimum and maximum elements of the unsorted array. The problem could now be simplified as finding minimum and maximum of an unsorted array in $\mathcal{O}(n)$ runtime. To achieve this goal, Algorithm \ref{alg1} shown below is proposed.
+\begin{algorithm}[H]
+\caption{\textsc{$|x-y|$-Maximizer}}\label{alg1}
+\begin{algorithmic}[1]
+\State $min \leftarrow +\infty$
+\State $max \leftarrow -\infty$
+\For {$i \leftarrow 1$ to $A.length$}
+\If {$A[i] < min$}
+\State min $\leftarrow A[i]$
+\ElsIf {$A[i] > max$}
+\State max $\leftarrow A[i]$
+\EndIf
+\EndFor
+\State \Return $min$, $max$
+\end{algorithmic}
+\end{algorithm}
+\item There are $n$ iterations of the for loop in each of which either $A[i] < min$ or $A[i] > max$ or none. In first two cases there would be one assignment of cost $c$. Therefore, the whole algorithm has a run time of $\mathcal{O}(nc+d)=\mathcal{O}(n)$, so algorithm is linear in $n$.
+\end{enumerate}

@@ -1,0 +1,93 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section*{Question 3}
+
+Give an example of a directed graph $G = (V, E)$, a source vertex $s \in V$, and a set of tree edges $E_\pi \subseteq E$ such that for each vertex $v \in V$, the unique simple path in the graph $(V, E_\pi)$ from $s$ to $v$ is a shortest path in $G$, yet the set of edges $E_\pi$ cannot be produced by running BFS on $G$, no matter how the vertices are ordered in each adjacency list.
+
+\subsection*{Solution}
+
+Figure \ref{fig31} provides an example of a graph $G = (V, E)$ in which $E_\pi$ can be chosen as either $\{(a,b), (a,c), (b,d), (c,d)\}$ or $\{(a,b), (a,c), (b,e), (c,d)\}$. Taking node $a$ as the source vertex, $E_\pi$ will immediately ensure a unique shortest path from $a$ to all other nodes.
+
+\begin{figure}[H]\centering
+\tikzstyle{vertex}=[circle,draw,minimum size=0.7cm]
+  \begin{tikzpicture}
+    \node[vertex] (1) {a};
+    \node[vertex] (2) [above right = 0.5cm and 1.5cm of 1] {b};
+    \node[vertex] (3) [below right = 0.5cm and 1.5cm of 1] {c};
+    \node[vertex] (4) [right = 1.5cm of 2] {d};
+    \node[vertex] (5) [right = 1.5cm of 3] {e};
+    \path[draw,thick,->]
+	(2) edge (5)
+	(3) edge (4)
+	;
+    \path[draw,ultra thick,->]
+    (1) edge (2)
+    (1) edge (3)
+    (2) edge (4)
+    (3) edge (5)
+    ;
+  \end{tikzpicture}
+\caption{Directed graph $G$}\label{fig31}
+\end{figure}
+
+Applying the breadth-first algorithm to graph $G$ starting from vertex $a$, will result into the Figure \ref{fig:sfig3-1} after one step (visiting vertex $a$). At step 2, one of nodes $b$ or $c$ must be visited. Due to symmetry of the graph which ensures no loss of generality, suppose node $b$ will be visited. Since both nodes $b$ and $c$ are connected to nodes $d$ and $e$, any such visit will put nodes $d$ and $e$ in queue, adding edges $(b,d)$ and $(b,e)$ to the set of tree edges. In next step of algorithm, vertex $c$ will be visited. However, since all vertices connected to $c$ are already placed in queue, the visit will not affect the set of tree edges. Hence, full implementation of the BFS algorithm will result in Figure \ref{fig:sfig3-2}.
+
+\begin{figure}[H]\centering
+\tikzstyle{vertex}=[circle,draw,minimum size=0.7cm]
+\tikzstyle{not visited}=[]
+\tikzstyle{visited}=[fill=gray!50]
+\tikzstyle{in queue}=[fill=gray!20]
+\tikzstyle{label}=[]
+\tikzstyle{ultra thick}=[line width=0.6mm]
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+    \node[vertex,visited] (1) {a};
+    \node[vertex,in queue] (2) [above right = 0.5cm and 1.5cm of 1] {b};
+    \node[vertex,in queue] (3) [below right = 0.5cm and 1.5cm of 1] {c};
+    \node[vertex] (4) [right = 1.5cm of 2] {d};
+    \node[vertex] (5) [right = 1.5cm of 3] {e};
+    \path[draw,thick,->]
+	(2) edge (5)
+	(3) edge (4)
+	;
+    \path[draw,ultra thick,->]
+    (1) edge (2)
+    (1) edge (3)
+    (2) edge (4)
+    (3) edge (5)
+    ;
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig3-1}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}\centering
+    \begin{tikzpicture}
+    \node[vertex,visited] (1) {a};
+    \node[vertex,visited] (2) [above right = 0.5cm and 1.5cm of 1] {b};
+    \node[vertex,visited] (3) [below right = 0.5cm and 1.5cm of 1] {c};
+    \node[vertex,visited] (4) [right = 1.5cm of 2] {d};
+    \node[vertex,visited] (5) [right = 1.5cm of 3] {e};
+    \path[draw,thick,->]
+	(3) edge (4)
+	(3) edge (5)
+	;
+    \path[draw,ultra thick,->]
+    (1) edge (2)
+    (1) edge (3)
+    (2) edge (4)
+    (2) edge (5)
+    ;
+    \end{tikzpicture}
+    \caption{}
+    \label{fig:sfig3-2}
+  \end{subfigure}
+\caption{Implementation of BFS on $G$ starting from $a$ at two different steps of the algorithm}\label{fig32}
+\end{figure}
+
+Therefore, regardless of the order of adjacency lists, no implementation of the breadth-first search algorithm will generate $E_\pi$ as set of tree edges.

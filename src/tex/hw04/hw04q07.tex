@@ -1,0 +1,46 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 7}
+
+Show how to implement a queue using two stacks. Analyze the running time of the queue operations and argue about their amortized cost.
+
+\subsection*{Solution}
+To implement a standard queue with \textsc{Enqueue} and \textsc{Dequeue} operations, using two stacks with pop and push operations, Algorithms \ref{alg61} and \ref{alg62} are respectively proposed, in which number of elements in stack $S$ is noted with $S.length$.
+
+\begin{algorithm}[H]
+\caption{\textsc{Enqueue($x$)}}\label{alg61}
+\begin{algorithmic}[1]
+\State \textsc{Push($S_1$, $x$)}
+\State $S_1.length \leftarrow S_1.length + 1$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{\textsc{Dequeue()}}\label{alg62}
+\begin{algorithmic}[1]
+\If {$S_2.length == 0$}
+\For {$i \leftarrow S_1.length$ down to $1$}
+\State $q \leftarrow$ \textsc{Pop}($S_1$)
+\State \textsc{Push}($S_2$, $q$)
+\EndFor
+\EndIf
+\State \Return \textsc{Pop}($S2$)
+\end{algorithmic}
+\end{algorithm}
+
+It is trivial to show that the runtime for \textsc{Enqueue}$(x)$ using Algorithm \ref{alg61} is $\mathcal{O}(1)$ since each \textsc{Push} operation for an stack takes a constant time $C$.
+
+When stack $S_2$ is not empty, \textsc{Dequeue} operation takes a constant time as well, simply because there is only one \textsc{Pop} operation with cost $C$.
+
+In the worst-case however, when stack $S_2$ is empty and there are $n$ elements in stack $S_1$, the for loop will iterate $n$ times, leading to a run-time of $\mathcal{O}(n)$. Thus the \textsc{Dequeue} algorithm is linear in number of elements in queue.
+
+An amortize analysis, however, reveal both \textsc{Enqueue} and \textsc{Dequeue} algorithms only take constant time $C$ per item. This is trivial for \textsc{Enqueue} since each element is \textsc{Push}ed only once.
+
+To prove this statement for \textsc{Dequeue}, suppose a stack $S_1$ of $m$ elements. It suffices to prove that it takes a multiple of $m$ constant-time cost to dequeue all $m$ elements, thus leading to a $\mathcal{O}(1)$ cost per element.
+
+To dequeue the first element, all $m$ elements are \textsc{Pop}ed from stack $S_1$ and \textsc{Push}ed to stack $S_2$. Once in $S_2$, they await their turn to be \textsc{Pop}ed again in later \textsc{Dequeue} operations. This means each individual element of queue is \textsc{Pop}ed, \textsc{Push}ed and \textsc{Pop}ed only once, and since both two operations have constant-time cost, a \textsc{Dequeue} will have an amortized cost of 3, i.e. $\mathcal{O}(1)$.

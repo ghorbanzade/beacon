@@ -1,0 +1,14 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 6}
+
+An expression is in disjunctive normal form if it is of the form $e = c_1 \vee c_2 \vee \dots \vee c_m$ where $c_k$ is a clause and of the form $c_k = (z_1^{(k)} \wedge z_2^{(k)} \wedge \dots \wedge z_{n_k}^{(k)})$ in which each $z_j^{(k)}$ is a literal. Prove that the problem of satisfiability for expressions in disjunctive normal form is in $P$; that is, prove that there is an algorithm which takes as input an expression $e$ with $|e|$ number of symbols in disjunctive normal form and determines whether or not that expression is satisfiable in polynomial time.
+
+\subsection*{Solution}
+
+An expression in Disjunctive Normal Form (DNF) will be evaluated to true if and only if at least one of its clauses is evaluated to true. Therefore, a DNF expression is satisfiable if boolean assignments can be made to one of its clauses such that the clause is evaluated to true. It is always possible to evaluate a conjunctive clause as long as a literal and its negation are not present in the clause at the same time. Consequently, satisfying a DNF expression can be translated to verifying whether there is a clause in that expression that does not contain a variable and its negation at the same time, a procedure which clearly has a runtime linear in the number of symbols $|e|$, thus polynomial time. Consequently, DNF-SAT is in P.

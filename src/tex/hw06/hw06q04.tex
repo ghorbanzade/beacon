@@ -1,0 +1,14 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+Prove that all problems that are NP-complete are polynomially equivalent, in the sense that if $A$ and $B$ are NP-complete then $A \leq_P B$ and $B \leq_P A$.
+
+\subsection*{Solution}
+By definition, $A$ is NP-complete if and only if $A$ is in NP and for \textbf{any} problem $B$ in NP, $B\leq_P A$. Proof is immediately attained by using assumptions that $A$ and $B$ are NP-complete, which means they are in NP. Since $B$ is in NP, using the assumption that $A$ is NP-hard, we can obtain $B \leq_P A$.
+Similarly, since $A$ is in NP, using the assumption that $B$ is NP-hard, we can write $A \leq_P B$. Therefore, both NP-complete problems are equivalent.

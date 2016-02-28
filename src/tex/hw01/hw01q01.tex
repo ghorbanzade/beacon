@@ -1,0 +1,42 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+Show that for any integer $n \geq 0$,
+\begin{equation}
+\sum_{k=0}^{n} {n \choose k}k = n2^{n-1}
+\end{equation}
+
+\subsection*{Solution}
+
+Proof is given by differentiating over binomial formula, given in Equation \ref{eq2}.
+
+\begin{equation}
+(x + y)^n = \sum_{k=0}^{n}{n \choose k}x^ky^{n-k}
+\label{eq2}
+\end{equation}
+
+Substituting $1$ for $y$ leads to
+
+\begin{equation}
+(1 + x)^n = \sum_{k=0}^{n}{n \choose k}x^k
+\label{eq3}
+\end{equation}
+
+where $(1 + x)^n$ is simply the ordinary generating function for a finite sequence of binomial coefficients. By differentiating Equation \ref{eq3} over $x$, we will achieve
+
+\begin{equation}
+n(1+x)^{n-1} = \sum_{k=0}^{n} {n \choose k}kx^{k-1}
+\end{equation}
+
+Now substituting $1$ for $x$ will give us
+
+\begin{equation}
+\sum_{k=0}^{n}{n \choose k}k = n2^{n-1}
+\end{equation}
+
+and all equations are valid for any integer $n \geq 0$.

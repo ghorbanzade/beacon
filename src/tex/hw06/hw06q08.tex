@@ -1,0 +1,23 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 8}
+
+Prove that the \textsc{Hitting Set} problem, explained below, is NP-complete.
+\begin{itemize}\itemsep=0pt
+\item[] \textit{Instance:} A collection $C$ of subsets of a set $S$ together with a positive integer $K$.
+\item[] \textit{Question:} Does $S$ contain a hitting set for $C$ of size $K$ or less? i.e. Is there a subset $S' \subseteq S$ with $|S'| \leq K$ such that $S'$ contains at least one element of each set $c \in C$? 
+\end{itemize}
+\subsection*{Solution}
+We will first prove \textsc{Hitting Set} is in NP and then will show that the \textsc{Vertex Cover} problem can be polynomially reduced to this problem which proves \textsc{Hitting Set} is NP-Hard.
+\begin{enumerate}[label=(\alph*)]
+\item To show that \textsc{Hitting Set} is in NP, we must show there as an algorithm that verifies in polynomial time if for a given finite set $S$, a collection $C$ of its subsets, a number $K$ and a final subset $S'$, intersection of $S'$ with each set $c \in C$ is non-empty.
+Since $S'$ is given, we need only to check if there are at most $K$ sets $c \in C$ whose intersection with $S'$ is not empty. Assuming there are $|C|$ elements in $C$, since finding intersection of two sets $c_1$ and $c_2$ is $\mathcal{O}(\max\{|c_1|, |c_2|\}^2)$, runtime to obtain size of $S'$ would be $\mathcal{O}(n^3)$ which is polynomial. Therefore, \textsc{Hitting Set} is satisfiable in polynomial time and is thus in NP.
+\item To show \textsc{Hitting Set} is NP-Hard we reduce the NP-Hard problem of \textsc{Vertex Cover} in polynomial time to \textsc{Hitting Set}. Suppose $V$ is a vertex cover of size at most $K$ for graph $G(V, E)$. Since $V$ is a vertex cover, for any edge $e = (u,v)$ either $u$ or $v$ is in $V$. We can now think of $e$ as a collection $c \in C$ with size 2. Since for each $c$, one of the elements is in $V$, graph $G=(V,E)$ has a hitting set of size at most $K$.
+Since the reduction takes linear time to the size of the input $S$, it is a polynomial-time reduction. Hence, \textsc{Hitting Set} is at least as hard as \textsc{Vertex Cover} which is NP-Complete.
+\end{enumerate}
+Therefore we have shown \textsc{Hitting Set} is in NP and is NP-hard which concludes it is NP-Complete.

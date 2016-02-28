@@ -1,0 +1,120 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 5}
+
+Show how depth-first search works on the graph of Figure \ref{fig51}. Assume that the \textbf{for} loop of lines 5-7 of the \textsc{DFS} procedure considers the vertices in alphabetical order, and assume that each adjacency list is ordered alphabetically. Show the discovery and finishing times for each vertex, and show the classification of each edge.
+
+\begin{figure}[H]\centering
+\tikzstyle{every path}=[draw,->]
+\tikzstyle{vertex}=[circle,draw,minimum size=0.7cm]
+\tikzstyle{not visited}=[]
+\tikzstyle{visited}=[fill=gray!50]
+\tikzstyle{in queue}=[fill=gray!20]
+\tikzstyle{label}=[]
+\tikzstyle{ultra thick}=[line width=0.6mm]
+  \begin{tikzpicture}
+    \node[vertex] (1) {q};
+    \node[vertex] (3) [left = 1cm of 1] {s};
+    \node[vertex] (9) [right = 1cm of 1] {y};
+    \node[vertex] (6) [left = 1cm of 3] {v};
+    \node[vertex] (7) [below = 1cm of 6] {w};
+    \node[vertex] (4) [below = 1cm of 9] {t};
+    \node[vertex] (2) [right = 1cm of 9] {r};
+    \node[vertex] (5) [below = 1cm of 2] {u};
+    \node[vertex] (8) [below = 1cm of 1] {x};
+    \node[vertex] (10)[left = 1cm of 8] {z};
+%    \node[label]  (9) [above = 0.1cm of 1] {r};
+%    \node[label]  (10) [above = 0.1cm of 2] {s};
+%    \node[label]  (11) [above = 0.1cm of 3] {t};
+%    \node[label]  (12) [above = 0.1cm of 4] {u};
+%    \node[label]  (13) [below = 0.1cm of 5] {v};
+%    \node[label]  (14) [below = 0.1cm of 6] {w};
+%    \node[label]  (15) [below = 0.1cm of 7] {x};
+%    \node[label]  (16) [below = 0.1cm of 8] {y};
+ 
+    \path[thick]
+      (1) edge (4)
+      (1) edge (3)
+      (1) edge (7)
+      (3) edge (6)
+      (6) edge (7)
+      (7) edge (3)
+      (4) edge (8)
+      (8) edge (10)
+      (10) edge [bend left = 30] (8)
+      (4) edge (9)
+      (9) edge (1)
+      (2) edge (9)
+      (5) edge (9)
+      (2) edge (5)
+      ;
+    \path[ultra thick]
+      ;
+  \end{tikzpicture}
+\caption{Directed graph $G$}\label{fig51}
+\end{figure}
+
+\subsection*{Solution}
+Final tree constructed by applying the depth-first search algorithm to graph $G$ starting from source vertex $q$ and continuing alphabetically, is shown in Figure \ref{fig52}. As can be seen, starting and finishing time of each node is written next to it.
+
+\begin{figure}[H]\centering
+\tikzstyle{every path}=[draw,->]
+\tikzstyle{vertex}=[circle,draw,minimum size=0.7cm]
+\tikzstyle{not visited}=[]
+\tikzstyle{visited}=[fill=gray!50]
+\tikzstyle{in queue}=[fill=gray!20]
+\tikzstyle{label}=[]
+\tikzstyle{ultra thick}=[line width=0.6mm]
+  \begin{tikzpicture}
+    \node[vertex,visited] (1) {q};
+    \node[vertex,visited] (3) [left = 1cm of 1] {s};
+    \node[vertex,visited] (9) [right = 1cm of 1] {y};
+    \node[vertex,visited] (6) [left = 1cm of 3] {v};
+    \node[vertex,visited] (7) [below = 1cm of 6] {w};
+    \node[vertex,visited] (4) [below = 1cm of 9] {t};
+    \node[vertex,visited] (2) [right = 1cm of 9] {r};
+    \node[vertex,visited] (5) [below = 1cm of 2] {u};
+    \node[vertex,visited] (8) [below = 1cm of 1] {x};
+    \node[vertex,visited] (10)[left = 1cm of 8] {z};
+    \node[label]  (11) [above = 0.1cm of 6] {3/6};
+    \node[label]  (12) [above = 0.1cm of 3] {2/7};
+    \node[label]  (13) [above = 0.1cm of 1] {1/16};
+    \node[label]  (14) [above = 0.1cm of 9] {13/14};
+    \node[label]  (15) [above = 0.1cm of 2] {17/20};
+    \node[label]  (16) [below = 0.1cm of 7] {4/5};
+    \node[label]  (17) [below = 0.1cm of 10]{10/11};
+    \node[label]  (18) [below = 0.1cm of 8] {9/12};
+    \node[label]  (19) [below = 0.1cm of 4] {8/15};
+    \node[label]  (20) [below = 0.1cm of 5] {18/19};
+ 
+    \path[thick]
+      (1) edge (7)
+      (7) edge (3)
+      (10) edge [bend left = 30] (8)
+      (4) edge (9)
+      (9) edge (1)
+      (2) edge (9)
+      (5) edge (9)
+      ;
+    \path[ultra thick]
+      (1) edge (3)
+      (3) edge (6)
+      (6) edge (7)
+      (1) edge (4)
+      (4) edge (8)
+      (8) edge (10)
+      (2) edge (5)
+      ;
+  \end{tikzpicture}
+\caption{Graph $G$ after implementation of DFS algorithm starting from node $q$}\label{fig52}
+\end{figure}
+
+A brief explanation of how the algorithm works is as follows. First, node $q$ is visited. Then, due to the alphabetical order, node $s$ will be discovered and visited as the child of $q$. Since node $s$ is connected to $v$, the algorithm continues by visiting $v$ and $w$. Once $w$ is visited, since nodes connected to $w$ are already visited, the algorithm will continue with the second child of $q$. $t$ itself will be discovered and visited. Since $x$ alphabetically proceeds $y$, the algorithm continues with discovering the subtree $t \rightarrow x \rightarrow z$. After this step, as second child of $t$ will be visited. Since $y$ is not connected to any unvisited node, the algorithm will mark it as visited and continues with discovering a new node $r$ and eventually visiting the last node $u$.
+
+Using the DFS algorithm on graph $G$ will lead to a set of tree edges that is as follows.
+$E = \{(q,s), (s,v), (v,w), (q,t), (t,x), (x,z), (r,u)\}$. At the same time, set of forward edges will have only one element $(q,w)$ and set of back edges will include $\{(w,x), (z,x), (y,q)\}$. Noteworthy that $(r,y)$ and $(u,y)$ are neither in set of forward nor back edges.

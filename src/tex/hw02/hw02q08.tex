@@ -1,0 +1,42 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 8}
+Assume you had some kind of super-hardware that, when given two lists of length $n$ that are sorted, merges them into one sorted list, and takes only $n^c$ steps where $c \geq 0$.
+
+\begin{enumerate}[label=(\alph*)]
+\item Write down a recursive algorithm that uses this hardware to sort lists of length $n$.
+\item Write down a recurrence to describe the run time.
+\item For what values of $c$ does this algorithm perform substantially better than $\mathcal{O}(n \log n)$? Why is it highly implausible that this kind of super-hardware could exist for these values of $c$?
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item Inspired by \textsc{MergeSort}, the proposed algorithm \textsc{Super-Merger-Sort} is given as Algorithm 3.
+
+The call to the super-hardware is performed by calling the \textsc{Super-Merge} method. Using this algorithm, we can sort an array of length $n$ by a top level call of \textsc{Super-Merger-Sort}(A, $1$, $n$).
+
+\begin{algorithm}[H]
+\caption{\textsc{Super-Merger-Sort}($A$, $p$, $r$)}
+\begin{algorithmic}[1]
+\If {$p < r$}
+\State $q \leftarrow \lfloor \frac{p+r}{2} \rfloor$
+\State \textsc{Super-Merger-Sort}($A$, $p$, $q$)
+\State \textsc{Super-Merger-Sort}($A$, $q+1$, $r$)
+\State \textsc{Super-Merge}($A$,$p$,$q$,$r$)
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+\item As the original \textsc{MergeSort} algorithm has hardly been modified, the recursion tree will be the same as the recursion tree for \textsc{MergeSort} (Figure 3 of Lecture note 2), the only difference being that the constant runtime of each level of the tree would this time be $n^c$.
+
+\item Based on this fact, the total runtime of the proposed \textsc{Super-Merger-Sort} algorithm with be $\mathcal{O}(n^{c}\log n)$ for sorting an array of length $n$.
+
+The proposed algorithm would therefore perform better when $c < 1$. This is of course highly implausible because any such super-hardware should at least read once all $n$ elements of the two merged lists to sort them and this itself is $\mathcal{O}(n)$.
+
+\end{enumerate}

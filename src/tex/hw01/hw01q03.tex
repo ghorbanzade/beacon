@@ -1,0 +1,25 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+Prove that $\log_a x = O(log_b x)$ for any $a > 0$ and $b > 0$.
+
+\subsection*{Solution}
+It suffices to introduce two constants $c$ and $x_0$ such that 
+
+\begin{equation}
+\log_a x \leq c\times \log_b x
+\label{eq7}
+\end{equation}
+
+for any $x \geq x_0$. To make Equation \ref{eq7} into equality, $c$ is obtained as
+
+\begin{equation}
+c = \frac{log_a x}{log_b x} = log_a b
+\end{equation}
+
+Thus Equation \ref{eq7} is valid for all $x > x_0 = 0$ and for any $c \geq log_a b$.

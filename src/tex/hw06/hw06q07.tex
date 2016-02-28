@@ -1,0 +1,39 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 7}
+Prove that the following are equivalent.
+\begin{enumerate}
+  \item 
+  \begin{enumerate}
+    \item $V_1$ is a vertex cover of $G$.
+    \item $V - V_1$ is an independent set in $G$.
+  \end{enumerate}
+  \item 
+  \begin{enumerate}
+    \item $V_2$ is an independent set in $G$.
+    \item $V_2$ is a clique in $G^c$.
+  \end{enumerate}
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}
+  \item To prove 1(a) and 1(b) are equivalent, we need to show vertex cover and independent set problems are polynomially equivalent.
+  \begin{enumerate}
+    \item Objective is to prove any independent set of vertices $V_2$ for an undirected graph $G = (V, E)$ is reducible to a vertex cover on $G' = (V_1, E')$ where $V_1 = V - V_2$.
+    Since $V_1$ is an independent set, for any edge $e = (u,v) \in E$ either $u\in V_2$ or $v\in V_2$ which means either $u \in V_1$ or $v \in V_1$. Since $E$, by definition, contains all the edges in graph $G$, any $e \in E$ has at least one end in $V_1$, which means $V_1 = V - V_2$ is a vertex cover.
+    \item Objective is to show any vertex cover $V_1 \in V$ in $G(V, E)$ is reducible to an independent set of vertices $V_2 = V - V_1$. Proof is given by contradiction that $V_2$ must form an independent set. Suppose $V_2$ is not an independent set which means there is an edge $e = (u,v) \in E$ such that both its endpoints are in $V_2$. Therefore $\{u, v\} \notin V_1$ which means set of vertices $V_1$ does not cover $e$ and therefore $V_1$ is not a vertex cover of $G$ which is a contradiction.
+  \end{enumerate}
+  Thus both problems 1(a) and 1(b) are polynomially reducible to each other which means they are equally hard.
+  \item To prove 2(a) and 2(b) are equivalent, we need to show independent set and clique problems are polynomially equivalent.
+  \begin{enumerate}
+    \item Objective is to prove any independent set of vertices $V_2$ for an undirected graph $G = (V, E)$ is reducible to a clique on $G^c = (V, E')$. Since $V_2$ form an independent set, for any pair of vertices $\{u, v\} \in V_2$, $e = (u, v) \notin E$ which means $(u, v) \in E'$. Thus since all vertices in $V_2$ are mutually connected in $G^c = (V, E')$, they form a clique in $G'$.
+    \item Objective is to prove any set of vertices $V_2$ that form a clique in $G^c=(V, E')$ form an independent set in $G = (V, E)$. Similar to previous proof, for any pair of vertices $\{u, v\}\in V_2$, $e = (u, v) \in E'$ which means $(u,v) \notin E$, i.e. no two vertices of $V_2$ are directly connected in $G=(V,E)$ which means they form an independent set.  
+  \end{enumerate}
+  Thus both problems 2(a) and 2(b) are polynomially reducible to each other which means they are equally hard.
+\end{enumerate}

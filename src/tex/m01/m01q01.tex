@@ -1,0 +1,48 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+\begin{enumerate}[label=(\alph*)]
+\item Use the substitution method to show that $T(n) = 8T(n/2) + n^3 = \mathcal{O}(n^3\log n)$. Assume $T(2)=d$ where $d$ is a constant. Use induction and do not skip stages.
+
+\item Prove or disprove $f(n) = \Theta(f(n/2))$. If true, show why. Otherwise give a counter-example.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item Proof is given by induction on $n$. Using assumption $T(2) = d$, $T(1) = \frac{T(2)-1}{8} = \frac{d-1}{8} = e$ where $e$ is a constant.
+\begin{enumerate}[label=\arabic*.]
+\item \textit{Base Case}\\
+We take the base step as $n = 1$.
+In this case, there exist constants $f > 0$, $n_0 = 1$ where $f = e(\frac{d}{8}+\frac{d}{1})$ such that $T(1) \leq f \times n^3 \log n$ for all $n \geq n_0$. Therefore, $T(1) = \mathcal{O}(n^3 \log n)$.
+\item \textit{Inductive Hypothesis}\\
+We form inductive hypothesis as $T(k)=\mathcal{O}(n^3 \log n)$. In other words, that there are constants $c$ and $n'_0$ such that $T(k) \leq ck^3 \log k$ for $k \geq n'_0$.
+\item \textit{Induction Step}\\
+Using inductive hypothesis we will show $T(2k) = O(n^3\log n)$; in other words, that there are constants $c^\prime$ and $n''_0$ such that $T(2k) \leq c' k^3 \log k$ for all $k \geq n''_0$.
+
+\begin{equation}\label{eq11}
+T(2k) = 8 T(\frac{2k}{2}) + (2k)^3
+\end{equation}
+By Inductive hypothesis, Equation \ref{eq11} can be written as shown in Equation \ref{eq12}.
+\begin{equation}\label{eq12}
+\begin{aligned}
+T(2k) &\leq 8c \big( (2k)^3 \log (2k) \big) + (2k)^3\\
+&\leq (8c + 1) (2k)^3 \log (2k)\\
+&\leq 8(8c+1) (k)^3 (\log (k) + \log 2)\\
+&\leq 16(8c+1) (k^3 \log k)
+\end{aligned}
+\end{equation}
+Therefore, by taking $c' = 16(8c+1)$ and $n''_0 = n'_0$ we have shown Equation \ref{eq13} holds for all $k \geq n''_0$.
+\begin{equation}\label{eq13}
+T(2k) \leq c' \big( (2k)^3 \log 2k \big)
+\end{equation}
+Hence, we have shown $T(2k) = \mathcal{O}(n^3\log n)$ and the induction is complete.
+\end{enumerate}
+\item The statement is not valid. To disprove, $f(n)=2^n$ can be given as a counter-example. What statement suggests is there are constants $C$ and $n_0$ such that $2^n < C(2^{n/2})$; in other words, $2^{n/2} < C$ for all $n > n_0$. This is obviously not true since there is no limit in our choice of $n$.
+\end{enumerate}

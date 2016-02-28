@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS624: Analysis of Algorithms
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs624-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+Show that there is an algorithm that produces the $k$ smallest elements of an unsorted set of $n$ elements in time $\mathcal{O}(n + k \log n)$.
+
+You have to state the algorithm carefully and prove that it does what it is supposed to do. You need also to prove that the algorithm runs in time $\mathcal{O}(n + k \log n)$.
+
+\subsection*{Solution}
+
+The desired algorithm \textsc{Sort-k-Min} which sorts $k$ smallest elements of array $A$ has been proposed below.
+
+\begin{algorithm}[H]
+\caption{\textsc{Sort-k-Min}}
+\begin{algorithmic}[1]
+\State \textsc{Build-Heap}($A$)
+\For {$i \leftarrow 1$ : $k$}
+\State $F[i] \leftarrow A[1]$
+\State \textsc{Heap-Delete}($A$, $1$)
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+As is shown, the objective is achieved by taking advantage of the heap data structure. First, a min-heap is constructed once from all elements of the array. This would cost a $\mathcal{O}(n)$ runtime. To get the smallest element, each time the root element will be produced as smallest and then it is removed from the heap using a call to \textsc{Heap-Delete}($A$, 1). Runtime of each iteration of the loop is thus $\mathcal{O}(\log n)$. To get the first $k$ elements, the loop should be used $k$ times which results in a total runtime of $\mathcal{O}(n + k\log n)$.
