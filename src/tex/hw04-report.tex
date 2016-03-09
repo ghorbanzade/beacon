@@ -1,0 +1,39 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS638: Applied Machine Learning
+% Copyright 2016 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs638-2016s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def \topDirectory {../..}
+\def \srcDirectory {\topDirectory/src}
+\def \binDirectory {\topDirectory/bin}
+\def \texDirectory {\srcDirectory/tex}
+\def \pngDirectory {\binDirectory/png}
+
+\documentclass[12pt,letterpaper,twoside]{article}
+
+\usepackage{\texDirectory/directives}
+\input{\texDirectory/config}
+\usepackage{\texDirectory/report}
+
+\begin{document}
+
+\doc{title}{Solution to Assignment 4}
+\doc{date-pub}{Mar 8, 2016 at 4:00 PM}
+\doc{date-due}{Mar 24, 2016 at 4:00 PM}
+
+\makeHeader
+
+\section*{Question}
+
+\cleardoublepage
+
+\section*{Appendices}
+
+\subsection*{Source Code}
+
+\lstset{language=r,tabsize=4}
+\lstinputlisting[firstline=1]{\srcDirectory/r/hw04.r}
+
+\end{document}

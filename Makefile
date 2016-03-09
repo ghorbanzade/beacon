@@ -1,5 +1,5 @@
-DOCS = hw02-report hw02-slide
-CODS = hw02
+DOCS = hw02-report hw02-slide hw04-report
+CODS = hw02 hw04
 
 TOP_DIR = .
 BIN_DIR = $(TOP_DIR)/bin
@@ -26,8 +26,8 @@ dirs:
 code: $(COD_PNG)
 
 $(COD_PNG): $(COD_SRC)
-	@echo -n "  Running $(?F)... "
-	@Rscript $? > /dev/null
+	@echo -n "  Running $(@F:-01.png=.r)... "
+	@Rscript $(COD_DIR)/$(@F:-01.png=.r) > /dev/null
 	@echo "Done."
 
 docs: $(DOC_PDF)
