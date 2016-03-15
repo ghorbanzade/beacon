@@ -15,35 +15,30 @@ DOC_PDF = $(foreach NUM, $(DOCS), $(DOC_DIR)/$(NUM).pdf)
 all: dirs docs bind tidy
 
 dirs:
-	mkdir -p $(BIN_DIR)
-	mkdir -p $(DOC_DIR)
+	@mkdir -p $(BIN_DIR)
+	@mkdir -p $(DOC_DIR)
 
 docs: $(DOC_PDF)
 
 $(DOC_PDF): $(DOC_TEX)
-	echo -n "  $(@F)... "
+	@echo -n "  $(@F)... "
 	pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex)
-	pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
-	echo "Done."
+	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
+	@echo "Done."
 
 bind:
-	echo -n "  Binding documents... "
-	gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$(BIN_DIR)/$(BIND_DOC).pdf $(DOC_PDF)
-	echo "Done."
+	@echo -n "  Binding documents... "
+	@gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$(BIN_DIR)/$(BIND_DOC).pdf $(DOC_PDF)
+	@echo "Done."
 
 tidy:
-	echo -n "  Removing unneeded files... "
-	find $(BIN_DIR) -name '*.log' -delete
-	find $(BIN_DIR) -name '*.aux' -delete
-	find $(BIN_DIR) -name '*.out' -delete
-	find $(BIN_DIR) -name '*.vrb' -delete
-	find $(BIN_DIR) -name '*.snm' -delete
-	find $(BIN_DIR) -name '*.toc' -delete
-	find $(BIN_DIR) -name '*.nav' -delete
-	find $(BIN_DIR) -name '*.pyg' -delete
-	echo "Done."
+	@echo -n "  Removing unneeded files... "
+	@find $(BIN_DIR) -name '*.log' -delete
+	@find $(BIN_DIR) -name '*.aux' -delete
+	@find $(BIN_DIR) -name '*.out' -delete
+	@echo "Done."
 
 clean:
-	echo -n "  Removing $(BIN_DIR)... "
-	rm -rf $(BIN_DIR)
-	echo "Done."
+	@echo -n "  Removing $(BIN_DIR)... "
+	@rm -rf $(BIN_DIR)
+	@echo "Done."
