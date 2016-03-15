@@ -1,31 +1,36 @@
 BIN_DIR = bin
-DOC_DIR = doc
-OUT_DIR = $(BIN_DIR)/doc
+SRC_DIR = src
+DOC_DIR = $(SRC_DIR)/doc
 TEX_DIR = $(DOC_DIR)/tex
-TEX = $(TEX_DIR)/main.tex
-PDF = $(BIN_DIR)/doc/main.pdf
+PDF_DIR = $(BIN_DIR)/documents
 
-.PHONY: all docs code tidy clean
+DOCS = hw01
+DOC_TEX = $(foreach NUM, $(DOCS), $(TEX_DIR)/$(NUM)/$(NUM).tex)
+DOC_PDF = $(foreach NUM, $(DOCS), $(PDF_DIR)/$(NUM).pdf)
+
+.PHONY: all dirs docs code tidy clean
 
 all: code
 
-docs: directories $(PDF) tidy
+docs: dirs $(DOC_PDF) code tidy
 
-directories: 
+dirs: 
 	@mkdir -p $(BIN_DIR)
-	@mkdir -p $(OUT_DIR)
+	@mkdir -p $(PDF_DIR)
 
-$(PDF): $(TEX)
-	@echo -n "  $(@F)... " && \
-	pdflatex -halt-on-error -output-directory $(OUT_DIR) $(TEX_DIR)/$(@F:.pdf=.tex) > /dev/null && \
-	pdflatex -halt-on-error -output-directory $(OUT_DIR) $(TEX_DIR)/$(@F:.pdf=.tex) > /dev/null
+$(DOC_PDF): $(DOC_TEX)
+	@echo -n "  $(@F)... "
+	@pdflatex -halt-on-error -output-directory $(PDF_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
+	@pdflatex -halt-on-error -output-directory $(PDF_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
 	@echo "Done."
+
 code:
 	@ant
 
 tidy:
-	@find $(OUT_DIR) -name '*.log' -delete
-	@find $(OUT_DIR) -name '*.aux' -delete
+	@find $(PDF_DIR) -name '*.log' -delete
+	@find $(PDF_DIR) -name '*.out' -delete
+	@find $(PDF_DIR) -name '*.aux' -delete
 
 clean:
 	@ant clean

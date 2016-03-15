@@ -60,5 +60,5 @@ For questions or further information please contact [Pejman Ghorbanzade].
 
 [University of Massachusetts Boston]: http://www.umb.edu
 [MIT License]: https://github.com/ghorbanzade/UMB-CS681-2016S/blob/master/LICENSE
-[Creative Commons Attribution-ShareAlike 4.0 International License]: https://github.com/ghorbanzade/UMB-CS681-2016S/blob/master/doc/LICENSE
+[Creative Commons Attribution-ShareAlike 4.0 International License]: https://github.com/ghorbanzade/UMB-CS681-2016S/blob/master/src/doc/LICENSE
 [Pejman Ghorbanzade]: http://www.ghorbanzade.com
