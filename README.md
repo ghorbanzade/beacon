@@ -22,7 +22,7 @@ The package(s) needed for building java codes are listed below.
 
 ```
 sudo apt-get intsall ant
-sudo apt-get install openjdk-7-jdk
+sudo apt-get install oraclejdk8
 ```
 
 All other dependencies will be handled using Apache Ivy tool that will be configured by Ant.
@@ -30,7 +30,7 @@ All other dependencies will be handled using Apache Ivy tool that will be config
 Once the build is complete, you can execute each program by adding the path to its jar file in classpath of `java` command and providing the name of its `*Main.java` class as its argument, as shown in the following example:
 
 ```
-java -cp UMB-CS681-2016S-hw12.jar edu.umb.cs681.hw12.FileSystemMain
+java -cp UMB-CS681-2016S-hw01.jar edu.umb.cs681.hw01.CarMain
 ```
 
 ### Building Documents
