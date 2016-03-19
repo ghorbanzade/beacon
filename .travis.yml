@@ -5,7 +5,6 @@ addons:
     packages:
     - texlive-latex-base
 jdk:
-  - openjdk7
   - oraclejdk8
 before_install:
   - ant init-ivy
