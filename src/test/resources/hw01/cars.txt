@@ -1,0 +1,7 @@
+# configuration of a sample list of cars
+# price, mileage, year
+4880,136636,2000
+7995,84297,2001
+10697,78321,2003
+10900,98362,2002
+24995,6822,2007

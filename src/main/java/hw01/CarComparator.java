@@ -7,49 +7,69 @@
 
 package edu.umb.cs681.hw01;
 
-import java.io.Serializable;
 import java.util.Comparator;
 
 /**
-* This class defines a parent class for different comparators used to compare
-* cars. By implementing the Comparator interface, this class ensures that any
-* comparator used for cars will override the compare method. In addition,
-* this class ensures that every comparator will have a name.
-*
-* @author       Pejman Ghorbanzade
-* @see          Car
-*/
-public abstract class CarComparator implements Comparator<Car>, Serializable {
-  /**
-  * Every comparator used to compare two cars has a name.
-  */
-  private final String name;
+ * This class allows us to assign a name to comparator objects and specify
+ * whether they sort cars in ascending or descending order. The information
+ * is used for printing purposes only.
+ *
+ * @author Pejman Ghorbanzade
+ * @see Car
+ * @see CarMain
+ */
+public class CarComparator {
 
   /**
-  * The constructor will initialize the name of comparators defined for Cars.
-  *
-  * @param name of the comparator
-  */
-  public CarComparator(String name) {
+   * An object of this class is assigned a name and describes the comparing
+   * logic and whether it sorts the list in ascending or descending order.
+   */
+  private final String name;
+  private final boolean isReverse;
+  private final Comparator<Car> comparator;
+
+  /**
+   * The constructor for this class takes the logic of the comparator as a
+   * comparator object, a name to assign to it and whether it sorts cars
+   * in ascending or descending order.
+   *
+   * @param name the name of the comparator as we want to be printed
+   * @param comp the comparator that describes the logic of sorting
+   * @param rev whether the comparator should work in reverse order
+   */
+  public CarComparator(String name, Comparator<Car> comp, boolean rev) {
     this.name = name;
+    this.isReverse = rev;
+    this.comparator = rev ? comp.reversed() : comp;
   }
 
   /**
-  * This getter method gives access to the name of the comparator.
-  *
-  * @return name of the comparator
-  */
+   * This getter method returns the name of the comparator for printing
+   * purposes.
+   *
+   * @return name assigned to the comparator
+   */
   public String getName() {
     return this.name;
   }
 
   /**
-  * Each comparator class that inherits this class must implement and override
-  * the compare method of Comperator interface.
-  *
-  * @param car1 the car we are comparing against
-  * @param car2 the car we are comparing with
-  */
-  @Override
-  public abstract int compare(Car car1, Car car2);
+   * This getter method returns the comparator object that is handed to
+   * sort method of collections class to sort the list of cars.
+   *
+   * @return the comparator object to be used for sorting
+   */
+  public Comparator<Car> getComparator() {
+    return this.comparator;
+  }
+
+  /**
+   * This getter method is used to print whether the list is sorted in
+   * ascending or descending order.
+   *
+   * @return whether the comparator delivers the list in descending order
+   */
+  public boolean isReverse() {
+    return this.isReverse;
+  }
 }

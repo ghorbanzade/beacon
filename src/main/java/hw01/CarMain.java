@@ -12,70 +12,66 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
-* This class is provided to test our design by instantiating a number of
-* cars and sorting them using different comparators.
-*
-* @author   Pejman Ghorbanzade
-* @see      Car
-* @see      CarComparator
-*/
+ * This class tests the design by instantiating a number of cars and
+ * sorting them using different comparators.
+ *
+ * @author Pejman Ghorbanzade
+ * @see Car
+ * @see CarComparator
+ * @see CarListReader
+ */
 public final class CarMain {
+
   /**
-  * Program's main method initializes a list of cars and sorts and prints the
-  * list using different comparators as specified in the problem.
-  *
-  * @param args command line arguments given to program
-  */
+   * Program's main method initializes a list of cars and sorts and prints
+   * the list using different comparators as specified in the problem.
+   *
+   * @param args command line arguments given to program
+   */
   public static void main(String[] args) {
-    ArrayList<Car> cars = initializeCars();
-    ArrayList<CarComparator> comparators = initializeComparators();
-    for (CarComparator comparator: comparators) {
-      printSortedList(cars, comparator);
+    CarListReader cr = new CarListReader("/cars.txt");
+    ArrayList<Car> cars = cr.load();
+    ArrayList<CarComparator> comps = initializeComparators();
+    for (CarComparator comp: comps) {
+      printList(cars, comp);
     }
   }
 
   /**
-  * This static method initializes a list of cars to be sorted. The
-  * information used for this purpose are the ones given in lecture slide.
-  *
-  * @return a list of initialized Car objects
-  */
-  public static ArrayList<Car> initializeCars() {
-    ArrayList<Car> cars = new ArrayList<Car>();
-    cars.add(new Car(4880, 136636, 2000));
-    cars.add(new Car(7995, 84297, 2001));
-    cars.add(new Car(10697, 78321, 2003));
-    cars.add(new Car(10900, 98362, 2002));
-    cars.add(new Car(24995, 6822, 2007));
-    return cars;
-  }
-
-  /**
-  * This static method defines a list of comparators to be used to sort the
-  * cars.
-  *
-  * @return a list of comperators to compare Car objects
-  */
+   * This method defines a list of comparators to be used to sort
+   * the cars.
+   *
+   * @return an arraylist of car comparator objects
+   */
   public static ArrayList<CarComparator> initializeComparators() {
-    ArrayList<CarComparator> comparators = new ArrayList<CarComparator>();
-    comparators.add(new PriceComparator());
-    comparators.add(new MileageComparator());
-    comparators.add(new YearComparator());
-    comparators.add(new ParetoComparator());
-    return comparators;
+    ArrayList<CarComparator> comps = new ArrayList<CarComparator>();
+    comps.add(new CarComparator("price", compareByPrice(), false));
+    comps.add(new CarComparator("mileage", compareByMileage(), false));
+    comps.add(new CarComparator("year", compareByYear(), false));
+    comps.add(new CarComparator("pareto", compareByPareto(), false));
+    comps.add(new CarComparator("price", compareByPrice(), true));
+    comps.add(new CarComparator("mileage", compareByMileage(), true));
+    comps.add(new CarComparator("year", compareByYear(), true));
+    comps.add(new CarComparator("pareto", compareByPareto(), true));
+    return comps;
   }
 
   /**
-  * This static method takes a list of cars and a given comparator to sort
-  * cars and then to print their information. This method handles the output
-  * shown on the console.
-  *
-  * @param cars the list of cars to be sorted
-  * @param comparator the comparator to be used to sort cars
-  */
-  public static void printSortedList(ArrayList<Car> cars, CarComparator comparator) {
-    Collections.sort(cars, comparator);
-    System.out.printf("Cars sorted using %s comparator:%n", comparator.getName());
+   * This method takes a list of cars and a given comparator to sort
+   * cars and then to print their information.
+   * This method handles the output shown on the console.
+   *
+   * @param cars an arraylist of car objects
+   * @param comparator the comparator to use to sort the car objects
+   */
+  public static void printList(ArrayList<Car> cars, CarComparator comparator) {
+    Collections.sort(cars, comparator.getComparator());
+    String order = comparator.isReverse() ? "descending" : "ascending";
+    System.out.printf(
+        "Cars sorted based on %s in %s order:%n",
+        comparator.getName(),
+        order
+    );
     for (Car car: cars) {
       System.out.println(car);
     }
@@ -83,8 +79,56 @@ public final class CarMain {
   }
 
   /**
-  * This class is to test the design and must be allowed to be instantiated.
-  */
+   * Comparison rule for comparing two Car objects. In this comparator,
+   * a car is considered as lower (better) if it is cheaper.
+   *
+   * @return a comparator object with price comparison logic
+   */
+  public static Comparator<Car> compareByPrice() {
+    return Comparator.comparing(Car::getPrice);
+  }
+
+  /**
+   * Comparison rule for comparing two Car objects. In this comparator,
+   * a car is considered as lower (better) if it has been used less.
+   *
+   * @return a comparator object with mileage comparison logic
+   */
+  public static Comparator<Car> compareByMileage() {
+    return Comparator.comparing((Car car)-> car.getMileage());
+  }
+
+  /**
+   * Comparison rule for comparing two Car objects. In this comparator,
+   * a car is considered as lower (better) if it is manufacture more
+   * recently.
+   *
+   * @return a comparator object with year comparison logic
+   */
+  public static Comparator<Car> compareByYear() {
+    return (Car car1, Car car2)-> car1.getYear() - car2.getYear();
+  }
+
+  /**
+   * Comparison rule for comparing two Car objects. In this comparator, a
+   * car is considered as lower (better) if it dominates the other car in
+   * more aspects.
+   *
+   * @return a comparator object with pareto comparison logic
+   */
+  public static Comparator<Car> compareByPareto() {
+    return (Car car1, Car car2)-> {
+      int sum = 0;
+      sum += (int) Math.signum(car1.getPrice() - car2.getPrice());
+      sum += (int) Math.signum(car1.getMileage() - car2.getMileage());
+      sum += (int) Math.signum(car1.getYear() - car2.getYear());
+      return sum;
+    };
+  }
+
+  /**
+   * This class is to test the design and must be allowed to be instantiated.
+   */
   private CarMain() {
   }
 }
