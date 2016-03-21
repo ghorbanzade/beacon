@@ -35,7 +35,7 @@ public class Polygon {
    * treated as a polygon.
    *
    * @param points the list of points (vertices) of the polygon object
-   * @param areaCalc the logic for calculating the area of the the polygon object
+   * @param areaCalc the logic to compute the area of the the polygon object
    */
   public Polygon(ArrayList<Point2D> points, AreaCalculator areaCalc) {
     this.points = Objects.requireNonNull(points);
@@ -88,15 +88,6 @@ public class Polygon {
    */
   public void setAreaCalc(AreaCalculator areaCalc) {
     this.areaCalc = Objects.requireNonNull(areaCalc);
-  }
-
-  /**
-   * This getter method returns the list of vertices defining the polygon.
-   *
-   * @return the list of coordinates of vertices of the polygon
-   */
-  public ArrayList<Point2D> getPoints() {
-    return this.points;
   }
 
   /**
