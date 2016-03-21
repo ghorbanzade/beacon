@@ -16,7 +16,6 @@ import java.util.Comparator;
  *
  * @author Pejman Ghorbanzade
  * @see Car
- * @see CarMain
  */
 public class CarComparator {
 

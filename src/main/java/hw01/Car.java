@@ -13,8 +13,8 @@ package edu.umb.cs681.hw01;
  * and manufacturing year. We assume these parameters are fixed and thus
  * not subject to change. Therefore, no setter method has been defined.
  *
- * @author   Pejman Ghorbanzade
- * @see      CarComparator
+ * @author Pejman Ghorbanzade
+ * @see CarComparator
  */
 public final class Car {
 

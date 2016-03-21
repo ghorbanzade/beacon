@@ -20,7 +20,6 @@ import java.util.ArrayList;
  *
  * @author Pejman Ghorbanzade
  * @see Car
- * @see CarMain
  */
 public final class CarListReader {
 
