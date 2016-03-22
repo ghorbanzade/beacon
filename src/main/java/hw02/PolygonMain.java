@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * This method demonstrate the design by creating a triangle and transforming
+ * This class demonstrate the design by creating a triangle and transforming
  * it to a rectangle and back to triangle again and printing the area of the
  * polygon at each stage.
  *
