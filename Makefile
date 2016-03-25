@@ -1,4 +1,4 @@
-DOCS = hw02-report hw02-slide hw04-report
+DOCS = hw02-slide hw02-report hw04-slide hw04-report
 CODS = hw02 hw04
 
 TOP_DIR = .

@@ -1,0 +1,159 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS638: Applied Machine Learning
+% Copyright 2016 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs638-2016s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def \topDirectory {../..}
+\def \srcDirectory {\topDirectory/src}
+\def \binDirectory {\topDirectory/bin}
+\def \texDirectory {\srcDirectory/tex}
+\def \pngDirectory {\binDirectory/png}
+
+\documentclass[aspectratio=169]{beamer}
+\mode<presentation>
+\usetheme{default}
+
+\usepackage{\texDirectory/directives}
+\input{\texDirectory/config}
+\usepackage{\texDirectory/slide}
+
+\date{\today}
+\author[pejman]{Pejman Ghorbanzade\\ \texttt{pejman@cs.umb.edu}}
+\title{Solution to Assignment 4}
+\institute[UMass]{Department of Computer Science\\ University of Massachusetts Boston}
+
+\begin{document}
+
+\begin{slide}
+
+	\begin{columns}
+
+	\column{0.4\textwidth}
+	\begin{block}{Objective}
+	To implement logistic regression based on scores obtained in two exams to predict whether a student will be admitted into a university.
+	\end{block}
+
+	\column{0.6\textwidth}
+	\begin{figure}
+	\includegraphics[width=\textwidth]{\pngDirectory/hw04-11.png}
+	\end{figure}
+
+	\end{columns}
+
+\end{slide}
+
+\begin{slide}
+
+	\begin{columns}
+
+	\column{0.4\textwidth}
+	Final $\theta$ values:
+	\begin{equation*}
+	\theta_0:: -15.396
+	\end{equation*}
+	\begin{equation*}
+	\theta_1:: 0.128
+	\end{equation*}
+	\begin{equation*}
+	\theta_2:: 0.123
+	\end{equation*}
+
+	Final cost function value:
+	\begin{equation*}
+	J(x_1, x_2):: 0.205
+	\end{equation*}
+
+	Scaling features was shown to help obtain same parameters with only 100 iterations.
+
+	\column{0.6\textwidth}
+	\begin{figure}
+	\includegraphics[width=\textwidth]{\pngDirectory/hw04-12.png}
+	\end{figure}
+
+	\end{columns}
+
+\end{slide}
+
+\begin{slide}
+
+	\begin{columns}
+
+	\column{0.4\textwidth}
+	\begin{block}{Prediction}
+	A student with scores 100 and 50 in exams 1 and 2, respectively, is estimated to have 97.2\% chance to be admitted.
+	\end{block}
+
+	\column{0.6\textwidth}
+	\begin{figure}
+	\includegraphics[width=\textwidth]{\pngDirectory/hw04-14.png}
+	\end{figure}
+
+	\end{columns}
+
+\end{slide}
+
+\begin{slide}
+
+	\begin{columns}
+
+	\column{0.4\textwidth}
+	\begin{block}{Objective}
+	To implement regularized logistic regression based on samples from two quality tests to predict whether a microchip from a fabrication plant will pass quality assurance.
+	\end{block}
+
+	\column{0.6\textwidth}
+	\begin{figure}
+	\includegraphics[width=\textwidth]{\pngDirectory/hw04-21.png}
+	\end{figure}
+
+	\end{columns}
+
+\end{slide}
+
+\begin{slide}
+
+	\begin{columns}
+
+	\column{0.4\textwidth}
+	\begin{block}{Cost Function Minimization}
+	\begin{itemize}
+	\item $\alpha$ is chosen as $0.5$.
+	\item Minimum cost obtained when $\lambda$ is chosen as $0$.
+	\item Very large $\lambda$ values will cause failure for gradient descent algorithm to converge.
+	\end{itemize}
+	\end{block}
+
+	\column{0.6\textwidth}
+	\begin{figure}
+	\includegraphics[width=\textwidth]{\pngDirectory/hw04-22.png}
+	\end{figure}
+
+	\end{columns}
+
+\end{slide}
+
+\begin{slide}
+
+	\begin{columns}
+
+	\column{0.4\textwidth}
+	\begin{block}{Effect of large $\lambda$ values}
+	\begin{itemize}
+	\item $\lambda = 100$ or $\lambda = 1000$ cause unacceptable decision boundaries.
+	\item Both $\lambda = 0$ and $\lambda = 1$ lead to almost identical decision boundaries.
+	\item Even though $\lambda = 0$ causes minimum final cost, $\lambda = 1$ may be a better choice to avoid over-fitting.
+	\end{itemize}
+	\end{block}
+
+	\column{0.6\textwidth}
+	\begin{figure}
+	\includegraphics[width=\textwidth]{\pngDirectory/hw04-24.png}
+	\end{figure}
+
+	\end{columns}
+
+\end{slide}
+
+\end{document}
