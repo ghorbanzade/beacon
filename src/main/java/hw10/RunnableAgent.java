@@ -7,10 +7,9 @@
 
 package edu.umb.cs681.hw10;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
- *
+ * This class is the parent class of any class that is going to act on
+ * a file object.
  *
  * @author Pejman Ghorbanzade
  * @see AutoSaver
@@ -19,29 +18,29 @@ import java.util.concurrent.locks.ReentrantLock;
 public abstract class RunnableAgent implements Runnable {
 
   /**
-   *
-   */ 
-  private File file;
-  private String name = "autosaver";
+   * Any runnable object takes account of the file is assigned to affect.
+   */
+  private final File file;
 
   /**
-   * 
+   * The constructor records the file to be acted upon.
    *
-   * @param file
+   * @param file the file to be either saved or changed.
    */
   public RunnableAgent(File file) {
     this.file = file;
   }
 
   /**
-   *
+   * All classes extending this class must implement how threads should
+   * execute the class.
    */
   public abstract void run();
 
   /**
+   * This method provides access to the file that the runnable agent is given.
    *
-   *
-   * @return
+   * @return the file that the runnable agent is acting upon
    */
   public File getFile() {
     return this.file;

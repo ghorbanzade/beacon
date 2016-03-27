@@ -7,10 +7,9 @@
 
 package edu.umb.cs681.hw10;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
- *
+ * This class defines an editor as an implementation of the runnable
+ * interface.
  *
  * @author Pejman Ghorbanzade
  * @see RunnableAgent
@@ -19,34 +18,35 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Editor extends RunnableAgent {
 
   /**
-   *
+   * The type of the runnable agent is used to print which agent is acting
+   * on the file.
    */
-  private String name = "editor";
+  private static final String name = "editor";
 
   /**
-   * 
+   * The constructor takes the file to be acted upon and passes it to the
+   * super class.
    *
-   * @param file
+   * @param file the file to be changed or saved
    */
   public Editor(File file) {
     super(file);
   }
 
   /**
-   *
+   * This method specifies what a thread should do if it is passed
+   * an editor object.
    */
   @Override
   public void run() {
-    for (int i = 0; i < 10; i++) {
-      this.getFile().change(this.name);
-      try {
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
+    for (int i = 0; i < 20; i++) {
+      if (i % 2 == 0) {
+        this.getFile().change(Editor.name);
+      } else {
+        this.getFile().save(Editor.name);
       }
-      this.getFile().save(this.name);
       try {
-        Thread.sleep(1000);
+        Thread.sleep(100);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

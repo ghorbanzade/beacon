@@ -7,20 +7,22 @@
 
 package edu.umb.cs681.hw10;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
- *
+ * This class demonstrates how editing and saving a file by multiple
+ * threads are performed in a thread safe manner.
  *
  * @author Pejman Ghorbanzade
  * @see AutoSaver
  * @see Editor
  * @see File
  */
-public class FileMain {
+public final class FileMain {
 
   /**
-   *
+   * The main method of this program defines two editor and autosaver threads
+   * and starts them. The editor sequentially changes and saves the file every
+   * two hundred milliseconds. The autosaver saves the file every two hundred
+   * milliseconds.
    *
    * @param args command line arguments given to the program
    */

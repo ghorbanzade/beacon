@@ -7,10 +7,9 @@
 
 package edu.umb.cs681.hw10;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
- *
+ * This class defines an autosaver as an implementation of the runnable
+ * interface.
  *
  * @author Pejman Ghorbanzade
  * @see RunnableAgent
@@ -19,28 +18,31 @@ import java.util.concurrent.locks.ReentrantLock;
 public class AutoSaver extends RunnableAgent {
 
   /**
-   *
+   * The type of the runnable agent is used to print which agent is acting
+   * on the file.
    */ 
-  private String name = "autosaver";
+  private static final String name = "autosaver";
 
   /**
-   * 
+   * The constructor takes the file to be saved and passes it to the
+   * super class.
    *
-   * @param file
+   * @param file the file to be saved
    */
   public AutoSaver(File file) {
     super(file);
   }
 
   /**
-   *
+   * This method specifies what a thread should do if it is passed
+   * an autosaver object.
    */
   @Override
   public void run() {
     for (int i = 0; i < 10; i++) {
-      this.getFile().save(this.name);
+      this.getFile().save(AutoSaver.name);
       try {
-        Thread.sleep(2000);
+        Thread.sleep(200);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
