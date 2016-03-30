@@ -9,42 +9,78 @@ package edu.umb.cs681.hw13;
 
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- *
+ * This class defines an access counter object as part of any web
+ * server, whose job is to keep track of the number of times webpages
+ * are requested.
  *
  * @author Pejman Ghorbanzade
  */
 public class AccessCounter {
 
   /**
-   *
+   * An access counter object keeps record of the number of times
+   * a webpage is requested.
    */
-  private HashMap<Path, Integer> hm = new HashMap<Path, Integer>();
+  private final ReentrantLock lock;
+  private final HashMap<Path, Integer> hm;
 
   /**
-   *
+   * The constructor initializes an empty hash table and a lock
+   * that ensures threads update table entries sequentially.
    */
   public AccessCounter() {
+    this.lock = new ReentrantLock();
+    this.hm = new HashMap<Path, Integer>();
   }
 
   /**
+   * This method takes a webpage and increments the number of
+   * times it is requested.
    *
-   *
-   * @param path
+   * @param path the webpage requested by client
    */
   public void increment(Path path) {
-    int count = this.getCount(path);
-    this.hm.put(path, count + 1);
+    int count = 0;
+    this.lock.lock();
+    try {
+      if (this.hm.containsKey(path)) {
+        count = this.hm.get(path);
+      }
+      this.hm.put(path, count + 1);
+    } finally {
+      this.lock.unlock();
+    }
   }
 
   /**
+   * This method takes a webpage and returns the number of times
+   * the webpage has been requested so far.
    *
-   *
-   * @param path
+   * @param path the webpage requested by client
+   * @return number of times a webpage is requested
    */
   public int getCount(Path path) {
-    return this.hm.containsKey(path) ? this.hm.get(path) : 0;
+    int count = 0;
+    this.lock.lock();
+    try {
+      if (this.hm.containsKey(path)) {
+        count = this.hm.get(path);
+      }
+    } finally {
+      this.lock.unlock();
+    }
+    return count;
+  }
+
+  /**
+   * This method simply returns current status of the hashmap
+   * attribute.
+   */
+  public void showStats() {
+    System.out.println(this.hm.entrySet());
   }
 
 }

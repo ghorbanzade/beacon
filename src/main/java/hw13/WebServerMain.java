@@ -8,14 +8,18 @@
 package edu.umb.cs681.hw13;
 
 /**
- *
+ * This class demonsrates a thread-safe design to handle multiple
+ * webpage load requests.
  *
  * @author Pejman Ghorbanzade
  */
 public final class WebServerMain {
 
   /**
-   *
+   * This program constructs a number of threads that request
+   * webpages from a web server. Once all requests are made,
+   * the webserver will report the the number of times different
+   * webpages are requested.
    *
    * @param args command line arguments given to the program
    */
@@ -29,6 +33,14 @@ public final class WebServerMain {
       threads[i] = new Thread(rh);
       threads[i].start();
     }
+    for (Thread t: threads) {
+      try {
+        t.join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    ws.getAccessCounter().showStats();
   }
 
   /**
