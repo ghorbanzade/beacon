@@ -1,0 +1,26 @@
+# Common Anglo-Saxon surnames.
+#
+# From Bob Baldwin's collection from MIT
+#
+adams
+allen
+allison
+alvarez
+anderson
+andrews
+armstrong
+arnold
+avila
+bailey
+baker
+barnes
+bennett
+bishop
+boyd
+bradley
+brooks
+brown
+bryan
+burke
+burton
+butler
