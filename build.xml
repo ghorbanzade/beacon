@@ -68,7 +68,7 @@
 				<mkdir dir="${resources.main.src.dir}/@{package}"/>
 				<jar destfile="${jar.dir}/${ant.project.name}-@{package}.jar">
 					<fileset dir="${class.dir}" includes="${organization-path}/@{package}/*.class" excludes="**/*Test.class"/>
-					<fileset dir="${resources.main.src.dir}/@{package}" includes="*"/>
+					<fileset dir="${resources.main.src.dir}/@{package}"/>
 				</jar>
 			</sequential>
 		</ant:for>

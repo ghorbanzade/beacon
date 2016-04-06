@@ -77,7 +77,7 @@ public abstract class FileCache {
    * @return
    */
   private StringBuilder getContent(Path path) {
-    String filePath = String.format("/%s.txt", path.toString());
+    String filePath = String.format("/files/%s.txt", path.toString());
     StringBuilder sb = new StringBuilder();
     try (InputStream fis = FileCache.class.getResourceAsStream(filePath)) {
       BufferedReader bf = new BufferedReader(
