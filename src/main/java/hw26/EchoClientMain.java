@@ -10,6 +10,7 @@ package edu.umb.cs681.hw26;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -34,11 +35,15 @@ public final class EchoClientMain {
     int port = Integer.parseInt(cr.get("port"));
     try (
         Socket es = new Socket(cr.get("host"), port);
-        PrintWriter out = new PrintWriter(es.getOutputStream(), true);
-        InputStreamReader isr1 = new InputStreamReader(es.getInputStream());
-        BufferedReader in = new BufferedReader(isr1);
-        InputStreamReader isr2 = new InputStreamReader(System.in);
-        BufferedReader stdin = new BufferedReader(isr2);
+        PrintWriter out = new PrintWriter(
+            new OutputStreamWriter(es.getOutputStream(), "UTF-8"), true
+        );
+        BufferedReader in = new BufferedReader(
+            new InputStreamReader(es.getInputStream(), "UTF-8")
+        );
+        BufferedReader stdin = new BufferedReader(
+            new InputStreamReader(System.in, "UTF-8")
+        );
     ) {
       System.out.printf("connection established.%n");     
       System.out.printf("type 'exit' to disconnect.%n");
