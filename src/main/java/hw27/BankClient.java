@@ -7,10 +7,12 @@
 
 package edu.umb.cs681.hw27;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
 /**
  *
@@ -24,51 +26,65 @@ public class BankClient {
    *
    */
   private Socket socket;
-  private Scanner in;
+  private BufferedReader in;
   private PrintWriter out;
+  private final String id;
+  private final int remotePort;
+  private final String remoteHost;
+
+  /**
+   *
+   */
+  public BankClient(int remotePort, String remoteHost) {
+    this.remotePort = remotePort;
+    this.remoteHost = remoteHost;
+    this.id = new Identifier().get();
+  }
 
   /**
    *
    */
   public void init() {
-    ConfigReader cr = new ConfigReader("/bank.properties");
-    int port = Integer.parseInt(cr.get("port"));
-    try (Socket socket = new Socket(cr.get("host"), port)) {
+    try (Socket socket = new Socket(this.remoteHost, this.remotePort)) {
       this.socket = socket;
-      System.out.printf("socket created on local port %d%n",
-          socket.getLocalPort());
+      System.out.printf("%s: socket created on local port %d%n",
+          this.id, socket.getLocalPort());
       System.out.printf("connection established with remote port %d at %s%n",
           socket.getPort(), socket.getInetAddress().toString());
-      in = new Scanner(socket.getInputStream(), "UTF-8");
-      out = new PrintWriter(socket.getOutputStream());
-      System.out.println("I/O setup done.");
+      this.in = new BufferedReader(
+          new InputStreamReader(this.socket.getInputStream(), "UTF-8")
+      );
+      this.out = new PrintWriter(
+          new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true
+      );
+      System.out.printf("I/O setup done.%n");
       sendCommands();
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.printf("connection refused.%n");
+      //e.printStackTrace();
     }
   }
 
   /**
    *
    */
-  public void sendCommands() {
-    sendCommand("BALANCE\n");
+  private void sendCommands() throws IOException {
+    this.sendCommand(new Transaction(TransactionType.BALANCE));
     System.out.println(getResponse());
-    sendCommand("DEPOSIT 100\n");
+    this.sendCommand(new Transaction(TransactionType.DEPOSIT, 100.0f));
     System.out.println(getResponse());
-    sendCommand("WITHDRAW 50\n");
+    this.sendCommand(new Transaction(TransactionType.WITHDRAW, 50.0f));
     System.out.println(getResponse());
-    sendCommand("QUIT\n");
+    this.sendCommand(new Transaction(TransactionType.QUIT));
   }
 
   /**
    *
    */
-  public void sendCommand(String command) {
-    System.out.printf("Sending %s", command);
-    out.print(command);
-    out.flush();
-    if ("QUIT".equals(command)) {
+  private void sendCommand(Transaction command) {
+    System.out.printf("sending %s%n", command.toString());
+    this.out.println(command.toString());
+    if ("QUIT".equals(command.toString())) {
       try {
         this.socket.close();
         System.out.printf("connection closed.%n");
@@ -81,16 +97,8 @@ public class BankClient {
   /**
    *
    */
-  public String getResponse() {
-    return in.nextLine();
-  }
-
-  /**
-   *
-   */
-  public static void main(String[] args) {
-    BankClient client = new BankClient();
-    client.init();
+  private String getResponse() throws IOException {
+    return this.in.readLine();
   }
 
 }

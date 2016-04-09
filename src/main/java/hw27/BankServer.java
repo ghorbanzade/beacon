@@ -7,9 +7,11 @@
 
 package edu.umb.cs681.hw27;
 
-import java.io.PrintWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.ServerSocket;
 import java.util.Scanner;
 
@@ -20,29 +22,31 @@ import java.util.Scanner;
  * @see BankClient
  * @see BankAccount
  */
-public class BankServer {
+public final class BankServer {
 
   /**
    *
    */
-  private final BankAccount account;
+  private final BankAccount account = new BankAccount();
+  private final int port;
+  private final int timeout;
 
   /**
    *
    */
-  public BankServer() {
-    account = new BankAccount();
+  public BankServer(int port, int timeout) {
+    this.port = port;
+    this.timeout = timeout;
   }
 
   /**
    *
    */
   public void init() {
-    ConfigReader cr = new ConfigReader("/bank.properties");
-    int port = Integer.parseInt(cr.get("port"));
-    try (ServerSocket serverSocket = new ServerSocket(port)) {
+    try (ServerSocket serverSocket = new ServerSocket(this.port)) {
       System.out.println("Socket created.");
       while (true) {
+        serverSocket.setSoTimeout(this.timeout);
         System.out.printf("listening for a connection on local port %d...%n",
             serverSocket.getLocalPort()
         );
@@ -52,6 +56,8 @@ public class BankServer {
         );
         executeCommand(socket);
       }
+    } catch (SocketTimeoutException e) {
+      System.out.printf("connection timed out.%n");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -64,7 +70,9 @@ public class BankServer {
     try {
       try {
         Scanner in = new Scanner(socket.getInputStream(), "UTF-8");
-        PrintWriter out = new PrintWriter(socket.getOutputStream());
+        PrintWriter out = new PrintWriter(
+            new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true
+        );
         System.out.println("I/O setup done");
         while (true) {
           if (in.hasNext()) {
@@ -80,7 +88,7 @@ public class BankServer {
         }
       } finally {
         socket.close();
-        System.out.println("A connection is closed.");
+        System.out.println("connection closed.");
       }
     } catch (Exception exception) {
       exception.printStackTrace();
@@ -95,29 +103,27 @@ public class BankServer {
     if ("DEPOSIT".equals(command)) {
       amount = in.nextDouble();
       account.deposit(amount);
-      System.out.println("DEPOSIT: Current balance: " + account.getBalance());
-      out.println("DEPOSIT Done. Current balance: " + account.getBalance());
+      System.out.println("DEPOSIT: current balance: " + account.getBalance());
+      out.println("DEPOSIT Done. current balance: " + account.getBalance());
     } else if ("WITHDRAW".equals(command)) {
       amount = in.nextDouble();
       account.withdraw(amount);
-      System.out.println("WITHDRAW: Current balance: " + account.getBalance());
-      out.println("WITHDRAW Done. Current balance: " + account.getBalance());
+      System.out.println("WITHDRAW: current balance: " + account.getBalance());
+      out.println("WITHDRAW Done. current balance: " + account.getBalance());
     } else if ("BALANCE".equals(command)) {
-      System.out.println("BALANCE: Current balance: " + account.getBalance());
-      out.println("BALANCE accepted. Current balance: " + account.getBalance());
+      System.out.println("BALANCE: current balance: " + account.getBalance());
+      out.println("BALANCE accepted. current balance: " + account.getBalance());
     } else {
-      System.out.println("Invalid Command");
-      out.println("Invalid command. Try another command.");
+      System.out.println("invalid command");
+      out.println("invalid command. try another command.");
     }
-    out.flush();
   }
 
   /**
    *
    */
-  public static void main(String[] args) {
-    BankServer server = new BankServer();
-    server.init();
+  public int getPort() {
+    return this.port;
   }
 
 }
