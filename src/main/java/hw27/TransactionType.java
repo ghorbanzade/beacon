@@ -30,6 +30,8 @@ public enum TransactionType {
 
   /**
    *
+   *
+   * @param name
    */
   private TransactionType(String name) {
     this.name = name;
@@ -37,6 +39,8 @@ public enum TransactionType {
 
   /**
    *
+   *
+   * @return
    */
   @Override
   public String toString() {

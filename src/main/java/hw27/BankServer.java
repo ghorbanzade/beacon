@@ -8,12 +8,9 @@
 package edu.umb.cs681.hw27;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.ServerSocket;
-import java.util.Scanner;
 
 /**
  *
@@ -33,6 +30,9 @@ public final class BankServer {
 
   /**
    *
+   *
+   * @param port
+   * @param timeout
    */
   public BankServer(int port, int timeout) {
     this.port = port;
@@ -54,7 +54,7 @@ public final class BankServer {
         System.out.printf("connection established with remote port %d at %s.%n",
             socket.getPort(), socket.getInetAddress().toString()
         );
-        executeCommand(socket);
+        new Thread(new BankServerRunnable(socket, this.account)).start();
       }
     } catch (SocketTimeoutException e) {
       System.out.printf("connection timed out.%n");
@@ -65,62 +65,8 @@ public final class BankServer {
 
   /**
    *
-   */
-  private void executeCommand(Socket socket) {
-    try {
-      try {
-        Scanner in = new Scanner(socket.getInputStream(), "UTF-8");
-        PrintWriter out = new PrintWriter(
-            new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true
-        );
-        System.out.println("I/O setup done");
-        while (true) {
-          if (in.hasNext()) {
-            String command = in.next();
-            if ("QUIT".equals(command)) {
-              System.out.println("QUIT: Connection being closed.");
-              out.println("QUIT accepted. Connection being closed.");
-              out.close();
-              return;
-            }
-            accessAccount(command, in, out);
-          }
-        }
-      } finally {
-        socket.close();
-        System.out.println("connection closed.");
-      }
-    } catch (Exception exception) {
-      exception.printStackTrace();
-    }
-  }
-
-  /**
    *
-   */
-  private void accessAccount(String command, Scanner in, PrintWriter out) {
-    double amount;
-    if ("DEPOSIT".equals(command)) {
-      amount = in.nextDouble();
-      account.deposit(amount);
-      System.out.println("DEPOSIT: current balance: " + account.getBalance());
-      out.println("DEPOSIT Done. current balance: " + account.getBalance());
-    } else if ("WITHDRAW".equals(command)) {
-      amount = in.nextDouble();
-      account.withdraw(amount);
-      System.out.println("WITHDRAW: current balance: " + account.getBalance());
-      out.println("WITHDRAW Done. current balance: " + account.getBalance());
-    } else if ("BALANCE".equals(command)) {
-      System.out.println("BALANCE: current balance: " + account.getBalance());
-      out.println("BALANCE accepted. current balance: " + account.getBalance());
-    } else {
-      System.out.println("invalid command");
-      out.println("invalid command. try another command.");
-    }
-  }
-
-  /**
-   *
+   * @return
    */
   public int getPort() {
     return this.port;

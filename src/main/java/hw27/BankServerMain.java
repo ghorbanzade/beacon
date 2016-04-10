@@ -13,10 +13,12 @@ package edu.umb.cs681.hw27;
  * @author Pejman Ghorbanzade
  * @see BankServer
  */
-public class BankServerMain {
+public final class BankServerMain {
 
   /**
    *
+   *
+   * @param args command line arguments
    */
   public static void main(String[] args) {
     ConfigReader cr = new ConfigReader("/bank.properties");

@@ -31,6 +31,8 @@ public final class Identifier {
 
   /**
    *
+   *
+   * @return
    */
   public String get() {
     StringBuilder sb = new StringBuilder(length);

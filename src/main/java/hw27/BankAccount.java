@@ -7,6 +7,9 @@
 
 package edu.umb.cs681.hw27;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 /**
  *
  *
@@ -18,29 +21,57 @@ public class BankAccount {
   /**
    *
    */
-  private double balance = 0;
+  private float balance = 0;
+  private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+  private final Lock readLock = lock.readLock();
+  private final Lock writeLock = lock.writeLock();
 
   /**
    *
+   *
+   * @return
    */
-  public double getBalance() {
-    return this.balance;
+  public float getBalance() {
+    float out = 0; 
+    this.readLock.lock();
+    try {
+      out = this.balance;
+    } finally {
+      this.readLock.unlock();
+    }
+    return out;
   }
 
   /**
    *
+   *
+   * @param amount
+   * @return
    */
   public double deposit(double amount) {
-    this.balance += amount;
-    return this.balance;
+    this.writeLock.lock();
+    try {
+      this.balance += amount;
+    } finally {
+      this.writeLock.unlock();
+    }
+    return this.getBalance();
   }
 
   /**
    *
+   *
+   * @param amount
+   * @return
    */
   public double withdraw(double amount) {
-    this.balance -= amount;
-    return this.balance;
+    this.writeLock.lock();
+    try {
+      this.balance -= amount;
+    } finally {
+      this.writeLock.unlock();
+    }
+    return this.getBalance();
   }
 
 }

@@ -21,6 +21,8 @@ public class Transaction {
 
   /**
    *
+   *
+   * @param type
    */
   public Transaction(TransactionType type) {
     this.type = type;
@@ -28,6 +30,9 @@ public class Transaction {
 
   /**
    *
+   *
+   * @param type
+   * @param amount
    */
   public Transaction(TransactionType type, float amount) {
     this.type = type;
@@ -37,18 +42,22 @@ public class Transaction {
 
   /**
    *
+   *
+   * @return
    */
   @Override
   public String toString() {
-    if (this.hasAmount == false) {
+    if (!this.hasAmount) {
       return this.type.toString();
     } else {
-      return String.format("%s %f", this.type.toString(), this.amount);
+      return String.format("%s %.2f", this.type.toString(), this.amount);
     }
   }
 
   /**
    *
+   *
+   * @return
    */
   public TransactionType getType() {
     return this.type;
@@ -56,6 +65,8 @@ public class Transaction {
 
   /**
    *
+   *
+   * @return
    */
   public float getAmount() {
     return this.amount;

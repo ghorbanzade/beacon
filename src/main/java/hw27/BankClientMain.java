@@ -20,17 +20,23 @@ import java.net.Socket;
  * @author Pejman Ghorbanzade
  * @see BankServer
  */
-public class BankClientMain {
+public final class BankClientMain {
 
   /**
    *
+   *
+   * @param args command line arguments
    */
   public static void main(String[] args) {
     ConfigReader cr = new ConfigReader("/bank.properties");
     int port = Integer.parseInt(cr.get("server.port"));
     String host = cr.get("host");
-    BankClient client = new BankClient(port, host);
-    client.init();
+    int num = Integer.parseInt(cr.get("clients.number"));
+    BankClient[] clients = new BankClient[num];
+    for (int i = 0; i < clients.length; i++) {
+      clients[i] = new BankClient(port, host);
+      clients[i].init();
+    }
   }
 
   /**
