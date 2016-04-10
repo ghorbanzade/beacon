@@ -9,7 +9,8 @@ package edu.umb.cs681.hw16;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * A webserver is a wrapper object that holds an instance of
@@ -25,7 +26,8 @@ public class WebServer {
    * of access counter.
    */
   private final AccessCounter accessCounter;
-  private final ReentrantLock lock;
+  private final Lock readLock;
+  private final Lock writeLock;
 
   /**
    * The constructor simply initializes the access counter and lock
@@ -33,7 +35,9 @@ public class WebServer {
    */
   public WebServer() {
     this.accessCounter = new AccessCounter();
-    this.lock = new ReentrantLock();
+    ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    this.readLock = lock.readLock();
+    this.writeLock = lock.writeLock();
   }
 
   /**
@@ -44,15 +48,19 @@ public class WebServer {
    * @param name the name of the requested webpage
    */
   public void request(String name) {
-    this.lock.lock();
+    this.writeLock.lock();
     try {
-      Path page = Paths.get(name);
       System.out.printf("requesting: %14s\t", name);
-      this.accessCounter.increment(page);
-      int count = this.accessCounter.getCount(page);
-      System.out.printf("count: %d%n", count);
+      this.accessCounter.increment(Paths.get(name));
     } finally {
-      this.lock.unlock();
+      this.readLock.lock();
+      this.writeLock.unlock();
+      try {
+        int count = this.accessCounter.getCount(Paths.get(name));
+        System.out.printf("count: %d%n", count);
+      } finally {
+        this.readLock.unlock();
+      }
     }
   }
 
