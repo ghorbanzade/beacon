@@ -16,31 +16,34 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- *
+ * This class defines a reader as an object that holds a list of possible
+ * webpages to be requested by the client.
  *
  * @author Pejman Ghorbanzade
  */
 public class WebPageReader {
 
   /**
-   *
+   * A webpage reader keeps all the lines of the file it is assigned to.
    */
   private final String[] pages;
 
   /**
+   * The constructor takes the path to the file containing list of webpages
+   * and loads the names of all webpages.
    *
-   *
-   * @param filePath
+   * @param filePath the path to the file containing filenames
    */
   public WebPageReader(String filePath) {
     this.pages = this.loadPages(filePath);
   }
 
   /**
+   * This helper method initializes the list of filenames included in a
+   * given path.
    *
-   *
-   * @param filePath
-   * @return
+   * @param filePath the path to the file containing filenames
+   * @return the list of pages included in the assigned file
    */
   private String[] loadPages(String filePath) {
     ArrayList<String> list = new ArrayList<String>();
@@ -67,9 +70,10 @@ public class WebPageReader {
   }
 
   /**
+   * Returns a string representation of a webpage randomly chosen by the
+   * client.
    *
-   *
-   * @return
+   * @return a randomly chosen page from the assigned file
    */
   public String getPage() {
     String out = null;

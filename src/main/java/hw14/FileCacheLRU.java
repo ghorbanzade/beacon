@@ -12,7 +12,9 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- *
+ * This class provides logic for updating file cache of the web server
+ * such that it always holds meta data of the most frequently requested
+ * web pages.
  *
  * @author Pejman Ghorbanzade
  * @see FileCache
@@ -21,19 +23,21 @@ import java.util.Map;
 public class FileCacheLRU extends FileCache {
 
   /**
+   * File cache objects are distinguished based on the size of
+   * the map they hold to cache meta data of web pages.
    *
-   *
-   * @param threshold
+   * @param threshold size of the map for caching meta data of pages
    */
   public FileCacheLRU(int threshold) {
     super(threshold);
   }
 
   /**
+   * This method replaces the least frequently requested web page
+   * whose content is cached with the new cache entry passed to it.
    *
-   *
-   * @param path
-   * @param newEntry
+   * @param path the path to the requested web page
+   * @param newEntry the new entry with which to update the cache
    */
   @Override
   public void updateCache(Path path, CacheEntry newEntry) {

@@ -9,10 +9,9 @@ package edu.umb.cs681.hw14;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
- *
+ * A webpage is a wrapper object that holds the file cache.
  *
  * @author Pejman Ghorbanzade
  * @see AccessCounter
@@ -20,51 +19,32 @@ import java.util.concurrent.locks.ReentrantLock;
 public class WebServer {
 
   /**
-   *
+   * A web server has a file cache to save information about certain
+   * files in it based on the logic implemented in the file cache.
    */
-  private final ReentrantLock lock;
   private final FileCache fileCache;
 
   /**
+   * A web server object is initialized by wrapping an instance of
+   * file cache that provides logic for saving content and meta data
+   * about certain files.
    *
-   *
-   * @param fileCache
+   * @param fileCache the file cache to be assigned to web server
    */
   public WebServer(FileCache fc) {
     this.fileCache = fc;
-    this.lock = new ReentrantLock();
   }
 
   /**
+   * This method is provided to handle all the requests made to the
+   * server. Upon receipt of a request for a web page, the web server
+   * returns the content of the page either from the cache or by
+   * reading the file directly.
    *
-   *
-   * @param name
+   * @param name the path to the web page to be requested
    */
   public void request(String name) {
-    this.lock.lock();
-    try {
-      System.out.printf("Requesting %s%n", name);
-      Path page = Paths.get(name);
-      this.fileCache.fetch(page);
-    } finally {
-      this.lock.unlock();
-    }
-  }
-
-  /**
-   *
-   *
-   * @return
-   */
-  public FileCache getFileCache() {
-    FileCache cache = null;
-    this.lock.lock();
-    try {
-      cache = this.fileCache;
-    } finally {
-      this.lock.unlock();
-    }
-    return cache;
+    this.fileCache.fetch(Paths.get(name));
   }
 
 }
