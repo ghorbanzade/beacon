@@ -1,0 +1,19 @@
+#
+# pizza names
+#
+
+plain cheese
+buffalo chicken pizza
+fresh garden vegetable
+grilled vegetable
+chicken stir fry
+all meat
+hawaiian aloha
+mexican fajita
+greek island
+california veggie supreme
+house special
+roma pizza
+steak works pizza
+granma
+seven cheese pizza
