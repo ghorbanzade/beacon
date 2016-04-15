@@ -1,0 +1,112 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Consider a database schema with three relations:\\
+
+\texttt{Students (\underline{sid}:integer, sname:string, age:integer)}\\
+\texttt{Enrolled (\underline{sid}:integer, \underline{cid}:integer, grade:integer)}\\
+\texttt{Courses  (\underline{cid}:integer, cname:string, credits:integer)}\\
+
+The keys are underlined in each relation. Students are identified uniquely by \texttt{sid}, and courses by \texttt{cid}. 
+Students enroll to take courses, and for each course they obtain a grade which is an integer. \texttt{sname} is 
+the student name (string), \texttt{age} represents the student age and is an integer. \texttt{cname} is the course name (string), and \texttt{credits} is the number of credits for a particular course (integer).
+
+Write relational algebra expressions for the following queries:
+
+\begin{enumerate}
+  \item Find the names of students who got grade 10 in some course.
+  
+  \textbf{Solution:}
+  $$\displaystyle \pi_{sname}((\sigma_{grade=10}Enrolled)\Join Students)$$
+  \item Find the ages of students who take some course with 3 credits.
+  
+  \textbf{Solution:}
+  $$\displaystyle \pi_{age} (\pi_{sid} (\pi_{cid} (\sigma_{credits=3}Courses) \Join Enrolled) \Join Students)$$
+  \item Find the names of students who take a course named "Calculus".
+  
+  \textbf{Solution:}
+  $$\displaystyle \pi_{sname} (\pi_{sid} (\pi_{cid} (\sigma_{cname="Calculus"}Courses) \Join Enrolled)\Join Students)$$
+  \item Find the names of students who obtained grade at least 8 in some course that has less than 4 credits.
+  
+  \textbf{Solution:}
+  $$\displaystyle \pi_{sname} (\pi_{sid} (\sigma_{grade>0}(\pi_{cid} (\sigma_{credits<4}Courses) \Join Enrolled)) \Join Students) $$
+  
+  \item Find the names of students who obtained only grades of 10 (implies that they took at least one course).
+  
+  \textbf{Solution:}
+  \begin{enumerate}
+  \item S1 is constructed to represent IDs of students who obtained grades of 10 at lease in one course; i.e. includes IDs of students who might have obtained a different grade in different course(s).
+  $$\displaystyle \rho(S1, \pi_{sid}( \sigma_{grade=10}Enrolled)) $$
+  \item S2 is constructed to represent IDs of all students who obtained a grade different than 10 at least in one course.
+  $$\displaystyle \rho(S2, \pi_{sid}(\sigma_{grade<>10}Enrolled)) $$
+  \item Desired list is obtained by looking up names of students whose ID is in S1 and not in S2.
+  $$\displaystyle \pi_{sname}((S1-S2) \Join Students) $$
+  \end{enumerate}
+  
+  \item Find the names of  students who took a course with three credits or who obtained grade 10 in some course.
+  
+  \textbf{Solution:}
+  \begin{enumerate}
+  \item S1 is constructed to represent IDs of students who took a course with three credits.
+  $$\displaystyle \rho(S1, \pi_{sid} (\pi_{cid} (\sigma_{credits=3}Courses) ) \Join Enrolled)$$
+  \item S2 is constructed to represent IDs of students who obtained grade 10 at least in one course.
+  $$\displaystyle \rho(S2, \pi_{sid}(\sigma_{grade=10}Enrolled) ) $$
+  \item Desired list is obtained by merging S1 and S2 lists and looking up names of students corresponding to IDs of merged list.
+  $$\displaystyle \pi_{sname}((S1 \cup S2) \Join Students) $$
+  \end{enumerate}
+  
+  \item Find the ages of students who attend "Calculus" but never took any 4-credit course (assume there is a course "Calculus" with 3 credits).
+  
+  \textbf{Solution:}
+  \begin{enumerate}
+  \item S1 is constructed to represent IDs of students who attend "Calculus".
+  $$ \displaystyle \rho(S1,   \pi_{sid}( \pi_{cid}( \sigma_{cname="Calculus"}Courses) \Join Enrolled) ) $$
+  \item S2 is constructed to represent IDs of students who took at lease one 4-credit course.
+  $$ \displaystyle \rho(S2, \pi_{sid} (\pi_{cid}( \sigma_{credits=4}Courses) \Join Enrolled) ) $$
+  \item Desired list is obtained by finding names of students whose ID is in S1 and not in S2.
+  $$ \displaystyle \pi_{sname}((S1-S2)\Join Students) $$
+  \end{enumerate}
+  
+  \item Find the names of students who have the lowest age.
+  
+  \textbf{Solution:}
+  $$\displaystyle \rho(S1(1\rightarrow sid1, 2\rightarrow sname1, 3\rightarrow age1),Students)$$
+  $$\rho(S2(1\rightarrow sid2, 2\rightarrow sname2, 3\rightarrow age2),Students)$$
+  $$\rho(Elders(1\rightarrow sid),\pi_{sid1}(S1 \Join_{(age1>age2)} S2)) $$
+  Desired list includes names of students whose ID is not among Elders.
+  $$ \pi_{sname}((\pi_{sid}(Students)-Elders) \Join Students) $$
+  
+  \item Find the names of students who are enrolled in a single course.
+  
+  \textbf{Solution:}
+  \begin{enumerate}
+  \item{S1 is constructed to represent IDs of students who are not enrolled in any courses.}
+  $$\displaystyle \rho(S1, \pi_{sid}Students-\pi_{sid}Enrolled)$$
+  \item{S2 is constructed to represent IDs of students who are enrolled in more than one course.}
+  $$\displaystyle \rho(E1(1\rightarrow sid1, 2\rightarrow cid1, 3\rightarrow grade1),Enrolled)$$
+  $$\rho(E2(1\rightarrow sid2, 2\rightarrow cid2, 3\rightarrow grade2),Enrolled)$$  
+  $$\rho(S2,\pi_{sid}(E1 \Join_{(sid1=sid2\wedge cid1\neq cid2)} E2) ) $$
+  \item{Students enrolled in a single course are those whose ID is neither in S1 nor in S2.}
+  $$\displaystyle \pi_{sname}( ((\pi_{sid}Students-S1)-S2)\Join Students)$$
+  \end{enumerate}
+  
+  \item Find the grades of students who are enrolled in course(s) with the highest number of credits.
+  
+  \textbf{Solution:}
+  \begin{enumerate}
+  \item C4 is constructed to give list of course IDs with highest number of credits.
+  $$\displaystyle \rho(C1(1\rightarrow cid1, 2\rightarrow cname1, 3\rightarrow credits1),Courses)$$
+  $$\rho(C2(1\rightarrow cid2, 2\rightarrow cname2, 3\rightarrow credits2),Courses)$$
+  $$\rho(C3,\pi_{cid1}(C1 \Join_{(credits1<credits2)} C2)) $$
+  $$\rho(C4(1 \rightarrow cid),\pi_{cid1}Courses-C3)$$
+  \item Desired list is obtained using C4 table.
+  $$ \pi_{grade}(C4 \Join Enrolled) $$
+  \end{enumerate}
+  
+\end{enumerate}
