@@ -1,0 +1,154 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Consider a database schema with three relations:\\
+
+\texttt{Movies (\underline{movie\_id}:integer, title:string, year:integer, studio:string)}\\
+\texttt{StarsIn (\underline{actor\_id}:integer, \underline{movie\_id}:integer, character:string)}\\
+\texttt{Actors (\underline{actor\_id}:integer, name:string, nationality:string)}\\
+
+The keys are underlined in each relation. Relation \texttt{Movies} stores information such as unique movie identifier, title, year and  producing studio. \texttt{Actors} contains unique actor identifier, actor name and nationality. Relation \texttt{StarsIn} tracks which actor starred in which movie, and the name of the character interpreted in that movie. Assume that one actor plays at most one character in the  same movie.
+
+Provide SQL statements for the following:
+ 
+\begin{enumerate}
+
+\item Write SQL declarations for creating the schema. Include necessary key constraints.
+
+\textbf{Solution:}
+
+\begin{verbatim}
+CREATE TABLE ACTORS (
+actor_id number(6) NOT NULL,
+name varchar(20),
+nationality varchar(20),
+PRIMARY KEY (actor_id)
+);
+CREATE TABLE MOVIES (
+movie_id number(6) NOT NULL,
+title varchar(20),
+year number(4),
+studio varchar(20),
+PRIMARY KEY (movie_id)
+);
+CREATE TABLE STARSIN (
+actor_id number(6) NOT NULL,
+movie_id number(6) NOT NULL,
+character varchar(20),
+PRIMARY KEY (actor_id,movie_id),
+FOREIGN KEY (actor_id) REFERENCES ACTORS (actor_id),
+FOREIGN KEY (movie_id) REFERENCES MOVIES (movie_id)
+);
+\end{verbatim}
+
+\item Find the title and studio of movies starring actor \textit{Tom Hanks}.
+
+\textbf{Solution:}
+
+\begin{verbatim}
+SELECT M.title, M.studio
+FROM MOVIES M, ACTORS A, STARSIN S
+WHERE S.movie_id = M.movie_id AND S.actor_id = A.actor_id AND A.name = 'Tom Hanks';
+\end{verbatim}
+
+\item Find the names of actors of \textit{US} nationality.
+
+\textbf{Solution:}
+
+\begin{verbatim}
+SELECT A.name
+FROM ACTORS A
+WHERE A.nationality = 'US';
+\end{verbatim}
+
+\item Find the nationalities of actors that star in some movie for all producing studios (another way to phrase this is "find the nationalities of actors that worked for all studios"). Ensure that a nationality appears only once in the result.
+
+\textbf{Solution:}
+
+\begin{verbatim}
+SELECT DISTINCT A.nationality
+FROM ACTORS A
+WHERE NOT EXISTS (
+SELECT M.studio
+FROM MOVIES M
+WHERE NOT EXISTS (
+SELECT *
+FROM STARSIN S
+WHERE S.actor_id = A.actor_id 
+AND S.movie_id IN (
+SELECT M2.movie_id
+FROM MOVIES M2
+WHERE M2.studio = M.studio
+)
+)
+);
+\end{verbatim}
+
+\item Find for each year the number of distinct actors that played a character that starts with letter \textit{G} and has at least three letters in the character name.
+
+\textbf{Solution:}
+
+\begin{verbatim}
+SELECT M.year, COUNT(A.actor_id)
+FROM ACTORS A, MOVIES M, STARSIN S
+WHERE S.actor_id = A.actor_id
+AND S.movie_id = M.movie_id
+AND S.character LIKE 'G_%_%'
+GROUP BY M.year;
+\end{verbatim}
+
+\item Find the movie titles that are produced by \textit{Universal} studio and in which there are at least ten actors starring.
+
+\textbf{Solution:}
+
+\begin{verbatim}
+SELECT M.title
+FROM MOVIES M
+WHERE M.studio = 'Universal'
+AND 10 <= (
+SELECT COUNT (*)
+FROM STARSIN S
+WHERE S.movie_id = M.movie_id
+);
+\end{verbatim}
+
+\item Find the nationality (or nationalities) best represented (i.e., nationality of most actors) among actors that starred in movies produced in year 2011.
+
+\textbf{Solution:}
+
+\begin{verbatim}
+SELECT TEMP.nationality
+FROM (
+SELECT TEMP2.nationality, COUNT(TEMP2.nationality) AS freq
+FROM (
+SELECT *
+FROM ACTORS A, STARSIN S, MOVIES M
+WHERE S.actor_id = A.actor_id
+AND S.movie_id = M.movie_id
+AND M.year = 2011
+) TEMP2
+GROUP BY TEMP2.nationality
+) TEMP
+WHERE TEMP.freq = (
+SELECT MAX(TEMP.freq)
+FROM (
+SELECT TEMP2.nationality, COUNT(TEMP2.nationality) AS freq
+FROM (
+SELECT *
+FROM ACTORS A, STARSIN S, MOVIES M
+WHERE S.actor_id = A.actor_id
+AND S.movie_id = M.movie_id
+AND M.year = 2011
+) TEMP2
+GROUP BY TEMP2.nationality
+) TEMP
+);
+\end{verbatim}
+
+\end{enumerate}
