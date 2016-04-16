@@ -7,7 +7,8 @@
 
 \section*{Question 2}
 
-Let $a$ and $b$ be integer-valued attributes that may be \texttt{NULL} in some tuples. For each of the following conditions that may appear in a \texttt{WHERE} clause, describe exactly the set of $(a,b)$ tuples that satisfy the condition, including the case where $a$ and/or $b$ is \texttt{NULL}. 
+Let $a$ and $b$ be integer-valued attributes that may be \texttt{NULL} in some tuples.
+For each of the following conditions that may appear in a \texttt{WHERE} clause, describe exactly the set of $(a,b)$ tuples that satisfy the condition, including the case where $a$ and/or $b$ is \texttt{NULL}.
 
 \begin{enumerate}[label=(\alph*)]
 \item $a=10$ or $b=20$
@@ -18,7 +19,8 @@ Let $a$ and $b$ be integer-valued attributes that may be \texttt{NULL} in some t
 
 \textbf{Solution:}
 
-For ease of representation, sets $I$ and $J$ are defined respectively as set of integers and nullable integers; the latter being set of all possible integer values and the \texttt{NULL} value, $\lambda$. As well, set of all binary relations that satisfy specified condition is defined as $S$.
+For ease of representation, sets $I$ and $J$ are defined respectively as set of integers and nullable integers; the latter being set of all possible integer values and the \texttt{NULL} value, $\lambda$.
+As well, set of all binary relations that satisfy specified condition is defined as $S$.
 
 \begin{enumerate}[label=(\alph*)]
 \item
@@ -31,11 +33,11 @@ S = \{ (a,b) | a = 10, b = 20 \}
 \end{equation}
 \item
 \begin{equation}\nonumber
-S = \{ (a,b) | a \in I, b \in J\}= J - \{(a,b)|a = \lambda , b \in J\} 
+S = \{ (a,b) | a \in I, b \in J\}= J - \{(a,b)|a = \lambda , b \in J\}
 \end{equation}
 \item
 \begin{equation}\nonumber
-S = \{ (a,b) | a = b, a \in I, b \in I\} 
+S = \{ (a,b) | a = b, a \in I, b \in I\}
 \end{equation}
 
 \end{enumerate}

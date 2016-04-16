@@ -23,12 +23,12 @@ BEGIN
 	LOOP
 		FETCH DOLLARVALUES INTO dollar;
 		EXIT WHEN DOLLARVALUES%NOTFOUND;
-		numberOfOrders := numberOfOrders + 1;		
+		numberOfOrders := numberOfOrders + 1;
 		sumValue := sumValue + dollar;
 	END LOOP;
 	CLOSE DOLLARVALUES;
 	meanValue := sumValue / numberOfOrders;
-	RETURN meanValue;	
+	RETURN meanValue;
 END;
 /
 CREATE OR REPLACE FUNCTION getVarianceByZip(givenZipcode SUPPLIERS.zipcode%TYPE)
@@ -52,7 +52,7 @@ BEGIN
 	LOOP
 		FETCH DOLLARVALUES INTO dollar;
 		EXIT WHEN DOLLARVALUES%NOTFOUND;
-		numberOfOrders := numberOfOrders + 1;		
+		numberOfOrders := numberOfOrders + 1;
 		sumValue := sumValue + dollar;
 	END LOOP;
 	CLOSE DOLLARVALUES;
@@ -74,7 +74,7 @@ IS
 	varValue NUMBER;
 BEGIN
 	SELECT getMeanByZip(givenZipcode) INTO meanValue FROM dual;
-	SELECT getVarianceByZip(givenZipcode) INTO varValue FROM dual; 
+	SELECT getVarianceByZip(givenZipcode) INTO varValue FROM dual;
 	DBMS_OUTPUT.PUT_LINE('Mean = '||meanValue);
 	DBMS_OUTPUT.PUT_LINE('Variance =  '||varValue);
 END;

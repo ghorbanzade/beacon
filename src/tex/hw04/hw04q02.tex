@@ -7,7 +7,8 @@
 
 \section*{Question 2}
 
-You must create a JDBC application for managing the course enrollment at a university. The schema is as follows:\\
+You must create a JDBC application for managing the course enrollment at a university.
+The schema is as follows:\\
 
 \texttt{Students (\underline{sid}:integer, sname:string)}\\
 \texttt{Courses (\underline{cid}:integer, cname:string, credits:integer)}\\
@@ -26,16 +27,20 @@ You will use the DBS2 Oracle instance as DBMS.
 
 \subsubsection*{Student Menu}
 
-Application starts by requesting student's ID. No authentication is necessary, and the remaining session 
-assumes that student ID is active.
-If $(-1)$ is  introduced, a new student is created, and the user is prompted for all necessary information. The main menu is the following:
+Application starts by requesting student's ID.
+No authentication is necessary, and the remaining session assumes that student ID is active.
+If $(-1)$ is  introduced, a new student is created, and the user is prompted for all necessary information.
+The main menu is the following:
 
 \begin{itemize}
 \item[] L : List : Lists all records in the \texttt{Courses} table.
 \item[] E : Enroll : Enrolls the active student in a course.
-User is prompted for course ID. Check for conflicts; i.e. student cannot enroll twice in same course.
-\item[] W : Withdraw : Deletes an entry in the \texttt{Enrolled} table corresponding to active student. Student is prompted for course ID to be withdrawn from.
-\item[] S : Search : Search courses based on substring of course name which is given by user. List all matching courses.
+User is prompted for course ID.
+Check for conflicts; i.e. student cannot enroll twice in same course.
+\item[] W : Withdraw : Deletes an entry in the \texttt{Enrolled} table corresponding to active student.
+Student is prompted for course ID to be withdrawn from.
+\item[] S : Search : Search courses based on substring of course name which is given by user.
+List all matching courses.
 \item[] M : My Classes : Lists all classes enrolled in by the active student.
 \item[] X : Exit : Exit application.
 \end{itemize}

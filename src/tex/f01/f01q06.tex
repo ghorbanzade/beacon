@@ -7,7 +7,8 @@
 
 \section*{Question 6}
 
-Show the grant diagrams after steps 4 and 5 of the sequence of actions in Table \ref{table51}, where $A$ owns the relation on which the privilege $p$ is assigned. Can $C$ still exercise privilege $p$ after step 5? What about $E$?
+Show the grant diagrams after steps 4 and 5 of the sequence of actions in Table \ref{table51}, where $A$ owns the relation on which the privilege $p$ is assigned.
+Can $C$ still exercise privilege $p$ after step 5? What about $E$?
 
 \begin{table}[H]
 \centering
@@ -27,7 +28,8 @@ Step & Executed by & Action\\
 
 \subsection*{Solution}
 
-Figure \ref{fig1} provides grant diagram after step 4. As is shown, after step 4, $D$ is granted (only by $B$) both exercise and delegation of $\textit{p}$ to $E$.
+Figure \ref{fig1} provides grant diagram after step 4.
+As is shown, after step 4, $D$ is granted (only by $B$) both exercise and delegation of $\textit{p}$ to $E$.
 
 \begin{figure}[H]\centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
@@ -50,7 +52,8 @@ distance=4cm,semithick]
 \end{figure}
 
 Figure \ref{fig52} provides grant diagram after step 5.
-After step 5, when $B$ revokes $\textit{p}$ from $D$ in cascade mode, $D$ is no longer authorized delegation of $p$. Therefore, grant $\textit{p}$ by $D$ to $E$ is also revoked.
+After step 5, when $B$ revokes $\textit{p}$ from $D$ in cascade mode, $D$ is no longer authorized delegation of $p$.
+Therefore, grant $\textit{p}$ by $D$ to $E$ is also revoked.
 It is perfectly possible for $C$ to exercise $\textit{p}$, however, $E$ would no longer be able to exercise $\textit{p}$.
 
 \begin{figure}[H]\centering

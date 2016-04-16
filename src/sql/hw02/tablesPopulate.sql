@@ -175,7 +175,7 @@ INSERT INTO ACTORS (actor_id, name, nationality) VALUES (4, 'Javier Bardem', 'Sp
 INSERT INTO ACTORS (actor_id, name, nationality) VALUES (5, 'Ben Affleck', 'US');
 INSERT INTO ACTORS (actor_id, name, nationality) VALUES (6, 'Jean Reno', 'France');
 INSERT INTO ACTORS (actor_id, name, nationality) VALUES (7, 'Marion Cotillard', 'France');
-INSERT INTO ACTORS (actor_id, name, nationality) VALUES (8, 'Alain Delon', 'France'); 
+INSERT INTO ACTORS (actor_id, name, nationality) VALUES (8, 'Alain Delon', 'France');
 INSERT INTO ACTORS (actor_id, name, nationality) VALUES (9, 'Golshifteh Farahani', 'Iran');
 INSERT INTO ACTORS (actor_id, name, nationality) VALUES (10, 'Parviz Parastui', 'Iran');
 INSERT INTO ACTORS (actor_id, name, nationality) VALUES (11, 'Christian Bale', 'UK');

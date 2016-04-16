@@ -56,7 +56,7 @@ WHERE E1.salary = (
 -- old for each department with at least 10 employees of any age.
 
 SELECT D1.did, AVG(E1.salary)
-FROM Employee E1, Department D1, Works W1 
+FROM Employee E1, Department D1, Works W1
 WHERE W1.did = D1.did AND W1.eid = E1.eid AND E1.age < 45
 GROUP BY D1.did
 HAVING 10 <= (

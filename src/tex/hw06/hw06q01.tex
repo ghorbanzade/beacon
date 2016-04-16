@@ -18,7 +18,9 @@ For each set of functional dependencies,
 
 \begin{enumerate}[label=(\alph*)]
 \item Identify the candidate key(s) for R (recall that keys must be \textit{minimal})
-\item Determine if $R$ is in $BCNF$, $3NF$, or none of the above. If it is not in $BCNF$, decompose it into a set of $BCNF$ relations. Does the decomposition you obtained preserve all initial dependencies?
+\item Determine if $R$ is in $BCNF$, $3NF$, or none of the above.
+If it is not in $BCNF$, decompose it into a set of $BCNF$ relations.
+Does the decomposition you obtained preserve all initial dependencies?
 \end{enumerate}
 
 Recall that it is not sufficient to consider the set of functional dependencies that are given but also it's closure.
@@ -116,7 +118,8 @@ Clearly, the decomposition preserves all initial functional dependencies.
 	\end{table}
 	As shown in Table \ref{table3}, relation $R$ is not \textit{BCNF} since functional dependency $C\rightarrow DA$ violates \textit{BCNF} condition ($C$ is not a minimal key).
 	To resolve the violation, $R$ is decomposed into $BC$ and $CDA$.
-	As neither of the decomposed sets have violations, new relations conform \textit{BCNF} form. In this case, the decomposition does not preserves initial functional dependencies.
+	As neither of the decomposed sets have violations, new relations conform \textit{BCNF} form.
+In this case, the decomposition does not preserves initial functional dependencies.
 	\end{enumerate}
 
 \end{enumerate}

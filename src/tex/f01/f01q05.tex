@@ -11,12 +11,14 @@ Suppose you are given a relation with four attributes ABCD and the following set
 
 \begin{enumerate}[label=(\alph*)]
 \item Identify the candidate key(s) for $R$.
-\item Determine if R is in BCNF, 3NF, or neither of them. If it is not in BCNF, decompose it into a set of BCNF relations.
+\item Determine if R is in BCNF, 3NF, or neither of them.
+If it is not in BCNF, decompose it into a set of BCNF relations.
 \end{enumerate}
 
 \textbf{Solution:}
 
-Table \ref{table1} is constructed to find candidate key(s) for $R$. Based on attribute closures of each attribute combination, combinations whose closure is equivalent to relation $R$ are underlined as minimal candidate keys.
+Table \ref{table1} is constructed to find candidate key(s) for $R$.
+Based on attribute closures of each attribute combination, combinations whose closure is equivalent to relation $R$ are underlined as minimal candidate keys.
 
 \begin{table}[H]
 \centering\caption{Closure of different combinations of relation $R$}\label{table1}
@@ -56,4 +58,5 @@ $3NF$ & \checkmark & $\times$ & \checkmark \\
 \end{tabular}
 \end{table}
 
-As shown in Table \ref{table2}, relation $R$ is not \textit{BCNF} since functional dependency $BC\rightarrow D$ violates \textit{BCNF} condition. To resolve the violation, $R$ is decomposed into $ABC$ and $BCD$ whose closures are respectively $\{AB\rightarrow C, AB\rightarrow D\}$ and $\{BC\rightarrow D\}$ both conforming to \textit{BCNF} form.
+As shown in Table \ref{table2}, relation $R$ is not \textit{BCNF} since functional dependency $BC\rightarrow D$ violates \textit{BCNF} condition.
+To resolve the violation, $R$ is decomposed into $ABC$ and $BCD$ whose closures are respectively $\{AB\rightarrow C, AB\rightarrow D\}$ and $\{BC\rightarrow D\}$ both conforming to \textit{BCNF} form.

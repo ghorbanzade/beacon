@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <oraca.h> 
+#include <oraca.h>
 #define programAuth 0
 #define programSupp 1
 #define programPart 2
@@ -42,7 +42,7 @@ int main()
 /*	-----------------------------------------
 	Error Handler
 	-----------------------------------------*/
-	EXEC SQL WHENEVER SQLERROR goto ERRORREPORT; 
+	EXEC SQL WHENEVER SQLERROR goto ERRORREPORT;
 	EXEC SQL WHENEVER NOT FOUND goto NOTFOUND;
 /*	-----------------------------------------
 	Welcoming
@@ -84,7 +84,7 @@ int main()
     statusShow(1,"Please input ID of Supplier you want information about.",1);
 	statusShow(1,"Supplier ID = ",0);
     scanf("%d", &Supplier_ID);
-    EXEC SQL 
+    EXEC SQL
 		SELECT S.sname, S.state, S.zipcode
 		INTO :Supplier_name, :Supplier_state, :Supplier_zipcode
 		FROM Suppliers S
@@ -102,12 +102,12 @@ int main()
 	statusShow(1,"Parts ordered from this supplier:",1);
 /*	-----------------------------------------
 	Cursor Declaration
-	-----------------------------------------*/	
+	-----------------------------------------*/
 	programState[programPart] = 0;
 	EXEC SQL DECLARE cursorParts CURSOR FOR
 		SELECT P.pid, P.pname, P.pyear, P.price
 		FROM Suppliers S, Parts P, Orders O
-		WHERE S.sid = O.sid AND P.pid = O.pid AND S.sid = :Supplier_ID;			
+		WHERE S.sid = O.sid AND P.pid = O.pid AND S.sid = :Supplier_ID;
 	EXEC SQL OPEN cursorParts;
 	statusShow(2,"Row	ID	Year	Price	Name",1);
 	statusShow(2,"---	--	----	-----	----",1);

@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <oraca.h> 
+#include <oraca.h>
 #define programAuth 0
 #define programRequ 1
 #define programPart 2
@@ -51,8 +51,8 @@ int main()
 /*	-----------------------------------------
 	Error Handler
 	-----------------------------------------*/
-	EXEC SQL WHENEVER SQLERROR goto ERRORREPORT; 
-	EXEC SQL WHENEVER NOT FOUND goto NOTFOUND;	
+	EXEC SQL WHENEVER SQLERROR goto ERRORREPORT;
+	EXEC SQL WHENEVER NOT FOUND goto NOTFOUND;
 /*	-----------------------------------------
 	Welcoming
 	-----------------------------------------*/
@@ -92,10 +92,10 @@ int main()
 	programState[programRequ] = 0;
 	programState[programPart] = 0;
 	statusShow(0,"Demanding Part Information...",1);
-    statusShow(1,"Please input desired part number.",1);
+	statusShow(1,"Please input desired part number.",1);
 	statusShow(1,"Part ID = ",0);
-    scanf("%d", &requestedPartID);
-    EXEC SQL 
+	scanf("%d", &requestedPartID);
+	EXEC SQL
 		SELECT P.pid, P.pname
 		INTO :Part_pid, :Part_pname
 		FROM Parts P
@@ -105,7 +105,7 @@ int main()
 	statusShow(0,"Part ID found.",1);
 	programState[programSupp] = 0;
 	statusShow(0,"Demanding Supplier Information...",1);
-    statusShow(1,"Please input desired zipcode.",1);
+	statusShow(1,"Please input desired zipcode.",1);
 	statusShow(1,"Supplier Zipcode = ",0);
 	scanf("%s",&requestedSuppZip);
 	EXEC SQL WHENEVER NOT FOUND goto NOTFOUND2;
@@ -163,7 +163,7 @@ NOTFOUND3:
 /*	-----------------------------------------
 	Deletion
 	-----------------------------------------*/
-	programState[programDele] = 0;	
+	programState[programDele] = 0;
 	while (!programState[programDele])
 	{
 		if (rowNumber == 0)
@@ -194,10 +194,10 @@ NOTFOUND3:
 			programState[programTabl] = 1;
 			statusShow(1,"You may remove orders placed to suppliers.",1);
 			statusShow(1,"Please input the row number you want to remove.",1);
-			statusShow(1,"You may insert 0 to quit.",1);	
+			statusShow(1,"You may insert 0 to quit.",1);
 			sprintf(message,"Row to Remove [0-%d] = ",rowNumber);
 			statusShow(1,message,0);
-    		scanf("%d", &rowToDelete);
+			scanf("%d", &rowToDelete);
 			if (rowToDelete == 0)
 			{
 				programState[programDele] = 1;
@@ -221,7 +221,7 @@ NOTFOUND3:
 					WHERE O.pid = :requestedPartID AND O.sid = :Supp_sid;
 				rowNumber--;
 				sprintf(message,"Row %d removed.",rowToDelete);
-				EXEC SQL COMMIT;			
+				EXEC SQL COMMIT;
 				statusShow(1,message,1);
 			}
 		}
