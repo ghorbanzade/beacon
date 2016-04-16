@@ -1,0 +1,122 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Suppose you are given a relation $R$ with four attribute $ABCD$ and the set of functional dependencies as follows.
+
+\begin{enumerate}
+\item FD = \{ $AB\rightarrow C$, $BC\rightarrow D$ \}
+\item FD = \{ $BC\rightarrow A$, $AB\rightarrow C$, $C\rightarrow DA$ \}
+\end{enumerate}
+
+For each set of functional dependencies,
+
+\begin{enumerate}[label=(\alph*)]
+\item Identify the candidate key(s) for R (recall that keys must be \textit{minimal})
+\item Determine if $R$ is in $BCNF$, $3NF$, or none of the above. If it is not in $BCNF$, decompose it into a set of $BCNF$ relations. Does the decomposition you obtained preserve all initial dependencies?
+\end{enumerate}
+
+Recall that it is not sufficient to consider the set of functional dependencies that are given but also it's closure.
+
+\subsection*{Solution}
+
+Tables \ref{table1} (a) and \ref{table1} (b) are constructed to find candidate key(s) of first and second set of functional dependencies, respectively.
+Based on attribute closures of each attribute combination, combinations whose closure is equivalent to relation $R$ are underlined as minimal candidate keys.
+
+\begin{table}[H]
+\centering\caption{Candidate keys of relation $R$ under different set of functional dependencies}\label{table1}
+\begin{subtable}{.5\linewidth}
+\centering\caption{FD = \{ $AB\rightarrow C$, $BC\rightarrow D$ \}}\label{table1a}
+\begin{tabular}{|c|c||c|c|}
+\hline
+$X$ & $X^+$ & $X$ & $X^+$\\
+\hline
+A & A & BC & BCD\\
+B & B & BD & BD\\
+C & C & CD & CD\\
+D & D & ABC & ABCD\\
+\underline{\bf AB} & ABCD & ABD & ABCD\\
+AC & AC & ACD & ACD\\
+AD & AD & BCD & BCD\\
+\hline
+\end{tabular}
+\end{subtable}%
+\begin{subtable}{.5\linewidth}
+\centering\caption{FD = \{ $BC\rightarrow A$, $AB\rightarrow C$, $C\rightarrow DA$ \}}\label{table1b}
+\begin{tabular}{|c|c||c|c|}
+\hline
+$X$ & $X^+$ & $X$ & $X^+$\\
+\hline
+A & A & \underline{\bf BC} & ABCD\\
+B & B & BD & BD\\
+C & ACD & CD & ACD\\
+D & D & ABC & ABCD\\
+\underline{\bf AB} & ABCD & ABD & ABCD\\
+AC & ACD & ACD & ACD\\
+AD & AD & BCD & ABCD\\
+\hline
+\end{tabular}
+\end{subtable}
+\end{table}
+
+\begin{enumerate}
+
+\item $FD = \{ AB\rightarrow C, BC\rightarrow D \}$
+
+	\begin{enumerate}[label=(\alph*)]
+	\item As shown in Table \ref{table1}(a), set of minimal candidate keys are $\{AB\}$.
+	\item To check if $R$ is in \textit{BCNF} or \textit{3NF}, closure of functional dependencies are constructed in Equation \ref{equation1}.
+	\begin{equation}\label{equation1}
+	F^+ = \{AB\rightarrow C, BC\rightarrow D\} \cup \{AB\rightarrow D\}
+	\end{equation}
+	Each functional dependency (FD) is now verified to conform to $BCNF$ and $3NF$ form, as given in Table \ref{table2}.
+	
+	\begin{table}[H]
+	\centering\caption{Conformance verification of relation $R$}\label{table2}
+	\begin{tabular}{|r||c|c|c|}
+	\hline
+	 & $AB\rightarrow C$ & $BC\rightarrow D$ & $AB \rightarrow D$\\
+	\hline
+	$BCNF$ & \checkmark & $\times$ & \checkmark \\
+	$3NF$ & \checkmark & $\times$ & \checkmark \\
+	\hline
+	\end{tabular}
+	\end{table}
+	
+	As shown in Table \ref{table2}, relation $R$ is not \textit{BCNF} since functional dependency $BC\rightarrow D$ violates \textit{BCNF} condition.
+To resolve the violation, $R$ is decomposed into $ABC$ and $BCD$ whose closures are respectively $\{AB\rightarrow C, AB\rightarrow D\}$ and $\{BC\rightarrow D\}$ both conforming to \textit{BCNF} form.
+Clearly, the decomposition preserves all initial functional dependencies.
+
+	\end{enumerate}
+
+\item FD = \{ $BC\rightarrow A$, $AB\rightarrow C$, $C\rightarrow DA$ \}
+
+	\begin{enumerate}[label=(\alph*)]
+	\item As shown in Table \ref{table1}(a), set of minimal candidate keys are $\{AB, BC\}$.
+	\item To check if $R$ is in \textit{BCNF} or \textit{3NF}, closure of functional dependencies are constructed in Equation \ref{equation2}.
+	\begin{equation}\label{equation2}
+	F^+ = \{BC\rightarrow A, AB\rightarrow C, C\rightarrow DA\} \cup \{AB\rightarrow D, BC\rightarrow D\}
+	\end{equation}
+	Each functional dependency (FD) is now verified to conform to $BCNF$ and $3NF$ form, as given in Table \ref{table3}.
+	\begin{table}[H]
+	\centering\caption{Conformance verification of relation $R$}\label{table3}
+	\begin{tabular}{|r||c|c|c|c|c|}
+	\hline
+	 & $BC\rightarrow A$ & $AB\rightarrow C$ & $C\rightarrow DA$ & $AB\rightarrow D$ & $BC\rightarrow D$ \\
+	\hline
+	$BCNF$ & \checkmark & \checkmark & $\times$ & \checkmark & \checkmark \\
+	$3NF$ & \checkmark & \checkmark & $\times$ & \checkmark & \checkmark \\
+	\hline
+	\end{tabular}
+	\end{table}
+	As shown in Table \ref{table3}, relation $R$ is not \textit{BCNF} since functional dependency $C\rightarrow DA$ violates \textit{BCNF} condition ($C$ is not a minimal key).
+	To resolve the violation, $R$ is decomposed into $BC$ and $CDA$.
+	As neither of the decomposed sets have violations, new relations conform \textit{BCNF} form. In this case, the decomposition does not preserves initial functional dependencies.
+	\end{enumerate}
+
+\end{enumerate}
