@@ -31,7 +31,7 @@ Figure \ref{fig1} provides grant diagram after step 4. As is shown, after step 4
 
 \begin{figure}[H]\centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
-distance=4cm,semithick] 
+distance=4cm,semithick]
   \tikzstyle{system}=[circle,thick,draw=black,fill=gray!40,text=black]
   \node[state,system] (0) {Sys};
   \node[state] (1) [above of = 0] {A};
@@ -51,11 +51,11 @@ distance=4cm,semithick]
 
 Figure \ref{fig52} provides grant diagram after step 5.
 After step 5, when $B$ revokes $\textit{p}$ from $D$ in cascade mode, $D$ is no longer authorized delegation of $p$. Therefore, grant $\textit{p}$ by $D$ to $E$ is also revoked.
-It is perfectly possible for $C$ to exercise $\textit{p}$, however, $E$ would no longer be able to exercise $\textit{p}$. 
+It is perfectly possible for $C$ to exercise $\textit{p}$, however, $E$ would no longer be able to exercise $\textit{p}$.
 
 \begin{figure}[H]\centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
-distance=4cm,semithick] 
+distance=4cm,semithick]
   \tikzstyle{system}=[circle,thick,draw=black,fill=gray!40,text=black]
   \node[state,system] (0) {Sys};
   \node[state] (1) [above of = 0] {A};
