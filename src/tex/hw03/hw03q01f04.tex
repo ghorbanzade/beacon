@@ -6,6 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{tikzpicture}[node distance=3cm, every edge/.style={link}]
+
 \node[entity] (prof) {Professor};
 \node[attribute] (ssn) [above left of = prof] {\key{SSN}} edge (prof);
 \node[attribute] (name) [above right of = prof] {Name} edge (prof);
