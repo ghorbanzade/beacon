@@ -1,0 +1,107 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+Design a database for a bank, including information about customers and their accounts. Information about customers includes their name, address, phone and SSN. Accounts have numbers, types (e.g., savings/checking) and balances. Also, record the customer(s) who own an account.
+
+
+\begin{enumerate}[label=(\alph*)]
+\item Draw the E/R diagram for this database, assuming no constraints hold other than what results from the schema.
+
+\textbf{Solution:}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[node distance=3cm, every edge/.style={link}]
+\node[entity] (customers) {Customers};
+\node[attribute] (ssn) [above of = customers] {\key{SSN}} edge (customers);
+\node[attribute] (name) [above left of = customers] {Name} edge (customers);
+\node[attribute] (phone) [left of = customers] {Phone} edge (customers);
+\node[attribute] (address) [below left of = customers] {Address} edge (customers);
+\node[relationship] (own) [right of = customers] {Own} edge (customers);
+\node[entity] (accounts) [right of = own] {Accounts} edge (own);
+\node[attribute] (numbers) [right of=accounts] {\key{Number}} edge (accounts);
+\node[attribute] (type) [below right of =accounts] {Type} edge (accounts);
+\node[attribute] (credits) [above right of=accounts] {Credits} edge (accounts);
+\end{tikzpicture}
+\caption{ER Diagram for Question 4$\left(a\right)$} \label{fig:ER1}
+\end{figure}
+
+
+\item Modify the E/R diagram from (a) to reflect the constraint that each customer must have at least one account.
+
+\textbf{Solution:}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[node distance=3cm, every edge/.style={link}]
+\node[entity] (customers) {Customers};
+\node[attribute] (ssn) [above of = customers] {\key{SSN}} edge (customers);
+\node[attribute] (name) [above left of = customers] {Name} edge (customers);
+\node[attribute] (phone) [left of = customers] {Phone} edge (customers);
+\node[attribute] (address) [below left of = customers] {Address} edge (customers);
+
+\node[relationship] (own) [right of = customers] {Own} edge [total] (customers);
+\node[entity] (accounts) [right of = own] {Accounts} edge (own);
+\node[attribute] (numbers) [right of=accounts] {\key{Number}} edge (accounts);
+\node[attribute] (type) [below right of =accounts] {Type} edge (accounts);
+\node[attribute] (credits) [above right of=accounts] {Credits} edge (accounts);
+\end{tikzpicture}
+\caption{ER Diagram for Question 4$\left(b\right)$} \label{fig:ER2}
+\end{figure}
+
+\item Modify the E/R diagram from (a) to reflect the constraint that an account must have only one customer.
+
+\textbf{Solution:}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[node distance=3cm, every edge/.style={link}]
+\node[entity] (customers) {Customers};
+\node[attribute] (ssn) [above of = customers] {\key{SSN}} edge (customers);
+\node[attribute] (name) [above left of = customers] {Name} edge (customers);
+\node[attribute] (phone) [left of = customers] {Phone} edge (customers);
+\node[attribute] (address) [below left of = customers] {Address} edge (customers);
+
+\node[relationship] (own) [right of = customers] {Own} edge node[auto,swap] {1} (customers);
+\node[entity] (accounts) [right of = own] {Accounts} edge node[auto,swap] {m} (own);
+\node[attribute] (numbers) [right of=accounts] {\key{Number}} edge (accounts);
+\node[attribute] (type) [below right of =accounts] {Type} edge (accounts);
+\node[attribute] (credits) [above right of=accounts] {Credits} edge (accounts);
+\end{tikzpicture}
+\caption{ER Diagram for Question 4$\left(c\right)$} \label{fig:ER3}
+\end{figure}
+
+\item Modify the diagram from (a) such that a customer can have a set of addresses(which are street-city-state triples) and a set of phones. Recall that in the E/R model there can be only primitive data types (no sets).
+
+\textbf{Solution:}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[node distance=3cm, every edge/.style={link}]
+\node[entity] (customers) {Customers};
+\node[attribute] (ssn) [above of = customers] {\key{SSN}} edge (customers);
+\node[attribute] (name) [above left of = customers] {Name} edge (customers);
+
+\node[relationship] (own) [right of = customers] {Own} edge (customers);
+\node[entity] (accounts) [right of = own] {Accounts} edge (own);
+\node[attribute] (numbers) [above of=accounts] {\key{Numbers}} edge (accounts);
+\node[attribute] (type) [above right of =accounts] {Type} edge (accounts);
+\node[attribute] (credits) [right of=accounts] {Credits} edge (accounts);
+
+\node[relationship] (lives) [below right of = customers] {Live} edge (customers);
+\node[entity] (address) [right of = lives] {Address} edge (lives);
+\node[attribute] (number) [right of=address] {\key{Number}} edge (address);
+\node[attribute] (street) [below right of =address] {Street} edge (address);
+\node[attribute] (city) [below of=address] {City} edge (address);
+\node[attribute] (state) [below left of=address] {State} edge (address);
+
+\node[relationship] (has) [left of = customers] {Has} edge (customers);
+\node[entity] (phone) [below of = has] {Phone} edge (has);
+\node[attribute] (number) [right of =phone] {\key{Number}} edge (phone);
+\end{tikzpicture}
+\caption{ER Diagram for Question 4$\left(d\right)$} \label{fig:ER4}
+\end{figure}
+
+\end{enumerate}
