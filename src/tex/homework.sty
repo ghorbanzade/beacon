@@ -13,6 +13,9 @@
 \usepackage{enumitem}
 \usepackage{hyperref}
 
+\usepackage{listings}
+\usepackage{xcolor}
+
 \title{\docTitle}
 \author{\authorName}
 
@@ -41,3 +44,40 @@
 	\end{center}
 	\endgroup
 }
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{light-gray}{gray}{0.95}
+\lstset{
+	frame=tb,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\tiny\color{black},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=5,
+	escapeinside={@*}{*@}
+}
+
+\lstnewenvironment{terminal}
+{\lstset{
+	backgroundcolor=\color{light-gray},
+	basicstyle=\small\ttfamily,
+	numbers=none,
+	xleftmargin=1cm,
+	framexleftmargin=10mm,
+	framextopmargin=2mm,
+	framexbottommargin=2mm,
+	frame=tb,
+	framerule=0pt
+}}
+{}

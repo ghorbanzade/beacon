@@ -1,0 +1,58 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Consider a database schema with three relations:
+
+\begin{terminal}
+Parts (@*\underline{pid}*@:integer, pname:string, price:integer)
+Suppliers (@*\underline{sid}*@:integer, sname:string, state:string, zipcode:string)
+Orders (@*\underline{pid}*@:integer, @*\underline{sid}*@:integer, quantity:integer)
+\end{terminal}
+
+The description is as follows: a factory keeps a database with parts that it uses, the suppliers of those parts, and purchase orders.
+Each part is uniquely identified by \texttt{pid}.
+Each part has a string description \texttt{pname}, \texttt{year} of fabrication and \texttt{price} per unit.
+Parts are provided by suppliers, and each supplier is uniquely identified by \texttt{sid}.
+Each supplier has a name \texttt{sname}, and it operates at the given \texttt{state} and \texttt{zipcode}.
+The company has a number of orders for parts, and each order contains the \texttt{pid} of the part ordered, the \texttt{sid} of the supplier from which the part is ordered, and the \texttt{quantity} ordered.
+You are allowed flexibility on the exact attribute types you use for your schema, as long as they reasonably match the specification above (e.g., in terms of number types, string types).
+Include the schema definition in your submission in a file called \texttt{schema.sql}.
+
+Write Embedded SQL programs that perform the following tasks:
+
+\begin{enumerate}[label=(\alph*)]
+\item Prompt the user for a supplier ID and print the specifications (part number, part name, year and price for all parts ordered from that supplier.
+Attributes of each part must be printed on a new line (10p).
+\item Prompt the user for the value of a zipcode and a part ID.
+Output in tabular format (one per line) the supplier ID, supplier name and the \textit{dollar amount} of the order for the given part for each supplier in the given zipcode that supplied that part.
+Each line should start with a unique entry number (begin numbering with 1, continue with 2,3 and so on) which is NOT part of any schema, but uniquely identifies the output line.
+If there are no matching records, print the message \textit{No Records Found} on the screen.
+If the result is not empty, prompt the user for an entry number and delete the corresponding record from the Orders table (15p).
+\end{enumerate}
+
+Create two separate source files for (a) and (b), and name them \texttt{Q1a.pc} and \texttt{Q1b.pc}.
+
+\section*{Solution to Question 1}
+
+\lstset{language=c}
+\lstset{tabsize=4}
+
+\begin{itemize}
+
+\item[] File \texttt{q1a.c}
+\lstinputlisting[firstline=10]{
+	\topDirectory/src/c/hw04/hw04q01p01.c
+}
+
+\item[] File \texttt{q1b.c}
+\lstinputlisting[firstline=10]{
+	\topDirectory/src/c/hw04/hw04q01p02.c
+}
+
+\end{itemize}

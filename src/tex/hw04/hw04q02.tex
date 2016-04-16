@@ -1,0 +1,79 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+You must create a JDBC application for managing the course enrollment at a university. The schema is as follows:\\
+
+\texttt{Students (\underline{sid}:integer, sname:string)}\\
+\texttt{Courses (\underline{cid}:integer, cname:string, credits:integer)}\\
+\texttt{Enrolled (\underline{sid}:integer, \underline{cid}:integer)}\\
+
+The \texttt{Students} relation stores data about students: a unique student id and name.
+Each course has a course id, name and number of credits).
+The \texttt{Enrolled} relation stores what courses are taken by which students.
+You must create the above schema definition in your submission in a file called \texttt{schema.sql}.
+You are allowed flexibility on the exact attribute types you use for your schema, as long as they reasonably match the specification above (e.g. in terms of number types, string types).
+Also, you have to create a Java JDBC-based application run by students, with name \texttt{Student.java}.
+The application must have a command-line interface menu that allows the user to select one option as below.
+Once that menu function is completed, the program must return to the main menu.
+For each menu option, you are allowed (and even recommended, if needed) to have multiple steps (or \textit{screens}) to complete the tasks.
+You will use the DBS2 Oracle instance as DBMS.
+
+\subsubsection*{Student Menu}
+
+Application starts by requesting student's ID. No authentication is necessary, and the remaining session 
+assumes that student ID is active.
+If $(-1)$ is  introduced, a new student is created, and the user is prompted for all necessary information. The main menu is the following:
+
+\begin{itemize}
+\item[] L : List : Lists all records in the \texttt{Courses} table.
+\item[] E : Enroll : Enrolls the active student in a course.
+User is prompted for course ID. Check for conflicts; i.e. student cannot enroll twice in same course.
+\item[] W : Withdraw : Deletes an entry in the \texttt{Enrolled} table corresponding to active student. Student is prompted for course ID to be withdrawn from.
+\item[] S : Search : Search courses based on substring of course name which is given by user. List all matching courses.
+\item[] M : My Classes : Lists all classes enrolled in by the active student.
+\item[] X : Exit : Exit application.
+\end{itemize}
+
+\section*{Solution to Question 2}
+
+\lstset{language=java}
+\lstset{tabsize=2}
+\begin{itemize}
+
+\item File \texttt{Main.java}
+\lstinputlisting[firstline=10]{
+	\topDirectory/src/java/hw04/Main.java
+}
+
+\item File \texttt{Database.java}
+\lstinputlisting[firstline=10]{
+	\topDirectory/src/java/hw04/Database.java
+}
+
+\item File \texttt{Course.java}
+\lstinputlisting[firstline=10]{
+	\topDirectory/src/java/hw04/Course.java
+}
+
+\item File \texttt{Student.java}
+\lstinputlisting[firstline=10]{
+	\topDirectory/src/java/hw04/Student.java
+}
+
+\item File \texttt{Section.java}
+\lstinputlisting[firstline=10]{
+	\topDirectory/src/java/hw04/Section.java
+}
+
+\item File \texttt{CPrompt.java}
+\lstinputlisting[firstline=10]{
+	\topDirectory/src/java/hw04/CPrompt.java
+}
+
+\end{itemize}

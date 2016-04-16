@@ -1,0 +1,169 @@
+/**
+ * CS630: Database Management Systems
+ * Copyleft 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+ * More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014
+ *
+ * The author has placed this file in the public domain.
+ * He makes no warranty and accepts no liability for this file.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <oraca.h> 
+#define programAuth 0
+#define programSupp 1
+#define programPart 2
+EXEC SQL INCLUDE SQLCA;
+/*	-----------------------------------------
+	Start of main();
+	-----------------------------------------*/
+int main()
+{
+/*	-----------------------------------------
+	Variable Declaration Block
+	-----------------------------------------*/
+	int programState[10];
+	int rowNumber = 0;
+	char message[200];
+	EXEC SQL BEGIN DECLARE SECTION;
+	char login[100];
+	char password[100];
+	int  Supplier_ID;
+	char Supplier_name[20];
+	char Supplier_state[20];
+	char Supplier_zipcode[10];
+	int  Part_ID;
+	char Part_name[20];
+	int  Part_year;
+	int  Part_price;
+	char SQLSTATE[6];
+	EXEC SQL END DECLARE SECTION;
+/*	-----------------------------------------
+	Error Handler
+	-----------------------------------------*/
+	EXEC SQL WHENEVER SQLERROR goto ERRORREPORT; 
+	EXEC SQL WHENEVER NOT FOUND goto NOTFOUND;
+/*	-----------------------------------------
+	Welcoming
+	-----------------------------------------*/
+	statusShow(0,"",5);
+	statusShow(0,"-----------------------------------------",1);
+	statusShow(0,"Solution to Assignment 4, Part A",1);
+	statusShow(0,"Course CS630: Database Management Systems",1);
+	statusShow(0,"Department of Computer Science",1);
+	statusShow(0,"University of Massachusetts Boston",1);
+	statusShow(0,"Developed By",1);
+	statusShow(0,"Pejman Ghorbanzade",1);
+	statusShow(0,"pejman@cs.umb.edu",1);
+	statusShow(0,"-----------------------------------------",2);
+/*	-----------------------------------------
+	Authentication
+	-----------------------------------------*/
+	programState[programAuth] = 0;
+	statusShow(0,"Authenticating...",1);
+	statusShow(1,"Please type your username and click enter.",1);
+	statusShow(1,"Username = ",0);
+	gets(login);
+	statusShow(1,"Thank you.",1);
+	statusShow(1,"Please type your password and click enter.",1);
+	statusShow(1,"For security reasons your password would not be shown.",1);
+	statusShow(1,"Password = ",0);
+	char *pass_string = malloc(128);
+	pass_string=getpass("");
+	strcpy(password, pass_string);
+	EXEC SQL CONNECT :login IDENTIFIED BY :password;
+	programState[programAuth] = 1;
+	statusShow(1,"You are now connected to database.",1);
+	statusShow(0,"Authentication Successful.",1);
+/*	-----------------------------------------
+	Get Supplier ID
+	-----------------------------------------*/
+	programState[programSupp] = 0;
+	statusShow(0,"Selecting Supplier...",1);
+    statusShow(1,"Please input ID of Supplier you want information about.",1);
+	statusShow(1,"Supplier ID = ",0);
+    scanf("%d", &Supplier_ID);
+    EXEC SQL 
+		SELECT S.sname, S.state, S.zipcode
+		INTO :Supplier_name, :Supplier_state, :Supplier_zipcode
+		FROM Suppliers S
+		WHERE S.sid = :Supplier_ID;
+	programState[programSupp] = 1;
+	statusShow(0,"Supplier Determined.",1);
+	statusShow(0,"Retrieving Information...",1);
+	statusShow(1,"Supplier Information:",1);
+	sprintf(message,"Name:		%s", Supplier_name);
+	statusShow(2,message,1);
+	sprintf(message,"State:		%s", Supplier_state);
+	statusShow(2,message,1);
+	sprintf(message,"Zipcode:	%s", Supplier_zipcode);
+	statusShow(2,message,1);
+	statusShow(1,"Parts ordered from this supplier:",1);
+/*	-----------------------------------------
+	Cursor Declaration
+	-----------------------------------------*/	
+	programState[programPart] = 0;
+	EXEC SQL DECLARE cursorParts CURSOR FOR
+		SELECT P.pid, P.pname, P.pyear, P.price
+		FROM Suppliers S, Parts P, Orders O
+		WHERE S.sid = O.sid AND P.pid = O.pid AND S.sid = :Supplier_ID;			
+	EXEC SQL OPEN cursorParts;
+	statusShow(2,"Row	ID	Year	Price	Name",1);
+	statusShow(2,"---	--	----	-----	----",1);
+	while(1)
+	{
+		EXEC SQL
+			FETCH cursorParts
+			INTO :Part_ID, :Part_name, :Part_year, :Part_price;
+		rowNumber++;
+		sprintf(message,"%d\t%d\t%d\t%d\t%s", rowNumber, Part_ID, Part_year, Part_price, Part_name);
+		statusShow(2,message,1);
+	}
+/*	-----------------------------------------
+	Finalization
+	-----------------------------------------*/
+	return 0;
+ERRORREPORT:
+	if (!programState[programAuth])
+	{
+		statusShow(0,"Authentication Failed.",1);
+	}
+	else
+	{
+		sprintf(message,"Error %s occured. Please try again.", SQLSTATE);
+		statusShow(0,message,1);
+	}
+	statusShow(0,"Program Aborted.",2);
+	return 1;
+NOTFOUND:
+	if (!programState[programSupp])
+	{
+		sprintf(message,"Supplier %d does not exist.", Supplier_ID);
+		statusShow(0,message,1);
+		statusShow(0,"Program Aborted.",2);
+	}
+	else if (!programState[programPart])
+	{
+		EXEC SQL CLOSE cursorParts;
+		statusShow(0,"Information Retrieved.",1);
+		statusShow(0,"End of Program.",4);
+	}
+	return 1;
+}
+/*	-----------------------------------------
+	End of main();
+	-----------------------------------------*/
+int statusShow(int indention, char *status, int lineSpace)
+{
+	int i;
+	for (i = 0; i < indention ; i++)
+	{
+		printf("\t");
+	}
+	printf("%s",status);
+	for (i = 0; i < lineSpace ; i++)
+	{
+		printf("\n");
+	}
+}
