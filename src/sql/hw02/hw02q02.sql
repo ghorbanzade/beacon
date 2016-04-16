@@ -1,17 +1,10 @@
--- University of Massachusetts Boston
--- Department of Computer Science
--- http://www.cs.umb.edu
 --
--- CS630 Database Management Systems
--- Lecturer: Dr. Gabriel Ghinita
--- Assignment 2
--- Fall 2014
+-- CS630: Database Management Systems
+-- Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+-- Creative Commons Attribution-ShareAlike 4.0 International License
+-- More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
 --
--- Code Written By
--- Pejman Ghorbanzade
--- pejman@cs.umb.edu
--- http://ghorbanzade.com
---
+
 -- Question 2 Part A
 -- Write SQL declarations for creating the schemata. Include necessary key constraints.
 

@@ -9,23 +9,23 @@
 -- Write SQL declarations for creating the schemata. Include necessary key constraints.
 
 CREATE TABLE Employee(
-        eid number(6),
-        ename varchar(20),
-        age number(3),
+	eid number(6),
+	ename varchar(20),
+	age number(3),
 	salary number(12,2),
 	PRIMARY KEY (eid)
 	);
 CREATE TABLE Department(
-        did number(6),
-        dname varchar(20),
+	did number(6),
+	dname varchar(20),
 	budget number(12,2),
 	managerid number(10),
-        PRIMARY KEY (did)
-        );
+	PRIMARY KEY (did)
+	);
 CREATE TABLE Works(
-        eid number(6),
-        did number(6),
-        pct_time number(5,2),
+	eid number(6),
+	did number(6),
+	pct_time number(5,2),
 	PRIMARY KEY (eid,did),
 	FOREIGN KEY (eid) REFERENCES Employee (eid),
 	FOREIGN KEY (did) REFERENCES Department (did)
@@ -126,7 +126,7 @@ WHERE W.eid = E.eid AND W.did = D.did
 	AND W.did = (
 		SELECT D2.did
 		FROM Employee E2, Department D2, Works W2
-		WHERE W2.eid = E2.eid 
+		WHERE W2.eid = E2.eid
 			AND W2.did = D2.did
 			AND E2.eid = D.managerid
 		)
@@ -144,7 +144,7 @@ HAVING COUNT(*) = (
 	SELECT COUNT(*)
 	FROM EMPLOYEE E1, WORKS W1
 	WHERE W1.eid = E1.eid
-		AND W1.did = D.did 
+		AND W1.did = D.did
 		AND E1.age <= 30
 	);
 
@@ -198,7 +198,7 @@ WHERE TEMP.freq = (
 		GROUP BY TEMP2.age
 		) TEMP
 	);
-	
+
 -- Question 1 Part O
 -- Find the average salary among employees that work in all departments whose names starts with 'Ca'.
 
@@ -207,11 +207,10 @@ FROM EMPLOYEE E
 WHERE NOT EXISTS (
 	SELECT D.did
 	FROM DEPARTMENT D
-	WHERE D.dname LIKE 'Ca%' AND 
+	WHERE D.dname LIKE 'Ca%' AND
 		NOT EXISTS (
 		SELECT *
 		FROM WORKS W
 		WHERE W.eid = E.eid AND W.did = D.did
 		)
 	);
-	
