@@ -1,0 +1,21 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Write a PL/SQL procedure that receives as arguments \texttt{pid}, \texttt{sid} and \texttt{quantity} of a prospective order.
+First, you need to determine if the value (i.e., dollar amount) of that order will be  lower or equal than 75\% of the average previous order value for that part. If the answer is yes, go ahead and input the new order into the database.
+
+Otherwise, compute the \texttt{price} value that would make the prospective order value be exactly at the 75\% limit above, and then insert a NEW part with that price, and the same attributes as the part given in the \texttt{pid} parameter (except  for the \texttt{pid} of course, for which you need to determine a unique value). 
+Then, input in the database an order with the \texttt{sid}  \texttt{quantity} given, but for the new \texttt{pid}. 
+
+\subsection*{Solution}
+
+\lstset{language=SQL}
+\lstinputlisting[firstline=8]{
+	\topDirectory/src/pls/hw05/hw05q02.pls
+}

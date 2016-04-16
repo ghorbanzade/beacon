@@ -1,4 +1,4 @@
-DOCS = hw01 hw02 hw03 hw04
+DOCS = hw01 hw02 hw03 hw04 hw05
 BIND_DOC = cs630
 
 TOP_DIR = .
