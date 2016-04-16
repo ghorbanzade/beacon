@@ -6,12 +6,17 @@ INTRODUCTION
 
     This repository contains the source code developed for Database
     Management Systems course at University of Massachusetts Boston.
-    It includes solutions to six assignments, midterm and final exams.
+    It includes solutions to six assignments, one practice midterm
+    exam and one practice final exam.
 
 BUILDING
 
     The package(s) needed for building source code are listed below.
-    - texlive-latex-base
+
+        - texlive-latex-base
+        - texlive-latex-extra
+        - pgf
+        - ghostscript
 
     Once you have all packages, all you need is `make` to produce all documents.
 
