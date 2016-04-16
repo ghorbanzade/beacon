@@ -7,15 +7,19 @@
 
 \section*{Question 1}
 
-Consider a database schema with three relations:\\
+Consider a database schema with three relations:
 
-\texttt{Students (\underline{sid}:integer, sname:string, age:integer)}\\
-\texttt{Enrolled (\underline{sid}:integer, \underline{cid}:integer, grade:integer)}\\
-\texttt{Courses  (\underline{cid}:integer, cname:string, credits:integer)}\\
+\begin{terminal}
+Students (@*\underline{sid}*@:integer, sname:string, age:integer)
+Enrolled (@*\underline{sid}*@:integer, @*\underline{cid}*@:integer, grade:integer)
+Courses  (@*\underline{cid}*@:integer, cname:string, credits:integer)
+\end{terminal}
 
-The keys are underlined in each relation. Students are identified uniquely by \texttt{sid}, and courses by \texttt{cid}.
-Students enroll to take courses, and for each course they obtain a grade which is an integer. \texttt{sname} is
-the student name (string), \texttt{age} represents the student age and is an integer. \texttt{cname} is the course name (string), and \texttt{credits} is the number of credits for a particular course (integer).
+The keys are underlined in each relation.
+Students are identified uniquely by \texttt{sid}, and courses by \texttt{cid}.
+Students enroll to take courses, and for each course they obtain a grade which is an integer.
+\texttt{sname} is the student name (string), \texttt{age} represents the student age and is an integer.
+\texttt{cname} is the course name (string), and \texttt{credits} is the number of credits for a particular course (integer).
 
 Write relational algebra expressions for the following queries:
 

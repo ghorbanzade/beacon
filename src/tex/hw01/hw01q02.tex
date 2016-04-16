@@ -9,11 +9,17 @@
 
 Consider a database schema with three relations:\\
 
-\texttt{Movies (\underline{movie\_id}:integer, title:string, year:integer, studio:string)}\\
-\texttt{Actors (\underline{actor\_id}:integer, name:string, nationality:string)}\\
-\texttt{StarsIn(\underline{actor\_id}:integer, \underline{movie\_id}:integer, character:string)}\\
+\begin{terminal}
+Movies (@*\underline{movie\_id}*@:integer, title:string, year:integer, studio:string)
+Actors (@*\underline{actor\_id}*@:integer, name:string, nationality:string)
+StarsIn(@*\underline{actor\_id}*@:integer, @*\underline{movie\_id}*@:integer, character:string)
+\end{terminal}
 
-The keys are underlined in each relation. Relation \texttt{Movies} stores information such as unique movie identifier, title, year and  producing studio. \texttt{Actors} contains unique actor identifier, actor name and nationality. Relation \texttt{StarsIn} tracks which actor starred in which movie, and the name of the character interpreted in that movie. Assume that one actor plays at most one character in the  same movie.
+The keys are underlined in each relation.
+Relation \texttt{Movies} stores information such as unique movie identifier, title, year and  producing studio.
+\texttt{Actors} contains unique actor identifier, actor name and nationality.
+Relation \texttt{StarsIn} tracks which actor starred in which movie, and the name of the character interpreted in that movie.
+Assume that one actor plays at most one character in the same movie.
 
 Write relational algebra expressions for the following queries:
 
