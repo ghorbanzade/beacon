@@ -18,10 +18,10 @@ The keys are underlined in each relation. Relation \texttt{Employee} stores empl
 Provide SQL statements for the following:
 
 \begin{enumerate}
-\item Write SQL declarations for creating the schema. Include necessary key constraints. 
-  
+\item Write SQL declarations for creating the schema. Include necessary key constraints.
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 CREATE TABLE Employee(
 eid number(6),
@@ -48,7 +48,7 @@ FOREIGN KEY (did) REFERENCES Department (did)
 \end{verbatim}
 
 \item Find the salaries of employees that work in a department whose name starts with \textit{Mar}.
-  
+
 \textbf{Solution:}
 
 \begin{verbatim}
@@ -58,7 +58,7 @@ WHERE D.did = W.did AND E.eid = W.eid AND D.dname LIKE 'Mar%';
 \end{verbatim}
 
 \item Find the ages of employees who work at least 30\% of their time in a single department. List each age only once.
-  
+
 \textbf{Solution:}
 
 \begin{verbatim}
@@ -68,9 +68,9 @@ WHERE E.eid = W.eid AND pct_time >= 30.00;
 \end{verbatim}
 
 \item Find the salaries of employees who work only  in departments that have budget more than \$500,000. List each salary value only once.
-  
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT DISTINCT E.salary
 FROM Employee E, Department D, Works W
@@ -80,30 +80,30 @@ FROM Works W, Department D
 WHERE W.did = D.did AND D.budget <=500000
 );
 \end{verbatim}
-  
+
 \item Find the names of employees who are managers.
-  
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT E.ename
 FROM Employee E, Department D, Works W
 WHERE E.eid = W.eid AND D.did = W.did AND E.eid = D.managerid;
 \end{verbatim}
- 
-\item Find the average salary over all employees. 
-  
+
+\item Find the average salary over all employees.
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT AVG(E.salary)
 FROM Employee E;
 \end{verbatim}
-  
+
 \item Find the ages of employees who work at least 10\% of their time in a department called \textit{Catering} but who do not work in any department with budget higher than \$500,000.
-  
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT E.age
 FROM Employee E, Department D, Works W
@@ -113,11 +113,11 @@ FROM Department D, Works W
 WHERE D.did = W.did AND D.budget > 500000
 );
 \end{verbatim}
-  
-\item Find the names of employees who work in all departments with budget higher than \$500,000. 
-  
+
+\item Find the names of employees who work in all departments with budget higher than \$500,000.
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT E.ename
 FROM Employee E
@@ -132,11 +132,11 @@ WHERE W.did = D.did AND W.eid = E.eid
 )
 );
 \end{verbatim}
-  
+
 \item Find the name(s) of the department(s) with the highest budget.
-  
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT D.dname
 FROM Department D
@@ -145,11 +145,11 @@ SELECT MAX(D.budget)
 FROM Department D
 );
 \end{verbatim}
-  
+
 \item Find the maximum salary among employees 30 years old or younger for each department with at least 10 employees of any age.
-  
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT MAX(E.salary)
 FROM Employee E, Department D, Works W
@@ -160,11 +160,11 @@ FROM Works W2
 WHERE W2.did = D.did) >= 3
 );
 \end{verbatim}
-  
+
 \item Find for each manager (listed in the output by \texttt{eid}) the average salary of employees working for that manager.
-  
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT D.managerid, AVG(E.salary)
 FROM Employee E, Department D, Works W
@@ -172,18 +172,18 @@ WHERE W.eid = E.eid AND W.did = D.did
 AND W.did = (
 SELECT D2.did
 FROM Employee E2, Department D2, Works W2
-WHERE W2.eid = E2.eid 
+WHERE W2.eid = E2.eid
 AND W2.did = D2.did
 AND E2.eid = D.managerid
 )
 AND E.eid <> D.managerid
 GROUP BY D.managerid;
 \end{verbatim}
-  
+
 \item Find the average age of employees for each department where every employee is 30 years old or younger.
-  
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT AVG(E.age)
 FROM EMPLOYEE E, DEPARTMENT D, WORKS W
@@ -193,15 +193,15 @@ HAVING COUNT(*) = (
 SELECT COUNT(*)
 FROM EMPLOYEE E1, WORKS W1
 WHERE W1.eid = E1.eid
-AND W1.did = D.did 
+AND W1.did = D.did
 AND E1.age <= 30
 );
 \end{verbatim}
-  
+
 \item Find the name(s) of department(s) who have the highest average employee age.
-  
+
 \textbf{Solution:}
- 
+
 \begin{verbatim}
 SELECT D.dname
 FROM Department D, (
@@ -221,11 +221,11 @@ GROUP BY D.did, D.dname
 ) TEMP
 );
 \end{verbatim}
-  
+
 \item Find the age(s) that most employees have, i.e., best represented age(s) among employees that work in departments with budget larger than \$300,000. If an employee works in multiple such departments, his/her age is only counted once.
-  
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT TEMP.age, TEMP.freq
 FROM (
@@ -254,18 +254,18 @@ GROUP BY TEMP2.age
 ) TEMP
 );
 \end{verbatim}
-  
+
 \item Find the average salary among employees that work in all departments whose names starts with \textit{Ca}.
-  
+
 \textbf{Solution:}
-  
+
 \begin{verbatim}
 SELECT AVG(E.salary)
 FROM EMPLOYEE E
 WHERE NOT EXISTS (
 SELECT D.did
 FROM DEPARTMENT D
-WHERE D.dname LIKE 'Ca%' AND 
+WHERE D.dname LIKE 'Ca%' AND
 NOT EXISTS (
 SELECT *
 FROM WORKS W
