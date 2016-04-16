@@ -6,12 +6,17 @@ INTRODUCTION
 
     This repository contains the source code developed for Analysis of
     Algorithms course at University of Massachusetts Boston. It includes
-    solutions to three assignments and a final exam.
+    solutions to six assignments and two midterm exams.
 
 BUILDING
 
     The package(s) needed for building source code are listed below.
-    - texlive-latex-base
+
+        - texlive-latex-base
+        - texlive-latex-extra
+        - texlive-science
+        - pgf
+        - ghostscript
 
     Once you have all packages, all you need is `make` to produce all documents.
 
@@ -22,7 +27,6 @@ CONTRIBUTION
 
 LICENSE
 
-    All source codes are released under the terms of the MIT License.
     All documents are under Creative Commons Attribution-ShareAlike 4.0
     International License.
 
