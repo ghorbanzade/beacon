@@ -5,7 +5,8 @@
 % More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{tikzpicture}[node distance=3cm, every edge/.style={link}]
+\begin{tikzpicture}[scale=0.7, transform shape, node distance=3cm, every edge/.style={link}]
+
 \node[entity] (prof) {Professor};
 \node[attribute] (ssn) [left of = prof] {\key{SSN}} edge (prof);
 \node[attribute] (name) [below left of = prof] {Name} edge (prof);
@@ -16,4 +17,5 @@
 \node[attribute] (courseid) [right of=course] {\key{ID}} edge (course);
 \node[attribute] (name) [below right of =course] {Name} edge (course);
 \node[attribute] (credits) [above right of=course] {Credits} edge (course);
+
 \end{tikzpicture}
