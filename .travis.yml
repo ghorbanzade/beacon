@@ -1,0 +1,18 @@
+language: c
+compiler: gcc
+addons:
+  apt:
+    packages:
+    - texlive-latex-base
+    - texlive-latex-extra
+    - texlive-science
+    - pgf
+    - ghostscript
+script:
+  - make
+notifications:
+  email:
+    recipients:
+      - mail@ghorbanzade.com
+    on_success: change
+    on_failure: always

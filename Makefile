@@ -22,7 +22,7 @@ docs: $(DOC_PDF)
 
 $(DOC_PDF): $(DOC_TEX)
 	@echo -n "  $(@F)... "
-	pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex)
+	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
 	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
 	@echo "Done."
 
