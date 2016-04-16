@@ -5,11 +5,13 @@
 % More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-For questions 1 to 3, you are given the following relational schema.\\
+For questions 1 to 3, you are given the following relational schema.
 
-\texttt{Students (\underline{sid}:integer, sname:string, age:integer)}\\
-\texttt{Grades (\underline{sid}:integer, \underline{cid}:integer, grade:integer)}\\
-\texttt{Courses (\underline{cid}:integer, cname:string, credits:integer)}\\
+\begin{terminal}
+Students (@*\underline{sid}*@:integer, sname:string, age:integer)
+Grades (@*\underline{sid}*@:integer, @*\underline{cid}*@:integer, grade:integer)
+Courses (@*\underline{cid}*@:integer, cname:string, credits:integer)
+\end{terminal}
 
 The meaning of attributes is as follows.
 

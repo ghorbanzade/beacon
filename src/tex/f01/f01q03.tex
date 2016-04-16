@@ -9,18 +9,9 @@
 
 Using the schema above, and assuming that grade is of type integer, provide the SQL statement to create a view \texttt{TopStudents} that lists the student ID, name and average grade (GPA) for students that have GPA above 3.0.
 
-\textbf{Solution:}
+\subsection*{Solution}
 
-\lstset{language=SQL}
-\lstset{numbers=none}
-\begin{lstlisting}
-CREATE VIEW TopStudents(sid, sname, GPA) AS
-SELECT TMP.sid, TMP.sname, TMP.gpa
-FROM (
-	SELECT S.sid, S.sname, SUM(C.credits*G.grade)/COUNT(*) AS gpa
-	FROM Students S, Courses C, Grades G
-	WHERE G.sid = S.sid AND G.cid = C.cid
-	GROUP BY S.sid, S.name
-	) TMP
-WHERE TMP.gpa > 3.0;
-\end{lstlisting}
+\lstset{language=sql}
+\lstinputlisting[firstline=8]{
+	\topDirectory/src/sql/f01/f01q03.sql
+}
