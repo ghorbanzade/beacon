@@ -1,4 +1,4 @@
-DOCS = hw01 hw02 hw03 hw04 hw05 hw06
+DOCS = hw01 hw02 hw03 hw04 hw05 hw06 m01
 BIND_DOC = cs630
 
 TOP_DIR = .
@@ -22,7 +22,7 @@ docs: $(DOC_PDF)
 
 $(DOC_PDF): $(DOC_TEX)
 	@echo -n "  $(@F)... "
-	pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex)
+	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
 	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
 	@echo "Done."
 

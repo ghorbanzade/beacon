@@ -1,0 +1,45 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Write \textbf{relational algebra} expressions for the following queries:
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Find the ages of employees who work in a department named 'Catering'.
+
+\textbf{Solution:}
+$$ \pi_{E.age}(\pi_{W.eid}(\pi_{D.did}(\sigma_{D.dname = 'Catering'}D)\Join W)\Join E) $$
+\item Find salaries of employees that work at least 30\% of their time in departments that have budget at least \$50000.
+
+\textbf{Solution:}
+$$ \pi_{E.salary}(\pi_{W.eid}(\sigma_{W.pct\_time \geq 30}(\pi_{D.did}(\sigma_{D.budget \geq 50000}D)\Join W))\Join E) $$
+
+\item Find the salaries of department managers.
+
+\textbf{Solution:}
+$$ \pi_{E.salary}(\sigma_{E.eid = D.managerid}((D \Join_{W.did = D.did} W)\Join_{W.eid = E.eid} E)) $$
+
+\item Find the names of employees who work in the \textit{Marketing} department or who spend more than half of their time in a single department.
+
+\textbf{Solution:}
+$$\rho(E1,\pi_{W.eid}(\pi_{D.did}(\sigma_{D.dname ='Marketing'}D)\Join W))$$
+$$\rho(E2,\pi_{E.eid}(\sigma_{W.pct\_time \geq 50}(E \Join W)))$$
+$$\pi_{E.ename}((E1 \cup E2)\Join E) $$
+
+\item Find the \texttt{eid} of managers who manage exactly one department.
+
+\textbf{Solution:}
+\begin{enumerate}
+\item M is defined as \texttt{eid} of managers who manage more than two department.
+$$\rho(D1(1\rightarrow did2, 2\rightarrow dname2, 3\rightarrow budget2, 4\rightarrow managerid2),Department) $$
+$$\rho(M,\pi_{managerid}(Department \Join_{(managerid = managerid2 \wedge did \neq did2)} D1 )) $$
+\item desired list $M^\prime$ is obtained by subtracting M from the list of all managers.
+$$\rho(M^\prime,\pi_{E.eid}(\pi_{W.eid}((\pi_{managerid}Department - M)\Join_{managerid = eid} Works)\Join Employee))$$
+\end{enumerate}
+\end{enumerate}
