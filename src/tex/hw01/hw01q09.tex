@@ -11,16 +11,26 @@ Prove that if a binary tree has depth $n$, then it has at most $2^n$ leaves.
 
 \subsection*{Solution}
 
-Proof is given by induction on depth $n$ of binary tree. By definition of \textit{binary} trees, it is assumed each node has at most two children.
+Proof is given by induction on depth $n$ of binary tree.
+By definition of \textit{binary} trees, it is assumed each node has at most two children.
 \begin{proof}
 Induction on depth $n$ of the binary tree.
 \begin{itemize}
-\item[] Argument is trivially true for \emph{base step} $n=0$ where there is only one node (if any) with no children. In this case, the node (if exists) will be the only leaf and number of leaves is either zero or one. Therefore, a binary tree with depth $0$ has at most $2^0=1$ leaf.
-\item[] When $n=1$, there is only one parent node and by definition it has at most two children. It follows that any additional node should be child of one of those children which will contradict our earlier assumption that depth of tree is $n=1$.
+\item[] Argument is trivially true for \emph{base step} $n=0$ where there is only one node (if any) with no children.
+In this case, the node (if exists) will be the only leaf and number of leaves is either zero or one.
+Therefore, a binary tree with depth $0$ has at most $2^0=1$ leaf.
+\item[] When $n=1$, there is only one parent node and by definition it has at most two children.
+It follows that any additional node should be child of one of those children which will contradict our earlier assumption that depth of tree is $n=1$.
 
-\item[] \emph{Inductive hypothesis} is formed as follows. A binary tree with depth $n$ has at most $2^n$ leaves. We show that a binary tree with depth $n+1$ has at most $2^{n+1}$ leaves.
+\item[] \emph{Inductive hypothesis} is formed as follows.
+A binary tree with depth $n$ has at most $2^n$ leaves.
+We show that a binary tree with depth $n+1$ has at most $2^{n+1}$ leaves.
 
-\item[] The only way to obtain a binary tree with depth $n+1$ is to add at least one child to at least one of the leaves of a binary tree with depth $n$. By inductive hypothesis, as there are at most $2^n$ leaves in a binary tree with depth $n$, we can at most promote $2^n$ leaves to parents. As each parent has at most two children, maximum number of children in a binary tree with depth $n+1$ will be $2 \times 2^n = 2^{n+1}$. As all former leaves will be parents with 2 children, any additional node should be child of one of the new leaves which contradicts our earlier assumption about depth of the tree.
+
+\item[] The only way to obtain a binary tree with depth $n+1$ is to add at least one child to at least one of the leaves of a binary tree with depth $n$.
+By inductive hypothesis, as there are at most $2^n$ leaves in a binary tree with depth $n$, we can at most promote $2^n$ leaves to parents.
+As each parent has at most two children, maximum number of children in a binary tree with depth $n+1$ will be $2 \times 2^n = 2^{n+1}$.
+As all former leaves will be parents with 2 children, any additional node should be child of one of the new leaves which contradicts our earlier assumption about depth of the tree.
 
 \end{itemize}
 \end{proof}

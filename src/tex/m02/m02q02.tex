@@ -8,9 +8,12 @@
 \section*{Question 2}
 
 \begin{enumerate}[label=(\alph*)]
-\item Show how to sort a set of $n$ numbers in $\mathcal{O}(n\log n)$ time using only the following binary search tree operations: \textsc{Minimum}, \textsc{Insert} and \textsc{Sucessor}. You may assume each operation takes $\mathcal{O}(\log n)$ time.
+\item Show how to sort a set of $n$ numbers in $\mathcal{O}(n\log n)$ time using only the following binary search tree operations: \textsc{Minimum}, \textsc{Insert} and \textsc{Sucessor}.
+You may assume each operation takes $\mathcal{O}(\log n)$ time.
 
-\item Let $b_n$ be the number of all possible binary search trees with $n$ nodes. Trivially $b_0$ is $1$. Show that $b_n = \sum_{k=0}^{n-1} b_k b_{n-1-k}$.
+\item Let $b_n$ be the number of all possible binary search trees with $n$ nodes.
+Trivially $b_0$ is $1$.
+Show that $b_n = \sum_{k=0}^{n-1} b_k b_{n-1-k}$.
 \end{enumerate}
 
 \subsection*{Solution}
@@ -18,7 +21,12 @@
 \begin{enumerate}[label=(\alph*)]
 \item The algorithm to sort the set of $n$ numbers is shown in Algorithm \ref{alg1}.
 
-First we can use the insert operation $n$ times to build a binary search tree out of $n$ elements. This will have $n\mathcal{O}(\log n)$ runtime cost. Then we once use the minimum operation to obtain and print the element with minimum value. Algorithm will continue by calling the successor operation $n-1$ times such that all elements are printed. As one call to minimum and $n-1$ calls to successor operation has been made, the runtime will be $\mathcal{O}(n\log n)$. Therefore, the entire sorting cost is $2n\mathcal{O}(\log n) = \mathcal{O}(n\log n)$.
+First we can use the insert operation $n$ times to build a binary search tree out of $n$ elements.
+This will have $n\mathcal{O}(\log n)$ runtime cost.
+Then we once use the minimum operation to obtain and print the element with minimum value.
+Algorithm will continue by calling the successor operation $n-1$ times such that all elements are printed.
+As one call to minimum and $n-1$ calls to successor operation has been made, the runtime will be $\mathcal{O}(n\log n)$.
+Therefore, the entire sorting cost is $2n\mathcal{O}(\log n) = \mathcal{O}(n\log n)$.
 
 \begin{algorithm}[H]
 \begin{algorithmic}[1]
@@ -35,9 +43,12 @@ First we can use the insert operation $n$ times to build a binary search tree ou
 \caption{Sort($A$)}\label{alg1}
 \end{algorithm}
 
-\item With $n$ nodes, we can convert the problem of finding $b_n$ possible binary search trees to finding a root for the tree, a left subtree and a right subtree. Suppose there are $k$ elements in the left subtree where $0 \leq k \leq n-1$.
+\item With $n$ nodes, we can convert the problem of finding $b_n$ possible binary search trees to finding a root for the tree, a left subtree and a right subtree.
+Suppose there are $k$ elements in the left subtree where $0 \leq k \leq n-1$.
 
-Let $b_k$ be defined as number of binary search trees that can be constructed with $k$ elements. As we still have $n-k-1$ elements with which to construct a right subtree, each choice of $k$ will give $b_k b_{n-1-k}$ possible binary search trees. Thus, total number of binary search trees that can be constructed with $n$ elements will be as shown in Eq. \ref{eq21}.
+Let $b_k$ be defined as number of binary search trees that can be constructed with $k$ elements.
+As we still have $n-k-1$ elements with which to construct a right subtree, each choice of $k$ will give $b_k b_{n-1-k}$ possible binary search trees.
+Thus, total number of binary search trees that can be constructed with $n$ elements will be as shown in Eq. \ref{eq21}.
 
 \begin{equation}
 b_n = \sum_{k=0}^{n-1} b_k b_{n-1-k}

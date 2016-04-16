@@ -6,14 +6,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 7}
+
 Prove that the following are equivalent.
 \begin{enumerate}
-  \item 
+  \item
   \begin{enumerate}
     \item $V_1$ is a vertex cover of $G$.
     \item $V - V_1$ is an independent set in $G$.
   \end{enumerate}
-  \item 
+  \item
   \begin{enumerate}
     \item $V_2$ is an independent set in $G$.
     \item $V_2$ is a clique in $G^c$.
@@ -33,7 +34,7 @@ Prove that the following are equivalent.
   \item To prove 2(a) and 2(b) are equivalent, we need to show independent set and clique problems are polynomially equivalent.
   \begin{enumerate}
     \item Objective is to prove any independent set of vertices $V_2$ for an undirected graph $G = (V, E)$ is reducible to a clique on $G^c = (V, E')$. Since $V_2$ form an independent set, for any pair of vertices $\{u, v\} \in V_2$, $e = (u, v) \notin E$ which means $(u, v) \in E'$. Thus since all vertices in $V_2$ are mutually connected in $G^c = (V, E')$, they form a clique in $G'$.
-    \item Objective is to prove any set of vertices $V_2$ that form a clique in $G^c=(V, E')$ form an independent set in $G = (V, E)$. Similar to previous proof, for any pair of vertices $\{u, v\}\in V_2$, $e = (u, v) \in E'$ which means $(u,v) \notin E$, i.e. no two vertices of $V_2$ are directly connected in $G=(V,E)$ which means they form an independent set.  
+    \item Objective is to prove any set of vertices $V_2$ that form a clique in $G^c=(V, E')$ form an independent set in $G = (V, E)$. Similar to previous proof, for any pair of vertices $\{u, v\}\in V_2$, $e = (u, v) \in E'$ which means $(u,v) \notin E$, i.e. no two vertices of $V_2$ are directly connected in $G=(V,E)$ which means they form an independent set.
   \end{enumerate}
   Thus both problems 2(a) and 2(b) are polynomially reducible to each other which means they are equally hard.
 \end{enumerate}

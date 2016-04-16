@@ -6,24 +6,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 6}
-Let $T$ be a rooted tree. $T$ is not necessarily a binary tree. That is, each node may have any finite number of child. We are going to consider a method of visiting each node of the tree. The method works as follows.
 
-At step 1, we visit the root. The root is then marked as \textit{visited}.
-At step $n$, all nodes that have already been marked \textit{visited} can visit at most one of their children. Of course if all the children of a node have already been visited, there is nothing for that node to do. But other nodes may stil do something at that step. So in particular, more than one node might be visited in a single step of the process.
+Let $T$ be a rooted tree.
+$T$ is not necessarily a binary tree.
+That is, each node may have any finite number of child.
+We are going to consider a method of visiting each node of the tree.
+The method works as follows.
 
-What is the minimum number of steps necessary to visit 
-every node in the tree?
+At step 1, we visit the root.
+The root is then marked as \textit{visited}.
+At step $n$, all nodes that have already been marked \textit{visited} can visit at most one of their children.
+Of course if all the children of a node have already been visited, there is nothing for that node to do.
+But other nodes may stil do something at that step.
+So in particular, more than one node might be visited in a single step of the process.
+
+What is the minimum number of steps necessary to visit every node in the tree?
 
 \begin{enumerate}[label=(\alph*)]
-\item Draw a tree in which more than one node is visited at some step of this process, and show why that happens.
+\item
+Draw a tree in which more than one node is visited at some step of this process, and show why that happens.
 
-\item Show that this problem contains optimal substructure. State precisely and clearly what the substructure is and show why it is optimal.
+\item
+Show that this problem contains optimal substructure.
+State precisely and clearly what the substructure is and show why it is optimal.
 
-\item Use that result to write a recursive algorithm to solve this problem.
+\item
+Use that result to write a recursive algorithm to solve this problem.
 
-\item Turn that algorithm into a dynamic programming algorithm.
+\item
+Turn that algorithm into a dynamic programming algorithm.
 
-\item What is the cost of your proposed algorithm, i.e. what is the cost of the algorithm that computes the cost?
+\item
+What is the cost of your proposed algorithm, i.e. what is the cost of the algorithm that computes the cost?
 \end{enumerate}
 
 \subsection*{Solution}

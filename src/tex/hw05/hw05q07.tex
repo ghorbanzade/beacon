@@ -11,4 +11,7 @@ Give a counter-example to the conjecture that if a directed graph $G$ contains a
 
 \subsection*{Solution}
 
-The counter-example proposed for previous question depicted in Figure \ref{fig61} can be proposed again. Starting from node $a$ as the source vertex, if depth-first algorithm continues with vertex $b$ ($b.d = 2$), there is no child of $b$ not already visited and therefore, node $b$ will be marked as visited ($b.f = 3 $). Going back to the partially visited vertex $a$, the algorithm would continue by discovering $c$ ($c.d = 5$). And this shows although there is a path from $b$ to $c$, $c.d \nleq b.f$.
+The counter-example proposed for previous question depicted in Figure \ref{fig61} can be proposed again.
+Starting from node $a$ as the source vertex, if depth-first algorithm continues with vertex $b$ ($b.d = 2$), there is no child of $b$ not already visited and therefore, node $b$ will be marked as visited ($b.f = 3 $).
+Going back to the partially visited vertex $a$, the algorithm would continue by discovering $c$ ($c.d = 5$).
+And this shows although there is a path from $b$ to $c$, $c.d \nleq b.f$.

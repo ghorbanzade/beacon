@@ -7,10 +7,14 @@
 
 \section*{Question 5}
 
-In Figure 3 of Lecture Note 4, where do the costs in the right-hand column come from? Show that they make sense. In particular, show why some of the costs are exact, and are upper bounds (with $\leq$ signs).
+In Figure 3 of Lecture Note 4, where do the costs in the right-hand column come from? Show that they make sense.
+In particular, show why some of the costs are exact, and are upper bounds (with $\leq$ signs).
 
 \subsection*{Solution}
 
-The costs indicated at each level of the recursion tree are actually run time costs of calling the \textsc{Partition} method on subarrays. As the \textsc{Partition} algorithm has a runtime of $\mathcal{O}(n)$ for an array of length $n$, it is not surprising that no matter how many times with divide the array to subarrays of length larger than 1, the runtime cost at each level would still remain the same.
+The costs indicated at each level of the recursion tree are actually run time costs of calling the \textsc{Partition} method on subarrays.
+As the \textsc{Partition} algorithm has a runtime of $\mathcal{O}(n)$ for an array of length $n$, it is not surprising that no matter how many times with divide the array to subarrays of length larger than 1, the runtime cost at each level would still remain the same.
 
-In case at each call of \textsc{Partition} the array is divided into two subarrays of equal length, we can expect that all levels would have a similar constant value. However, if \textsc{Partition} doesn't give the pivot value at middle of the array, at some level length of the subarrays that are the smaller parts given by \textsc{Partition} would reach 1 and \textsc{Partition} would have no effect, thus no cost. This makes the runtime cost of higher levels in the recursion tree in Figure 3 less than the constant value given in earlier levels.
+In case at each call of \textsc{Partition} the array is divided into two subarrays of equal length, we can expect that all levels would have a similar constant value.
+However, if \textsc{Partition} doesn't give the pivot value at middle of the array, at some level length of the subarrays that are the smaller parts given by \textsc{Partition} would reach 1 and \textsc{Partition} would have no effect, thus no cost.
+This makes the runtime cost of higher levels in the recursion tree in Figure 3 less than the constant value given in earlier levels.

@@ -6,7 +6,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 8}
-The \textsc{Quicksort} algorithm contains two recursive calls to itself. After \textsc{Quicksort} calls \textsc{Partition}, it recursively sorts the left subarray and then it recursively sorts the right subarray. The second recursive call in \textsc{Quicksort} is not really necessary; we can avoid it by using an iterative control structure. This technique, called \textit{tail recursion}, is provided automatically by good compilers. Consider the following version of quicksort, which simulates tail recursion.
+
+The \textsc{Quicksort} algorithm contains two recursive calls to itself.
+After \textsc{Quicksort} calls \textsc{Partition}, it recursively sorts the left subarray and then it recursively sorts the right subarray.
+The second recursive call in \textsc{Quicksort} is not really necessary; we can avoid it by using an iterative control structure.
+This technique, called \textit{tail recursion}, is provided automatically by good compilers.
+Consider the following version of quicksort, which simulates tail recursion.
 
 \begin{algorithm}[H]
 \caption{\textsc{Tail-Recursive-Quicksort($A$,$p$,$r$)}}
@@ -24,21 +29,34 @@ The \textsc{Quicksort} algorithm contains two recursive calls to itself. After \
 
 \item Describe a scenario in which \textsc{Tail-Recursive-Quicksort}'s stack depth is $\Theta(n)$ on an $n$-element input array.
 
-\item Modify the code for \textsc{Tail-Recursive-Quicksort} so that the worst-case stack depth is $\Theta(\log n)$. Maintain the $\mathcal{O}(n\log n)$ expected running time of the algorithm.
+\item Modify the code for \textsc{Tail-Recursive-Quicksort} so that the worst-case stack depth is $\Theta(\log n)$.
+Maintain the $\mathcal{O}(n\log n)$ expected running time of the algorithm.
 \end{enumerate}
 
 \subsection*{Solution}
 
 \begin{enumerate}[label=(\alph*)]
-\item It is assumed that the original \textsc{Quicksort} algorithm sorts correctly. Given that the original \textsc{Quicksort} makes use of the \textsc{Partition} algorithm itself, it is claimed that the statement $q = \textsc{Partition}(A,p,r)$ in second line of the algorithm works properly. As the algorithm calls itself at each iteration, proof of correctness is given by induction on the length $r$ of the array to be sorted.
+\item It is assumed that the original \textsc{Quicksort} algorithm sorts correctly.
+Given that the original \textsc{Quicksort} makes use of the \textsc{Partition} algorithm itself, it is claimed that the statement $q = \textsc{Partition}(A,p,r)$ in second line of the algorithm works properly.
+As the algorithm calls itself at each iteration, proof of correctness is given by induction on the length $r$ of the array to be sorted.
 
 \begin{itemize}
 \item[] \emph{Base Step}: When length of array $r = 1$, the array is already sorted and \textsc{Tail-Recursive-Quicksort} algorithm sorts correctly.
-\item[] \emph{Induction Step}: Inductive hypothesis is formed as \textsc{Tail-Recursive-Quicksort} works fine for any array of length $r \leq r_0$. Using this hypothesis, we show the algorithm is correct for $r = r_0 + 1$. This can simply be proven by following statements of the program. When $r = r_0 + 1$, the algorithm calls itself with arguments ($A$, $p$, $q-1$). Since $q - 1 < r_0+1$ for any $q$, all recursive calls are to an algorithm, correctness of which is already proven by the inductive hypothesis.
+\item[] \emph{Induction Step}: Inductive hypothesis is formed as \textsc{Tail-Recursive-Quicksort} works fine for any array of length $r \leq r_0$.
+Using this hypothesis, we show the algorithm is correct for $r = r_0 + 1$.
+This can simply be proven by following statements of the program.
+When $r = r_0 + 1$, the algorithm calls itself with arguments ($A$, $p$, $q-1$).
+Since $q - 1 < r_0+1$ for any $q$, all recursive calls are to an algorithm, correctness of which is already proven by the inductive hypothesis.
 \end{itemize}
 
-\item The number of iterations of \textit{while} loop in \textsc{Tail-Recursive-Quicksort} determines the stack depth. To make stack depth bound by $\Theta(n_0)$ for an $n_0$-element array, it suffices to make the algorithm to call itself for sorting an array ($n-1$)-element for any $n \leq n_0$. This means argument $q-1$ of the \textsc{Tail-Recursive-Quicksort} algorithm should be decremented for each iteration. This goal will be achieved, if we have an already-sorted array of length $n_0$. In this case, \textsc{Partition}($A$,$p$,$r$) will always be $r$ for any $r \leq r_0$.
+\item The number of iterations of \textit{while} loop in \textsc{Tail-Recursive-Quicksort} determines the stack depth.
+To make stack depth bound by $\Theta(n_0)$ for an $n_0$-element array, it suffices to make the algorithm to call itself for sorting an array ($n-1$)-element for any $n \leq n_0$.
+This means argument $q-1$ of the \textsc{Tail-Recursive-Quicksort} algorithm should be decremented for each iteration.
+This goal will be achieved, if we have an already-sorted array of length $n_0$.
+In this case, \textsc{Partition}($A$,$p$,$r$) will always be $r$ for any $r \leq r_0$.
 
-\item To maintain the expected runtime of the \textsc{Tail-Recursive-Quicksort} algorithm at $\Theta(n \log n)$, we cannot change arguments of the \textsc{Partition} and recursive \textsc{Tail-Recursive-Quicksort} calls. Therefore the only way to change the worst-case scenario is to change the order of partitioned sub-arrays so that the small sub-arrays be sorted first. This is made by insertion of a statement in between lines $2$ and $3$ that compares length of the sub arrays and gives the shortest one to the \textsc{Tail-Recursive-Quicksort} recursion.
+\item To maintain the expected runtime of the \textsc{Tail-Recursive-Quicksort} algorithm at $\Theta(n \log n)$, we cannot change arguments of the \textsc{Partition} and recursive \textsc{Tail-Recursive-Quicksort} calls.
+Therefore the only way to change the worst-case scenario is to change the order of partitioned sub-arrays so that the small sub-arrays be sorted first.
+This is made by insertion of a statement in between lines $2$ and $3$ that compares length of the sub arrays and gives the shortest one to the \textsc{Tail-Recursive-Quicksort} recursion.
 
 \end{enumerate}

@@ -6,26 +6,39 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 3}
+
 Prove that the keys in any subtree form a contiguous sequence.
 
 \subsection*{Solution}
-Suppose tree $T'$ with root $r'$ is a subtree of the tree $T$ with root $r$ such that $r'$ is a child of $r$. We claim that the keys in the subtree $T'$ construct a contiguous sequence. In other words, sorted sequence of all keys of subtree $T'$ is itself a subsequence of sorted sequence of keys of tree $T$.
 
-Proof is given by contradiction. Assume that our initial claim is false. This means there is an element $e$ in tree $T$ such that $n_1.key < e.key < n_2.key$ where $n_1$ and $n_2$ are two keys of subtree $T'$ and such that $e \notin T'$.
+Suppose tree $T'$ with root $r'$ is a subtree of the tree $T$ with root $r$ such that $r'$ is a child of $r$.
+We claim that the keys in the subtree $T'$ construct a contiguous sequence.
+In other words, sorted sequence of all keys of subtree $T'$ is itself a subsequence of sorted sequence of keys of tree $T$.
 
-Following the assumption that $r'$ is a child of $r$, $r'$ is either the left child or the right child. We now show that existence of the node $e$ in tree $T$ violates basic definition of the binary search tree.
+Proof is given by contradiction.
+Assume that our initial claim is false.
+This means there is an element $e$ in tree $T$ such that $n_1.key < e.key < n_2.key$ where $n_1$ and $n_2$ are two keys of subtree $T'$ and such that $e \notin T'$.
+
+Following the assumption that $r'$ is a child of $r$, $r'$ is either the left child or the right child.
+We now show that existence of the node $e$ in tree $T$ violates basic definition of the binary search tree.
 
 \begin{itemize}[itemsep=1mm] \parskip=0pt \parsep=0pt
-\item If $r'$ is the left child of $r$, $T'$ is a left subtree of $r$. Therefore, definition of the binary search tree enforces that keys of all nodes in $T'$ are less than key of $r$. Since $e \notin T'$, $e$ is either $r$ or in the right subtree of $r$.
+\item If $r'$ is the left child of $r$, $T'$ is a left subtree of $r$.
+Therefore, definition of the binary search tree enforces that keys of all nodes in $T'$ are less than key of $r$.
+Since $e \notin T'$, $e$ is either $r$ or in the right subtree of $r$.
 \begin{itemize}[itemsep=1mm] \parskip=0pt \parsep=0pt
   \item[] If $e = r$, then there is a node $n_2$ such that $r.key < n_2.key$.
-  \item[] If $e$ is in the right subtree, this means $e.key > r.key$. In this case, $e.key < n_2.key$ leads to $r.key < n_2.key$.
+  \item[] If $e$ is in the right subtree, this means $e.key > r.key$.
+In this case, $e.key < n_2.key$ leads to $r.key < n_2.key$.
 \end{itemize}
 And both cases violate the definition stating key of every node in left subtree $T'$ is less than $r.key$.
-\item If $r'$ is the right child of $r$, $T'$ is a right subtree of $r$. Therefore, definition of the binary search tree enforces that keys of all nodes in $T'$ are bigger than key of $r$. Since $e \notin T'$, $e$ is either $r$ or in the left subtree of $r$.
+\item If $r'$ is the right child of $r$, $T'$ is a right subtree of $r$.
+Therefore, definition of the binary search tree enforces that keys of all nodes in $T'$ are bigger than key of $r$.
+Since $e \notin T'$, $e$ is either $r$ or in the left subtree of $r$.
 \begin{itemize}[itemsep=1mm] \parskip=0pt \parsep=0pt
   \item[] If $e = r$, then there is a node $n_1$ such that $n_1.key < r.key$.
-  \item[] If $e$ is in the left subtree, this means $e.key < r.key$. In this case, $n_1.key < e.key$ leads to $n_1 < r.key$.
+  \item[] If $e$ is in the left subtree, this means $e.key < r.key$.
+In this case, $n_1.key < e.key$ leads to $n_1 < r.key$.
 \end{itemize}
 And both cases violate the definition stating keys of nodes in right subtree $T'$ are bigger than $r.key$.
 \end{itemize}

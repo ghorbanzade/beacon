@@ -7,7 +7,10 @@
 
 \section*{Question 1}
 
-A stack supports two operations: \textsc{Push} and \textsc{Pop}. Implementing the two operations using a linked-list takes $\mathcal{O}(1)$ time per operation. Suppose we are given two stacks, $A$ and $B$ with $n$ and $m$ elements, respectively. We want to implement the following operations:
+A stack supports two operations: \textsc{Push} and \textsc{Pop}.
+Implementing the two operations using a linked-list takes $\mathcal{O}(1)$ time per operation.
+Suppose we are given two stacks, $A$ and $B$ with $n$ and $m$ elements, respectively.
+We want to implement the following operations:
 \begin{description}\itemsep=0pt
 \item[\textsc{Push}($A, x$)] Push $x$ elements into $A$.
 \item[\textsc{Push}($B, x$)] Push $x$ elements into $B$.
@@ -17,7 +20,8 @@ A stack supports two operations: \textsc{Push} and \textsc{Pop}. Implementing th
 \end{description}
 \begin{enumerate}[label=(\alph*)]
 \item What is the worst-case running time of \textsc{MultipopA}, \textsc{MultipopB} and \textsc{Transfer}?
-\item Show that the amortized running time per operation is $\mathcal{O}(1)$ for a sequence of \textsc{Push}($A,n$) and \textsc{Transfer}($n$). You may use any technique shown in class on a sequence on $n$ operations.
+\item Show that the amortized running time per operation is $\mathcal{O}(1)$ for a sequence of \textsc{Push}($A,n$) and \textsc{Transfer}($n$).
+You may use any technique shown in class on a sequence on $n$ operations.
 \end{enumerate}
 
 \subsection*{Solution}
@@ -25,11 +29,14 @@ A stack supports two operations: \textsc{Push} and \textsc{Pop}. Implementing th
 \begin{enumerate}[label=(\alph*)]
 \item Operations \textsc{Push}($A,x$) and \textsc{Push}($B,x$) have a runtime cost of $\mathcal{O}(x)$ as \textsc{Push}() operation with runtime $\mathcal{O}(1)$ should be performed for $x$ times.
 
-Operations \textsc{MultipopA}($k$) and \textsc{MultipopB}($k$) both repeat the \textsc{Pop()} operation for $\text{min}(k,n)$ and $\text{min}(k,m)$ times, respectively. In the worst-case where $n,m < k$, the operations are limited by the number of elements in the stacks. Therefore, their worst-case runtime cost are $\mathcal{O}(n)$ and $\mathcal{O}(m)$, respectively.
+Operations \textsc{MultipopA}($k$) and \textsc{MultipopB}($k$) both repeat the \textsc{Pop()} operation for $\text{min}(k,n)$ and $\text{min}(k,m)$ times, respectively.
+In the worst-case where $n,m < k$, the operations are limited by the number of elements in the stacks.
+Therefore, their worst-case runtime cost are $\mathcal{O}(n)$ and $\mathcal{O}(m)$, respectively.
 
 Operation \textsc{Transfer($k$)} has a worst-case runtime of $\mathcal{O}(k)$, since worst scenario happens when $k < n$ and $k < m$ and there will be $k$ items to \textsc{Pop()} from stack $A$ and $k$ items to \textsc{Push()} to stack $B$.
 
-\item For \textsc{Push}($A,n$), amortized runtime would be constant $C$ where $C$ is the cost to push one element to a stack. This can be shown easily using the aggregate method as shown in Eq. \ref{eq11}.
+\item For \textsc{Push}($A,n$), amortized runtime would be constant $C$ where $C$ is the cost to push one element to a stack.
+This can be shown easily using the aggregate method as shown in Eq. \ref{eq11}.
 
 \begin{equation}
 \sum_{i=1}^{n} c_i = \sum_{i=1}^{n} c = c \sum_{i=1}^{n} 1 = nc \Rightarrow \text{Amortized Cost} = \frac{nc}{n} = c

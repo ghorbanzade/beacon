@@ -11,4 +11,8 @@ Prove that if $T$ is an optimal binary search tree and if $T'$ is any subtree of
 
 \subsection*{Solution}
 
-Proof is given by contradiction. Assume that $T'$ with nodes $n_i$ to $n_j$, is not an optimal binary search tree. This means nodes $n_i$ and $n_j$ can construct a binary search tree $T''$ whose expected cost is less than that of $T'$. As the same nodes form a subtree inside $T$, implementing the new binary search tree $T''$ will lead to less expected total tree cost; the later, directly violates our original assumption that $T$ was an optimal binary search tree. Therefore the initial assumption is false and $T'$ is an optimal binary search tree.
+Proof is given by contradiction.
+Assume that $T'$ with nodes $n_i$ to $n_j$, is not an optimal binary search tree.
+This means nodes $n_i$ and $n_j$ can construct a binary search tree $T''$ whose expected cost is less than that of $T'$.
+As the same nodes form a subtree inside $T$, implementing the new binary search tree $T''$ will lead to less expected total tree cost; the later, directly violates our original assumption that $T$ was an optimal binary search tree.
+Therefore the initial assumption is false and $T'$ is an optimal binary search tree.

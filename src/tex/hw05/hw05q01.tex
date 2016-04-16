@@ -13,12 +13,22 @@ Prove that if graph $G$ is connected, the breadth-first tree constructed by the 
 
 Proof is given by induction on number of vertices $n(G)$ in a connected graph $G$.
 \begin{itemize}\itemsep=0pt
-  \item[] \textit{Base case:} In case $n(G) = 1$, the graph will contain only the root node. BFS algorithm will begin by discovering node $s$ and immediately terminates by visiting it as $s$ has no children. Therefore, the tree constructed by $BFS(G,s)$ will be a single node tree, containing vertex $s$ which shows both statements hold true.
+  \item[] \textit{Base case:} In case $n(G) = 1$, the graph will contain only the root node.
+BFS algorithm will begin by discovering node $s$ and immediately terminates by visiting it as $s$ has no children.
+Therefore, the tree constructed by $BFS(G,s)$ will be a single node tree, containing vertex $s$ which shows both statements hold true.
   \item[] \textit{Inductive hypothesis:} Inductive hypothesis can now be formed as $BFS(G,s)$ will construct a tree containing all nodes, if $n(G)\leq k$ where $k \geq 1$.
   \item[] \textit{Induction step:} Objective is to prove $BFS(G',s)$ algorithm will produce a tree containing all nodes in case $n(G')=k+1$.
-  
-  Using the inductive hypothesis, graph $G'(V',E')$ is constructed by introducing a new vertex $v_{new}$ to the graph $G(V,E)$ where $n(G) = k$; i.e. $V' = V \cup \{v_{new}\}$. Since $G'$ should be connected, $E'$ will include 
-  a non-empty set of new edges $E''$ that connect $v_{new}$ to other nodes; i.e. $E' = E \cup E''$. For simplicity, suppose $V''$ will be the set of vertices $v_i$ such that $(v_i,v_{new})\in E''$.
-  
-  Suppose $v_i \in V''$ will be the first vertex visited at some step during $BFS(G,s)$ algorithm. This means, $v_i$ will also be the first node visited at $BFS(G',s)$ algorithm. Since $v_{new}$ is connected to $v_i$, definition of algorithm will enforce discovery of $v_i$, putting $v_i$ in the visiting queue and marking edge $(v_i,v_{new})$ as a tree edge. Since $v_i$ can be placed in queue only once, further visits to vertices $v_j \in V''$ will not discover $v_{new}$. This means that edge $(v_i,v_{new})$ would be the only edge added to the tree constructed by $BFS(G,s)$. As no loop can be created by adding one edge to a tree from a new vertex, $G'$ is proved to be a tree. Further, since $v_{new}$ is in queue, it will be visited at some point during $BFS(G',s)$ and will be including in the nodes of the tree constructed by $BFS(G',s)$.
+
+  Using the inductive hypothesis, graph $G'(V',E')$ is constructed by introducing a new vertex $v_{new}$ to the graph $G(V,E)$ where $n(G) = k$; i.e.
+$V' = V \cup \{v_{new}\}$.
+  Since $G'$ should be connected, $E'$ will include a non-empty set of new edges $E''$ that connect $v_{new}$ to other nodes; i.e. $E' = E \cup E''$.
+For simplicity, suppose $V''$ will be the set of vertices $v_i$ such that $(v_i,v_{new})\in E''$.
+
+  Suppose $v_i \in V''$ will be the first vertex visited at some step during $BFS(G,s)$ algorithm.
+This means, $v_i$ will also be the first node visited at $BFS(G',s)$ algorithm.
+Since $v_{new}$ is connected to $v_i$, definition of algorithm will enforce discovery of $v_i$, putting $v_i$ in the visiting queue and marking edge $(v_i,v_{new})$ as a tree edge.
+Since $v_i$ can be placed in queue only once, further visits to vertices $v_j \in V''$ will not discover $v_{new}$.
+This means that edge $(v_i,v_{new})$ would be the only edge added to the tree constructed by $BFS(G,s)$.
+As no loop can be created by adding one edge to a tree from a new vertex, $G'$ is proved to be a tree.
+Further, since $v_{new}$ is in queue, it will be visited at some point during $BFS(G',s)$ and will be including in the nodes of the tree constructed by $BFS(G',s)$.
 \end{itemize}

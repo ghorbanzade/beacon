@@ -6,9 +6,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 3}
+
 Prove that a simple loop contains no edge more than one.
 
 \subsection*{Solution}
+
 By definition, the loop $v_0 \rightarrow v_1 \rightarrow \cdots \rightarrow v_k$ is simple if $k \geq 3$ and it contains no vertex more than once except for the first and last vertex which are the same and occur only twice.
 
-Proof is thus given by contradiction. We assume that a simple loop might contain the edge $v_i \rightarrow v_{i+1}$ more than once, where $0 \leq i < k$. If $i \neq 0$, $v_i$ (and $v_{i+1}$) would occur twice while neither of them are first or last vertex. Therefore, the assumption would violate definition of the simple loop. If $i = 0$, the path would be of the form $v_i \rightarrow \cdots \rightarrow v_i \rightarrow \cdots \rightarrow v_k$. In this case, since $v_0$ and $v_k$ are the same, $v_i$ will occur more than twice which again violates the definition. Therefore the assumption is false and proof is complete.
+Proof is thus given by contradiction.
+We assume that a simple loop might contain the edge $v_i \rightarrow v_{i+1}$ more than once, where $0 \leq i < k$.
+If $i \neq 0$, $v_i$ (and $v_{i+1}$) would occur twice while neither of them are first or last vertex.
+Therefore, the assumption would violate definition of the simple loop.
+If $i = 0$, the path would be of the form $v_i \rightarrow \cdots \rightarrow v_i \rightarrow \cdots \rightarrow v_k$.
+In this case, since $v_0$ and $v_k$ are the same, $v_i$ will occur more than twice which again violates the definition.
+Therefore the assumption is false and proof is complete.

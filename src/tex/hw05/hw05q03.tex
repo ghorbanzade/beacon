@@ -12,7 +12,8 @@ Give an example of a directed graph $G = (V, E)$, a source vertex $s \in V$, and
 
 \subsection*{Solution}
 
-Figure \ref{fig31} provides an example of a graph $G = (V, E)$ in which $E_\pi$ can be chosen as either $\{(a,b), (a,c), (b,d), (c,d)\}$ or $\{(a,b), (a,c), (b,e), (c,d)\}$. Taking node $a$ as the source vertex, $E_\pi$ will immediately ensure a unique shortest path from $a$ to all other nodes.
+Figure \ref{fig31} provides an example of a graph $G = (V, E)$ in which $E_\pi$ can be chosen as either $\{(a,b), (a,c), (b,d), (c,d)\}$ or $\{(a,b), (a,c), (b,e), (c,d)\}$.
+Taking node $a$ as the source vertex, $E_\pi$ will immediately ensure a unique shortest path from $a$ to all other nodes.
 
 \begin{figure}[H]\centering
 \tikzstyle{vertex}=[circle,draw,minimum size=0.7cm]
@@ -36,7 +37,13 @@ Figure \ref{fig31} provides an example of a graph $G = (V, E)$ in which $E_\pi$ 
 \caption{Directed graph $G$}\label{fig31}
 \end{figure}
 
-Applying the breadth-first algorithm to graph $G$ starting from vertex $a$, will result into the Figure \ref{fig:sfig3-1} after one step (visiting vertex $a$). At step 2, one of nodes $b$ or $c$ must be visited. Due to symmetry of the graph which ensures no loss of generality, suppose node $b$ will be visited. Since both nodes $b$ and $c$ are connected to nodes $d$ and $e$, any such visit will put nodes $d$ and $e$ in queue, adding edges $(b,d)$ and $(b,e)$ to the set of tree edges. In next step of algorithm, vertex $c$ will be visited. However, since all vertices connected to $c$ are already placed in queue, the visit will not affect the set of tree edges. Hence, full implementation of the BFS algorithm will result in Figure \ref{fig:sfig3-2}.
+Applying the breadth-first algorithm to graph $G$ starting from vertex $a$, will result into the Figure \ref{fig:sfig3-1} after one step (visiting vertex $a$).
+At step 2, one of nodes $b$ or $c$ must be visited.
+Due to symmetry of the graph which ensures no loss of generality, suppose node $b$ will be visited.
+Since both nodes $b$ and $c$ are connected to nodes $d$ and $e$, any such visit will put nodes $d$ and $e$ in queue, adding edges $(b,d)$ and $(b,e)$ to the set of tree edges.
+In next step of algorithm, vertex $c$ will be visited.
+However, since all vertices connected to $c$ are already placed in queue, the visit will not affect the set of tree edges.
+Hence, full implementation of the BFS algorithm will result in Figure \ref{fig:sfig3-2}.
 
 \begin{figure}[H]\centering
 \tikzstyle{vertex}=[circle,draw,minimum size=0.7cm]

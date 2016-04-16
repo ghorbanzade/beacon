@@ -7,7 +7,8 @@
 
 \section*{Question 7}
 
-Suppose that, instead of sorting an array, we just require that the elements increase on average. More precisely, we call an $n$-element array $A$, \textbf{k-sorted} if, for all $i = 1, 2, ..., n-k$ Equation \ref{eq71} holds.
+Suppose that, instead of sorting an array, we just require that the elements increase on average.
+More precisely, we call an $n$-element array $A$, \textbf{k-sorted} if, for all $i = 1, 2, ..., n-k$ Equation \ref{eq71} holds.
 
 \begin{equation}\label{eq71}
 \frac{\sum_{j=i}^{i + k - 1} A[j]}{k} \leq \frac{\sum_{j=i+1}^{i + k} A[j]}{k}
@@ -28,7 +29,8 @@ Suppose that, instead of sorting an array, we just require that the elements inc
 A[i] \leq A[i+1]
 \end{equation}
 Therefore, any array that is 1-sorted as actually sorted in ascending order.
-\item One possible permutation of numbers $1$ to $10$ to result in a 2-sorted array is $1$, $6$, $2$, $7$, $3$, $8$, $4$, $9$, $5$ and $10$. This is due that for any $1 \leq i < 9$, Equation \ref{eq73} would be valid.
+\item One possible permutation of numbers $1$ to $10$ to result in a 2-sorted array is $1$, $6$, $2$, $7$, $3$, $8$, $4$, $9$, $5$ and $10$.
+This is due that for any $1 \leq i < 9$, Equation \ref{eq73} would be valid.
 \begin{equation}\label{eq73}
 \frac{\sum_{j=i}^{i + 1} A[j]}{2} \leq \frac{\sum_{j=i+1}^{i + 2} A[j]}{2}
 \end{equation}
@@ -37,13 +39,21 @@ Therefore, any array that is 1-sorted as actually sorted in ascending order.
 \item[] \textit{Base case}: ($n = 2$)\\
 When length of array is 2, $k = 1$, Equation \ref{eq71} dictates that $A[i] \leq A[i+1]$ which confirms the hypothesis.
 \item[] \textit{Induction Step}\\
-We form inductive hypothesis as for any array of length $n$, the array is $k$-sorted if and only if $A[i] \leq A[i+k]$. Using the inductive hypothesis, we will show that the statement would hold true for arrays of length $n + 1$. 
+We form inductive hypothesis as for any array of length $n$, the array is $k$-sorted if and only if $A[i] \leq A[i+k]$.
+Using the inductive hypothesis, we will show that the statement would hold true for arrays of length $n + 1$.
 
-Assuming that the $(n+1)$-element array is $k$-sorted, Equation \ref{eq71} would be available to use. Subtracting the inductive hypothesis from Equation \ref{eq71} would directly lead to $A[j] \leq A[j+k]$ which is the right-side of the equation.
+Assuming that the $(n+1)$-element array is $k$-sorted, Equation \ref{eq71} would be available to use.
+Subtracting the inductive hypothesis from Equation \ref{eq71} would directly lead to $A[j] \leq A[j+k]$ which is the right-side of the equation.
 
 We should as well show that using $A[i] \leq A[i+1]$ and adding the inductive hypothesis, Equation \ref{eq71} would directly be obtained which shows the array is $k$-sorted.
 \end{enumerate}
 \item Inspired by the proposed $2$-sorted array of numbers $1$ to $10$, the algorithm to $k$-sort an $n$-element array is given as follows.
 
-We first divide the array into $k$ subarrays. This clearly is done in constant time and has no effect on runtime of the algorithm. Then, we sort all $k$ subarrays using Merge Sort. Since each array has length $\frac{n}{k}$, the runtime for sorting $k$ subarrays would be $\mathcal{O}(k\frac{n}{k}\log(\frac{n}{k}))$. All that remains is to reconstruct the final array by picking one element from $k$ subarrays, one in turn. This leading to a run time of $\mathcal{O}(n)$. Therefore the total runtime of this algorithm would be $\mathcal{O}(n \log(\frac{n}{k}) + n ) = \mathcal{O}(n \log(\frac{n}{k}) )$.
+We first divide the array into $k$ subarrays.
+This clearly is done in constant time and has no effect on runtime of the algorithm.
+Then, we sort all $k$ subarrays using Merge Sort.
+Since each array has length $\frac{n}{k}$, the runtime for sorting $k$ subarrays would be $\mathcal{O}(k\frac{n}{k}\log(\frac{n}{k}))$.
+All that remains is to reconstruct the final array by picking one element from $k$ subarrays, one in turn.
+This leading to a run time of $\mathcal{O}(n)$.
+Therefore the total runtime of this algorithm would be $\mathcal{O}(n \log(\frac{n}{k}) + n ) = \mathcal{O}(n \log(\frac{n}{k}) )$.
 \end{enumerate}

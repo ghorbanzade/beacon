@@ -6,10 +6,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 2}
-Show that the second smallest of $n$ elements can be found with $n + \lceil \log n \rceil - 2$ comparisons in the worst case.
-\subsection*{Solution}
-We begin by comparing elements of the array two by two, each time putting the minimum number in a new array of size $\lceil \frac{n}{2} \rceil$. We will repeat the procedure for the new array until our new array will have only one element which is the element with minimum value. To calculate the number of comparisons it takes to find the element with minimum value, we use the analogy of a tree with $n$ nodes at height $H$, in which case the number of comparisons would be equal to number of nodes at levels greater than $0$ which is $n - 1$.
 
-The second smallest element is the smallest of all other nodes except the root. Therefore, there has been a comparison in which this element has lost to the element with minimum value. As the latter is compared $\lceil \log n \rceil$ times, we can compare all its losers to eachother to obtain the second smallest element, a procedure which takes $\lceil \log n \rceil - 1$ comparisons.
+Show that the second smallest of $n$ elements can be found with $n + \lceil \log n \rceil - 2$ comparisons in the worst case.
+
+\subsection*{Solution}
+
+We begin by comparing elements of the array two by two, each time putting the minimum number in a new array of size $\lceil \frac{n}{2} \rceil$.
+We will repeat the procedure for the new array until our new array will have only one element which is the element with minimum value.
+To calculate the number of comparisons it takes to find the element with minimum value, we use the analogy of a tree with $n$ nodes at height $H$, in which case the number of comparisons would be equal to number of nodes at levels greater than $0$ which is $n - 1$.
+
+The second smallest element is the smallest of all other nodes except the root.
+Therefore, there has been a comparison in which this element has lost to the element with minimum value.
+As the latter is compared $\lceil \log n \rceil$ times, we can compare all its losers to eachother to obtain the second smallest element, a procedure which takes $\lceil \log n \rceil - 1$ comparisons.
 
 Therefore the total number of comparisons would be $n + \lceil \log n - 2$.

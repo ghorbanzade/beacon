@@ -6,7 +6,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 10}
-Assume that all the keys in a binary search tree are distinct. Let $x$ be a node in a binary search tree. Show that
+
+Assume that all the keys in a binary search tree are distinct.
+Let $x$ be a node in a binary search tree.
+Show that
 \begin{enumerate}
 \item If $a$ is an ancestor of $x$ and $a.key > x.key$, then for any descendant $d$ of $x$, we have $a.key > d.key$.
 
@@ -20,7 +23,11 @@ Assume that all the keys in a binary search tree are distinct. Let $x$ be a node
 
 \item Similarly, if $x$ has a left child, then the predecessor of $x$ does not have a right child.
 \end{enumerate}
+
 \subsection*{Solution}
+
 \begin{enumerate}
-\item Property of the binary search trees suggest that the key of any node $d$ of a binary search tree is smaller than the key stored in its ancestors. Therefore, for any descendant $d$ of $x$, we have $x.key > d.key$. Since $a.key > x.key$, then $a.key > d.key$ would immediately follow.
+\item Property of the binary search trees suggest that the key of any node $d$ of a binary search tree is smaller than the key stored in its ancestors.
+Therefore, for any descendant $d$ of $x$, we have $x.key > d.key$.
+Since $a.key > x.key$, then $a.key > d.key$ would immediately follow.
 \end{enumerate}

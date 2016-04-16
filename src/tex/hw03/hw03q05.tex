@@ -6,19 +6,30 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 5}
+
 \begin{enumerate}
 \item Prove that a vertex in a rooted tree can have at most one parent.
 \item Prove that every vertex other than the root has exactly one parent.
 \end{enumerate}
-\subsection*{Solution}
-\begin{enumerate}
-\item Proof is given by contradiction. Assume node $v_i$ is a vertex in a rooted tree with more than one parents. In this case, there will be two nodes $v_{r_1}$ and $v_{r_2}$ for which $v_i$ is a child. Then, either one of $v_{r_1}$ and $v_{r_2}$ or none of them is the root of the tree.
 
-In case none of them is the root, there is another node $u$ which is root and there are two paths $u \rightarrow \cdots \rightarrow v_{r_1} \rightarrow v_i$ and $u \rightarrow \cdots \rightarrow v_{r_2} \rightarrow v_i$. This means there is a simple loop of the form $u \rightarrow v_{r_1} \rightarrow \cdots \rightarrow v_i \rightarrow v_{r_2} \rightarrow \cdots \rightarrow u$ which contradicts the definition of the tree.
+\subsection*{Solution}
+
+\begin{enumerate}
+\item Proof is given by contradiction.
+Assume node $v_i$ is a vertex in a rooted tree with more than one parents.
+In this case, there will be two nodes $v_{r_1}$ and $v_{r_2}$ for which $v_i$ is a child.
+Then, either one of $v_{r_1}$ and $v_{r_2}$ or none of them is the root of the tree.
+
+In case none of them is the root, there is another node $u$ which is root and there are two paths $u \rightarrow \cdots \rightarrow v_{r_1} \rightarrow v_i$ and $u \rightarrow \cdots \rightarrow v_{r_2} \rightarrow v_i$.
+This means there is a simple loop of the form $u \rightarrow v_{r_1} \rightarrow \cdots \rightarrow v_i \rightarrow v_{r_2} \rightarrow \cdots \rightarrow u$ which contradicts the definition of the tree.
 
 On the other hand, if one of $v_{r_1}$ and $v_{r_2}$ is the root, there is a path from the root to $v_i$ and $v_i$ to its other parent which means $v_i$ is the parent of the other node which contradicts the previous assumption that $v_i$ has two roots.
 
 Therefore the initial assumption is false and proof is complete.
 
-\item The proof is again given by contradiction. Assume that in the tree with root $u$, there is a node $v_i$ with more than two parents. In this case, $v_i$ is child of at least two nodes $v_{r_1}$ and $v_{r_2}$. As there are distinct paths $u \rightarrow \cdots \rightarrow v_{r_1}$ and $u \rightarrow \cdots \rightarrow v_{r_2}$, there will be a simple loop of the form $u \rightarrow \cdots \rightarrow v_{r_1} \rightarrow v_i \rightarrow v_{r_2} \rightarrow \cdots \rightarrow u$ which contradicts the definition of the tree. Thus the initial assumption is false and proof is complete.
+\item The proof is again given by contradiction.
+Assume that in the tree with root $u$, there is a node $v_i$ with more than two parents.
+In this case, $v_i$ is child of at least two nodes $v_{r_1}$ and $v_{r_2}$.
+As there are distinct paths $u \rightarrow \cdots \rightarrow v_{r_1}$ and $u \rightarrow \cdots \rightarrow v_{r_2}$, there will be a simple loop of the form $u \rightarrow \cdots \rightarrow v_{r_1} \rightarrow v_i \rightarrow v_{r_2} \rightarrow \cdots \rightarrow u$ which contradicts the definition of the tree.
+Thus the initial assumption is false and proof is complete.
 \end{enumerate}

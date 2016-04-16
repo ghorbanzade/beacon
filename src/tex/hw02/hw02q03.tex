@@ -11,9 +11,12 @@ Prove that if the subtree rooted at node $i$ has $n$ nodes, the subtree rooted a
 
 \subsection*{Solution}
 
-The objective is to find an upper bound on the number nodes of a subtree based on number of nodes of a subtree rooted at its parent. We define $H$ as the height of the latter subtree rooted at node $i$.
+The objective is to find an upper bound on the number nodes of a subtree based on number of nodes of a subtree rooted at its parent.
+We define $H$ as the height of the latter subtree rooted at node $i$.
 
-To find the upper bound, we try to place as many nodes as possible on a subtree $L$ rooted at a child of $i$ while trying to maintain as few nodes as possible on subtree $R$ at the other child of $i$. This practice is however restricted by definition of the heap that requires all higher levels of the tree be completely filled. Thus the difference would be on the lowest level where we are allowed to add nodes from the left. 
+To find the upper bound, we try to place as many nodes as possible on a subtree $L$ rooted at a child of $i$ while trying to maintain as few nodes as possible on subtree $R$ at the other child of $i$.
+This practice is however restricted by definition of the heap that requires all higher levels of the tree be completely filled.
+Thus the difference would be on the lowest level where we are allowed to add nodes from the left.
 
 The imbalance between subtrees $L$ and $R$ will be most significant where last row is half full, in which case subtree $L$ will have height $(H-1)$ while subtree $R$ will have height $(H-2)$, due to the fact that both are completely filled.
 

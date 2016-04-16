@@ -93,13 +93,22 @@ For each of the following undirected graphs either show that there is a Hamilton
 \end{figure}
 
 \subsection*{Solution}
-For a graph $G = (V,E)$ to have a Hamiltonian Cycle, there should be a cycle that contains every vertex in $V$ exactly once. Therefore, to show a graph $G$ has a Hamiltonian Cycle, it suffices to propose a cycle that begins with $u \in V$, passes every $v \in V-\{u\}$ and ends in $u \in V$.
 
-We can also prove by contradiction that $G$ has a Hamiltonian Cycle $c$ if any vertex $u \in V$ is an endpoint of exactly $2$ edges in $c$. If $u$ is an endpoint of less than 2 edges, then $u$ is either not connected to $c$ or $c$ is not a cycle; both cases leading to contradiction.
-If $u$ is an endpoint of more than two edges, starting from $u$, we can follow $u$ to $v$, using one edge, then return to $u$ using another edge and then visit the third connected vertex. However, since $c$ is a cycle, we should end our path with $u$, thus visiting $u$ more than twice which contradicts definition of Hamiltonian Cycle.
+For a graph $G = (V,E)$ to have a Hamiltonian Cycle, there should be a cycle that contains every vertex in $V$ exactly once.
+Therefore, to show a graph $G$ has a Hamiltonian Cycle, it suffices to propose a cycle that begins with $u \in V$, passes every $v \in V-\{u\}$ and ends in $u \in V$.
+
+We can also prove by contradiction that $G$ has a Hamiltonian Cycle $c$ if any vertex $u \in V$ is an endpoint of exactly $2$ edges in $c$.
+If $u$ is an endpoint of less than 2 edges, then $u$ is either not connected to $c$ or $c$ is not a cycle; both cases leading to contradiction.
+If $u$ is an endpoint of more than two edges, starting from $u$, we can follow $u$ to $v$, using one edge, then return to $u$ using another edge and then visit the third connected vertex.
+However, since $c$ is a cycle, we should end our path with $u$, thus visiting $u$ more than twice which contradicts definition of Hamiltonian Cycle.
 Therefore, to show that a graph $G$ does not have any Hamiltonian Cycle $c$, we show that there is a vertex $v \in V$ which is an endpoint of more than 2 edges in $c$.
 \begin{enumerate}[label=(\alph*)]
-\item There is a cycle $c$ of the form $A \rightarrow B \rightarrow C \rightarrow D \rightarrow H \rightarrow G \rightarrow F \rightarrow E \rightarrow A$, that passes through all vertices in $V$ and ends in $A$. Therefore, Graph $F$ has a Hamiltonian Cycle.
-\item There is a cycle $c$ of the form $A \rightarrow B \rightarrow C \rightarrow I \rightarrow H \rightarrow G \rightarrow A$, that passes through all vertices in $V$ and ends in $A$. Therefore, Graph $G$ has a Hamiltonian Cycle.
-\item Vertex $E$ in graph $H$ is connected to $H$ via 4 edges. Since we proved any Hamiltonian cycle $c$ should pass vertex $E$ with 2 edges, $E$ will be connected to exactly 2 vertices from the set $S = \{B, D, F, H\}$. Regardless of our choice, choosing any two-element subset of $S$ will immediately divide yet-unvisited vertices into two islands and after visiting one of them, we are unable to visit the other without passing again from an already-visited node. Therefore, graph $H$ does not have any Hamiltonian Cycle.
+\item There is a cycle $c$ of the form $A \rightarrow B \rightarrow C \rightarrow D \rightarrow H \rightarrow G \rightarrow F \rightarrow E \rightarrow A$, that passes through all vertices in $V$ and ends in $A$.
+Therefore, Graph $F$ has a Hamiltonian Cycle.
+\item There is a cycle $c$ of the form $A \rightarrow B \rightarrow C \rightarrow I \rightarrow H \rightarrow G \rightarrow A$, that passes through all vertices in $V$ and ends in $A$.
+Therefore, Graph $G$ has a Hamiltonian Cycle.
+\item Vertex $E$ in graph $H$ is connected to $H$ via 4 edges.
+Since we proved any Hamiltonian cycle $c$ should pass vertex $E$ with 2 edges, $E$ will be connected to exactly 2 vertices from the set $S = \{B, D, F, H\}$.
+Regardless of our choice, choosing any two-element subset of $S$ will immediately divide yet-unvisited vertices into two islands and after visiting one of them, we are unable to visit the other without passing again from an already-visited node.
+Therefore, graph $H$ does not have any Hamiltonian Cycle.
 \end{enumerate}

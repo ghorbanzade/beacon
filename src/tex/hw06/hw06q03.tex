@@ -11,8 +11,10 @@ Show that if $A \leq_P B$, $B \leq_P C$ then $A \leq_P C$ where $A$, $B$ and $C$
 
 \subsection*{Solution}
 
-Using $A \leq_P B$, by definition, there is a function $f$ that maps instances of the problem $A$ to a subset of instances of the problem $B$ in runtime $\mathcal{O}(|a|^m)$ for some $m$. Similarly, $B \leq_P C$ means there is a function $g$ that maps all instances of the problem $B$ to a subset of instances of the problem $C$ in runtime $\mathcal{O}(|b|^n)$ for some $n$.
+Using $A \leq_P B$, by definition, there is a function $f$ that maps instances of the problem $A$ to a subset of instances of the problem $B$ in runtime $\mathcal{O}(|a|^m)$ for some $m$.
+Similarly, $B \leq_P C$ means there is a function $g$ that maps all instances of the problem $B$ to a subset of instances of the problem $C$ in runtime $\mathcal{O}(|b|^n)$ for some $n$.
 
-As $\text{domain}(A) \subseteq \text{domain}(B)$, we can propose a function $h = g(f(a))$ that maps any instance $a$ of the problem $A$ to a subset of instances of the problem $C$. Using properties of runtime, running time of $g(f(a))$ will be $\mathcal{O}(|a|^m) + \mathcal{O}(|f(a)|^n) = \mathcal{O}(|a|^k)$ where $k = \text{max}(m,n)$.
+As $\text{domain}(A) \subseteq \text{domain}(B)$, we can propose a function $h = g(f(a))$ that maps any instance $a$ of the problem $A$ to a subset of instances of the problem $C$.
+Using properties of runtime, running time of $g(f(a))$ will be $\mathcal{O}(|a|^m) + \mathcal{O}(|f(a)|^n) = \mathcal{O}(|a|^k)$ where $k = \text{max}(m,n)$.
 
 Therefore, polynomial-time reduction is transitive and $A \leq_P C$.

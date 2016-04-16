@@ -6,6 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 8}
+
 Assume you had some kind of super-hardware that, when given two lists of length $n$ that are sorted, merges them into one sorted list, and takes only $n^c$ steps where $c \geq 0$.
 
 \begin{enumerate}[label=(\alph*)]
@@ -19,7 +20,8 @@ Assume you had some kind of super-hardware that, when given two lists of length 
 \begin{enumerate}[label=(\alph*)]
 \item Inspired by \textsc{MergeSort}, the proposed algorithm \textsc{Super-Merger-Sort} is given as Algorithm 3.
 
-The call to the super-hardware is performed by calling the \textsc{Super-Merge} method. Using this algorithm, we can sort an array of length $n$ by a top level call of \textsc{Super-Merger-Sort}(A, $1$, $n$).
+The call to the super-hardware is performed by calling the \textsc{Super-Merge} method.
+Using this algorithm, we can sort an array of length $n$ by a top level call of \textsc{Super-Merger-Sort}(A, $1$, $n$).
 
 \begin{algorithm}[H]
 \caption{\textsc{Super-Merger-Sort}($A$, $p$, $r$)}
@@ -37,6 +39,7 @@ The call to the super-hardware is performed by calling the \textsc{Super-Merge} 
 
 \item Based on this fact, the total runtime of the proposed \textsc{Super-Merger-Sort} algorithm with be $\mathcal{O}(n^{c}\log n)$ for sorting an array of length $n$.
 
-The proposed algorithm would therefore perform better when $c < 1$. This is of course highly implausible because any such super-hardware should at least read once all $n$ elements of the two merged lists to sort them and this itself is $\mathcal{O}(n)$.
+The proposed algorithm would therefore perform better when $c < 1$.
+This is of course highly implausible because any such super-hardware should at least read once all $n$ elements of the two merged lists to sort them and this itself is $\mathcal{O}(n)$.
 
 \end{enumerate}

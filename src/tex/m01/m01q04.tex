@@ -7,7 +7,8 @@
 
 \section*{Question 4}
 
-If we had an algorithm that finds the median of a sequence in linear time (worst case) - \textsc{findMedian($A$, $p$, $r$)} which returns the index of the median of the sequence $A[p..r]$, describe a worst-case linear time algorithm that finds any order statistics. Provide a brief run-time analysis.
+If we had an algorithm that finds the median of a sequence in linear time (worst case) - \textsc{findMedian($A$, $p$, $r$)} which returns the index of the median of the sequence $A[p..r]$, describe a worst-case linear time algorithm that finds any order statistics.
+Provide a brief run-time analysis.
 
 \subsection*{Solution}
 
@@ -46,4 +47,5 @@ where \textsc{Partition($A$, $p$, $r$, $q$)} is a simple algorithm that partitio
 \end{algorithmic}
 \end{algorithm}
 
-A more rigorous run-time analysis can be obtained using recursion $T(n) = T(\frac{n}{2}) + \mathcal{O}(n)$. As $T(\frac{n}{2}) \leq \mathcal{O}(n)$ for all $n$, runtime would be bound by $O(n)$.
+A more rigorous run-time analysis can be obtained using recursion $T(n) = T(\frac{n}{2}) + \mathcal{O}(n)$.
+As $T(\frac{n}{2}) \leq \mathcal{O}(n)$ for all $n$, runtime would be bound by $O(n)$.

@@ -6,11 +6,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 1}
-The operation \textsc{Heap-Delete}$(A,i)$ deletes the item in node $i$ from heap $A$. Give an implementation of \textsc{Heap-Delete} that runs in $\mathcal{O}(\log n)$ time for an $n$-element max-heap. You are as well expected to show that your proposed algorithm run in $\mathcal{O}(\log n)$ time.
+
+The operation \textsc{Heap-Delete}$(A,i)$ deletes the item in node $i$ from heap $A$.
+Give an implementation of \textsc{Heap-Delete} that runs in $\mathcal{O}(\log n)$ time for an $n$-element max-heap.
+You are as well expected to show that your proposed algorithm run in $\mathcal{O}(\log n)$ time.
 
 \subsection*{Solution}
 
-To remove node $i$ from array $A$ where $A$ is a \textit{Heap} data structure with $n$ elements, we first replace $A[i]$ with $A[n]$; last node in height $H$ where $H$ is height of the tree. This is done to maintain \textit{completeness} of the binary tree. Obviously this step has a constant runtime cost which is negligible. As it is likely that such modification violates the \textit{heap} structure of the tree, we should \textsc{Heapify} the modified binary tree to maintain the heap structure after deletion.
+To remove node $i$ from array $A$ where $A$ is a \textit{Heap} data structure with $n$ elements, we first replace $A[i]$ with $A[n]$; last node in height $H$ where $H$ is height of the tree.
+This is done to maintain \textit{completeness} of the binary tree.
+Obviously this step has a constant runtime cost which is negligible.
+As it is likely that such modification violates the \textit{heap} structure of the tree, we should \textsc{Heapify} the modified binary tree to maintain the heap structure after deletion.
 
 Now the following two cases might occur:
 
@@ -22,4 +28,5 @@ If node $n$ is within the subtree with root at node $i$, we can rest assured tha
 If there is no subtree that includes nodes $i$ and $n$, the value of node $n$ may be higher than the value of parent of node $i$, in which case each call of \textsc{Heapify} is likely to move node $i$ one step higher.
 \end{enumerate}
 
-In either case, the number of calls to \textsc{Heapify} is surely less than or equal to the the height $H$ of the tree. Since $ 2^{H} - 1 < n $, we can derive $ h < \log {n+1} $ and thus the runtime of proposed \textsc{Heap-Delete} algorithm is $\mathcal{O}(\log n)$.
+In either case, the number of calls to \textsc{Heapify} is surely less than or equal to the the height $H$ of the tree.
+Since $ 2^{H} - 1 < n $, we can derive $ h < \log {n+1} $ and thus the runtime of proposed \textsc{Heap-Delete} algorithm is $\mathcal{O}(\log n)$.

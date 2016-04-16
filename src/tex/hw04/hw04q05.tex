@@ -35,19 +35,21 @@ Table \ref{tab52} provides $w(i,j)$ for all $0 \leq j \leq 7$ and $1 \leq i \leq
 \begin{table}[H]\centering
 \begin{tabular}{c c c c c c c c c}
   & 0    & 1    & 2    & 3    & 4    & 5    & 6    & 7\\\hline
-1 & 0.06 & 0.16 & 0.28 & 0.42 & 0.49 & 0.64 & 0.81 & 1.00\\ 
-2 &      & 0.06 & 0.18 & 0.32 & 0.39 & 0.54 & 0.71 & 0.90\\ 
-3 &      &      & 0.06 & 0.20 & 0.27 & 0.42 & 0.59 & 0.78\\ 
-4 &      &      &      & 0.06 & 0.13 & 0.28 & 0.45 & 0.64\\ 
-5 &      &      &      &      & 0.05 & 0.20 & 0.37 & 0.56\\ 
-6 &      &      &      &      &      & 0.05 & 0.22 & 0.41\\ 
+1 & 0.06 & 0.16 & 0.28 & 0.42 & 0.49 & 0.64 & 0.81 & 1.00\\
+2 &      & 0.06 & 0.18 & 0.32 & 0.39 & 0.54 & 0.71 & 0.90\\
+3 &      &      & 0.06 & 0.20 & 0.27 & 0.42 & 0.59 & 0.78\\
+4 &      &      &      & 0.06 & 0.13 & 0.28 & 0.45 & 0.64\\
+5 &      &      &      &      & 0.05 & 0.20 & 0.37 & 0.56\\
+6 &      &      &      &      &      & 0.05 & 0.22 & 0.41\\
 7 &      &      &      &      &      &      & 0.05 & 0.24\\
 8 &      &      &      &      &      &      &      & 0.05\\\hline
 \end{tabular}
 \caption{$w(i,j)$ for $0 \leq j \leq 7$ and $1 \leq i \leq 8$}\label{tab52}
 \end{table}
 
-We now calculate expected search cost $e[i,j]$ for $0 \leq j \leq 7$ and $1 \leq i \leq 8$. We know that $e[i,j] = q_{i-1}$ when $j = i - 1$. For the general case however where $i \leq j$, Equation \ref{eq52} can be used.
+We now calculate expected search cost $e[i,j]$ for $0 \leq j \leq 7$ and $1 \leq i \leq 8$.
+We know that $e[i,j] = q_{i-1}$ when $j = i - 1$.
+For the general case however where $i \leq j$, Equation \ref{eq52} can be used.
 
 \begin{equation}\label{eq52}
 \begin{aligned}
@@ -55,17 +57,18 @@ e[i,j] = \min_{i \leq r \leq j} \{e[i, r-1] + e[r+1, j] + w(i,j)\}
 \end{aligned}
 \end{equation}
 
-where $r$ is the root in the optimal subtree $n_i$ to $n_j$. Using this equation and following the \textsc{Optimal-BST} algorithm described in the textbook, $e[i, j]$ and $root[i,j]$ are obtained as shown in Table \ref{tab53} and Table \ref{tab54}, respectively.
+where $r$ is the root in the optimal subtree $n_i$ to $n_j$.
+Using this equation and following the \textsc{Optimal-BST} algorithm described in the textbook, $e[i, j]$ and $root[i,j]$ are obtained as shown in Table \ref{tab53} and Table \ref{tab54}, respectively.
 
 \begin{table}[H]\centering
 \begin{tabular}{c c c c c c c c c}
   & 0    & 1    & 2    & 3    & 4    & 5    & 6    & 7\\\hline
-1 & 0.06 & 0.28 & 0.50 & 0.76 & 0.90 & 1.18 & 1.50 & 1.86\\ 
-2 &      & 0.06 & 0.30 & 0.56 & 0.70 & 0.98 & 1.30 & 1.66\\ 
-3 &      &      & 0.06 & 0.32 & 0.46 & 0.74 & 1.06 & 1.42\\ 
-4 &      &      &      & 0.06 & 0.30 & 0.46 & 0.78 & 1.14\\ 
-5 &      &      &      &      & 0.05 & 0.24 & 0.62 & 0.98\\ 
-6 &      &      &      &      &      & 0.05 & 0.32 & 0.68\\ 
+1 & 0.06 & 0.28 & 0.50 & 0.76 & 0.90 & 1.18 & 1.50 & 1.86\\
+2 &      & 0.06 & 0.30 & 0.56 & 0.70 & 0.98 & 1.30 & 1.66\\
+3 &      &      & 0.06 & 0.32 & 0.46 & 0.74 & 1.06 & 1.42\\
+4 &      &      &      & 0.06 & 0.30 & 0.46 & 0.78 & 1.14\\
+5 &      &      &      &      & 0.05 & 0.24 & 0.62 & 0.98\\
+6 &      &      &      &      &      & 0.05 & 0.32 & 0.68\\
 7 &      &      &      &      &      &      & 0.05 & 0.34\\
 8 &      &      &      &      &      &      &      & 0.05\\\hline
 \end{tabular}
@@ -75,12 +78,12 @@ where $r$ is the root in the optimal subtree $n_i$ to $n_j$. Using this equation
 \begin{table}[H]\centering
 \begin{tabular}{c c c c c c c c c}
   & 1    & 2    & 3 & 4 & 5 & 6 & 7\\\hline
-1 & 1 & 2 & 3 & 3 & 5 & 6 & 7\\ 
-2 &   & 2 & 3 & 3 & 5 & 6 & 7\\ 
-3 &   &   & 3 & 3 & 5 & 6 & 7\\ 
-4 &   &   &   & 4 & 5 & 6 & 7\\ 
-5 &   &   &   &   & 5 & 6 & 7\\ 
-6 &   &   &   &   &   & 6 & 7\\ 
+1 & 1 & 2 & 3 & 3 & 5 & 6 & 7\\
+2 &   & 2 & 3 & 3 & 5 & 6 & 7\\
+3 &   &   & 3 & 3 & 5 & 6 & 7\\
+4 &   &   &   & 4 & 5 & 6 & 7\\
+5 &   &   &   &   & 5 & 6 & 7\\
+6 &   &   &   &   &   & 6 & 7\\
 7 &   &   &   &   &   &   & 7\\\hline
 \end{tabular}
 \caption{$root[i,j]$ for $1 \leq i,j \leq 7$}\label{tab54}
@@ -144,12 +147,12 @@ The total cost of the tree can also be easily computed using Table \ref{tab55} g
 \begin{table}[H]\centering
 \begin{tabular}{c c c c | c c c c}
 node & depth & probability & contribution & node & depth & probability & contribution\\\hline
-$k_1$ & 5 & 0.04 & 0.24 & $d_0$ & 6 & 0.06 & 0.42\\ 
-$k_2$ & 4 & 0.06 & 0.30 & $d_1$ & 6 & 0.06 & 0.42\\ 
-$k_3$ & 3 & 0.08 & 0.32 & $d_2$ & 5 & 0.06 & 0.36\\ 
-$k_4$ & 4 & 0.02 & 0.10 & $d_3$ & 5 & 0.06 & 0.36\\ 
-$k_5$ & 2 & 0.10 & 0.30 & $d_4$ & 5 & 0.05 & 0.30\\ 
-$k_6$ & 1 & 0.12 & 0.24 & $d_5$ & 3 & 0.05 & 0.20\\ 
+$k_1$ & 5 & 0.04 & 0.24 & $d_0$ & 6 & 0.06 & 0.42\\
+$k_2$ & 4 & 0.06 & 0.30 & $d_1$ & 6 & 0.06 & 0.42\\
+$k_3$ & 3 & 0.08 & 0.32 & $d_2$ & 5 & 0.06 & 0.36\\
+$k_4$ & 4 & 0.02 & 0.10 & $d_3$ & 5 & 0.06 & 0.36\\
+$k_5$ & 2 & 0.10 & 0.30 & $d_4$ & 5 & 0.05 & 0.30\\
+$k_6$ & 1 & 0.12 & 0.24 & $d_5$ & 3 & 0.05 & 0.20\\
 $k_7$ & 0 & 0.14 & 0.14 & $d_6$ & 2 & 0.05 & 0.15\\
       &   &      &      & $d_7$ & 1 & 0.05 & 0.10\\\hline
 \end{tabular}

@@ -7,14 +7,16 @@
 
 \section*{Question 5}
 
-Give asymptotic upper and lower bounds for $T(n)$ in each of the following recurrences. Assume that $T(n)$ is constant for $n \leq 2$. Make your bounds as tight as possible, and justify your answers.
+Give asymptotic upper and lower bounds for $T(n)$ in each of the following recurrences.
+Assume that $T(n)$ is constant for $n \leq 2$.
+Make your bounds as tight as possible, and justify your answers.
 
 \begin{enumerate}[label=(\alph*)]
 \item $T(n) = 2T(n/2) + n^4$.
 \item $T(n) = T(7n/10) + n$.
 \item $T(n) = 16T(n/4) + n^2$.
 \item $T(n) = 2T(n/4) + \sqrt{n}$.
-\item $T(n) = T(n-2) + n^2$. 
+\item $T(n) = T(n-2) + n^2$.
 \end{enumerate}
 
 \subsection*{Solution}
@@ -22,9 +24,11 @@ Give asymptotic upper and lower bounds for $T(n)$ in each of the following recur
 \begin{enumerate}[label=(\alph*)]
 \item $T(n) = 2T(n/2) + n^4$
 
-Recurrence is of the form $T(n) = aT(n/b)+f(n)$ where $a=2 \geq 1$, $b=2 > 1$ and $f(n) = n^4$ is ultimately positive. Therefore the \emph{Master Theorem} can be applied, according to which $T(n)$ can be asymptotically estimated as follows.
+Recurrence is of the form $T(n) = aT(n/b)+f(n)$ where $a=2 \geq 1$, $b=2 > 1$ and $f(n) = n^4$ is ultimately positive.
+Therefore the \emph{Master Theorem} can be applied, according to which $T(n)$ can be asymptotically estimated as follows.
 
-Since $f(n) = n^4$ is significantly large compared to $n^{\log_b a}=n$, $f(n)$ can be written as $f(n) = \Omega(n^{1+\epsilon})$ for $0 < \epsilon \leq 1$ provided that for some $0<c<1$ and $n_0$, if $n > n_0$, $af(n/b) \leq c f(n)$. This is true because by choosing $0.125 \leq c < 1$, $2f(n/2)=2\frac{n^4}{16}\leq cf(n)=cn^4$ for all $n$.
+Since $f(n) = n^4$ is significantly large compared to $n^{\log_b a}=n$, $f(n)$ can be written as $f(n) = \Omega(n^{1+\epsilon})$ for $0 < \epsilon \leq 1$ provided that for some $0<c<1$ and $n_0$, if $n > n_0$, $af(n/b) \leq c f(n)$.
+This is true because by choosing $0.125 \leq c < 1$, $2f(n/2)=2\frac{n^4}{16}\leq cf(n)=cn^4$ for all $n$.
 
 Therefore,
 \begin{equation}
@@ -33,9 +37,12 @@ T(n) = \Theta(f(n)) = \Theta(n^4)
 
 \item $T(n) = T(7n/10) + n$
 
-Recurrence is of the form $T(n) = aT(n/b) + f(n)$ where $a = 1 \geq 1$, $b = \frac{10}{7} > 1$ and $f(n) = n$ is ultimately positive. With conditions of the \emph{Master Theorem} satisfied, $T(n)$ can be asymptotically estimated as follows.
+Recurrence is of the form $T(n) = aT(n/b) + f(n)$ where $a = 1 \geq 1$, $b = \frac{10}{7} > 1$ and $f(n) = n$ is ultimately positive.
+With conditions of the \emph{Master Theorem} satisfied, $T(n)$ can be asymptotically estimated as follows.
 
-As $\log_b a = \log_{10/7} 1 = 0$, $f(n) = n$ is larger than $n^{\log_b a} = 1$. Therefore, $f(n) = \Omega(n^\epsilon)$ for $0 < \epsilon \leq 1$ provided that for some $0<c<1$ and $n_0$, if $n > n_0$, $af(n/b) \leq c f(n)$. This is true because by choosing $0.7 \leq c < 1$, $f(7n/10) = 0.7n \leq cf(n) = cn$ for all $n \geq n_0 = 0$. 
+As $\log_b a = \log_{10/7} 1 = 0$, $f(n) = n$ is larger than $n^{\log_b a} = 1$.
+Therefore, $f(n) = \Omega(n^\epsilon)$ for $0 < \epsilon \leq 1$ provided that for some $0<c<1$ and $n_0$, if $n > n_0$, $af(n/b) \leq c f(n)$.
+This is true because by choosing $0.7 \leq c < 1$, $f(7n/10) = 0.7n \leq cf(n) = cn$ for all $n \geq n_0 = 0$.
 
 Therefore,
 \begin{equation}
@@ -44,7 +51,8 @@ T(n) = \Theta(f(n)) = \Theta(n)
 
 \item $T(n) = 16T(n/4) + n^2$
 
-Recurrence is of the form $T(n) = aT(n/b)+f(n)$ where $a=16 \geq 1$, $b=4 > 1$ and $f(n) = n^2$ is ultimately positive. Therefore the \emph{Master Theorem} can be applied, according to which $T(n)$ can be asymptotically estimated as follows.
+Recurrence is of the form $T(n) = aT(n/b)+f(n)$ where $a=16 \geq 1$, $b=4 > 1$ and $f(n) = n^2$ is ultimately positive.
+Therefore the \emph{Master Theorem} can be applied, according to which $T(n)$ can be asymptotically estimated as follows.
 
 Since $f(n) = n^2$ is comparable to $n^{\log_b a}=n^{\log_4 16}=n^2$, we have $ f(n) = \Theta(n^2)$ and thus
 
@@ -54,7 +62,8 @@ T(n) = \Theta(n^{\log_b a}\log n) = \Theta(n^2\log n)
 
 \item $T(n) = 2T(n/4) + \sqrt{n}$
 
-Recurrence is of the form $T(n) = aT(n/b)+f(n)$ where $a=2 \geq 1$, $b=4 > 1$ and $f(n) = \sqrt{n}$ is ultimately positive. Therefore the \emph{Master Theorem} can be applied, according to which $T(n)$ can be asymptotically estimated as follows.
+Recurrence is of the form $T(n) = aT(n/b)+f(n)$ where $a=2 \geq 1$, $b=4 > 1$ and $f(n) = \sqrt{n}$ is ultimately positive.
+Therefore the \emph{Master Theorem} can be applied, according to which $T(n)$ can be asymptotically estimated as follows.
 
 Since $f(n) = \sqrt{n}$ is comparable to $n^{\log_b a}=n^{\log_4 2}=\sqrt{n}$, we have $ f(n) = \Theta(\sqrt{n})$ and thus
 
@@ -64,11 +73,20 @@ T(n) = \Theta(n^{\log_b a}\log n) = \Theta(\sqrt{n} \log n)
 
 \item $T(n) = T(n-2) + n^2$
 
-It is claimed that the given recurrence is bound by $T(n) = \mathcal{O}(n^2)$. Proof is given by induction on $n$.
+It is claimed that the given recurrence is bound by $T(n) = \mathcal{O}(n^2)$.
+Proof is given by induction on $n$.
 
-\emph{Base step}: As stated by the question, $T(n)$ is constant for $n \leq 2$. Let $T(n) = c$ for any $n \leq 2$. We can take any $n_0 \leq 2$ as base step of the induction and show that $T(n) = c + n^2 = \mathcal{O}(n^2)$. This is directly obtained by choosing $n_0 = 2$ and $d = c$ to satisfy $c + n^2 \leq d n^2$.
+\emph{Base step}: As stated by the question, $T(n)$ is constant for $n \leq 2$.
+Let $T(n) = c$ for any $n \leq 2$.
+We can take any $n_0 \leq 2$ as base step of the induction and show that $T(n) = c + n^2 = \mathcal{O}(n^2)$.
+This is directly obtained by choosing $n_0 = 2$ and $d = c$ to satisfy $c + n^2 \leq d n^2$.
 
-\emph{Induction Step}: Inductive hypothesis is formed as $T(n) = \mathcal{O}(n^2)$ for any $n \leq n_1$. It suffices to show that $T(n_1+1) = \mathcal{O}(n^2)$. Using the inductive hypothesis, $T(n_1+1) = T(n_1-1) + n^2$. But it is explicitly stated by inductive hypothesis that $T(n_1-1) = \mathcal{O}(n^2)$. We also know that $n^2 = \mathcal{O}(n^2)$. Therefore, $T(n_1+1) = \mathcal{O}(n^2) + \mathcal{O}(n^2) = \mathcal{O}(n^2)$.
+\emph{Induction Step}: Inductive hypothesis is formed as $T(n) = \mathcal{O}(n^2)$ for any $n \leq n_1$.
+It suffices to show that $T(n_1+1) = \mathcal{O}(n^2)$.
+Using the inductive hypothesis, $T(n_1+1) = T(n_1-1) + n^2$.
+But it is explicitly stated by inductive hypothesis that $T(n_1-1) = \mathcal{O}(n^2)$.
+We also know that $n^2 = \mathcal{O}(n^2)$.
+Therefore, $T(n_1+1) = \mathcal{O}(n^2) + \mathcal{O}(n^2) = \mathcal{O}(n^2)$.
 
 Therefore,
 \begin{equation}

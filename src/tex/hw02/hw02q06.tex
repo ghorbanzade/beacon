@@ -7,12 +7,14 @@
 
 \section*{Question 6}
 
-Show that there is no comparison sort whose running time is linear for at least half of the $n!$ inputs of length $n$. What about a fraction of $1/n$ of the inputs of length $n$? What about a fraction $1/2^n$?
+Show that there is no comparison sort whose running time is linear for at least half of the $n!$ inputs of length $n$.
+What about a fraction of $1/n$ of the inputs of length $n$? What about a fraction $1/2^n$?
 
 \subsection*{Solution}
 
 \begin{enumerate}[label=(\alph*)]
-\item As comparison sorts apply to decision trees, let's assume that the decision tree constructed for $n!$ inputs has height H. Thus for half of $n!$ inputs,
+\item As comparison sorts apply to decision trees, let's assume that the decision tree constructed for $n!$ inputs has height H.
+Thus for half of $n!$ inputs,
 
 \begin{equation}\label{eq61}
 \frac{n!}{2} \leq n! \leq 2^H
@@ -24,10 +26,11 @@ Taking logarithms with base 2 from both sides leads to Equation \ref{eq62}
 h \geq \log_2 (\frac{n!}{2})
 \end{equation}
 
-We know that any comparison sort algorithm requires $\Omega(n \log n)$ comparisons in the worst case. Thus we can find a lower bound can be found for $\log_2(\frac{n!}{2})$.
+We know that any comparison sort algorithm requires $\Omega(n \log n)$ comparisons in the worst case.
+Thus we can find a lower bound can be found for $\log_2(\frac{n!}{2})$.
 
 \begin{equation}\label{eq63}
-h \geq \log_2 (n!) - 1 = \mathcal{O}(n \log n) 
+h \geq \log_2 (n!) - 1 = \mathcal{O}(n \log n)
 \end{equation}
 
 Therefore, Equation \ref{eq63} proves no comparison sort algorithm would do better than $\mathcal{O}(n\log n)$.

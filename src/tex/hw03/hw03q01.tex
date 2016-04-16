@@ -6,6 +6,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 1}
+
 Prove that the depth of a binary tree with $L$ leaves is $\Omega(\log L)$.
+
 \subsection*{Solution}
-We know that the binary tree is a special kind of tree with at most 2 children for each node. Since we are interested in the lower bound of the depth of the tree, we will assume the case where every parent has two children which leads to a full binary tree. We showed before that a full binary tree with depth $H$ has $2^H$ leaves. Therefore the minimum depth of a binary tree with $L$ leaves will be $\lceil \log L \rceil$ leading to a lower bound of $\Omega (\log L)$ for the depth of the tree.
+
+We know that the binary tree is a special kind of tree with at most 2 children for each node.
+Since we are interested in the lower bound of the depth of the tree, we will assume the case where every parent has two children which leads to a full binary tree.
+We showed before that a full binary tree with depth $H$ has $2^H$ leaves.
+Therefore the minimum depth of a binary tree with $L$ leaves will be $\lceil \log L \rceil$ leading to a lower bound of $\Omega (\log L)$ for the depth of the tree.

@@ -6,6 +6,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 6}
+
 Prove that in a rooted tree $T$, if $x$ is an ancestor of $y$ and $y$ is an ancestor of $x$, then $x = y$.
+
 \subsection*{Solution}
-Proof is given by contradiction. Assume $x$ is an ancestor of $y$ and $y$ is an ancestor of $x$ and $x \neq y$ ($x$ and $y$ are two distinct nodes). According to definition of ancestorhood, there are paths from root $v_r$ of the form $v_r \rightarrow x \rightarrow y$ and $v_r \rightarrow y \rightarrow x$. This immediately results to a simple loop of the form $x \rightarrow y \rightarrow x$ and $y \rightarrow x \rightarrow y$ which contradicts the definition of the tree. Therefore the assumption is false and the proof is complete.
+
+Proof is given by contradiction.
+Assume $x$ is an ancestor of $y$ and $y$ is an ancestor of $x$ and $x \neq y$ ($x$ and $y$ are two distinct nodes).
+According to definition of ancestorhood, there are paths from root $v_r$ of the form $v_r \rightarrow x \rightarrow y$ and $v_r \rightarrow y \rightarrow x$.
+This immediately results to a simple loop of the form $x \rightarrow y \rightarrow x$ and $y \rightarrow x \rightarrow y$ which contradicts the definition of the tree.
+Therefore the assumption is false and the proof is complete.

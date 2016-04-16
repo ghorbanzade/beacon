@@ -6,7 +6,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Question 2}
-Decide whether each of the following statements is true or false. Prove that your conclusion is correct.
+
+Decide whether each of the following statements is true or false.
+Prove that your conclusion is correct.
 \begin{enumerate}[label=(\alph*)]
 \item $2^{n+1} = O(2^n)$
 \item $f(n) = O(g(n))$ implies $2^{f(n)} = O(2^{g(n)})$
@@ -14,13 +16,16 @@ Decide whether each of the following statements is true or false. Prove that you
 
 \subsection*{Solution}
 \begin{enumerate}[label=(\alph*)]
-\item \textit{true}. For all sufficiently large $n$ ($n \geq 0$), there exists a constant $c = 2$ such that 
+\item \textit{true}.
+For all sufficiently large $n$ ($n \geq 0$), there exists a constant $c = 2$ such that
 
 \begin{equation}
 2 \times 2^n = f(n) \leq c \times g(n) = c \times 2^n
 \end{equation}
 
-\item \textit{true}. Since $f(n) = O(g(n))$, there exists constants $c$ and $x_0$ such that $f(n) \leq c \times g(n)$ for any $n \geq x_0$. Since $h(x) = 2^x$ is an ever-increasing function, we can write
+\item \textit{true}.
+Since $f(n) = O(g(n))$, there exists constants $c$ and $x_0$ such that $f(n) \leq c \times g(n)$ for any $n \geq x_0$.
+Since $h(x) = 2^x$ is an ever-increasing function, we can write
 
 \begin{equation}
 f(n) \leq c \times g(n) \Rightarrow 2^{f(n)} \leq 2^{c \times g(n)} = 2^c \times 2^{g(n)}
