@@ -5,8 +5,9 @@
 -- More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
 --
 
--- Question 1 Part A
--- Write SQL declarations for creating the schemata. Include necessary key constraints.
+-- Query 1
+-- Write SQL declarations for creating the schemata. Include
+-- necessary key constraints.
 
 CREATE TABLE Employee(
 	eid number(6),
@@ -31,22 +32,25 @@ CREATE TABLE Works(
 	FOREIGN KEY (did) REFERENCES Department (did)
 	);
 
--- Question 1 Part B
--- Find the salaries of employees that work in a department whose name starts with 'Mar'.
+-- Query 2
+-- Find the salaries of employees that work in a department whose
+-- name starts with 'Mar'.
 
 SELECT E.salary
 FROM Employee E, Department D, Works W
 WHERE D.did = W.did AND E.eid = W.eid AND D.dname LIKE 'Mar%';
 
--- Question 1 Part C
--- Find the ages of employees who work at least 30% of their time in a single department. List each age only once.
+-- Query 3
+-- Find the ages of employees who work at least 30% of their time
+-- in a single department. List each age only once.
 
 SELECT DISTINCT E.age
 FROM Employee E, Works W
 WHERE E.eid = W.eid AND pct_time >= 30.00;
 
--- Question 1 Part D
--- Find the salaries of employees who work only in departments that have budget more than $500000. list each salary value only once.
+-- Query 4
+-- Find the salaries of employees who work only in departments that
+-- have budget more than $500000. List each salary value only once.
 
 SELECT DISTINCT E.salary
 FROM Employee E, Department D, Works W
@@ -56,58 +60,61 @@ FROM Works W, Department D
 WHERE W.did = D.did AND D.budget <=500000
 );
 
--- Question 1 Part E
+-- Query 5
 -- Find the names of employees who are managers.
 
 SELECT E.ename
 FROM Employee E, Department D, Works W
 WHERE E.eid = W.eid AND D.did = W.did AND E.eid = D.managerid;
 
--- Question 1 Part F
+-- Query 6
 -- Find the average salary over all employees.
 
 SELECT AVG(E.salary)
 FROM Employee E;
 
--- Question 1 Part G
--- Find the ages of employees who work at least 10% of their time in a department called 'Catering' but who do not work in any department with budget higher than $500000.
+-- Query 7
+-- Find the ages of employees who work at least 10% of their time in
+-- a department called 'Catering' but who do not work in any department
+-- with budget higher than $500000.
 
 SELECT E.age
 FROM Employee E, Department D, Works W
 WHERE E.eid = W.eid AND D.did = W.did AND D.dname = 'Catering' AND W.pct_time >= 10.00 AND W.eid NOT IN (
-SELECT W.eid
-FROM Department D, Works W
-WHERE D.did = W.did AND D.budget > 500000
-);
+	SELECT W.eid
+	FROM Department D, Works W
+	WHERE D.did = W.did AND D.budget > 500000
+	);
 
--- Question 1 Part H
--- Find the names of employees who work in all departments with budget higher than $500,000.
+-- Query 8
+-- Find the names of employees who work in all departments with budget
+-- higher than $500,000.
 
 SELECT E.ename
 FROM Employee E
 WHERE NOT EXISTS (
-		SELECT D.did
-		FROM Department D
-		WHERE D.budget >= 500000 AND
-			NOT EXISTS (
-			SELECT *
-			FROM Works W
-			WHERE W.did = D.did AND W.eid = E.eid
-			)
-		);
+	SELECT D.did
+	FROM Department D
+	WHERE D.budget >= 500000 AND NOT EXISTS (
+		SELECT *
+		FROM Works W
+		WHERE W.did = D.did AND W.eid = E.eid
+		)
+	);
 
--- Question 1 Part I
+-- Query 9
 -- Find the name(s) of the department(s) with the highest budget.
 
 SELECT D.dname
 FROM Department D
 WHERE D.budget = (
-SELECT MAX(D.budget)
-FROM Department D
-);
+	SELECT MAX(D.budget)
+	FROM Department D
+	);
 
--- Question 1 Part J
--- Find the maximum salary among employees 30 year old or younger for each department with at least 10 employees of any age.
+-- Query 10
+-- Find the maximum salary among employees 30 year old or younger
+-- for each department with at least 10 employees of any age.
 
 SELECT MAX(E.salary)
 FROM Employee E, Department D, Works W
@@ -117,8 +124,9 @@ HAVING (SELECT COUNT(*)
 	FROM Works W2
 	WHERE W2.did = D.did) >= 3;
 
--- Question 1 Part K
--- Find for each manager (listed in the output by eid) the average salary of employees working for that manager.
+-- Query 11
+-- Find for each manager (listed in the output by eid) the average
+-- salary of employees working for that manager.
 
 SELECT D.managerid, AVG(E.salary)
 FROM Employee E, Department D, Works W
@@ -133,8 +141,9 @@ WHERE W.eid = E.eid AND W.did = D.did
 	AND E.eid <> D.managerid
 GROUP BY D.managerid;
 
--- Question 1 Part L
--- Find the average age of employees for each department where every employee is 30 years old or younger.
+-- Query 12
+-- Find the average age of employees for each department where every
+-- employee is 30 years old or younger.
 
 SELECT AVG(E.age)
 FROM EMPLOYEE E, DEPARTMENT D, WORKS W
@@ -148,8 +157,9 @@ HAVING COUNT(*) = (
 		AND E1.age <= 30
 	);
 
--- Question 1 Part M
--- Find the name(s) of department(s) who have the highest average employee age.
+-- Query 13
+-- Find the name(s) of department(s) who have the highest average
+-- employee age.
 
 SELECT D.dname
 FROM Department D, (
@@ -158,10 +168,9 @@ FROM Department D, (
 	WHERE W.eid = E.eid AND W.did = D.did
 	GROUP BY D.did, D.dname
 	) TEMP
-WHERE D.did = TEMP.did AND
-TEMP.avgage = (
-		SELECT MAX(TEMP.avgage)
-		FROM (
+WHERE D.did = TEMP.did AND TEMP.avgage = (
+	SELECT MAX(TEMP.avgage)
+	FROM (
 		SELECT D.did, D.dname, AVG(E.eid) AS avgage
 		FROM Employee E, Department D, WORKS W
 		WHERE W.eid = E.eid AND W.did = D.did
@@ -169,8 +178,11 @@ TEMP.avgage = (
 		) TEMP
 	);
 
--- Question 1 Part N
--- Find the age(s) that most employees have, i.e., best represented age(s) among employees that work in departments with budget larger than $300,000. If an employee works in multiple such departments, his/her age is only counted once.
+-- Query 14
+-- Find the age(s) that most employees have, i.e., best represented
+-- age(s) among employees that work in departments with budget larger
+-- than $300,000. If an employee works in multiple such departments,
+-- his/her age is only counted once.
 
 SELECT TEMP.age, TEMP.freq
 FROM (
@@ -199,8 +211,9 @@ WHERE TEMP.freq = (
 		) TEMP
 	);
 
--- Question 1 Part O
--- Find the average salary among employees that work in all departments whose names starts with 'Ca'.
+-- Query 15
+-- Find the average salary among employees that work in all departments
+-- whose names starts with 'Ca'.
 
 SELECT AVG(E.salary)
 FROM EMPLOYEE E
