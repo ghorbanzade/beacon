@@ -1,0 +1,41 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Let $a$ and $b$ be integer-valued attributes that may be \texttt{NULL} in some tuples. For each of the following conditions that may appear in a \texttt{WHERE} clause, describe exactly the set of $(a,b)$ tuples that satisfy the condition, including the case where $a$ and/or $b$ is \texttt{NULL}. 
+
+\begin{enumerate}[label=(\alph*)]
+\item $a=10$ or $b=20$
+\item $a=10$ and $b=20$
+\item $a<10$ or $a>=10$
+\item $a=b$
+\end{enumerate}
+
+\textbf{Solution:}
+
+For ease of representation, sets $I$ and $J$ are defined respectively as set of integers and nullable integers; the latter being set of all possible integer values and the \texttt{NULL} value, $\lambda$. As well, set of all binary relations that satisfy specified condition is defined as $S$.
+
+\begin{enumerate}[label=(\alph*)]
+\item
+\begin{equation}\nonumber
+S = \{ (a,b) | a = 10, b\in J \} \cup \{ (a,b) | b = 20, a\in J \}
+\end{equation}
+\item
+\begin{equation}\nonumber
+S = \{ (a,b) | a = 10, b = 20 \}
+\end{equation}
+\item
+\begin{equation}\nonumber
+S = \{ (a,b) | a \in I, b \in J\}= J - \{(a,b)|a = \lambda , b \in J\} 
+\end{equation}
+\item
+\begin{equation}\nonumber
+S = \{ (a,b) | a = b, a \in I, b \in I\} 
+\end{equation}
+
+\end{enumerate}

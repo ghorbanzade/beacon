@@ -1,0 +1,86 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+Consider a database schema with three relations:\\
+
+\texttt{Employee (\underline{eid}:integer, ename:string, age:integer, salary:real)}\\
+\texttt{Works (\underline{eid}:integer, \underline{did}:integer, pct\_time:integer)}\\
+\texttt{Department (\underline{did}:integer, dname:string, budget:real, managerid:integer)}\\
+
+The keys are underlined in each relation. Relation \texttt{Employee} stores employee information such as unique identifier \texttt{eid}, employee name \texttt{ename}, \texttt{age} and \texttt{salary}. Relation \texttt{Department} stores the department unique identifier \texttt{did}, department name \texttt{dname}, the department \texttt{budget} and \texttt{managerid} which is the \texttt{eid} of the employee who is managing the department. The \texttt{managerid} value must always be found in the \texttt{eid} field of a record of the \texttt{Employee} relation. The \texttt{Works} relation tracks which employee works in which department, and what percentage of the time \texttt{pct\_time} s/he allocates to that department. Note that, an employee can work in several departments.
+
+Provide SQL statements for the following:
+
+\begin{enumerate}
+
+\item Create a view \texttt{ManagerSummary} that lists for every department the department name, manager ID and manager name, manager salary and the number of employees in that department. The view will have five columns with headings: \texttt{DeptName}, \texttt{MgrID}, \texttt{MgrName}, \texttt{MgrSalary} and \texttt{EmpCount}.
+
+\textbf{Solution:}
+
+\begin{verbatim}
+CREATE VIEW ManagerSummary(DeptName, MgrID, MgrName, MgrSalary, EmpCount) AS
+SELECT D.dname, D.managerid, E.ename, E.salary, COUNT(W2.eid)
+FROM Department D, Works W1, Works W2, Employee E
+WHERE D.did = W1.did AND E.eid = W1.eid AND W2.did = D.did AND
+E.eid = D.managerid
+GROUP BY D.did, D.dname, D.managerid, E.ename, E.salary;
+\end{verbatim}
+
+\item Query the view above to retrieve the set of distinct salaries of managers who manage a department called \textit{Sales}.
+
+\textbf{Solution:}
+
+\begin{verbatim}
+SELECT DISTINCT M.MgrSalary
+FROM ManagerSummary M
+WHERE M.DeptName = 'Sales';
+\end{verbatim}
+
+\item Query the view above to find the name of the manager  who manages most employees. If the same employee works in several departments, that employee is counted once in each  of the departments. The manager is included in the count the same as all other employees, i.e., based on his or her records in the \texttt{Works} table.
+
+\textbf{Solution:}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item if we assume employee may not be appointed to manager of multiple departments
+
+\begin{verbatim}
+SELECT M1.MgrID
+FROM ManagerSummary M1
+WHERE M1.EmpCount = (
+		SELECT MAX(M2.EmpCount)
+		FROM ManagerSummary M2
+		)
+GROUP BY M1.MgrId;
+\end{verbatim}
+
+\item if we assume employees may be appointed to manager of multiple departments
+
+\begin{verbatim}
+SELECT TEMP.MgrId, TEMP.EmpCount2
+FROM (
+	SELECT M1.MgrID, SUM(DISTINCT M2.EmpCount) AS EmpCount2
+	FROM ManagerSummary M1, ManagerSummary M2
+	WHERE M1.MgrID = M2.MgrID
+	GROUP BY M1.MgrID
+	) TEMP
+WHERE TEMP.EmpCount2 = (
+	SELECT MAX(TEMP2.EmpCount2)
+	FROM (
+		SELECT M1.MgrID, SUM(DISTINCT M2.EmpCount) AS EmpCount2
+		FROM ManagerSummary M1, ManagerSummary M2
+		WHERE M1.MgrID = M2.MgrID
+		GROUP BY M1.MgrID
+		) TEMP2
+	);
+\end{verbatim}
+
+\end{enumerate}
+
+\end{enumerate}

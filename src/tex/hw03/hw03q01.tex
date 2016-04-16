@@ -1,0 +1,64 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+A university database contains information about professors (identified by social security number \textit{SSN}) and courses (identified by \textit{courseid}). Professors also have a name, an address and a phone number. Courses have a name and a number of credits. Professors teach courses. For each of the following situations, draw an ER diagram that describes it (assuming no further constraints hold).
+
+\begin{enumerate}[label=(\alph*)]
+\item Every professor must teach some course. 
+
+\textbf{Solution:}
+
+\begin{figure}[H]\centering
+\input{\texDirectory/hw03/hw03q01f01}
+\caption{ER Diagram for Question 1$\left(a\right)$ with Chen's Notation} \label{fig:ER1}
+\end{figure}
+
+\item Every professor teaches exactly one course (no more, no less).
+
+\textbf{Solution:}
+
+\begin{figure}[H]\centering
+\input{\texDirectory/hw03/hw03q01f02}
+\caption{ER Diagram for Question 1$\left(b\right)$ with Chen's Notation} \label{fig:ER2}
+\end{figure}
+
+\item Every professor teaches exactly one course (no more, no less), and every course must be taught by some professor.
+
+\textbf{Solution:}
+
+\begin{figure}[H]\centering
+\input{\texDirectory/hw03/hw03q01f03}
+\caption{ER Diagram for Question 1$\left(c\right)$ with Chen's Notation} \label{fig:ER3}
+\end{figure}
+
+\item Modify the diagram from (a) such that a professor can have a set of addresses (which are street, city and state triples) and a set of phones. Recall that in the ER model 
+there can be only primitive data types (no sets).
+
+\textbf{Solution:}
+
+\begin{figure}[H]\centering
+\input{\texDirectory/hw03/hw03q01f04}
+\caption{ER Diagram for Question 1$\left(c\right)$ with Chen's Notation} \label{fig:ER3}
+\caption{ER Diagram for Question 1$\left(d\right)$ with Chen's Notation} \label{fig:ER4}
+\end{figure}
+
+It is assumed multiple professors may live at a single address. There might be addresses at which no professor lives. There might be phone numbers that do not belong to any professor. There might be professors who have not declared their addresses or phone numbers. As each entity must have a key attribute, \texttt{Address ID} and \texttt{Phone ID} of \texttt{Address} and \texttt{Phone} entities are also indicated.
+
+\item Modify the diagram from (d) such that professors can have a set of addresses, and at each address there is a set of phones.
+
+\textbf{Solution:}
+
+It is assumed multiple professors may live at a single address. There might be addresses at which no professor lives. There might be phone numbers that do not belong to any professor. There might be professors who have not declared their addresses. There might be addresses with no phone. As each entity must have a key attribute, \texttt{Address ID} and \texttt{Phone ID} of \texttt{Address} and \texttt{Phone} entities are also indicated.
+
+\begin{figure}[H]\centering
+\input{\texDirectory/hw03/hw03q01f05}
+\caption{ER Diagram for Question 1$\left(e\right)$ with Chen's Notation} \label{fig:ER5}
+\end{figure}
+
+\end{enumerate}
