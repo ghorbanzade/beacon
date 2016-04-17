@@ -1,0 +1,4 @@
+proc MODE=ANSI $1.pc
+gcc -c $1.c -I/disk/sd0d/tools/sun4-sos5/oracle-10.1/precomp/public -m64
+gcc -o $1 $1.o -m64 -L/disk/sd0d/tools/sun4-sos5/oracle-10.1/lib/ -lclntsh `cat /disk/sd0d/tools/sun4-sos5/oracle-10.1/lib/ldflags`   `cat /disk/sd0d/tools/sun4-sos5/oracle-10.1/lib/sysliblist` -R/disk/sd0d/tools/sun4-sos5/oracle-10.1/lib -laio  -lposix4  -lm  -lthread
+
