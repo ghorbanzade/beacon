@@ -1,0 +1,59 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Let $x, y, z$ be three words from $A^*$ such that $xy = yz$ and $x \neq \lambda$.
+Prove that there exist $u, v \in A^*$ such that $x = uv$, $y = (uv)^n u$ and $z = vu$ for some $n \in \mathbb{N}$.
+
+\subsection*{Solution}
+
+Statement is verified using proof of induction on the length of $|xy|$.
+Since $x \neq \lambda$, $u$ and $v$ cannot be $\lambda$ at the same time, following that the length of $|xy|$ is never 0 and is always a multiple of 2.
+
+\begin{itemize}
+
+\item
+Initial Step: $|xy| = 2$\\
+Suppose $u = \lambda$ and $v \in A$. No restrictions are imposed on $n \in \mathbb{N}$.
+
+\begin{equation}\label{1eq1}
+xy = uv(uv)^nu = vv^n = v^{n+1}
+\end{equation}
+
+\begin{equation}\label{1eq2}
+yz = (uv)^nuvu = v^nv = v^{n+1}
+\end{equation}
+
+From \eqref{1eq1} and \eqref{1eq2}, it follows that $xy = yz$ and the statement holds true.
+
+\item
+Assumption Step: $|xy| = m$\\
+It is assumed that $xy = yz$ for some $u,v \in A^*$ and some $n \in \mathbb{N}$.
+That is there are some $u, v$ and $n$ that
+
+\begin{equation}\label{1eq3}
+xy = uv(uv)^nu = (uv)^nuvu = yz
+\end{equation}
+
+\item
+Induction Step $|xy| = m + 2$\\
+Suppose $u$ and $v$ are same words from $A^*$ that were used in assumption step.
+By assuming $n^\prime = n + 1$ where $n$ was the same $n$ that was used in assumption step, we will have:
+
+\begin{equation}\label{1eq4}
+xy = uv(uv)^{n^\prime}u = uv(uv)^{n+1}u = uv(uv)^nuvu = (xy)^\prime vu
+\end{equation}
+
+\begin{equation}\label{1eq5}
+yz = (uv)^{n^\prime}uvu = (uv)^{n+1}uvu = (uv)^nuvuvu = (yz)^\prime vu
+\end{equation}
+
+where $(xy)^\prime$ and $(yz)^\prime$ are those in assumption step.
+From \eqref{1eq3} we know $(xy)^\prime = (yz)^\prime$. Therefore, \eqref{1eq4} = \eqref{1eq5} and the induction is complete.
+
+\end{itemize}

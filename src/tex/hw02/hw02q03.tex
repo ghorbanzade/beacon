@@ -1,0 +1,40 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+Consider the \textit{dfa} $\mathcal{M} = \left( \{a,b\}, \{q_0,q_1,q_2\}, \delta, q_0, \{q_1\} \right) $ whose graph is given in Figure \ref{fig:DR4}. Determine the language accepted by the automaton $\mathcal{M}$.
+
+\begin{figure}[H]\centering
+	\begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node distance=3cm, semithick]
+		\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+		\node[state, initial]	(0) 	  				{$q_0$};
+		\node[state] 			(2)	[above right of=0]	  	{$q_2$};
+		\node[state, final]   (1) [below right of=2] 	  	{$q_1$};
+		\path
+			(0) edge [bend left]	node {b} (2)
+				edge [bend right]	node {a} (1)
+			(1) edge [loop right] 	node {b} (1)
+				edge [bend left]  	node {a} (2)
+			(2) edge [bend left]  	node {b} (1)
+				edge [loop above] 	node {a} (2);
+	\end{tikzpicture}
+	\caption{Graph of the Deterministic Finite Automaton $\mathcal{M}$}
+	\label{fig:DR4}
+\end{figure}
+
+\subsection*{Solution}
+
+By definition, the language accepted by the given Deterministic Finite Automaton (\textit{dfa}) is the set $ L \left( \mathcal{M} \right) = \{ x \in \{a\}^*\{b\}^* | \delta ^* \left( q_0,x \right) \in \{q1\} \}$.
+The final state $q_1$ can be reached from initial state $q_0$ either directly or through $q_2$.
+Final state can be reached directly from state $q_0$ using the symbol $a$ or indirectly by state $q_1$ using words of the form $b\{a\}^*b$.
+Once $q_1$ is reached, we can stay in $q_1$ by any arbitrary number of $b$ and/or any arbitrary number of loops of the form $a\{a\}^*b$.
+Therefore, the language $L(\mathcal{M})$ accepted by the \textit{dfa} $\mathcal{M}$ would be
+
+\begin{equation}
+	L(\mathcal{M}) = \{a \cup b\{a\}^*b\}\{b\}^*\{a\{a\}^*b\}^*\{b\}^*
+\end{equation}

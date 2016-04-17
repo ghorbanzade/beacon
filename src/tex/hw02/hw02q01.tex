@@ -1,0 +1,61 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Let $L, K$ be two regular languages on an alphabet $A$.
+Prove that the set of words $t \in A^*$ that can be written as $$ t = xy^R = u^R z $$ for some $x,u \in L$ and $y, z \in K$ is a regular language.
+
+\subsection*{Solution}
+
+To prove set of words $t \in A^*$ is a regular language, we take advantage of the fact that a language is regular, if and only if it can be recognized with a transition system. The objective would now be to construct a transition system $\mathcal{T}$ that recognizes the language.
+Such a transition system is depicted in Figure \ref{fig:DR1}.
+
+\begin{figure}\centering
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+		\tikzstyle{final}=[circle,thick,draw=black,fill=gray!20,text=black]
+		\node[state,initial] (0) {$q_0$};
+		\node[state] (1) [below left of=0] {$q_1$};
+		\node[state,final] (2) [below right of=0] {$q_2$};
+		\node[state,accepting] (3) [below of=1] {$q_3$};
+		\node[state,final,accepting] (4) [below of=2] {$q_4$};
+		\node[draw=black, fit= (1) (2), inner sep=0.5cm, dotted] {};
+		\node[draw=black, fit= (3) (4), inner sep=0.5cm, dotted] {};
+		\node[draw=black, fit= (0)(1)(2)(3)(4), inner sep=1cm, dashed] {};
+		\node[yshift=1.25cm, xshift=-1.25cm, black] at (1) {$\mathcal{L}$};
+		\node[yshift=1.25cm, xshift=-1.25cm, black] at (3) {$\mathcal{K}$};
+		\node[yshift=1.25cm, xshift=-4cm, black] at (0) {$\mathcal{T}$};
+		\path
+			(0) edge [bend left] node {$\lambda$} (2)
+				edge [bend right]node {$\lambda$} (1)
+			(1) edge [bend right=0]node {$\lambda$} (3)
+			(2)	edge [bend left=0] node {$\lambda$} (4);
+		\path[dashed]
+			(1) edge [bend left=20] node {x}	(2)
+				edge [bend right=20]node {u}	(2)
+			(3) edge [bend left=20] node {y}	(4)
+				edge [bend right=20]node {z}	(4);
+	\end{tikzpicture}
+	\caption{A schematic representation of transition system $\mathcal{T}$}
+	\label{fig:DR1}
+\end{figure}
+
+For simplicity of representation, only initial and set of final states of transition systems $\mathcal{L}$ and $\mathcal{K}$ are shown, where $\mathcal{L}(m)=L$ and $\mathcal{K}(m)=K$.
+States $q_1$ and $q_3$ respectively represent initial states of $\mathcal{L}$ and $\mathcal{K}$.
+Without loss of generality, it is assumed that there is only one final state for $\mathcal{L}$ and $\mathcal{K}$.
+These final states are colored in gray.
+As words $x,u \in L$ are accepted by the language, inputs $x,u$ are shown with dashed lines, only to suggest there are paths $x$ and $u$ from initial state $q_1$ to set of final states $q_2$.
+Similarly $y,z \in K$ are shown with dashed lines.
+
+As the new transition system $\mathcal{T}$ must accept inputs of the form $t = xy^R$ and $t = u^Rz$, spontaneous transitions $\lambda$ are introduced between initial states and final states of $\mathcal{L}$ and $\mathcal{K}$.
+We can now start from $q_1$, apply $x$, $\lambda$ and $y^R$ and end up in $q_3$.
+We can also start from $q_2$, apply $u^R$,$\lambda$ and $z$ and end up in $q_4$.
+States $q_3$ and $q_4$ are therefore assigned as final states of $\mathcal{T}$ and are shown with double-circles.
+As we cannot have multiple initial states, a new state $q_0$ is introduced to the system and is assigned the initial state.
+
+We can now argue that the set of words $t \in A^*$ where $t = xy^R = u^Rz$ can all be accepted by the transition system $\mathcal{T}$.
+As we constructed a system that recognizes the language, it is proven that the language is regular.

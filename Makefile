@@ -1,33 +1,48 @@
-SRC_DIR = src
-OUT_DIR = bin
 DOCS = hw01 hw02 hw03
+BIND_DOC = cs622
 
-PATH_TEX = $(foreach FILE, $(DOCS), $(SRC_DIR)/$(FILE)/$(FILE))
-TEX   = $(addsuffix .tex, $(PATH_TEX))
-PATH_PDF = $(foreach FILE, $(DOCS), $(OUT_DIR)/$(FILE)/$(FILE))
-PDF   = $(addsuffix .pdf, $(PATH_PDF))
+TOP_DIR = .
+BIN_DIR = $(TOP_DIR)/bin
+SRC_DIR = $(TOP_DIR)/src
+TEX_DIR = $(SRC_DIR)/tex
+DOC_DIR = $(BIN_DIR)/doc
 
-.PHONY: clean docs tidy all
+DOC_TEX = $(foreach NUM, $(DOCS), $(TEX_DIR)/$(NUM)/$(NUM).tex)
+DOC_PDF = $(foreach NUM, $(DOCS), $(DOC_DIR)/$(NUM).pdf)
 
-all: $(OUT_DIR) docs tidy
+.PHONY: all dirs docs bind tidy clean
 
-docs: $(PDF)
-	gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=documents.pdf $(PDF)
+all: dirs docs bind tidy
 
-$(PDF): $(OUT_DIR)/%.pdf : $(SRC_DIR)/%.tex
-	mkdir -p $(@D)
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -output-directory=$(@D) -use-make $<
+dirs:
+	@mkdir -p $(BIN_DIR)
+	@mkdir -p $(DOC_DIR)
 
-$(OUT_DIR):
-	mkdir -p $(OUT_DIR)
+docs: $(DOC_PDF)
 
-clean: tidy
-	find . -name '*.pdf' -delete
-	rm -r $(OUT_DIR)
+$(DOC_PDF): $(DOC_TEX)
+	@echo -n "  $(@F)... "
+	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
+	@bibtex $(DOC_DIR)/$(@F:.pdf=) > /dev/null
+	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
+	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
+	@echo "Done."
+
+bind:
+	@echo -n "  Binding documents... "
+	@gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$(BIN_DIR)/$(BIND_DOC).pdf $(DOC_PDF)
+	@echo "Done."
 
 tidy:
-	find . -name '*.log' -delete
-	find . -name '*.aux' -delete
-	find . -name '*.out' -delete
-	find . -name '*.fls' -delete
-	find . -name '*.fdb_latexmk' -delete
+	@echo -n "  Removing unneeded files... "
+	@find $(BIN_DIR) -name '*.log' -delete
+	@find $(BIN_DIR) -name '*.aux' -delete
+	@find $(BIN_DIR) -name '*.out' -delete
+	@find $(BIN_DIR) -name '*.bbl' -delete
+	@find $(BIN_DIR) -name '*.blg' -delete
+	@echo "Done."
+
+clean:
+	@echo -n "  Removing $(BIN_DIR)... "
+	@rm -rf $(BIN_DIR)
+	@echo "Done."

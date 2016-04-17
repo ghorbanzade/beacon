@@ -1,0 +1,145 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 6}
+
+Let $A$ be an alphabet and let $a \in A$.
+
+\begin{enumerate}[label=(\alph*)]
+
+	\item
+	Prove that $a^{-1}A^* = a^{-1}A^+ = A^*$.
+
+	\item
+	Prove that $a^{-1}A^n = A^{n-1}$.
+
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item
+It is assumed that $z \in a^{-1}A^*$.
+It is shown that $z \in a^{-1}A^*$ and $z \in A*$.
+To change inclusion to equality, it is also shown for $z\in A*$ that $z \in a^{-1}A^*$.
+
+\begin{equation}\label{6eq1}
+z \in a^{-1}A^* \Rightarrow az \in A^*
+\end{equation}
+
+\begin{equation}\label{6eq2}
+A^* = A^+ \cup \lambda
+\end{equation}
+
+Substituting \eqref{6eq2} in \eqref{6eq1},
+
+\begin{equation}
+az \in A^+ \cup \lambda \label{6eq3}
+\end{equation}
+
+\begin{equation}
+a \in az \Rightarrow az \neq \lambda \Rightarrow az \notin \lambda \label{6eq4}
+\end{equation}
+
+Using \eqref{6eq4} in \eqref{6eq3}
+
+\begin{equation}
+az \in A^+ \Rightarrow z \in a^{-1}A^+
+\end{equation}
+
+Thus $a^{-1}A^*\subseteq a^{-1}A^+$ is proven so far.
+
+\begin{equation}\label{6eq6}
+z \in a^{-1}A^+ \Rightarrow az \in A^+
+\end{equation}
+
+\begin{equation}\label{6eq7}
+a \in A \Rightarrow a \in A^+
+\end{equation}
+
+Using \eqref{6eq7} in \eqref{6eq6} concludes
+
+\begin{equation}
+z \in A^+ \Rightarrow z \in A^*
+\end{equation}
+
+Thus $a^{-1}A^*\subseteq a^{-1}A^+ \subseteq A^*$ is proven so far.
+
+\begin{equation}
+z \in A^* \Rightarrow az \in A^* \Rightarrow z \in a^{-1}A^*
+\end{equation}
+
+Which shows that $A^* \subseteq a^{-1}A^*$. Therefore
+
+\begin{equation}
+a^{-1}A^* = a^{-1}A^+ = A* \nonumber
+\end{equation}
+
+\item
+Statement is proven by induction on \textit{n}.
+
+Initial step: let $n = 1: a^{-1}A = \emptyset $.
+
+\begin{equation}
+z \in a^{-1}A \rightarrow az \in A
+\end{equation}
+
+As $A$ is the alphabet, any element in $A$ is a symbol.
+
+\begin{equation}
+|az| = 1 \Rightarrow |a| + |z| = 1 \Rightarrow |z| = 0 \Rightarrow z = \lambda \in \emptyset
+\end{equation}
+
+Thus, $a^{-1}A \subseteq \emptyset$.
+
+\begin{equation}
+z \in \emptyset \Rightarrow z = \lambda
+\end{equation}
+
+Since $a \in A$,
+
+\begin{equation}
+az = a\lambda \in A \Rightarrow z \in a^{-1}A
+\end{equation}
+
+Thus $\emptyset \subseteq a^{-1}A$ and initial induction step is proven.
+$$ a^{-1}A = \emptyset $$
+Assumption step:
+
+\begin{equation}\label{6eq14}
+a^{-1}A^n = A^{n-1}
+\end{equation}
+
+Induction step: $a^{-1}A^{n+1} = A^n$.
+
+\begin{equation}\label{6eq15}
+z \in a^{-1}A^n+1 \Rightarrow z \in a^{-1}A^nA
+\end{equation}
+
+Substituting \eqref{6eq14} in \eqref{6eq15},
+
+\begin{equation}
+z \in a^{-1}A^nA \Rightarrow z \in A^{n-1}A \Rightarrow z \in A^n
+\end{equation}
+
+Thus $a^{-1}A{n+1}\subseteq A^n$. Similarly,
+
+\begin{equation}
+z \in A^n \Rightarrow z \in A^{n-1}A
+\end{equation}
+
+From \eqref{6eq14},
+
+\begin{equation}
+z \in a^{-1}A^nA \Rightarrow z \in a^{-1}A^{n+1}
+\end{equation}
+
+Therefore, $a^{-1}A^{n+1}=A^n$.
+And the statement is proven by induction.
+
+\end{enumerate}

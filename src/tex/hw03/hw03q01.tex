@@ -1,0 +1,109 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Let $A = \{a,b\}$.
+Construct the minimal deterministic finite automaton that is able to accept the language $aA^*b$.
+
+\subsection*{Solution}
+
+Based on Hopcraft's Algorithm \cite{hopcroft1971n}, we start by $Q_0 = L = \{aA^*b\}$ and apply symbols $\{a,b\}\in A$ to go to $a^{-1}L$ and $b^{-1}L$ respectively.
+We take advantage of the following property of prefixes.
+
+\begin{equation}\label{eq1}
+a^{-1}LK = (a^{-1}L)K \cup (L \cap \{\lambda\})a^{-1}K
+\end{equation}
+
+Let $L$ and $K$ be defined as $aA^*$ and $b$, respectively.
+Using Eq. \ref{eq1}, we'll have
+
+\begin{equation}\label{eq2}
+\begin{aligned}
+a^{-1}aA^*b &= (a^{-1}aA^*)b \cup (aA^* \cap \{\lambda\})a^{-1}b\\
+&= A^*b \cup \emptyset \emptyset\\
+&= A^*b
+\end{aligned}
+\end{equation}
+
+\begin{equation}\label{eq3}
+\begin{aligned}
+b^{-1}aA^*b &= (b^{-1}aA^*)b \cup (aA^* \cap \{\lambda\})b^{-1}b\\
+&= \emptyset \cup \emptyset \lambda\\
+&= \emptyset
+\end{aligned}
+\end{equation}
+
+Therefore, $Q_1 = \{aA^*b, A^*b, \emptyset\}$.
+In a similar fashion,
+
+\begin{equation}
+\begin{aligned}
+a^{-1}A^*b &= (a^{-1}A^*)b \cup (A^* \cap \{\lambda\})a^{-1}b\\
+&= A^*b
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+b^{-1}A^*b &= (b^{-1}A^*)b \cup (A^* \cap \{\lambda\})b^{-1}b\\
+&= A^*b \cup \{\lambda\}
+\end{aligned}
+\end{equation}
+
+and evidently, $a^{-1}\emptyset = b^{-1}\emptyset = \emptyset$.
+Therefore, $Q_2 = Q_1 \cup \{A^*b \cup \{\lambda\}\}$.
+
+\begin{equation}
+\begin{aligned}
+a^{-1}(A^*b\cup\{\lambda \}) &= a^{-1}A^*b \cup a^{-1}\lambda\\
+&= A^*b
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+b^{-1}(A^*b\cup\{\lambda \}) &= b^{-1}A^*b \cup b^{-1}\lambda\\
+&= A^*b \cup \{\lambda \}
+\end{aligned}
+\end{equation}
+
+Thus, $Q_3 = Q_2 = Q_L = \{aA^*b, \emptyset, A^*b, A^*b\cup\{\lambda \} \}$.
+$Q_L$ would be set of states of the machine $\mathcal{M}_L$ that can recognize the language $aA^*b$.
+The automaton $\mathcal{M}_L$ is defined by Table \ref{tab1}.
+Also, Figure \ref{fig1} depicts graph of $\mathcal{M}_L$ where $q_0$, $q_1$, $q_2$ and $q_3$ represent $\emptyset$, $aA^*b$, $A^*b$ and $A^*b\cup\{\lambda \}$, respectively.
+
+\begin{table}\centering
+	\begin{tabular}[H!]{|c||c|c|c|c|}
+		\hline
+		Input & $aA^*b$ & $A^*b$ & $\emptyset$ & $A^*\cup \{\lambda \}$\\
+		\hline
+		a & $A^*b$ & $A^*b$& $\emptyset$& $A^*b$\\
+		b & $\emptyset$ & $A^*b\cup \{\lambda \}$& $\emptyset$ & $A^*b \cup \{\lambda \}$\\
+		\hline
+	\end{tabular}
+	\caption{Directed graph of the automaton $\mathcal{M}_L$}\label{tab1}
+\end{table}
+
+\begin{figure}\centering
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+		\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+		\node[state,initial]	(1) 					{$q_1$};
+		\node[state]			(0) [left of = 1]		{$q_0$};
+		\node[state]			(2) [right of = 1]		{$q_2$};
+		\node[state, final]		(3) [right of = 2]		{$q_3$};
+		\path
+			(0) edge [loop left]	node {a,b}	 (0)
+			(1) edge [bend left]	node {b}	 (0)
+				edge [bend left]	node {a}	 (2)
+			(2) edge [bend left]	node {b}	 (3)
+				edge [loop above]	node {a}	 (2)
+			(3) edge [loop right]	node {b}	 (3)
+				edge [bend left]	node {a}	 (2);
+	\end{tikzpicture}
+	\caption{Directed graph of the automaton $\mathcal{M}_L$}\label{fig1}
+\end{figure}

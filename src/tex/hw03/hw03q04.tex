@@ -1,0 +1,56 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+Let $ G $ be the context-free grammar $G = (\{S,X_1,X_2,X_3\},\{a,b,c\},S,P)$.
+Construct an equivalent grammar in Chomsky's normal form if
+
+\begin{equation}
+\begin{aligned}
+P =\ & \{ S\rightarrow X_1 X_2 X_3 X_1,\ S\rightarrow X_1 a X_2,\ X_1 \rightarrow X_1 X_2 X_3,\\
+& X_1 \rightarrow a, X_2 \rightarrow X_3 X_1, X_2 \rightarrow b, X_3 \rightarrow c\}
+\end{aligned}
+\end{equation}
+
+\subsection*{Solution}
+
+A Context-free grammar is in \textit{Chomsky Normal Form} if all its productions are either of the form $X\rightarrow YZ$ or of the form $X\rightarrow a$ where $X,Y,Z \in A_N$ and $a\in A_T$.
+By introducing the non-terminal symbol $X_a$ to $G$ we obtain
+
+\begin{equation}
+G_1 = (\{S, X_1, X_2, X_3, X_a\},\{a, b, c\},S,P_1)
+\end{equation}
+
+where
+
+\begin{equation}
+\begin{aligned}
+P_1 =\ & \{ S\rightarrow X_1 X_2 X_3 X_1,\ S\rightarrow X_1 X_a X_2,\ X_1 \rightarrow X_1 X_2 X_3,\ X_2 \rightarrow X_3 X_1,\\
+& X_1 \rightarrow a,\ X_2 \rightarrow b,\ X_3 \rightarrow c,\ X_a \rightarrow a\}
+\end{aligned}
+\end{equation}
+
+Although $G_1$ has no chain productions and every production in $G_1$ that contains a terminal symbol is of the form $X\rightarrow a$, three productions $S\rightarrow X_1 X_2 X_3 X_1$, $S\rightarrow X_1 X_a X_2$ and $X_1 \rightarrow X_1 X_2 X_3$ violate Chomsky Normal form.
+Thus, $Z_0$, $Z_1$, $Z_2$ are introduced as new non-terminal symbols.
+A new equivalent grammar $G_2$ can be obtained as
+
+\begin{equation}
+G_2 = (\{S, X_1, X_2, X_3, X_a, Z_0, Z_1, Z_2\},\{a, b, c\},S,P_2)
+\end{equation}
+
+where
+
+\begin{equation}
+\begin{aligned}
+P_2 =\ & \{ X_2 \rightarrow X_3 X_1,\ X_1 \rightarrow a,\ X_2 \rightarrow b,\ X_3 \rightarrow c,\ X_a \rightarrow a, \\
+& S\rightarrow Z_0X_1,\ S\rightarrow X_1Z_2,\ X_1\rightarrow Z_1X_3, \\
+& Z_0\rightarrow Z_1X_3,\ Z_1\rightarrow X_1X_2,\ Z_2\rightarrow X_aX_2 \}
+\end{aligned}
+\end{equation}
+
+where all productions in $G_2$ follow conditions of a grammar in Chomsky Normal form.

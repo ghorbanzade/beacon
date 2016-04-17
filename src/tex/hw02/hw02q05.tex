@@ -1,0 +1,33 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 5}
+
+Let $L$ be a regular language over an alphabet $A$.
+Prove that the set of all words $z \in A^*$ for which there exist $u,v \in L$ such that $u = zx$ and $v=yz$ for some $x,y \in A^*$ is a regular language.
+
+\subsection*{Solution}
+
+We assume $S_1$ as set of all words $z \in A^*$ for which there exist $u \in L$ such that $u=zx$ for some $x \in K \subseteq A^*$.
+We can represent $S_1$ as shown in Equation \ref{Eq1}.
+
+\begin{equation}\label{Eq1}
+	S_1 = LK^{-1} = \{z\in A^* | \exists x\in K, zx\in L\}
+\end{equation}
+
+Also, we assume $S_2$ as set of all words $z \in A^*$ for which there exists $v \in L$ such that $v = yz$ for some $y \in K \subseteq A^*$.
+We can represent $S_2$ as shown in Equation \ref{Eq2}.
+
+\begin{equation}\label{Eq2}
+	S_2 = K^{-1}L = \{z\in A^* | \exists y\in K, yz\in L\}
+\end{equation}
+
+It has been proven \cite{simovici1999theory} that for every language $K$, both the right and the left quotients $LK^{-1}$ and $K^{-1}L$ are regular, if $L$ is a regular language over alphabet $A$.
+Based on this theorem, $S_1$ and $S_2$ would both be regular.
+
+Since any word $z \in A^*$ for which there exist $u,v \in L$ such that $u = zx$ and $v=yz$ for some $x,y \in A^*$ should be an element of $S_1$ and $S_2$, set of all such words will be the intersection of $S_1$ and $S_2$.
+As regular languages $\mathcal{R}$ are closed with respect to intersection, it is proven that the desired set is a regular language.

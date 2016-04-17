@@ -1,0 +1,47 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+Consider the context-free grammar $ G = (\{S,X_1,X_2,X_3\},\{a,b\},S,\{S\rightarrow X_1 S X_2 X_3, S\rightarrow \lambda, X_1 \rightarrow ab, X_1 \rightarrow X_1 X_2 X_3, X_2 \rightarrow a X_1 b, X_2 \rightarrow \lambda, X_3 \rightarrow X_2 X_1 a b, X_3 \rightarrow b, X_3 \rightarrow \lambda \})$.
+Construct an equivalent grammar without erasure productions.
+
+\subsection*{Solution}
+
+We use the procedure described in Theorem 4.5.4 given in \cite{simovici1999theory}.
+$G$ is reconstructed as $ G = (\{S,X_1,X_2,X_3, X_a, X_b\},\{a,b\},S,\{S\rightarrow X_1 S X_2 X_3, S\rightarrow \lambda, X_1 \rightarrow X_aX_b, X_1 \rightarrow X_1 X_2 X_3, X_2 \rightarrow X_a X_1 X_b, X_2 \rightarrow \lambda, X_3 \rightarrow X_2 X_1 X_a X_b, X_3 \rightarrow X_b, X_3 \rightarrow \lambda, X_a \rightarrow a, X_b \rightarrow b \})$.
+
+The sequence of subsets of $\{S,X_1,X_2,X_3, X_a, X_b\}$ constructed in Theorem 4.5.4 would be,
+
+\begin{equation}
+\begin{aligned}
+U_0 &= \{X | X\in A_N, X\rightarrow \lambda \in P\}\\
+&= \{S, X_2, X_3\}
+\end{aligned}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+U_{1} &= U_{0} \cup \{X\in A_N | X\rightarrow \alpha \in P, \alpha \in U^*_0\}\\
+&= \{S, X_2, X_3\} \cup \emptyset\\
+&= U_{0}
+\end{aligned}
+\end{equation}
+
+Therefore, the set of productions $P^\prime$ constructed is given by
+
+\begin{equation}
+\begin{aligned}
+P^\prime =\ & \{S\rightarrow X_1SX_2X_3,\ S\rightarrow X_1SX_2,\ S\rightarrow X_1SX_3,\ S\rightarrow X_1X_2X_3,\\
+& S\rightarrow X_1S,\ S\rightarrow X_1X_2,\ S\rightarrow X_1X_3,\ S\rightarrow X_1,\\
+& X_1 \rightarrow X_aX_b,\ X_1\rightarrow X_1X_2X_3,\ X_1 \rightarrow X_1X_2,\ X_1 \rightarrow X_1X_3\\
+& X_2 \rightarrow X_aX_1X_b,\ X_3\rightarrow X_2X_1X_aX_b,\ X_3\rightarrow X_1X_aX_b,\\
+& X_3 \rightarrow X_b,\ X_a\rightarrow a,\ X_b \rightarrow b\}
+\end{aligned}
+\end{equation}
+
+And the equivalent grammar $G^\prime=(A_N, A_T, S, P^\prime)$ would be the equivalent grammar of $G$ without erasure productions.

@@ -1,0 +1,127 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+Construct deterministic finite automata that accept the following languages over the alphabet $A = \{a,b,c\}$:
+\begin{enumerate}[label=(\alph*)]
+	\item The set of all words that begin with $ab$ and end with $ba$.
+	\item The set $\{bab\}$.
+	\item The set $A^* - \{bab\}$.
+	\item The set of all words $x \in A^*$ that contain at least three $a$s.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+
+	\item
+	The \textit{dfa} that recognizes the language of the set of words that begin with $ab$ and end with $ba$ represented by $abA^*ba \cup \{aba\}$ is shown in Figure \ref{fig:DR5}.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state] (2) {$q_2$};
+			\node[state,initial] (0) [above left of =2] {$q_0$};
+			\node[state] (1) [below left of=2] {$q_1$};
+			\node[state] (3) [right of=2] {$q_3$};
+			\node[state] (4) [above right of=3] {$q_4$};
+			\node[state, final] (5) [below right of=3] {$q_5$};
+			\path
+				(0) edge [bend left] node {a} (2)
+					edge [bend right] node {b,c} (1)
+				(1) edge [loop left] node {a,b,c} (1)
+				(2) edge [bend left]  node {a,c} (1)
+					edge [bend left]  node {b} (3)
+				(3) edge [loop left] node {b} (3)
+					edge [bend right] node {c} (4)
+					edge [bend left]  node {a} (5)
+				(4) edge [loop right] node {a,c} (4)
+					edge [bend right]  node {b} (3)
+				(5) edge [bend right]  node {a,c} (4)
+					edge [bend left]  node {b} (3);
+		\end{tikzpicture}
+		\caption{Graph of a \textit{dfa} accepting the set of words that begin with $ab$ and end with $ba$}
+		\label{fig:DR5}
+	\end{figure}
+
+	\item
+	The \textit{dfa} that recognizes the language of the set $\{bab\}$ is shown in Figure \ref{fig:DR6}.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial] (0) {$q_0$};
+			\node[state] (1) [above right of=0] {$q_1$};
+			\node[state] (2) [below right of=1] {$q_2$};
+			\node[state] (3) [above right of=2] {$q_3$};
+			\node[state, final] (4) [below right of=3] {$q_4$};
+			\path
+				(0) edge [bend left] node {b} (1)
+					edge [bend right] node {a,c} (2)
+				(1) edge [bend left=15] node {a} (3)
+					edge [bend right] node {b,c} (2)
+				(2) edge [loop below] node {a,b,c} (2)
+				(3) edge [bend left] node {b} (4)
+					edge [bend left] node {a,c} (2)
+				(4) edge [bend left] node {a,b,c} (2);
+		\end{tikzpicture}
+		\caption{Graph of a \textit{dfa} accepting the set $\{bab\}$}
+		\label{fig:DR6}
+	\end{figure}
+
+	\item
+	the \textit{dfa} that recognizes the language of the set $A^* - \{bab\}$ is shown in Figure \ref{fig:DR7}.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial,final] (0) {$q_0$};
+			\node[state,final] (1) [above right of=0] {$q_1$};
+			\node[state,final] (2) [below right of=1] {$q_2$};
+			\node[state,final] (3) [above right of=2] {$q_3$};
+			\node[state] (4) [below right of=3] {$q_4$};
+			\path
+				(0) edge [bend left] node {b} (1)
+					edge [bend right] node {a,c} (2)
+				(1) edge [bend left] node {a} (3)
+					edge [bend right] node {b,c} (2)
+				(2) edge [loop below] node {a,b,c} (2)
+				(3) edge [bend left] node {b} (4)
+					edge [bend left] node {a,c} (2)
+				(4) edge [bend left] node {a,b,c} (2);
+		\end{tikzpicture}
+		\caption{Graph of a \textit{dfa} accepting the set $A^* -\{bab\}$}
+		\label{fig:DR7}
+	\end{figure}
+
+	\item
+	The set of all words that contain at least three $a$s can be described as set of all words of the form $A^*aA^*aA^*aA^*$.
+	\textit{dfa} that recognizes such language would have a final state $q_3$ to be reached from $q_0$ by three symbols $a$.
+	Proposed \textit{dfa} is shown in Figure \ref{fig:DR8} where state $q_i$ is reached by the words with at least $i$ symbol $a$.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial] (0) {$q_0$};
+			\node[state] (1) [right of=0] {$q_1$};
+			\node[state] (2) [right of=1] {$q_2$};
+			\node[state,final] (3) [right of=2] {$q_3$};
+			\path
+				(0) edge [loop below] node {b,c} (0)
+					edge [bend left] node {a} (1)
+				(1) edge [loop below] node {b,c} (1)
+					edge [bend left] node {a} (2)
+				(2) edge [loop below] node {b,c} (2)
+					edge [bend left] node {a} (3)
+				(3) edge [loop below] node {a,b,c} (3);
+		\end{tikzpicture}
+		\caption{Graph of a \textit{dfa} accepting the set $A^*aA^*aA^*aA^*$}
+		\label{fig:DR8}
+	\end{figure}
+
+\end{enumerate}

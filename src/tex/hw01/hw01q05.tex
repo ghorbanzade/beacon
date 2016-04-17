@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 5}
+
+A word on an alphabet A is \textit{square-free} if it contains no infix of the form $xx$, where $x \in A^+$.
+\begin{enumerate}[label=(\alph*)] 
+	\item
+	List all square-free words of length three over the alphabet \{a,b\}.
+
+	\item
+	Show that for the alphabet $\{a,b\}$ there are no square-free words of length at least equal to 4.
+
+	\item
+	Let $f:A \rightarrow A$ be a one-to-one mapping.
+	Prove that if $x$ is square-free then so is $f(x)$.
+
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+
+	\item
+	The only three-letter square-free words over the alphabet $\{a,b\}$ are $\{aba,bab\}$.
+
+	\item
+	A four-letter word is constructed by adding a symbol to the end of one of the possible three-letter combinations of which only \textit{aba} and \textit{bab} are square-free. If other three-letter combinations are chosen to construct upon, they have already failed to satisfy square-free condition. Table \ref{5tab1} shows that even if three-letter square-free words be chosen to construct upon, addition of any symbol would lead to infixes. As cases presented in table \ref{5tab1} are inclusive, it is concluded that no four-letter words over alphabet $\{a,b\}$ are square-free.
+
+	As any word of more than four symbols contains a four-letter combination, it is proven that no words of length at least equal to four are square free.
+
+	\begin{table}
+		\centering
+		\begin{tabular}{c|c|c|c}
+			\textbf{initial} & \textbf{$4^{th}$ letter} & \textbf{final combination} & \textbf{infix}\\
+			\hline
+			aba & a & abaa & a\\
+			aba & b & abab & ab\\
+			bab & a & baba & ba\\
+			bab & b & babb & b
+		\end{tabular}
+		\caption{Constructing 4-letter words from 3-letter words}\label{5tab1}
+	\end{table}
+
+	\item
+	Statement is shown to be true using proof of contradiction. It is assumed that there is a $y$ that is square-free whose $f(y)$ is not. $y$ can be represented as $klmn$ where $k, l, m, n \in A^*$ and $k \neq l \neq m \neq n$. $f(y)$ can also be represented as $tuuv$ where $t, u, v \in A^*$ and $u \neq \lambda$ and $t \neq u \neq v$.
+
+	Taking advantage of the assumption that $f:A\rightarrow A$ is one-to-one,
+
+	\begin{equation}\label{5eq1}
+	f(y) = f(k)f(l)f(m)f(n)
+	\end{equation}
+
+	Based on our assumption, it is true that
+
+	\begin{equation}\label{5eq2}
+	\exists k, l, m, n \mid y = klmn, f(k)=t, f(l)=u, f(m)=u, f(n)=v
+	\end{equation}
+
+	However \eqref{5eq2} claims that $f(l) = f(m)$ which is in contrast to our given assumption that $f:A\rightarrow A$ is one-to-one. Hence, our assumption is not valid and statement is proven to be true.
+
+\end{enumerate}

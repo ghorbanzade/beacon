@@ -1,0 +1,120 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Define the mapping $f:A^*\rightarrow A^*$ by
+
+\begin{equation}\label{assum1}
+f(\lambda)=\lambda
+\end{equation}
+
+\begin{equation}\label{assum2}
+f(ax)=xa
+\end{equation}
+
+for every $x \in A^*$ and $a \in A$.
+Prove that $f$ is a \textit{bijection}, that is, it is one-to-one and onto.
+
+\subsection*{Solution}
+
+To prove $f$ is a bijection, it is first proven that $f$ is one-to-one, using proof by contradiction.
+Let us assume that $f: A^* \rightarrow A^*$ is not one-to-one, that is, there is at least an element $y$ in $A^*$ to which two different elements $u, v \in A^*$, $u \neq v$ are mapped by $f$.
+That is following assumptions are made.
+
+\begin{eqnarray}
+f(u) = y \label{assum3} \\
+f(v) = y \label{assum4} \\
+u \neq v \label{assum5}
+\end{eqnarray}
+
+Two possible cases on the nature of $y$ arise:
+
+\begin{enumerate}[label=(\alph*)]
+
+\item
+$y = \lambda$
+
+Using assumption \eqref{assum1},
+
+\begin{equation}\label{assum6}
+y=\lambda=f(\lambda)=f(y)
+\end{equation}
+
+Substituting \eqref{assum6} in \eqref{assum3} and \eqref{assum4} gives
+
+\begin{equation}
+f(u) = f(y) = f(v) \Rightarrow u = v
+\end{equation}
+
+which is in contrast to our assumption \eqref{assum5}.
+
+\item
+$y \neq \lambda$
+
+In this case $y$ has at least one symbol and hence can be shown by $y=xa$ where $a \in A$ and $x \in A^*$.
+$u$ and $v$ must also have at least one symbol as, if otherwise, Based on \eqref{assum1}, $f(\lambda)$ would never be mapped to a symbol.
+Thus $u$ and $v$ can be represented as $u = by$ and $v = cz$ where $\{b,c\}\in A$ and $\{y,z\}\in A^*$.
+
+From \eqref{assum3} and \eqref{assum4}:
+\begin{eqnarray}
+f(u) = f(by) = y = xa \label{2eq8}\\
+f(v) = f(cz) = y = xa \label{2eq9}
+\end{eqnarray}
+
+Based on \eqref{assum2} following would also be true.
+\begin{eqnarray}
+f(u) = f(by) = yb \label{2eq10}\\
+f(v) = f(cz) = zc \label{2eq11}
+\end{eqnarray}
+
+From \eqref{2eq8} and \eqref{2eq10}
+
+\begin{equation}\label{2eq12}
+xa = yb
+\end{equation}
+
+And from \eqref{2eq9} and \eqref{2eq11}
+
+\begin{equation}\label{2eq13}
+xa = zc
+\end{equation}
+
+Since $a$, $b$ and $c$ are symbols, \eqref{2eq12} and \eqref{2eq13} can only happen if
+
+\begin{eqnarray}
+a = b = c & x = y = z
+\end{eqnarray}
+
+Thus
+
+\begin{equation}
+by = cz \Rightarrow u = v
+\end{equation}
+
+which contradicts our earlier assumption \eqref{assum5}.
+
+\end{enumerate}
+
+Based on contradictions occurred in both possible cases, one-to-one property of $f:A^*\rightarrow A^*$ holds true.
+
+A similar approach will be conducted to prove the onto property of $f:A^*\rightarrow A^*$ mapping.
+By proof of contradiction, it is assumed that $f$ is not onto; suggesting that there is at least one element $y$ in $A^*$ that is not mapped to by any element in $A^*$.
+Two possible cases for $y$ would arise.
+
+\begin{enumerate}[label=(\alph*)]
+\item $y = \lambda$
+
+Based on \eqref{assum1}, there exists an element $\lambda$ in $A^*$ that when mapped by $f$ is mapped to $y = \lambda$.
+\item $y \neq \lambda$
+
+In this case $y$ has at least one symbol and hence can be shown by $y=xa$ where $a \in A$ and $x \in A^*$.
+Based on \eqref{assum2} there is always an element $z \in A^*$ where $z = ax$ and $f(z) = f(ax) = xa = y$.
+
+\end{enumerate}
+
+As both possible cases contradict with our earlier assumption that $y$ is not mapped to by any element in $A^*$, contradicted assumption is false and $f:A^*\rightarrow A^*$ holds onto.

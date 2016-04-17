@@ -1,0 +1,83 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Let $A$ be an alphabet and let $b$ be a symbol such that $b \notin A$.
+
+\begin{enumerate}[label=(\alph*)]
+	\item construct a transition system that accepts the language $ L = b A^* b $.
+	\item construct an equivalent deterministic finite automaton that accepts $L$.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+
+	\item
+	A transition system that accepts the language $b A^* b$ is shown in Figure \ref{fig:DR2}.
+	Starting from initial state $q_0$, a word is accepted by this transition system only if it starts with $b$, follows a possible number of symbols in alphabet $A$ and end with $b$.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial] (0) {$q_0$};
+			\node[state] (1) [right of=0] {$q_1$};
+			\node[state, final] (2) [right of=1] {$q_2$};
+			\path
+				(0) edge [bend left=0] node {b} (1)
+				(1) edge [loop above] node {$A$} (1)
+					edge [bend left=0] node {b} (2);
+		\end{tikzpicture}
+		\caption{Graph of a transition system that accepts the language $bA^*b$}
+		\label{fig:DR2}
+	\end{figure}
+
+	\item
+	To achieve an equivalent \textit{dfa} with minimal number of states, we take advantage of the fact that the transition system given in Figure \ref{fig:DR2} has no $\lambda$-transition.
+	Therefore, it is also a non-deterministic finite automaton.
+	To construct an equivalent \textit{dfa} from the transition system/\textit{ndfa} given in Figure \ref{fig:DR2}, Table \ref{tab:TB1} is constructed where $\mathcal{K}\left(S\right)$ is set of all accessible states.
+
+	\begin{table}[H]\centering
+		\begin{tabular}{|c|c||c|c|}
+			\hline
+			S & $\mathcal{K}\left(S\right)$ & S & $\mathcal{K}\left(S\right)$ \\
+			\hline
+			$\emptyset$ & $\emptyset$ & $\{q_0,q_1\}$ & $Q$ \\
+			$\{q_0\}$ & $Q$ & $\{q_1,q_2\}$ & $\{q_1,q_2\}$ \\
+			$\{q_1\}$ & $\{q_1,q_2\}$ & $\{q_0,q_2\}$ & $Q$ \\
+			$\{q_2\}$ & $\{q_2\}$ & $\{q_0,q_1,q_2\}$ & $Q$\\
+			\hline
+		\end{tabular}
+		\caption{Accessible States From All Possible Sets of States}
+		\label{tab:TB1}
+	\end{table}
+
+	Based on Table \ref{tab:TB1}, set of states in an equivalent \textit{dfa} will be extracted as $\{Q,\{q1,q2\}, \{q2\}, \emptyset\}$ \ref{tab:TB1}.
+	The equivalent \textit{dfa} can now be constructed by assigning $Q$ as initial state and $q_2$ as final state.
+	The graph of such equivalent \textit{dfa} has been given in Figure \ref{fig:DR3}.
+
+	\begin{figure}[H]\centering
+		\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+			\tikzstyle{final}=[circle,thick,draw=black,fill=gray!40,text=black]
+			\node[state,initial] (0) {$Q$};
+			\node[state] (1) [right of=0] {$\{q_1,q_2\}$};
+			\node[state, final] (2) [right of=1] {$\{q_2\}$};
+			\node[state] (3) [right of=2] {$\emptyset$};
+			\path
+				(0) edge [bend right=0] node {b} (1)
+					edge [bend left=40] node {A} (3)
+				(1) edge [loop above] node {$A$} (1)
+					edge [bend right=0] node {b} (2)
+				(2) edge [bend right=0] node {$\{b\} \cup A$} (3)
+				(3) edge [loop right] node {$\{b\} \cup A$} (3);
+		\end{tikzpicture}
+		\caption{Graph of an equivalent \textit{dfa} that accepts te language $bA^*b$}
+		\label{fig:DR3}
+	\end{figure}
+
+\end{enumerate}
