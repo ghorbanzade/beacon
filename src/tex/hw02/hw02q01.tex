@@ -1,6 +1,14 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS671: Machine Learning
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Question 1}
 
-A rhombus $R_{x_0, y_0, c, d}$ is a quadrilateral which has the vertices $(x_0-c, y_0)$, $(x_0, y_0-d)$, $(x_0+c, y_0)$, $(x_0, y_0+d)$ as shown in Figure \ref{fig11}. Prove that the class of rhombi  in $\mathbb{R}^2$ for which the ratio $c/d$ is a constant is a PAC-learnable.
+A rhombus $R_{x_0, y_0, c, d}$ is a quadrilateral which has the vertices $(x_0-c, y_0)$, $(x_0, y_0-d)$, $(x_0+c, y_0)$, $(x_0, y_0+d)$ as shown in Figure \ref{fig11}.
+Prove that the class of rhombi  in $\mathbb{R}^2$ for which the ratio $c/d$ is a constant is a PAC-learnable.
 
 \begin{figure}[H]
 \centering
@@ -29,7 +37,8 @@ Therefore, the concept $\mathcal{C}$ would be a particular rhombus with ratio $c
 
 Suppose the rhombus shown in Figure \ref{fig11} is a concept $c \in \mathcal{C}$ which is not known by the learner.
 
-As the hypothesis $h_S$, formed by the learner, is also a rhombus, Figure \ref{fig12} can be constructed in which $h_S$ is the rhombus formed by intersection of dashed lines. Areas enclosed by dashed lines and different edges of the concept rhombus are defined as $r_1$, $r_2$, $r_3$ and $r_4$.
+As the hypothesis $h_S$, formed by the learner, is also a rhombus, Figure \ref{fig12} can be constructed in which $h_S$ is the rhombus formed by intersection of dashed lines.
+Areas enclosed by dashed lines and different edges of the concept rhombus are defined as $r_1$, $r_2$, $r_3$ and $r_4$.
 
 \begin{figure}[H]
 \centering
@@ -67,7 +76,9 @@ Suppose the probability of the generalization error defined as in Equation \ref{
 R(h) = P({x\in \mathcal{X} | h_s(x) \neq c(x)})
 \end{equation}
 
-This means that probability of the hypothesis $h_S$ is at least $1 - \epsilon$. This means that the rhombus $h_s$ must intersect at least one of $r_1$, $r_2$, $r_3$ or $r_4$. Therefore,
+This means that probability of the hypothesis $h_S$ is at least $1 - \epsilon$.
+This means that the rhombus $h_s$ must intersect at least one of $r_1$, $r_2$, $r_3$ or $r_4$.
+Therefore,
 
 \begin{equation}
 \begin{aligned}

@@ -1,3 +1,10 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS671: Machine Learning
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Question 2}
 
 What is the Vapnik-Chervonenkis dimension of the class of rhombi defined above?
@@ -10,7 +17,9 @@ To support this claim, we first show that any set $ S = \{x, y\}$ where $x y \in
 As well, we need to show that there is a set $S = \{x_1, x_2, x_3\}$ impossible to be shattered by $\mathcal{R}$.
 
 \begin{enumerate}
-\item VCD($\mathcal{R}$) is at least one, because for any point $P(x,y)$ where $x, y \in \mathbb{R}$, we can choose a rhombus with center $(0,0)$ and diagonals $2c$ and $2d$ where $min\{c,d\} > (x^2 + y^2)$ to enclose the point. As well, we can be sure that any rhombus with $min\{c,d\} < (x^2 + y^2)$ does not contain $P(x,y)$. Thus $\mathcal{R}$ shatters sets of size 1.
+\item VCD($\mathcal{R}$) is at least one, because for any point $P(x,y)$ where $x, y \in \mathbb{R}$, we can choose a rhombus with center $(0,0)$ and diagonals $2c$ and $2d$ where $min\{c,d\} > (x^2 + y^2)$ to enclose the point.
+As well, we can be sure that any rhombus with $min\{c,d\} < (x^2 + y^2)$ does not contain $P(x,y)$.
+Thus $\mathcal{R}$ shatters sets of size 1.
 
 \item VCD($\mathcal{R}$) is at least two, because for any two points $P_1(x_1,y_1)$ and $P_2(x_2,y_2)$, there exists $\epsilon \in \mathbb{R}$ such that a rhombus with a center $P_s(x,y)$ and diagonals of length $x+\epsilon$ and $y+\epsilon$ can enclose $P_s$ but no other point.
 
@@ -19,7 +28,9 @@ As well, diagonals $2c_0$ and $2d_0$ can be found such that $min\{c,d\} > max\{x
 \item VCD($\mathcal{R}$) is not three because three points $P_1(x_1,y_1)$, $P_2(x_2,y_2)$ and $P_3(x_3,y_3)$ can be given such that no rhombus with ratio $c/d$ can shatter them.
 To show this point, take $P_1(x_1,y_1)$ and $P_2(x_2,y_2)$ at any two arbitrary points $P_1 \neq P_2$.
 
-It is always possible to construct a rhombus with ratio $c/d$ such that $P_1$ and $P_2$ are on its edges. If $P_3$ now be chosen inside this rhombus, no rhombus with fixed ratio of $c/d$ can shatter these points anymore. Mathematically, any choice of $P_3(x_3,y_3)$ such that $x_1 < x_3 < x_2$ and $max\{y_3/y_1, y_3/y_2\} < c/d$ will prevent $\mathcal{R}$ to shatter the three points. 
+It is always possible to construct a rhombus with ratio $c/d$ such that $P_1$ and $P_2$ are on its edges.
+If $P_3$ now be chosen inside this rhombus, no rhombus with fixed ratio of $c/d$ can shatter these points anymore.
+Mathematically, any choice of $P_3(x_3,y_3)$ such that $x_1 < x_3 < x_2$ and $max\{y_3/y_1, y_3/y_2\} < c/d$ will prevent $\mathcal{R}$ to shatter the three points.
 \end{enumerate}
 
 Therefore Vapnik-Chervonenkis Dimension of $\mathcal{R}$ is only 2.

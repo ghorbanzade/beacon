@@ -1,9 +1,19 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS671: Machine Learning
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Question 1}
 
-Let $\mathcal{X}$, the set of examples, be the set of natural numbers. The hypotheses space $H$ consists of all intervals of the form $[a,b]$ with $a \leq b$. The concept that must be learned is an interval $[c,d]$, where all examples reside.
+Let $\mathcal{X}$, the set of examples, be the set of natural numbers.
+The hypotheses space $H$ consists of all intervals of the form $[a,b]$ with $a \leq b$.
+The concept that must be learned is an interval $[c,d]$, where all examples reside.
 
 \begin{enumerate}[label=(\alph*)]
-\item Let $h_1$, $h_2$ be two hypotheses. What does it mean in this context that $h_1$ is more specific than $h_2$?
+\item Let $h_1$, $h_2$ be two hypotheses.
+What does it mean in this context that $h_1$ is more specific than $h_2$?
 \item Design an algorithm that learns the target concept.
 \end{enumerate}
 
@@ -12,9 +22,12 @@ Let $\mathcal{X}$, the set of examples, be the set of natural numbers. The hypot
 \begin{enumerate}[label=(\alph*)]
 \item Since hypotheses space $H$ is the set of intervals of the form $[a, b]$ with $a \leq b$, let us present hypothesis $h_1$ and $h_2$ as intervals $[x_1, y_1]$ and $[x_2, y_2]$ respectively, where $x_1 \leq y_1$ and $x_2 \leq y_2$.
 
-By definition, hypothesis $h_1$ is more specific than $h_2$ if for every concept (natural number) $i \in h_1$, $i \in h_2$ as well. For this to happen, for any integer $i$ in the interval $[x_1, y_1]$ we should have $i \in [x_2, y_2]$. Alternatively, $h_1$ is more specific than $h_2$ when $[x_1, y_1] \subseteq [x_2, y_2]$.
+By definition, hypothesis $h_1$ is more specific than $h_2$ if for every concept (natural number) $i \in h_1$, $i \in h_2$ as well.
+For this to happen, for any integer $i$ in the interval $[x_1, y_1]$ we should have $i \in [x_2, y_2]$.
+Alternatively, $h_1$ is more specific than $h_2$ when $[x_1, y_1] \subseteq [x_2, y_2]$.
 
-\item The objective is to propose an algorithm to find the consistent hypothesis (target concept) using both positive and negative examples. To achieve this objective, we initialize most general hypothesis as the interval $[-\infty, \infty]$ and least general hypothesis as the empty set $\emptyset$.
+\item The objective is to propose an algorithm to find the consistent hypothesis (target concept) using both positive and negative examples.
+To achieve this objective, we initialize most general hypothesis as the interval $[-\infty, \infty]$ and least general hypothesis as the empty set $\emptyset$.
 For any concept $c$, consistent hypothesis can be updated using \textsc{Update-Concept} algorithm whose pseudo-code is given in Algorithm 1 and in which \textit{SB} and \textit{GB} are respectively maximally specific and maximally general positive hypothesis boundaries.
 
 \begin{algorithm}[H]

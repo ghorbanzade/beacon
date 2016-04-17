@@ -1,6 +1,14 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS671: Machine Learning
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Question 4}
 
-Let $f_1: \mathbb{R}^n \longrightarrow \mathbb{R}$ and $f_2: \mathbb{R}^n \longrightarrow \mathbb{R}$ be two convex functions. Prove that the function $f$ defined by $f(x) = \text{max}\{f_1(x), f_2(x)\}$ is convex.
+Let $f_1: \mathbb{R}^n \longrightarrow \mathbb{R}$ and $f_2: \mathbb{R}^n \longrightarrow \mathbb{R}$ be two convex functions.
+Prove that the function $f$ defined by $f(x) = \text{max}\{f_1(x), f_2(x)\}$ is convex.
 
 \subsection*{Solution}
 
@@ -14,7 +22,9 @@ Similarly,
 f_2(tx+(1-t)y)\leq tf_2(x) + (1-t)f_2(y)
 \label{eq42}
 \end{equation}
-On the other hand, since $f = \text{max}\{f_1, f_2\}$, for any point $z \in \mathbb{R}^2$, $f_1(z) \leq f(z)$ and $f_2(z) \leq f(z)$. Therefore, $f_1(x), f_2(x) \leq f(x)$ and $f_1(y), f_2(y) \leq f(y)$. Thus, Eq. \ref{eq41} and Eq. \ref{eq42} can be rewritten as follows.
+On the other hand, since $f = \text{max}\{f_1, f_2\}$, for any point $z \in \mathbb{R}^2$, $f_1(z) \leq f(z)$ and $f_2(z) \leq f(z)$.
+Therefore, $f_1(x), f_2(x) \leq f(x)$ and $f_1(y), f_2(y) \leq f(y)$.
+Thus, Eq. \ref{eq41} and Eq. \ref{eq42} can be rewritten as follows.
 \begin{equation}
 f_1(tx+(1-t)y)\leq tf(x) + (1-t)f(y)
 \label{eq43}
@@ -24,7 +34,8 @@ Similarly,
 f_2(tx+(1-t)y)\leq tf(x) + (1-t)f(y)
 \label{eq44}
 \end{equation}
-But, since $f = max\{f_1,f_2\}$, $f(tx+(1-t)y)$ is either $f_1(tx+(1-t)y)$ or $f_2(tx+(1-t)y)$. Based on Eq. \ref{eq43} and Eq. \ref{eq44}, however, this immediately results into Eq. \ref{eq45}.
+But, since $f = max\{f_1,f_2\}$, $f(tx+(1-t)y)$ is either $f_1(tx+(1-t)y)$ or $f_2(tx+(1-t)y)$.
+Based on Eq. \ref{eq43} and Eq. \ref{eq44}, however, this immediately results into Eq. \ref{eq45}.
 \begin{equation}
 f(tx+(1-t)y) = tf(x) + (1-t)f(y)
 \label{eq45}

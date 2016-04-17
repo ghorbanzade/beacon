@@ -1,3 +1,10 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS671: Machine Learning
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Question 1}
 
 Determine the interior, closure and border of the following sets:
@@ -13,18 +20,27 @@ Determine the interior, closure and border of the following sets:
 \subsection*{Solution}
 
 \begin{enumerate}[label=(\alph*)]
-\item Set $S_1$ can be represented as the intersection of two sets $S_{\text{sub}_1} = \{x \in \mathbb{R}^2 | x_1^2 + x_2^2 \leqslant 1 \}$ and $S_{\textbf{sub}_2} = \{x \in \mathbb{R}^2 | x_2 > 1 \}$. Suppose $x_0(t_1, t_2) \in S_{\textbf{sub}_2}$. This means $t_2 > 1$ and therefore $t_2^2 > 1$. Hence, regardless of the choice of $t_1$, $t_1^2 + t_2^2 > 1$ and therefore $x_0 \notin S_{\textbf{sub}_1}$. Consequently, $S_1 = S_{\text{sub}_1} \cap S_{\text{sub}_2} = \emptyset$. Therefore, $K(S) = I(S) = \partial S = \emptyset$.
+\item Set $S_1$ can be represented as the intersection of two sets $S_{\text{sub}_1} = \{x \in \mathbb{R}^2 | x_1^2 + x_2^2 \leqslant 1 \}$ and $S_{\textbf{sub}_2} = \{x \in \mathbb{R}^2 | x_2 > 1 \}$.
+Suppose $x_0(t_1, t_2) \in S_{\textbf{sub}_2}$.
+This means $t_2 > 1$ and therefore $t_2^2 > 1$.
+Hence, regardless of the choice of $t_1$, $t_1^2 + t_2^2 > 1$ and therefore $x_0 \notin S_{\textbf{sub}_1}$.
+Consequently, $S_1 = S_{\text{sub}_1} \cap S_{\text{sub}_2} = \emptyset$.
+Therefore, $K(S) = I(S) = \partial S = \emptyset$.
 
-\item Set $S_2$ can be represented as the intersection of two sets $S_{\text{sub}_1} = \{x \in \mathbb{R}^2 | x_1^2 + x_2^2 \leqslant 1 \}$ (which represents closure of a circle) and $S_{\textbf{sub}_2} = \{x \in \mathbb{R}^2 | x_1 + x_2 = 1.4\}$ which is a line. Figure \ref{fig11} shows how the two sets intersect. We first obtain the points where the circle and line intersect by solving Eq. \ref{eq11} for $x_1$ and $x_2$.
+\item Set $S_2$ can be represented as the intersection of two sets $S_{\text{sub}_1} = \{x \in \mathbb{R}^2 | x_1^2 + x_2^2 \leqslant 1 \}$ (which represents closure of a circle) and $S_{\textbf{sub}_2} = \{x \in \mathbb{R}^2 | x_1 + x_2 = 1.4\}$ which is a line.
+Figure \ref{fig11} shows how the two sets intersect.
+We first obtain the points where the circle and line intersect by solving Eq. \ref{eq11} for $x_1$ and $x_2$.
 
 \begin{equation}
 \left\{ \begin{array}{ll} x_1^2 + x_2^2 = 1 \\ x_1 + x_2 = 1.4 \end{array} \right.
 \label{eq11}
 \end{equation}
 
-Eq. \ref{eq11} translates to $2x_2^2 - 2.8x_2 + 0.96 = 0$ and yields to $x = (0.6, 0.8)$ and $x = (0.8, 0.6)$. Therefore the set $S$ is the set of points on the closed segment $[(0.6,0.8),(0.8,0.6)]$.
+Eq. \ref{eq11} translates to $2x_2^2 - 2.8x_2 + 0.96 = 0$ and yields to $x = (0.6, 0.8)$ and $x = (0.8, 0.6)$.
+Therefore the set $S$ is the set of points on the closed segment $[(0.6,0.8),(0.8,0.6)]$.
 
-As the endpoints of the line segment are included in $S$, $S$ is closed in $\mathbb{R}^2$, therefore, $K(S) = S$. As well, because $S$ is a line segment in $\mathbb{R}^2$, its interior is $S - \{(0.6,0.8),(0.8,0.6)\}$ and its boundary is $S$.
+As the endpoints of the line segment are included in $S$, $S$ is closed in $\mathbb{R}^2$, therefore, $K(S) = S$.
+As well, because $S$ is a line segment in $\mathbb{R}^2$, its interior is $S - \{(0.6,0.8),(0.8,0.6)\}$ and its boundary is $S$.
 
 \begin{figure}[H]\centering
 \begin{tikzpicture}
@@ -40,7 +56,10 @@ As the endpoints of the line segment are included in $S$, $S$ is closed in $\mat
 \caption{Intersection of $S_{\text{sub}_1}$ and $S_{\text{sub}_2}$}\label{fig11}
 \end{figure}
 
-\item Set $S_2$ can be represented as the intersection of two sets $S_{\text{sub}_1} = \{x \in \mathbb{R}^2 | x_1^2 + x_2^2 \leqslant 1 \}$ (which represents closure of a circle) and $S_{\textbf{sub}_2} = \{x \in \mathbb{R}^2 | x_1 + x_2 = 1.5\}$ which is a line. The two sets are shown in Figure \ref{fig12}. As is shown, the two sets do not intersect which means $S_1 = S_{\text{sub}_1} \cap S_{\text{sub}_2} = \emptyset$. Therefore, $K(S) = I(S) = \partial S = \emptyset$.
+\item Set $S_2$ can be represented as the intersection of two sets $S_{\text{sub}_1} = \{x \in \mathbb{R}^2 | x_1^2 + x_2^2 \leqslant 1 \}$ (which represents closure of a circle) and $S_{\textbf{sub}_2} = \{x \in \mathbb{R}^2 | x_1 + x_2 = 1.5\}$ which is a line.
+The two sets are shown in Figure \ref{fig12}.
+As is shown, the two sets do not intersect which means $S_1 = S_{\text{sub}_1} \cap S_{\text{sub}_2} = \emptyset$.
+Therefore, $K(S) = I(S) = \partial S = \emptyset$.
 
 \begin{figure}[H]\centering
 \begin{tikzpicture}
