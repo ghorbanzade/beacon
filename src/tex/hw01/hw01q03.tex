@@ -7,16 +7,12 @@
 
 \section*{Question 3}
 
-Create a table \texttt{t1} with columns \textit{id} of type integer and \textit{message} of type varchar(40). Insert two rows into it and then display the rows.
+Create a table \texttt{t1} with columns \textit{id} of type integer and \textit{message} of type varchar(40).
+Insert two rows into it and then display the rows.
 
 \subsection*{Solution}
 
-\begin{lstlisting}
-CREATE TABLE t1 (
-	id INT NOT NULL PRIMARY KEY,
-	message VARCHAR(40),
-	);
-INSERT INTO t1 (id, message) VALUES (1, 'First Row');
-INSERT INTO t1 (id, message) VALUES (2, 'Second Row');
-SELECT id, message FROM t1;
-\end{lstlisting}
+\lstset{language=sql}
+\lstinputlisting[firstline=10]{
+	\srcDirectory/sql/hw01/hw01q03.sql
+}
