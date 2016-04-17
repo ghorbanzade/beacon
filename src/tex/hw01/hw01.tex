@@ -5,7 +5,7 @@
 % More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def \topDirectory {../..}
+\def \topDirectory {.}
 \def \srcDirectory {\topDirectory/src}
 \def \binDirectory {\topDirectory/bin}
 \def \texDirectory {\srcDirectory/tex}
@@ -17,20 +17,17 @@
 \input{\texDirectory/config}
 \usepackage{\texDirectory/homework}
 
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{float}
-\usepackage{pgfplots}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 \begin{document}
 
-\doc{title}{Solution to Assignment 2}
+\doc{title}{Solution to Assignment 1}
 
 \frontPage
 
-\input{\texDirectory/hw02q01}
-\input{\texDirectory/hw02q02}
-\input{\texDirectory/hw02q03}
-\input{\texDirectory/hw02q04}
+\input{\texDirectory/hw01/hw01q01}
+\input{\texDirectory/hw01/hw01q02}
+\input{\texDirectory/hw01/hw01q03}
 
 \end{document}
