@@ -1,8 +1,10 @@
 #
 # CS671: Machine Learning
-# Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
-# Creative Commons Attribution-ShareAlike 4.0 International License
-# More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015f
+# Copyleft 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+# More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+#
+# The author has placed this file in the public domain.
+# He makes no warranty and accepts no liability for this file.
 #
 
 # clear workspace
@@ -13,9 +15,7 @@ if (!is.null(dev.list())) trash <- dev.off()
 # loading dataset from csv file
 training_set <- read.csv("dat/dataset_training.csv", header=TRUE, sep=",")
 
-##
 # plot training dataset
-##
 png(filename="bin/png/f01-01.png",
 	height=768, width=1024, res=150, units="px", bg="white")
 
@@ -36,9 +36,7 @@ title(ylab="Y-Axis")
 title(main="Training Dataset", font.main=1)
 trash <- dev.off()
 
-##
 # building classifiers
-##
 library("kernlab")
 
 # Build a classifer using a linear kernel function
@@ -53,9 +51,7 @@ for (i in 1:length(kernels)) {
 }
 exec_time <- exec_time[,1:3]
 
-#
 # plot training_error for classifiers
-#
 png(filename="bin/png/f01-02.png",
 	height=768, width=1024, res=150, units="px", bg="white")
 
@@ -72,9 +68,7 @@ title(ylab="Error Rate")
 title(main="Training Error for Different Kernels", font.main=1)
 trash <- dev.off()
 
-#
 # plot execution time of classifiers
-#
 png(filename="bin/png/f01-03.png",
 	height=768, width=1024, res=150, units="px", bg="white")
 
@@ -90,14 +84,11 @@ title(ylab="Execution Time")
 title(main="Execution Time of Constructing Different Kernels", font.main=1)
 trash <- dev.off()
 
-#
 # plot execution time based on training error
-#
 png(filename="bin/png/f01-04.png",
 	height=768, width=1024, res=150, units="px", bg="white")
 
 plot(training_error, exec_time[,1], type="o", col="blue", ann=F, axes=F)
-#plot.window(ylim=c(min(exec_time),max(exec_time)),xlim=c(min(training_error),max(training_error)))
 points(training_error,exec_time[,1],pch=21,col="blue",bg="white")
 axis(1, )
 axis(2, las=1)
