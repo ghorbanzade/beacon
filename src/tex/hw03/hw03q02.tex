@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Study the script for building \texttt{my\_guitar\_shop2} which is available \href{book\_apps/\_create\_db.sql}{online}.
+The online version has inserts as well as create tables.
+
+\begin{enumerate}[label=(\alph*)]
+\item Find all the foreign keys and list them in order seen in this file, by table and column.
+Note that they do not have foreign keys constraints.
+\item  Draw an Entity Relation Diagram like the one shown on pg. 535.
+You don't need to fill in all the column names, but do include primary key and foreign key column names.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item Table \ref{tab21} presents a list of all foreign keys and columns of other tables they each are referring to.
+
+\begin{table}\centering
+\begin{tabular}{ c | r | l | r | l }
+Num & Foreign Key & Table & Primary Key & Table\\
+\hline
+1 & shipAddressID & customers & addressID & addresses\\
+2 & billingAddressID & customers & addressID & addresses\\
+3 & customerID & addresses & customerID & customers\\
+4 & customerID & orders & customerID & customers\\
+5 & shipAddressID & orders & addressID & addresses\\
+6 & billingAddressID & orders & addressID & addresses\\
+7 & orderID & orderitems & orderID & orders\\
+8 & productID & orderitems & productID & products\\
+9 & categoryID & products & categoryID & categories\\
+\end{tabular}
+\caption{Foreign Keys and Their References in \texttt{m\_guitar\_shop2.sql} Tables}\label{tab21}
+\end{table}
+
+\item The E-R diagram is shown in Figure \ref{fig22}.
+
+\begin{figure}\centering
+\input{\texDirectory/hw03/hw03q02f01}
+\caption{ER-Diagram of \texttt{my\_guitar\_shop2.sql} Tables}\label{fig22}
+\end{figure}
+
+\end{enumerate}

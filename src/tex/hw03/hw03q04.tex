@@ -1,0 +1,53 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+\begin{enumerate}[label=(\alph*)]
+\item Download \texttt{pizza1\_setup.zip} and unzip it, then copy it to \texttt{pizza1} for development.
+
+\item Use \texttt{pizza1-setup}'s \texttt{database/createdb.sql} to load you own mysql \texttt{pizzadb}.
+Also create a mysql user named \texttt{pizza\_user} for the app.
+Report your commands and success or problems.
+Show the resulting output of \texttt{showdb.sql}.
+
+\item In \texttt{pizza1}, edit \texttt{database.php} to replace \texttt{xxxx} with your \texttt{cs.umb.edu} username.
+(This will be used for executions on topcat.) Install pizza1 on your own Apache server at \texttt{htdocs/pizza1} and browse to \texttt{localhost/pizza1} to try it out.
+Report on your success or problems.
+It should be able to list the toppings, but not much else.
+
+\item Set up a Netbeans projects for \texttt{pizza1-setup} and \texttt{pizza1}.
+Then show the edit of database.php done in c.
+as a file \texttt{diff}.by selecting both file versions in Projects, right-clicking and using \texttt{Tools>Diff}.
+ Report on success or problems.
+Also run the project from Netbeans and report on success or problems.
+\end{enumerate}
+
+\subsection*{Solution}
+
+All instructions were carried out successfully.
+
+\begin{enumerate}[label=(\alph*)]
+\item \texttt{pizza1\_setup.zip} directory was successfully setup for development.
+
+\item Resulting output of \texttt{showdb.sql} is a four-column row as shown in Table \ref{tab41}.
+
+\begin{table}[H]\centering
+\begin{tabular}{| c | c | c | c |}
+\hline
+next\_order\_id & next\_topping\_id & next\_size\_id & current\_day\\ 
+\hline
+1 & 1 & 1 & 1\\
+\hline
+\end{tabular}
+\caption{Output of \texttt{showdb.sql}}\label{tab41}
+\end{table}
+
+\item \texttt{pizza1} is now accessible both from offline XAMPP server and from topcat server on CS department website.
+
+\item Projects \texttt{pizza1-setup} and \texttt{pizza1} were successfully setup in Netbeans IDE.
+\end{enumerate}

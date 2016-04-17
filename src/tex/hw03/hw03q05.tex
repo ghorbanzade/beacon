@@ -1,0 +1,76 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 5}
+
+\texttt{pizza1\_setup} has a start on the toppings manager.
+Finish this part of the project by adding the capability of adding a new topping.
+Add a function \texttt{add\_topping} to \texttt{topping\_db.php}, and clean out the useless function there.
+Then call \texttt{add\_topping} from \texttt{topping/index.php}.
+Show \texttt{topping\_db.php} and \texttt{topping/index.php} in your homework paper.
+
+\subsection*{Solution}
+
+\lstset{language=PHP}
+Following is the code snippet of \texttt{/admin/topping/index.php}.
+\begin{lstlisting}
+<?php
+require('../../model/database.php'); // database configuration file
+require('../../model/topping_db.php'); // this defines two functions
+include('../../view/header.php');
+$action = filter_input(INPUT_POST, 'action');
+if ($action == NULL) {
+	$action = filter_input(INPUT_GET, 'action');
+	if ($action == NULL) {
+		$action = 'list_toppings';
+	}
+}
+if ($action == 'list_toppings') {
+	$toppings = get_toppings();
+	include('topping_list.php');
+	echo "<p class='last_paragraph'><a href='?action=show_add_form'>Add a New Topping</a></p>";
+}
+elseif ($action == 'show_add_form') {
+	include('topping_add.php');
+}
+elseif ($action == 'topping_add') {
+	$tname = filter_input(INPUT_POST, 'name');
+	if ($tname == NULL) {
+		echo "You have not entered the topping name. Try again.";
+	}
+	else {
+		if (!add_topping(1,$tname)) {
+			echo "Unable to add topping";
+		}
+		else {
+			header("Location: index.php");
+		}
+	}
+}
+include('../../view/footer.php');
+?>
+\end{lstlisting}
+And the code for developed function \texttt{add\_topping()} in file \texttt{/model/topping\_db.php} is as follows.
+\begin{lstlisting}
+function add_topping($status, $name) {
+	global $db;
+	try {
+		$query = 'INSERT INTO toppings (t_status, topping_name) VALUES (:status, :name)';
+		$statement = $db -> prepare($query);
+		$statement -> bindValue(':status', $status);
+		$statement -> bindValue(':name', $name);
+		$statement -> execute();
+		$statement -> closeCursor();
+		return true;
+	}
+	catch(PDOException $e) {
+		echo $sql . "<br>" . $e->getMessage();
+		return false;
+	}
+}
+\end{lstlisting}
+

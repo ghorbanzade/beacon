@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+\begin{enumerate}[label=(\alph*)]
+\item Find the model API by searching for \texttt{function} across all the files in model directory. Show the output of your commands.
+
+\item By MVC rules, calls to these functions must all come from the controllers, that is, not from any view file. A partial test of this is to search all files for \texttt{get\_} and see if any hits are in view files. Report on what you find.
+
+\item By MVC rules, no HTML should occur in controller files. A test of this is to search all \texttt{index} files for \texttt{<} and see if hits are HTML. Note that some \texttt{index.php} files are \textit{navigational}, not really controllers, and just contain links to other parts of the website.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item The following code snippet shows the model API of all 21 functions in model directory of the project.
+\lstset{language=bash}
+\begin{lstlisting}
+pejman@topcat:~/solution/gs/model$ grep -ir function . | grep -v ' function'
+./initial.php:function initial_db() {
+./order_db.php:function get_preparing_orders() {
+./order_db.php:function get_baked_orders() {
+./order_db.php:function get_preparing_orders_of_room($room) {
+./order_db.php:function get_baked_orders_of_room($room) {
+./order_db.php:function add_toppings_to_orders($orders) {
+./order_db.php:function get_orders_toppings($order_id) {
+./order_db.php:function change_to_baked($id) {
+./order_db.php:function get_oldest_preparing_id() {
+./order_db.php:function get_todays_orders($day) {
+./order_db.php:function get_current_day() {
+./order_db.php:function update_next_day($next_day){
+./order_db.php:function change_to_finished($current_day) {
+./order_db.php:function update_to_finished($room) {
+./order_db.php:function get_order_id() {
+./order_db.php:function add_order($room,$size_id,$current_day,$status, $toppings) {
+./order_db.php:function add_order_topping($topping_id) {
+./size_db.php:function add_size($size_name) {
+./size_db.php:function get_available_sizes() {
+./topping_db.php:function add_topping($topping_name) {
+./topping_db.php:function get_available_toppings() {
+pejman@topcat:~/solution/gs/model$
+\end{lstlisting}
+
+\item Since all model functions begin with one of \texttt{get\_}, \texttt{update\_}, \texttt{add\_} or \texttt{\_change}, we can search all non-index view files of the project and make sure none of the functions listed previously are used in them. The following search command has been used and the result is shown below.
+
+\lstset{language=bash}
+\begin{lstlisting}
+pejman@topcat:~/solution/gs$ grep -ir --exclude="*index.php" 'get_\|add_\|change_\|update_' admin/* pizza/ view/ | grep -v '\"add_\|\"update_\|\"change_\|\"get_'
+admin/size/size_list.php:        <a href=".?action=show_add_form">Add Size</a>
+admin/topping/topping_list.php:        <a href=".?action=show_add_form">Add Topping</a>
+pejman@topcat:~/solution/gs$
+\end{lstlisting}
+As is shown, given query has had two results and as they are simple names corresponding to function APIs not functions themselves, we can firmly claim no view file has violated the convention.
+
+\item To ensure no controller file includes HTML scripts, the following unix query has been used across all index.php files and the result is given below.
+\lstset{language=bash}
+\begin{lstlisting}
+pejman@topcat:~/solution/gs$ grep -irn '<' */index.php                          admin/index.php:1:<?php
+admin/index.php:6:<?php  include '../view/header.php'; ?>
+admin/index.php:7:<section>
+admin/index.php:8:    <h1>Admin Menu</h1>
+admin/index.php:9:    <ul class="last_paragraph">
+admin/index.php:10:        <li><a href="topping">Topping Manager</a></li>
+admin/index.php:11:        <li><a href="size">Size Manager</a></li>
+admin/index.php:12:        <li><a href="day">Day Manager</a></li>
+admin/index.php:13:        <li><a href="order">Order Manager</a></li>
+admin/index.php:14:    </ul>
+admin/index.php:16:</section>
+admin/index.php:18:<?php include '../view/footer.php'; ?>
+pizza/index.php:1:<?php
+pejman@topcat:~/solution/gs$
+\end{lstlisting}
+Since all results point to a navigational section in \texttt{admin/index.php} file, the result confirms no HTML script has been used inside controller files.
+
+
+\end{enumerate}
+

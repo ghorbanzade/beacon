@@ -1,0 +1,146 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+\lstset{language=SQL}
+\lstset{numbers=none}
+\lstset{tabsize=4}
+\lstset{frame=none}
+
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\begin{enumerate}
+\item Nobel Prize Winners, based on an online database with schema \texttt{nobel(yr, subject, winner)} available on website \href{http://sqlzoo.net/wiki/SELECT_from_Nobel_Tutorial}{sqlzoo.net}.
+\begin{enumerate}
+\setcounter{enumii}{1}
+\item Show who won the 1962 prize for Literature.
+\begin{lstlisting}
+SELECT winner
+FROM nobel N
+WHERE N.yr = 1962 AND N.subject = 'Literature';
+\end{lstlisting}
+\setcounter{enumii}{3}
+\item Give the name of the 'Peace' winners since the year 2000, including 2000.
+\begin{lstlisting}
+SELECT winner
+FROM nobel N
+WHERE N.yr >= 2000 AND N.subject='Peace';
+\end{lstlisting}
+\setcounter{enumii}{5}
+\item Show all details of the presidential winners: (Theodore Roosevelt, Woodrow Wilson, Jed Bartlet, Jimmy Carter)
+\begin{lstlisting}
+SELECT *
+FROM nobel
+WHERE winner IN (
+	'Theodore Roosevelt',
+	'Woodrow Wilson',
+	'Jed Bartlet',
+	'Jimmy Carter');
+\end{lstlisting}
+\end{enumerate}
+\item World Countries, based on an online database with schema \texttt{world(name, continent, area, population, gdp)} available on website \href{http://sqlzoo.net/wiki/SELECT_within_SELECT_Tutorial}{sqlzoo.net}.
+\begin{enumerate}
+\setcounter{enumii}{1}
+\item Show the countries in Europe with a per capita GDP greater than \textit{United Kingdom}.
+\begin{lstlisting}
+SELECT C.name
+FROM world C
+WHERE C.continent = 'Europe' AND C.gdp/C.population > (
+	SELECT C1.gdp/C1.population
+	FROM world C1
+	WHERE C1.name = 'United Kingdom'
+	);
+\end{lstlisting}
+\setcounter{enumii}{3}
+\item Which country has a population that is more than Canada but less than Poland? Show the name and the population.
+\begin{lstlisting}
+SELECT C.name, C.population
+FROM world C
+WHERE C.population > (
+	SELECT C1.population
+	FROM world C1
+	WHERE C1.name = 'Canada'
+	)
+	AND C.population < (
+	SELECT C2.population
+	FROM world C2
+	WHERE C2.name = 'Poland'
+	);
+\end{lstlisting}
+\setcounter{enumii}{5}
+\item Find the largest country (by area) in each continent, show the continent, the name and the area.
+\begin{lstlisting}
+SELECT C.continent, C.name, C.area
+FROM world C
+WHERE C.area >= ALL (
+	SELECT C1.area
+	FROM world C1
+	WHERE C1.continent = C.continent
+	AND C1.area IS NOT NULL
+	);
+\end{lstlisting}
+\end{enumerate}
+\item World Countries, based on an online database with schema \texttt{world(name, continent, area, population, gdp)} available on website \href{http://sqlzoo.net/wiki/SUM_and_COUNT}{sqlzoo.net}.
+\begin{enumerate}
+\setcounter{enumii}{1}
+\item List all the continents - just once each.
+\begin{lstlisting}
+SELECT DISTINCT C.continent
+FROM world C;
+\end{lstlisting}
+\setcounter{enumii}{3}
+\item How many countries have an area of at least 1000000?
+\begin{lstlisting}
+SELECT COUNT(*)
+FROM world
+WHERE area >= 1000000;
+\end{lstlisting}
+\setcounter{enumii}{5}
+\item For each continent show the continent and number of countries.
+\begin{lstlisting}
+SELECT C.continent, COUNT(C.name)
+FROM world C
+GROUP BY C.continent;
+\end{lstlisting}
+\end{enumerate}
+\item Consider the following database schema with three relations:
+
+\texttt{movie (\underline{id}:integer, title:string, year:integer, director:string, budget:integer, gross:integer)}\\
+\texttt{actor (\underline{id}:integer, name:string)}\\
+\texttt{casting (\underline{movieid}:integer, \underline{actorid}:integer, ord:string)}
+
+More information about the database available at \href{http://sqlzoo.net/wiki/More_details_about_the_database.}{sqlzoo.net}
+
+\begin{enumerate}
+\setcounter{enumii}{5}
+\item What is the id of the film \textit{Casablanca}?
+\begin{lstlisting}
+SELECT id
+FROM movie M
+WHERE M.title = 'Casablanca';
+\end{lstlisting}
+\item Obtain the cast list for \textit{Casablanca}.
+\begin{lstlisting}
+SELECT A.name
+FROM movie M, casting C, actor A
+WHERE M.id = C.movieid AND A.id = C.actorid AND M.title = 'Casablanca';
+\end{lstlisting}
+\item Obtain the cast list for the film \textit{Alien}.
+\begin{lstlisting}
+SELECT A.name
+FROM movie M, casting C, actor A
+WHERE M.id = C.movieid AND A.id = C.actorid AND M.title = 'Alien';
+\end{lstlisting}
+\item List the films in which \textit{Harrison Ford} has appeared.
+\begin{lstlisting}
+SELECT M.title
+FROM movie M, actor A, casting C
+WHERE C.movieid = M.id AND C.actorid = A.id AND A.name = 'Harrison Ford';
+\end{lstlisting}
+\end{enumerate}
+\end{enumerate}

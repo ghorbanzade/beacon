@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+Modify the class \texttt{CategoryDB} given in the code snippet below such that it uses regular methods instead of static methods.
+
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+<?php
+class CategoryDB {
+    public static function getCategories() {
+        $db = Database::getDB();
+        $query = 'SELECT * FROM categories ORDER BY categoryID';
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $categories = array();
+        foreach ($statement as $row) {
+            $category = new Category($row['categoryID'], $row['categoryName']);
+            $categories[] = $category;
+        }
+        return $categories;
+    }
+    public static function getCategory($category_id) {
+        $db = Database::getDB();
+        $query = 'SELECT * FROM categories WHERE categoryID = :category_id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':category_id', $category_id);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        $category = new Category($row['categoryID'], $row['categoryName']);
+        return $category;
+    }
+}
+\end{lstlisting}
+
+\section*{Solution}
+
+The modified class \texttt{CategoryDAO} is given as the following code snippet.
+
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+<?php
+class CategoryDAO {
+    public function getCategories() {
+        $db = Database::getDB();
+        $query = 'SELECT * FROM categories ORDER BY categoryID';
+        $statement = $db->prepare($query);
+        $statement->execute();
+        $categories = array();
+        foreach ($statement as $row) {
+            $category = new Category($row['categoryID'], $row['categoryName']);
+            $categories[] = $category;
+        }
+        return $categories;
+    }
+    public function getCategory($category_id) {
+        $db = Database::getDB();
+        $query = 'SELECT * FROM categories WHERE categoryID = :category_id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':category_id', $category_id);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        $category = new Category($row['categoryID'], $row['categoryName']);
+        return $category;
+    }
+}
+\end{lstlisting}
+

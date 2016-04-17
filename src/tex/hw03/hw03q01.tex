@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Study the deployed project at the \href{http://topcat.cs.umb.edu:11600/pizza3}{Topcat Website} and see how a user can navigate among them.
+Draw a graph of the pages as navigated, with arrows showing use of links or buttons to get from one page to another.
+There are 8 major pages in this pizza app: Home, Admin Menu, Manage Toppings, Manage Sizes, Manage Orders, Manage Days, Student Welcome and Pizza Order Form.
+So there should be 8 nodes in your graph, with arrows between them as appropriate.
+
+\subsection*{Solution}
+
+Figure \ref{fig11} presents the graph of page relations in project \texttt{my\_guitar\_shop2}.
+Table \ref{tab11} shows which page each letter stands for.
+
+\begin{table}[H] \centering
+\begin{tabular}{c | l | l}
+Letter & Pages & File Name\\
+\hline
+A & Manage Toppings & \texttt{toppings.php}\\
+B & Admin Menu & \texttt{adminWelcome.php}\\
+C & Home & \texttt{index.php}\\
+D & Student Welcome & \texttt{studentWelcome.php} \\
+E & Manage Sizes & \texttt{sizes.php} \\
+F & Manage Orders & \texttt{orders.php} \\
+G & Manage Days & \texttt{days.php} \\
+H & Pizza Order Form & \texttt{orderForm.php} \\
+\end{tabular}
+\caption{List of symbols assigned to different pages}\label{tab11}
+\end{table}
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+distance=2cm,semithick]
+  \node[state]	(0) 				{A};
+  \node[state]	(1) [below of = 0]	{E};
+  \node[state]	(2) [right of = 0]	{B};
+  \node[state]	(3) [right of = 1]	{F};
+  \node[state]	(4) [right of = 2]	{C};
+  \node[state]	(5) [right of = 3]	{G};
+  \node[state]	(6) [right of = 4]	{D};
+  \node[state]	(7) [right of = 5]	{H};
+  \path
+  	(4) edge [bend left=0] node {}	(2)
+  	  	edge [bend left=0] node {}	(6)
+  	(2) edge [bend left=0] node {}	(0)
+  		edge [bend left=0] node {}	(1)
+  		edge [bend left=0] node {}	(3)
+  		edge [bend left=0] node {}	(5)
+  	(6)	edge [bend left=0] node {}	(7)
+  	(0) edge [bend left=0] node {}	(2)
+  	(1) edge [bend left=0] node {}	(2)
+  	(3) edge [bend left=0] node {}	(2)
+  	(5) edge [bend left=0] node {}	(2);
+\end{tikzpicture}
+\caption{Graph of page navigations excluding sidebar menu}\label{fig11}
+\end{figure}
+
+If side bar menu is to be included, the graph will have extra arrows from each node pointing to nodes $B$, $C$, $D$.

@@ -1,0 +1,92 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item
+Visit University of Massachusetts Boston's \href{http://www2.www.umb.edu/directory/search1.php}{search page} and get its source from your browser.
+
+\begin{enumerate}[label=(\roman*)]
+
+\item
+What are the \texttt{ACTION} values for each one? What \texttt{URL} is the form submitted to? Do they do a \texttt{GET} or a \texttt{POST} request to the web server?
+
+\item What are the names of the (non-hidden) input text fields for the first and second forms? The hidden ones?
+
+\item What other ways of accepting input from the user are in use on this page?
+\end{enumerate}
+
+\item Visit \href{http://boulter.com/ttt}{Tic Tac Toe} website for a game with HTML user interface.
+
+\begin{enumerate}[label=(\roman*)]
+\item Start playing, and then look at the source.
+Explain how the \textit{X}s and \textit{O}s are displayed.
+
+\item Observe how the cursor changes shape as you move the mouse around.
+What software is handling the moment-to-moment cursor painting? Look at the HTML source.
+How are the various areas for special cursors specified by the HTML?
+
+\item Do another move, note that the computer moves right away, but nothing ever happens after that until you do something.
+You can wait hours, and meanwhile hundreds of other users can be playing.
+Where is the knowledge of your current position (\textit{X}'s and \textit{O}'s) kept all this time? To answer this puzzle, look at the source, after a move and again after another move, and find out about hidden form fields.
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item There are two HTML forms in the web page.
+\begin{enumerate}[label=(\roman*)]
+\item The first form is identified as \texttt{searchbox\_001225130692263366863:pbalvg-\_hus} and will be submitted to \href{http://www.umb.edu/search}{\texttt{http://www.umb.edu/search}} which is the \texttt{action} value defined for it.
+As the \texttt{method} attribute is not explicitly defined, the form will use the \texttt{GET} method as default to send information to the web server.
+
+The second form is identified as \texttt{person} and because its action attribute is left blank, it will be submitted to same web page \href{http://www.umb.edu/offices_directory}{\texttt{http://www.umb.edu/offices\_directory}}.
+This form as well, uses the \texttt{GET} method to send information to server.
+
+\item Non-hidden input elements for the first forms are \texttt{cx}, \texttt{cof} and \texttt{q}.
+As for the second form, it has only one non-hidden input named \texttt{query}.
+None of the two forms have hidden inputs.
+
+\item Other ways of getting information from user are links that not only provide a way for user to visit other pages, they also sometimes specify information that will be given to the destination page using \texttt{GET} method.
+As well, some of the links provide quick access to different parts of the web page using \texttt{\#} sign.
+\end{enumerate}
+
+\item
+The \textit{Tic-Tac-Toe} Game
+
+\begin{enumerate}[label=(\roman*)]
+\item
+The playing board is enclosed in an HTML form and each 9 squares of the board are initially, one of its non-hidden inputs of type \texttt{image}.
+Initially source attribute of every image is set to \texttt{blank.gif}.
+There are also five more hidden input elements that are responsible for controlling the game flow.
+Input element with name \texttt{compmark} for instance determines which sign of \textit{X} or \textit{O} is assigned to the user and which to the computer.
+Current position of \textit{X}s and \textit{O}s are determined by another hidden element with name \texttt{board}.
+Two other hidden input elements \texttt{xsize} and \textit{ysize} determine size of the board.
+Finally, hidden input element \texttt{needwin} determines rule of the game, i.e. how many sign in a row is needed for a player to win.
+
+As the player clicks on blank squares of the board, the form is submitted to the same page using \texttt{POST} method to send information to the server.
+Based on previous position of the board and recent movement of the player, the server would then processes information and gives the next setup of the board in which its movement is included.
+
+\item
+Changes in cursor from pointer to a hand is made by browsers to provide accessibility features for users and as a notification that the element the cursor points to is clickable.
+During the Tic-Tac-Toe game, the hand icon would appear when the user moves the cursor to an input element.
+Initially, when the board is clear all 9 squares are input elements that act as a submit button for the form.
+Yet, when \textit{X}s and \textit{O}s appear in squares, the input element will be replaced by a simple image element making the square impossible to choose.
+
+\item
+As explained before, current state of the board is passively stored as the value of a hidden input element named \textit{board}.
+Obviously, other users may interact with the server but none will affect the value stored in that input element, temporarily stored in the browser.
+Each time the form is submitted, the new state of the board will be given to the user based on the information previously submitted to the server.
+As new users will have different information submitted to the server they will get different results even if they are playing at the same time.
+
+\end{enumerate}
+
+\end{enumerate}
+

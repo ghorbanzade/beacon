@@ -1,0 +1,60 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 6}
+
+\begin{enumerate}[label=(\alph*)]
+\item In C, Java, and PHP, a non-negative integer constant consisting of a sequence of two or more digits is taken to be octal if the first digit is zero, Write a call to \texttt{preg\_match()} that checks if a string represents a non-negative octal number.
+
+\item An octal number can be negative, with a minus sign before the digits. Write a call to \texttt{preg\_match()} that checks if a string represents an octal number.
+
+\item A sequence of digits preceded by \texttt{0x} or \texttt{0X} is taken to be a hexadecimal integer, possibly preceded by a minus sign. The hexadecimal digits include \texttt{a} or \texttt{A} through \texttt{f} or \texttt{F} with values \texttt{10} through \texttt{15}. Write a call to \texttt{preg\_match()} that checks if a string represents a hexadecimal number, possibly negative.
+
+\item Write a pattern that will match strings that are  either \texttt{messages} or \texttt{messages} followed by a dot character and a number. Write a call to \texttt{preg\_match()} that checks if a string represents this pattern.
+
+\item A C-style comment is a sequence of characters that begin with \texttt{/*} and ends with \texttt{*/}. C-style comments do not nest. Write a call to \texttt{preg\_match()} that checks if the variable \$line represents a C-style comment.
+
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item Pattern \verb/(^[0]\d+$)/ will match all non-negative octal numbers as desired. The following code snippet shows how this pattern can be used inside the \texttt{preg\_match()} PHP function.
+
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+$pattern = '(^[0]\d+$)';
+preg_match($pattern, $string);
+\end{lstlisting}
+
+\item Pattern \verb/(^[-]?[0]\d+$)/ will match all octal numbers as desired. The following code snippet shows how to use this pattern to check if \$string contains a string literal representation of an octal number.
+
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+$pattern = '(^[-]?[0]\d+$)';
+preg_match($pattern, $string);
+\end{lstlisting}
+
+\item Pattern \verb/(^[-]?[0][x|X][0-9a-fA-F]+$)/ will match all string lateral representations of hexadecimal numbers. The following code snippet shows how to use this pattern to check if \$string contains a string literal representation of a hexadecimal number.
+
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+$pattern = '(^[-]?[0][x|X][0-9a-fA-F]+$)';
+preg_match($pattern, $string);
+\end{lstlisting}
+
+\item Pattern \verb/(^\bmessages\b(?:[.]\d+)?$)/ will match string literals that begin with word \textit{messages} and may continue with a dot character followed by any number. The following code snippet shows how to use this pattern in PHP to see if an string literal matches the pattern.
+
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+$pattern = '(^\bmessages\b(?:[.]\d+)?$)';
+preg_match($pattern, $string);
+\end{lstlisting}
+
+\item The simple pattern \verb#(\/\*.*\*\/)# would succeed in matching single-line block comments that are not nested. To resolve the nesting limitation, pattern \verb#(\/\*(\*(?!\/)|[^*])*\*\/)# is proposed. This pattern would match all single-line block comments. To further remove the limitation, pattern \verb#(\/\*([^*]|[\r\n]|(\*+([^*\/]|[\r\n])))*\*\/+)# is proposed that supports multi-line c-style block comments as well.
+
+\end{enumerate}

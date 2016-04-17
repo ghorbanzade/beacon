@@ -1,0 +1,27 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 5}
+
+A PHP code snippet contains two lines of code given below, to be used later for pattern matching. 
+\begin{lstlisting}
+$char = '([^\\\\”])';
+$hostname = '([[:alnum:]]([-[:alnum:]]{0,62}[[:alnum:]])?)';
+\end{lstlisting}
+Write down the pattern each line represents and explain what they will match. In the second line, explain what hostnames will be eliminated if question mark is removed.
+
+\subsection*{Solution}
+
+\begin{enumerate}[label=(\alph*)]
+\item Pattern \verb+([^\\\"])+ matches the first character in a string that is neither a backslash nor a double-quotation mark.
+
+\item Pattern \verb+([[:alnum:]]([-[:alnum:]]{0,62}[[:alnum:]])?)+ matches all the strings that begin with an alphanumeric character (a case-insensitive letter or a digit) and \textit{may} continue with a string of maximum length 63 containing characters that are either alphanumeric or dash character and whose last character is always an alphanumeric.
+
+Removing the question mark in the pattern will slightly limit the matched strings in that the second part cannot be empty. In other words, the new pattern would match all the strings that begin with an alphanumeric character and \textit{will} continue with a string of maximum size 63 containing characters that are either alphanumeric or dash character and whose last character is an alphanumeric. This means removing the question mark will eliminate host names of single alphanumeric character from the matched strings.
+
+\end{enumerate}
+

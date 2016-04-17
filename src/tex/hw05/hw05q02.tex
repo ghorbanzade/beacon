@@ -1,0 +1,213 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Explain why modified version of the \texttt{index.php} and \texttt{display\_result.php} files in previous question, are not following the Model View Control rules.
+given below.
+\begin{enumerate}
+\item Controller code generates no HTML. Instead, it forwards to view files that do have HTML generation, or do a redirect (which has no HTML).
+\item Calls to the model code occur only in controller code. The controller interprets incoming parameters and assembles the data the view needs before forwarding to view code.
+\end{enumerate}
+Modify \texttt{index.php} and \texttt{display\_result.php} files to comply with MVC rules. Argue which code should be designated as control code, and which code should be view code. Note that there is no model code here.
+
+\subsection*{Solution}
+
+File \texttt{index.php} and \texttt{display\_result.php} in previous question do not comply with MVC requirements in that HTML codes are generated within both files that contain controller code as well.
+
+To modify the program such that it follows MVC requirements, the file structure depicted in Figure \ref{fig21} is proposed. As is shown, \texttt{header.php} and \texttt{footer.php} view files are placed in a separate \texttt{view} folder and \texttt{index.php} files serve as controllers that, after preparing data, call view files \texttt{showForm.php} and \texttt{display\_result.php} for HTML generation. 
+
+\begin{figure}[H]\centering
+\tikzstyle{every node}=[anchor=west]
+\tikzstyle{file}=[]
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  \node {root}
+    child { node {result} 
+      child { node [file] {display\_result.php} }
+      child { node [file] {index.php} }
+    }
+    child [missing] {}
+    child [missing] {}
+    child { node {view}
+      child { node [file] {header.php} }
+      child { node [file] {footer.php} }
+    }
+    child [missing] {}
+    child [missing] {}
+    child { node {form}
+      child { node [file] {showForm.php} }
+    }
+    child [missing] {}
+    child { node [file] {index.php} }				
+    ;
+\end{tikzpicture}
+\caption{Program file structure compliant to MVC conventions}\label{fig21}
+\end{figure}
+
+Following is the content for each file in this new file structure.
+
+\begin{enumerate}
+\item file \texttt{/view/header.php}
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Future Value Calculator</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	<main>
+	<h1>Future Value Calculator</h1>
+\end{lstlisting}
+
+\item file \texttt{/view/footer.php}
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+	</main>
+</body>
+</html>
+\end{lstlisting}
+
+\item file \texttt{/index.php}
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+<?php 
+	//set default value of variables for initial page load
+	if (!isset($investment)) { $investment = ''; } 
+	if (!isset($interest_rate)) { $interest_rate = ''; } 
+	if (!isset($years)) { $years = ''; } 
+	if (!empty($error_message)) {
+		echo "<p class='error'>".htmlspecialchars($error_message)."</p>";
+	}
+	include 'form/showForm.php';
+\end{lstlisting}
+
+\item file \texttt{/form/showForm.php}
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+<form action="result/" method="post">
+	<div id="data">
+		<div class='field'>
+			<label for="investment">Investment Amount</label>
+			<input type="text" id="investment" name="investment" value="<?php echo $investment; ?>" tabindex="1">
+		</div>
+		<div class='field'>
+			<label for="interest_rate">Yearly Interest Rate</label>
+			<input type="text" id="interest_rate" name="interest_rate" value="<?php echo $interest_rate; ?>" tabindex="2">
+		</div>
+		<div class='field'>
+			<label for="years">Number of Years</label>
+			<input type="text" id="years" name="years" value="<?php echo $years; ?>" tabindex="3">
+		</div>
+	</div>
+	<div id="buttons">
+		<label>&nbsp;</label>
+		<input type="submit" value="Calculate" tabindex="4">
+	</div>
+</form>
+\end{lstlisting}
+
+\item file \texttt{/result/index.php}
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+<?php
+	// get the data from the form
+	$investment = filter_input(INPUT_POST, 'investment', FILTER_VALIDATE_FLOAT);
+	$interest_rate = filter_input(INPUT_POST, 'interest_rate', FILTER_VALIDATE_FLOAT);
+	$years = filter_input(INPUT_POST, 'years', FILTER_VALIDATE_INT);
+	// validate investment
+	if ($investment === FALSE ) {
+		$error_message = 'Investment must be a valid number.'; 
+	} else if ( $investment <= 0 ) {
+		$error_message = 'Investment must be greater than zero.'; 
+	// validate interest rate
+	} else if ( $interest_rate === FALSE )  {
+		$error_message = 'Interest rate must be a valid number.'; 
+	} else if ( $interest_rate <= 0 ) {
+		$error_message = 'Interest rate must be greater than zero.'; 
+	// validate years
+	} else if ( $years === FALSE ) {
+		$error_message = 'Years must be a valid whole number.';
+	} else if ( $years <= 0 ) {
+		$error_message = 'Years must be greater than zero.';
+	} else if ( $years > 30 ) {
+		$error_message = 'Years must be less than 31.';
+	// set error message to empty string if no invalid entries
+	} else {
+		$error_message = ''; 
+	}
+	// if an error message exists, go to the index page
+	if ($error_message != '') {
+		include('index.php');
+		exit(); 
+	}
+	// calculate the future value
+	// Developing investment class
+	class Investment {
+		private $amount;
+		private $interest;
+		private $year;
+		public function __construct($amount, $interest, $year) {
+			$this->amount = $amount;
+			$this->interest = $interest;
+			$this->year = $year;
+		}
+		public function findFutureValue() {
+			$future_value = $this->amount;
+			for ($i = 1; $i <= $this->year; $i++) {
+				$future_value += $future_value * ($this->interest) * 0.01;
+			}
+			return $future_value;
+		}
+		public function getAmount() {
+			return $this->amount;
+		}
+		public function getInterest() {
+			return $this->interest;
+		}
+	}
+	// Object instantiation and use
+	$investment = new Investment($_POST['investment'], $_POST['interest_rate'], $_POST['years']);
+	$future_value = $investment->findFutureValue();
+	// apply currency and percent formatting
+	$investment_f = '$'.number_format($investment->getAmount(), 2);
+	$yearly_rate_f = $investment->getInterest().'%';
+	$future_value_f = '$'.number_format($future_value, 2);
+	include 'display_results.php';
+?>
+\end{lstlisting}
+
+\item file \texttt{/result/display\_result.php}
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Future Value Calculator</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	<main>
+		<h1>Future Value Calculator</h1>
+		<label>Investment Amount:</label>
+		<span><?php echo $investment_f; ?></span><br>
+		<label>Yearly Interest Rate:</label>
+		<span><?php echo $yearly_rate_f; ?></span><br>
+		<label>Number of Years:</label>
+		<span><?php echo $years; ?></span><br>
+		<label>Future Value:</label>
+		<span><?php echo $future_value_f; ?></span><br>
+	</main>
+</body>
+</html>
+\end{lstlisting}
+\end{enumerate}
+

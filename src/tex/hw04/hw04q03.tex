@@ -1,0 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+When the user of the \texttt{pizza1} project makes the first pizza order, he specified a room number on the order form. This room number then shows up on next displayed page, along with a table of orders for that room (no hidden parameter yet needed). If the user follows the link to order another pizza, the room number is pre-selected in the order form. How does the controller of the order form know the room number? Similarly, the user could acknowledge receipt of pizzas, causing another request-response cycle, yet again the controller knows the room number when redoing the page. Explain how the room number information is transmitted from one request-response cycle to the next.
+
+\subsection*{Solution}
+The procedure implemented to deal with stateless nature of the HTML relies on form inputs of type \textit{hidden}. In \texttt{pizza/index.php}, room number is taken from user via an HTML form with one \textit{select} input whose name is \textit{room} and one \textit{hidden} input named \textit{action} and with default value \textit{``Select Room''}. When user selects a room and submits the form the information is \textit{posted} to the server and is processed to change the \textit{Order Pizza} link in case \texttt{\$\_POST[room]} is set. Therefore, when user clicks on \textit{Order Pizza} link, room number would be sent to the server and would be used to set the default value of the \textit{room} input in the \texttt{form\_order\_pizza} form. This input will again be used once the user places his order to show the list of current orders placed by the room.
+
+Therefore, the server \textit{understand}s the previously-selected room number with help of the \texttt{room} URL parameter. Which page to show to the user is as well determined based on value of \textit{action} hidden input.
+

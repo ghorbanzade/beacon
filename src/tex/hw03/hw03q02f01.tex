@@ -1,0 +1,96 @@
+\begin{tikzpicture}[every node/.style={font=\ttfamily}, node distance=3cm]
+
+\matrix [entity=addresses]  {
+    \pk{addressID}
+    \fk{customerID}
+    \properties{
+        line1, 
+        line2,
+        city,
+        state,
+        zipCode,
+        phone,
+        disabled
+    }
+};
+
+\matrix [entity=customers, right=of addresses-addressID, entity anchor=customers-shipAddressID] {
+    \fk{shipAddressID}
+    \fk{billingAddressID}
+    \pk{customerID}
+    \properties{ 
+        emailAddress,
+        password,
+        firstName,
+        lastName
+    }
+};
+
+\matrix [entity=orders, right=of customers-shipAddressID, entity anchor=orders-shipAddressID]  {
+    \fk{shipAddressID}
+    \fk{billingAddressID}
+    \fk{customerID}    
+    \pk{orderID}
+    \properties{
+        orderDate,
+        shipAmount,
+        taxAmount, 
+        shipDate,
+        cardType, 
+        cardNumber,
+        cardExpires
+    }
+};
+
+\matrix [entity=orderitems, below=of customers-customerID, entity anchor=orderitems-itemID]  {
+    \pk{itemID}
+    \fk{orderID}
+    \fk{productID}
+    \properties{
+        itemPrice,
+        discountAmount,
+        quantity
+    }
+};
+
+\matrix [entity=products, below=of addresses-state, entity anchor=products-productID]  {
+    \pk{productID}
+    \fk{categoryID}
+    \properties{
+        productCode,
+        productName,
+        description,
+        listPrice,
+        discountPercent,
+        dateAdded
+    }
+};
+
+\matrix [entity=categories, below=of orderitems-productID, entity anchor=categories-categoryID]  {
+    \pk{categoryID}
+    \properties{
+        categoryName,
+    }
+};
+
+\matrix  [entity=administrators, below=of orders-shipDate, entity anchor=administrators-adminID]  {
+    \pk{adminID}
+    \properties{
+        emailAddress,
+        password,
+        firstName,
+        lastName
+    }
+};
+
+\draw [one to many] (customers-customerID) to (addresses-customerID);
+\draw [one to many] (addresses-addressID) to (customers-shipAddressID) ;
+\draw [one to many] (addresses-addressID) to (customers-billingAddressID) ;
+\draw [one to many] (categories-categoryID) to (products-categoryID);
+\draw [one to many] (products-productID) to (orderitems-productID);
+\draw [one to many] (orders-orderID) to (orderitems-orderID);
+\draw [one to many] (customers-customerID) to (orders-customerID);
+\draw [one to many] (customers-shipAddressID) to (orders-shipAddressID);
+\draw [one to many] (customers-billingAddressID) to (orders-billingAddressID);
+
+\end{tikzpicture}
