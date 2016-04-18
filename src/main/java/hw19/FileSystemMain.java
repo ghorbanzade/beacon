@@ -72,6 +72,7 @@ public final class FileSystemMain {
     }
 
     /* kill all the threads */
+    fq.setFlag();
     for (Thread t: threads) {
       t.interrupt();
     }

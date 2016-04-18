@@ -30,6 +30,7 @@ public final class FileQueue {
   private final int threshold;
   private final ArrayList<File> files;
   private final ReentrantLock lock;
+  private boolean flag = false;
 
   /**
    * A file queue is simply defined as a list of files whose size should
@@ -91,6 +92,39 @@ public final class FileQueue {
       this.lock.lock();
       try {
         return this.threshold <= this.files.size();
+      } finally {
+        this.lock.unlock();
+      }
+    }
+  }
+
+  /**
+   * This method is called by crawlers to check whether the main thread is
+   * asking them to stop.
+   *
+   * @return whether the flag to stop crawlers is set
+   */
+  public boolean getFlag() {
+    while (true) {
+      this.lock.lock();
+      try {
+        return this.flag;
+      } finally {
+        this.lock.unlock();
+      }
+    }
+  }
+
+  /**
+   * This method is called by the main thread to signal to all crawlers that
+   * it is time tot stop.
+   */
+  public void setFlag() {
+    while (true) {
+      this.lock.lock();
+      try {
+        this.flag = true;
+        break;
       } finally {
         this.lock.unlock();
       }

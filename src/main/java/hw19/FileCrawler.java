@@ -48,19 +48,21 @@ public final class FileCrawler implements Runnable {
    * it tries to crawl them using DFS method.
    *
    * @param root top level directory whose elements should be crawled.
+   * @throws InterruptedException when the main thread asks to stop
    */
-  private void crawl(Directory root) {
+  private void crawl(Directory root) throws InterruptedException {
     for (FileSystemElement element: root.getChildren()) {
       if (element instanceof Directory) {
         this.crawl((Directory) element);
       } else if (element instanceof File) {
         File file = (File) element;
         while (true) {
-          if (this.fq.isFull()) {
+          if (this.fq.getFlag()) {
+            throw new InterruptedException();
+          } else if (this.fq.isFull()) {
             try {
               Thread.sleep(this.speed);
             } catch (InterruptedException e) {
-              e.printStackTrace();
               Thread.currentThread().interrupt();
             }
           } else {
@@ -79,7 +81,15 @@ public final class FileCrawler implements Runnable {
    * or the main thread has interrupted the thread.
    */
   public void run() {
-    this.crawl(this.root);
+    while (!Thread.currentThread().isInterrupted()) {
+      try {
+        this.crawl(this.root);
+        break;
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+    }
+    System.out.printf("file crawler stopped by the main thread%n");
   }
 
 }

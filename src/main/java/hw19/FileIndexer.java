@@ -60,10 +60,10 @@ public final class FileIndexer implements Runnable {
         this.indexFile(this.fq.get());
         Thread.sleep(this.speed);
       } catch (InterruptedException e) {
-        System.out.printf("file indexer stopped by the main thread%n");
         Thread.currentThread().interrupt();
       }
     }
+    System.out.printf("file indexer stopped by the main thread%n");
   }
 
 }
