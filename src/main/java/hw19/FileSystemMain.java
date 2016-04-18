@@ -10,26 +10,32 @@ package edu.umb.cs681.hw19;
 import java.util.ArrayList;
 
 /**
+ * This class demonstrates how a file system can be crawler by multiple
+ * threads and indexed by other threads at the same time.
  *
+ * @author Pejman Ghorbanzade
  */
 public final class FileSystemMain {
 
   /**
+   * This program loads a file system and creates as many file crawlers
+   * as there are directories under the root directory, and as many
+   * file indexers as specified in configuration file. The main thread
+   * then starts crawlers and indexers as separate threads and waits
+   * a certain amount of time before stopping them.
    *
+   * @param args command line arguments given to the problem
    */
   public static void main(String[] args) {
     ConfigReader cfg = new ConfigReader("/filesystem.properties");
-    int fsNum = Integer.parseInt(cfg.get("fselements.number"));
-    int fiNum = Integer.parseInt(cfg.get("fileindexer.number"));
-    FileNameReader fnr = new FileNameReader(cfg.get("filename.list"));
-
-    FileQueue fq = new FileQueue(Integer.parseInt(cfg.get("filequeue.size")));
-    FileSystem fs = initFileSystem();
+    FileSystem fs = new FileSystem(cfg);
+    FileQueue fq = new FileQueue(Integer.parseInt(cfg.get("queue.size")));
     FileIndexer fi = new FileIndexer(fq);
-    FileCrawler fc = new FileCrawler(fs.getRoot(), fq);
 
-    fs.getRoot().showAllElements();
+    /* print the directory structure */
+    fs.show();
 
+    /* create as many crawlers as there are directories under the root */
     ArrayList<FileCrawler> crawlers = new ArrayList<FileCrawler>();
     for (FSElement element: fs.getRoot().getChildren()) {
       if (element instanceof Directory) {
@@ -39,41 +45,38 @@ public final class FileSystemMain {
         fq.put((File) element);
       }
     }
-    Thread[] fcThreads = new Thread[crawlers.size()];
-    for (int i = 0; i < crawlers.size(); i++) {
-      fcThreads[i] = new Thread(crawlers.get(i));
-      fcThreads[i].start();
-    }
-    Thread[] fiThreads = new Thread[fiNum];
-    for (int i = 0; i < fiNum; i++) {
-      fiThreads[i] = new Thread(fi);
-      fiThreads[i].start();
-    }
-    
-  }
 
-  /**
-   *
-   */
-  public static FileSystem initFileSystem() {
-    String user = "pejman";
-    Directory dir1 = new Directory("pictures", user);
-    File file1 = new File("e", user, 8);
-    dir1.appendChild(file1);
-    dir1.appendChild(new File("f", user, 28));
-    dir1.appendChild(new Link("y", user, file1));
-    Directory dir2 = new Directory("system", user);
-    dir2.appendChild(new File("a", user, 256));
-    dir2.appendChild(new File("b", user, 12));
-    dir2.appendChild(new File("c", user, 64));
-    Directory dir3 = new Directory("home", user);
-    dir3.appendChild(new File("d", user, 56));
-    dir3.appendChild(new Link("x", user, dir2));
-    dir3.appendChild(dir1);
-    FileSystem fs = FileSystem.getFileSystem();
-    fs.getRoot().appendChild(dir2);
-    fs.getRoot().appendChild(dir3);
-    return fs;
+    /* create a list of threads to add indexers and crawlers to */
+    ArrayList<Thread> threads = new ArrayList<Thread>();
+
+    /* add file crawlers to the list of threads */
+    for (int i = 0; i < crawlers.size(); i++) {
+      threads.add(new Thread(crawlers.get(i)));
+    }
+
+    /* add file indexers to the list of threads */
+    for (int i = 0; i < Integer.parseInt(cfg.get("indexer.number")); i++) {
+      threads.add(new Thread(fi));
+    }
+
+    /* start all the threads */
+    for (Thread t: threads) {
+      t.start();
+    }
+
+    /* wait as long as main.runtime for threads to run */
+    try {
+      Thread.sleep(Integer.parseInt(cfg.get("main.runtime")));
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    /* kill all the threads */
+    for (Thread t: threads) {
+      t.interrupt();
+    }
+
+    /* end of the main method */
   }
 
   /**

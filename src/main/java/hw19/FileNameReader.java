@@ -12,35 +12,45 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import java.util.ArrayList;
 
 /**
- *
+ * This class defines a file name reader as an object that generates
+ * random filenames based on a resource file that contains multiple
+ * filenames.
  *
  * @author Pejman Ghorbanzade
+ * @see FileSystem
  */
 public class FileNameReader {
 
   /**
-   *
+   * A filename reader keeps track of an array of filenames from which a
+   * filename can be chosen.
    */
   private final String[] names;
 
   /**
+   * A filename reader object takes the path to a resource file and uses
+   * the names inside that file as a list of possible filenames to choose
+   * names from.
+   * 
+   * <p>Upon construction, a filename reader object loads all possible
+   * filenames for faster access.
    *
-   *
-   * @param path
+   * @param path path to the file containing a list of possible filenames
    */
   public FileNameReader(String path) {
     this.names = this.loadNames(path);
   }
 
   /**
+   * This method takes the path of a resource file and loads its content
+   * as a list of possible filenames to be used for generating random
+   * filenames for different file system elements.
    *
-   *
-   * @param path
-   * @return
+   * @param path the path to the file whose content should be loaded
+   * @return an array of filenames to choose a filename from
    */
   private String[] loadNames(String path) {
     ArrayList<String> list = new ArrayList<String>();
@@ -67,9 +77,10 @@ public class FileNameReader {
   }
 
   /**
+   * This method generates a random file name to be assigned to a file system
+   * element.
    *
-   *
-   * @return
+   * @return a random filename to be used as the name of a file system element
    */
   public String getName() {
     String out = null;

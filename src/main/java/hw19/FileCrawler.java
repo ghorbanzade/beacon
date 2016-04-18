@@ -9,25 +9,37 @@ package edu.umb.cs681.hw19;
 
 /**
  *
+ *
+ * @author Pejman Ghorbanzade
+ * @see FileQueue
+ * @see File
  */
 public final class FileCrawler implements Runnable {
 
   /**
    *
    */
-  private FileQueue fq;
-  private Directory root;
+  private final FileQueue fq;
+  private final Directory root;
+  private final int speed;
 
   /**
    *
+   *
+   * @param root
+   * @param fq
    */
   public FileCrawler(Directory root, FileQueue fq) {
+    ConfigReader cfg = new ConfigReader("/filesystem.properties");
+    this.speed = Integer.parseInt(cfg.get("crawler.speed"));
     this.fq = fq;
     this.root = root;
   }
 
   /**
    *
+   *
+   * @param root top level directory whose elements should be crawled.
    */
   private void crawl(Directory root) {
     for (FSElement element: root.getChildren()) {
@@ -38,13 +50,14 @@ public final class FileCrawler implements Runnable {
         while (true) {
           if (this.fq.isFull()) {
             try {
-              Thread.sleep(1000);
+              Thread.sleep(this.speed);
             } catch (InterruptedException e) {
               e.printStackTrace();
               Thread.currentThread().interrupt();
             }
           } else {
             this.fq.put(file);
+            break;
           }
         }
       }

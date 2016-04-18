@@ -47,7 +47,7 @@ public final class Directory extends FSElement {
   public int getSize() {
     int size = 0;
     for (FSElement element: this.getChildren()) {
-      if (element instanceof Link == false) {
+      if (!(element instanceof Link)) {
         size += element.getSize();
       }
     }

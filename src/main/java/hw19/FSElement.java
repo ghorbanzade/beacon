@@ -14,6 +14,8 @@ import java.util.Locale;
 
 /**
  *
+ *
+ * @author Pejman Ghorbanzade
  */
 public abstract class FSElement {
 
@@ -29,6 +31,10 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @param type
+   * @param name
+   * @param owner
    */
   public FSElement(FSElementType type, String name, String owner) {
     this.type = type;
@@ -40,6 +46,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @return
    */
   public boolean isLeaf() {
     return (this instanceof File || this instanceof Link || ((Directory) this).getChildren().isEmpty());
@@ -47,6 +55,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @return
    */
   public String getName() {
     return this.name;
@@ -54,6 +64,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @return
    */
   public String getOwner() {
     return this.owner;
@@ -61,6 +73,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @return
    */
   public Date getCreated() {
     return (Date) this.created.clone();
@@ -68,6 +82,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @return the date the element is last modified
    */
   public Date getLastModified() {
     return (Date) this.lastModified.clone();
@@ -75,11 +91,15 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @return
    */
   public abstract int getSize();
 
   /**
    *
+   *
+   * @return
    */
   public Directory getParent() {
     return this.parent;
@@ -87,6 +107,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @return
    */
   public FSElementType getType() {
     return this.type;
@@ -94,6 +116,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @param name
    */
   public void setName(String name) {
     this.name = name;
@@ -102,6 +126,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @param owner
    */
   public void setOwner(String owner) {
     this.owner = owner;
@@ -120,6 +146,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @return
    */
   public void setParent(Directory parent) {
     this.parent = parent;
@@ -141,6 +169,8 @@ public abstract class FSElement {
 
   /**
    *
+   *
+   * @return
    */
   @Override
   public String toString() {
