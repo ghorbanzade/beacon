@@ -37,7 +37,7 @@ public final class FileSystemMain {
 
     /* create as many crawlers as there are directories under the root */
     ArrayList<FileCrawler> crawlers = new ArrayList<FileCrawler>();
-    for (FSElement element: fs.getRoot().getChildren()) {
+    for (FileSystemElement element: fs.getRoot().getChildren()) {
       if (element instanceof Directory) {
         Directory dir = (Directory) element;
         crawlers.add(new FileCrawler(dir, fq));

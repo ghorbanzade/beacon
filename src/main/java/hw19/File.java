@@ -14,9 +14,9 @@ import java.util.ArrayList;
  * fixed size.
  *
  * @author Pejman Ghorbanzade
- * @see FSElement
+ * @see FileSystemElement
  */
-public final class File extends FSElement {
+public final class File extends FileSystemElement {
 
   /**
    * A file is the only file system element which has an actual size.
@@ -26,19 +26,21 @@ public final class File extends FSElement {
   private final int size;
 
   /**
-   * To create a new file, its name, its owner and its size must be provided.
+   * To create a new file, its name, its owner and its size must be
+   * provided.
    *
    * @param name name of the file
    * @param owner owner of the file
    * @param size size of file
    */
   public File(String name, String owner, int size) {
-    super(FSElementType.FILE, name, owner);
+    super(FileSystemElementType.FILE, name, owner);
     this.size = size;
   }
 
   /**
-   * This method allows access to the size of the file for information purposes.
+   * This method allows access to the size of the file for information
+   * purposes.
    *
    * @return the size of the file
    */

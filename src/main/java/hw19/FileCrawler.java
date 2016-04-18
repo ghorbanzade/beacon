@@ -8,7 +8,10 @@
 package edu.umb.cs681.hw19;
 
 /**
- *
+ * This class defines a file crawler as a thread that continues to
+ * read file system element reachable through a given directory and
+ * put them a file queue until all the file system elements are
+ * processed or the main thread interrupts the thread.
  *
  * @author Pejman Ghorbanzade
  * @see FileQueue
@@ -17,17 +20,20 @@ package edu.umb.cs681.hw19;
 public final class FileCrawler implements Runnable {
 
   /**
-   *
+   * A file crawler holds a reference to the file queue it should put
+   * file system elements on, as well as the time it should wait
+   * before each file process.
    */
   private final FileQueue fq;
   private final Directory root;
   private final int speed;
 
   /**
+   * Upon construction, a file crawler loads the configuration file to
+   * determine the time it should wait between every crawling action.
    *
-   *
-   * @param root
-   * @param fq
+   * @param root the directory of the file system to crawl
+   * @param fq the file queue on which files should be put
    */
   public FileCrawler(Directory root, FileQueue fq) {
     ConfigReader cfg = new ConfigReader("/filesystem.properties");
@@ -37,12 +43,14 @@ public final class FileCrawler implements Runnable {
   }
 
   /**
-   *
+   * This recursive method checks children of a directory and puts them
+   * on the file queue if they are files. In case they are directories,
+   * it tries to crawl them using DFS method.
    *
    * @param root top level directory whose elements should be crawled.
    */
   private void crawl(Directory root) {
-    for (FSElement element: root.getChildren()) {
+    for (FileSystemElement element: root.getChildren()) {
       if (element instanceof Directory) {
         this.crawl((Directory) element);
       } else if (element instanceof File) {
@@ -65,7 +73,10 @@ public final class FileCrawler implements Runnable {
   }
 
   /**
-   *
+   * A thread given a file crawler tries to crawl the root directory
+   * which is given to the file crawler. It stops either if the crawler
+   * has processed all the file system elements under the root directory
+   * or the main thread has interrupted the thread.
    */
   public void run() {
     this.crawl(this.root);
