@@ -6,37 +6,42 @@
 //
 
 package edu.umb.cs681.hw18;
- 
+
 import java.lang.InterruptedException;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- *
+ * This class provides an implementation of pizza image which defines
+ * a placeholder for a real pizza until it is out of the oven.
  *
  * @author Pejman Ghorbanzade
  */
 public class PizzaProxy implements PizzaImage {
 
   /**
-   *
+   * A pizza proxy holds a real pizza object which does not have any
+   * name initially until it is out of the oven. A pizza proxy will
+   * also have a condition object which changes state once the real
+   * pizza object is fully constructed.
    */
   private PizzaReal pizza;
   private final ReentrantLock lock;
   private Condition ready;
-  
+
   /**
-   *
+   * A pizza proxy initializes the lock and the condition to allow
+   * safe threading functionality for its methods.
    */
   public PizzaProxy() {
     this.lock = new ReentrantLock();
     this.ready = this.lock.newCondition();
   }
-  
+
   /**
+   * This method is used by client to set an order in thread-safe way.
    *
-   *
-   * @param pizza
+   * @param pizza the real pizza to be made
    */
   public void setRealPizza(PizzaReal pizza) {
     this.lock.lock();
@@ -51,9 +56,11 @@ public class PizzaProxy implements PizzaImage {
   }
 
   /**
+   * This method uses a reentrant lock to check for a thread in case
+   * the real pizza associated with this object is ready for pick up.
+   * Client objects use this method to check if their orders are ready.
    *
-   *
-   * @return
+   * @return whether the real pizza object is out of the oven or not
    */
   public boolean isReady() {
     boolean out = false;
@@ -72,20 +79,21 @@ public class PizzaProxy implements PizzaImage {
   }
 
   /**
+   * This method is called when the client asks for his pizza order.
+   * In case the pizza is not ready yet, the client will have to wait
+   * until the it changes the state.
    *
-   *
-   * @return
+   * @return the name of the ordered pizza 
    */
   public String getPizza() {
     String out = null;
     this.lock.lock();
     try {
-      if (this.pizza == null) {
+      while (this.pizza == null) {
         this.ready.await();
       }
       out = this.pizza.getPizza();
-    }
-    catch(InterruptedException e) {
+    } catch (InterruptedException e) {
       e.printStackTrace();
     } finally {
       this.lock.unlock();

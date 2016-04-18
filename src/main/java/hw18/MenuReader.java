@@ -70,7 +70,7 @@ public class MenuReader {
   }
 
   /**
-   * This method randomly chooses one of the items listed in the menu
+   * This method randomly chooses one of the items listed in the menu.
    *
    * @return a randomly chosen pizza name from the menu
    */
