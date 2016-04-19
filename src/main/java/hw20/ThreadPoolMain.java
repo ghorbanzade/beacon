@@ -8,7 +8,8 @@
 package edu.umb.cs681.hw20;
 
 /**
- *
+ * This class demonstrates how a singleton threadpool can be used
+ * to execute a number of tasks using a specified number of threads.
  *
  * @author Pejman Ghorbanzade
  * @see ThreadPool
@@ -16,21 +17,41 @@ package edu.umb.cs681.hw20;
 public final class ThreadPoolMain {
 
   /**
-   *
+   * This program creates a number of tasks with different names
+   * and a thread pool of certain size for executing those tasks.
+   * It then waits for a certain amount of time before stopping
+   * all the threads.
    *
    * @param args command line arguments given to this program
    */
   public static void main(String[] args) {
-    ThreadPool.getInstance().execute(new Task("A"));
-    ThreadPool.getInstance().execute(new Task("B"));
-    ThreadPool.getInstance().execute(new Task("C"));
-    ThreadPool.getInstance().execute(new Task("D"));
+    ConfigReader cr = new ConfigReader("/threadpool.properties");
+    for (int i = 1; i <= Integer.parseInt(cr.get("tasks.number")); i++) {
+      ThreadPool.getInstance().execute(new Task(getId(i)));
+    }
     try {
-      Thread.sleep(1000);
+      Thread.sleep(Integer.parseInt(cr.get("main.thread.timeout")));
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
     ThreadPool.getInstance().shutdown();
+  }
+
+  /**
+   * This method converts an id number to a corresponding string literal
+   * such that 26 will be AA and 28 will be AC.
+   *
+   * @param num the numeric 
+   * @return a string literal of an id number
+   */
+  private static String getId(int num) {
+    StringBuilder sb = new StringBuilder();
+    while (num > 0) {
+      num--;
+      sb.insert(0, (char) ('A' + (num % 26))); 
+      num = num / 26;
+    }
+    return sb.toString();
   }
 
   /**

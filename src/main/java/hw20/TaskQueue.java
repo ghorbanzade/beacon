@@ -12,31 +12,37 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- *
+ * This class provides a thread-safe implementation of a task queue
+ * where tasks are temporary queued to be executed by members of the
+ * thread pool.
  *
  * @author Pejman Ghorbanzade
+ * @see ThreadPoolThread
  * @see Task
  */
 public class TaskQueue {
 
   /**
-   *
+   * A task queue holds a list of tasks and reentrant lock to prevent
+   * race conditions in accessing and manipulating the list.
    */
   private final ArrayList<Task> queue = new ArrayList<Task>();
   private final ReentrantLock lock = new ReentrantLock();
   private final Condition condition;
 
   /**
-   *
+   * Once a task queue is created, it will be set as available to be
+   * assigned to a threadpool.
    */
   public TaskQueue() {
     condition = this.lock.newCondition();
   }
 
   /**
+   * This method gives a thread-safe way to check the number of tasks
+   * in the queue currently awaiting execution.
    *
-   *
-   * @return
+   * @return the number of tasks the queue
    */
   public int size() {
     while (true) {
@@ -50,9 +56,9 @@ public class TaskQueue {
   }
 
   /**
+   * This method provides a way to assign a new task to the queue.
    *
-   *
-   * @param
+   * @param task the new task that should be put in the queue
    */
   public void put(Task task) {
     this.lock.lock();
@@ -66,9 +72,10 @@ public class TaskQueue {
   }
 
   /**
+   * This method allows thread pool members to fetch a task from the
+   * queue.
    *
-   *
-   * @return
+   * @return the dequeued task from the queue or null if queue is empty
    */
   public Task get() {
     this.lock.lock();
