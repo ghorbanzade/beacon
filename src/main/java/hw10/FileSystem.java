@@ -7,8 +7,6 @@
 
 package edu.umb.cs680.hw10;
 
-import java.util.Date;
-
 /**
 * This class presents the FileSystem and its root directory.
 * Design of this class follows a classic singleton pattern which allows

@@ -7,7 +7,6 @@
 
 package edu.umb.cs680.hw02;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +30,9 @@ public final class IceCreamConfig {
   * object will be initialized.
   */
   private IceCreamConfig() {
-    try (InputStream fis = IceCreamConfig.class.getResourceAsStream("/icecream.properties")) {
+    try (InputStream fis =
+	IceCreamConfig.class.getResourceAsStream("/icecream.properties")
+    ) {
       this.config = new Properties();
       this.config.load(fis);
       fis.close();

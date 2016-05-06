@@ -28,7 +28,7 @@ public final class CliCommand implements Command {
   * @param cli the CLI instance whose active directory should be changed
   * @param instruction the instruction instance created based on user input
   * @throws UnsupportedOperationException in case argument is
-  *         given to the command 
+  *         given to the command
   */
   public void execute(Cli cli, Instruction instruction)
         throws UnsupportedOperationException {

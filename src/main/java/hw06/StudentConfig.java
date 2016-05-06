@@ -7,7 +7,6 @@
 
 package edu.umb.cs680.hw06;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +30,9 @@ public final class StudentConfig {
   * object will be initialized.
   */
   private StudentConfig() {
-    try (InputStream fis = StudentConfig.class.getResourceAsStream("/student.properties")) {
+    try (InputStream fis =
+        StudentConfig.class.getResourceAsStream("/student.properties")
+    ) {
       this.config = new Properties();
       this.config.load(fis);
       fis.close();

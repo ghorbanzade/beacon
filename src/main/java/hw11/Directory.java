@@ -72,7 +72,7 @@ public final class Directory extends FileSystemElement {
   public int getSize() {
     int size = 0;
     for (FileSystemElement element: this.getChildren()) {
-      if (element instanceof Link == false) {
+      if (!(element instanceof Link)) {
         size += element.getSize();
       }
     }
@@ -81,7 +81,7 @@ public final class Directory extends FileSystemElement {
 
   /**
   * This method will take any subclass of the FileSystemVisitor class and
-  * executes its algorithm on the current directory. 
+  * executes its algorithm on the current directory.
   *
   * @param visitor an object from a subclass of FileSystemVisitor class.
   */

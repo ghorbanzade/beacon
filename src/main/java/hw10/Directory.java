@@ -8,7 +8,6 @@
 package edu.umb.cs680.hw10;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
 * This class defines the directory as a filesystem element that can hold
@@ -72,7 +71,7 @@ public final class Directory extends FSElement {
   public int getSize() {
     int size = 0;
     for (FSElement element: this.getChildren()) {
-      if (element instanceof Link == false) {
+      if (!(element instanceof Link)) {
         size += element.getSize();
       }
     }

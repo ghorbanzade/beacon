@@ -1,9 +1,15 @@
+//
+// CS680: Object Oriented Design and Programming
+// Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+// Released under the terms of MIT License
+// https://github.com/ghorbanzade/UMB-CS680-2015F/blob/master/LICENSE
+//
+
 package edu.umb.cs680.hw02;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;

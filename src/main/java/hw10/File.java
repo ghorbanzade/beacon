@@ -8,7 +8,6 @@
 package edu.umb.cs680.hw10;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
 * This class defines the file as a filesystem element with no children.
@@ -45,4 +44,5 @@ public final class File extends FSElement {
   public int getSize() {
     return this.size;
   }
+
 }

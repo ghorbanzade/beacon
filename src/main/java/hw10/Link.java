@@ -7,9 +7,6 @@
 
 package edu.umb.cs680.hw10;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 /**
 * This class defines the link as a filesystem element that points to another
 * file system element.

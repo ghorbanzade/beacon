@@ -9,7 +9,6 @@ package edu.umb.cs680.hw09;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
 * This class is provided to test our design by instantiating a number of

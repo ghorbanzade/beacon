@@ -7,8 +7,6 @@
 
 package edu.umb.cs680.hw12;
 
-import java.lang.UnsupportedOperationException;
-
 /**
 * This class defines the functionality of the command for changing
 * current directory of the active cli object.

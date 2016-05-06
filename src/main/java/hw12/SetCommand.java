@@ -7,8 +7,6 @@
 
 package edu.umb.cs680.hw12;
 
-import java.lang.UnsupportedOperationException;
-
 /**
 * This class defines the functionality of the command for printing
 * current directory of the active cli object.
@@ -19,7 +17,7 @@ import java.lang.UnsupportedOperationException;
 */
 public final class SetCommand implements Command {
   /**
-  * This method provides the functionality of the command by 
+  * This method provides the functionality of the command by
   * implementing execute method of the Command interface.
   *
   * <p>Based on current implementation, regardless of the number

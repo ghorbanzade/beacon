@@ -7,8 +7,6 @@
 
 package edu.umb.cs680.hw10;
 
-import java.util.Date;
-
 /**
 * This program aims to develop a program that allows handling a simplified
 * version of filesystem access operations. Using a mixture of singleton and

@@ -23,7 +23,7 @@ public interface AreaCalculator {
   * The method to get the area of the polygon.
   *
   * @param points the list of coordinates of vertices of the polygon
-  * @return area of the rectangle
+  * @return area of the polygon
   */
   public double getArea(ArrayList<Point2D> points);
 }

@@ -193,7 +193,7 @@ public abstract class FileSystemElement {
   }
 
   /**
-  * This method find the full directory path resulting from a walk from root
+  * This method finds the full directory path resulting from a walk from root
   * to the current node.
   *
   * @return the full path of current file system element, starting from root

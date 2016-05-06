@@ -18,7 +18,7 @@ import java.util.ArrayList;
 * @see      Rectangle
 */
 public class Triangle implements Polygon {
-  ArrayList<Point2D> points = new ArrayList<Point2D>();
+  private ArrayList<Point2D> points = new ArrayList<Point2D>();
 
   /**
   * A triangle is constructed by giving coordinates of its three vertices.

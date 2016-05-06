@@ -7,7 +7,6 @@
 
 package edu.umb.cs680.hw12;
 
-import java.lang.UnsupportedOperationException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -119,7 +118,7 @@ public final class Cli {
 
   /**
   * This method takes a user instruction, parses it to take its corresponding
-  * command and tries to execute that command. 
+  * command and tries to execute that command.
   *
   * @param instruction the instruction instance cooresponding to the user input
   * @throws InvalidCommandException in case no command is found for

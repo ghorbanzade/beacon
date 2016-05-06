@@ -19,9 +19,9 @@ public class Customer extends Client {
   *
   *
   */
-  ArrayList<BasicAccount> basicAccounts = new ArrayList<BasicAccount>();
-  ArrayList<CreditAccount> creditAccounts = new ArrayList<CreditAccount>();
-  ArrayList<CreditCard> creditCards = new ArrayList<CreditCard>();
+  private ArrayList<BasicAccount> basicAccounts = new ArrayList<BasicAccount>();
+  private ArrayList<CreditAccount> creditAccounts = new ArrayList<CreditAccount>();
+  private ArrayList<CreditCard> creditCards = new ArrayList<CreditCard>();
 
   /**
   *

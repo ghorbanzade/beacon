@@ -7,8 +7,6 @@
 
 package edu.umb.cs680.hw12;
 
-import java.util.Comparator;
-
 /**
 * This class provides a method to compare file system elements
 * based on the time they are last modified. This method may be

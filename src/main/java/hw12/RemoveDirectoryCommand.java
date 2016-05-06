@@ -7,7 +7,6 @@
 
 package edu.umb.cs680.hw12;
 
-import java.lang.UnsupportedOperationException;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +24,7 @@ public final class RemoveDirectoryCommand implements Command {
   *
   * <p>Based on current implementation, the user may remove
   * multiple directories by providing multiple arguments. These
-  * arguments may be in form of relative or absolute paths. 
+  * arguments may be in form of relative or absolute paths.
   *
   * @param cli the CLI instance used to remove directories
   * @param instruction the instruction instance created based

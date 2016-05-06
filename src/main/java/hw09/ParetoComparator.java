@@ -8,7 +8,6 @@
 package edu.umb.cs680.hw09;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
 * This class presents a method to compare two cars based on number of
