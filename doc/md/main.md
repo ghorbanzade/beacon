@@ -1,6 +1,6 @@
 # Object-Oriented Design and Programming
 
-[![Build Status](https://magnum.travis-ci.com/ghorbanzade/UMB-CS680-2015F.svg?token=qeVsJz4jt7qobqTJazMT&branch=master)](https://magnum.travis-ci.com/ghorbanzade/UMB-CS680-2015F)
+[![Build Status](https://travis-ci.org/ghorbanzade/UMB-CS680-2015F.svg?branch=master)](https://travis-ci.org/ghorbanzade/UMB-CS680-2015F)
 
 ## Introduction
 This repository contains the source code developed for _CS680: Object-Oriented Design and Programming_ course at [University of Massachusetts Boston].
