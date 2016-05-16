@@ -8,33 +8,32 @@
 package edu.umb.cs681.hw27;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
 /**
- *
+ * Defines a client as an agent that connects to bank server to request
+ * multiple transactions be made on his account.
  *
  * @author Pejman Ghorbanzade
  * @see BankServer
  */
 public class BankClient {
 
-  /**
-   *
-   */
   private final String id;
   private final int remotePort;
   private final String remoteHost;
 
   /**
+   * A client has a unique random string identifier and the host and port
+   * on which it should create its socket.
    *
-   *
-   * @param remotePort
-   * @param remoteHost
+   * @param remotePort the port on which client should create its socket
+   * @param remoteHost the host on which client should create its socket
    */
   public BankClient(int remotePort, String remoteHost) {
     this.remotePort = remotePort;
@@ -43,7 +42,8 @@ public class BankClient {
   }
 
   /**
-   *
+   * A bank client creates a socket to connet to the bank server and
+   * makes multiple transactions on his bank account using that socket.
    */
   public void init() {
     try (Socket socket = new Socket(this.remoteHost, this.remotePort)) {
@@ -66,12 +66,14 @@ public class BankClient {
   }
 
   /**
+   * Generates multiple transactions and transmits them to the bank server.
+   * TODO: transactions to be transmitted should be read from a file.
    *
-   *
-   * @param socket
-   * @param in
-   * @param out
-   * @throws IOException
+   * @param socket the client socket which should be closed if a transaction
+   *               terminates client-server connection.
+   * @param in the server ouput buffer that the client is reading
+   * @param out the client output buffer
+   * @throws IOException in case socket connection is interrupted
    */
   private void sendCommands(Socket socket, BufferedReader in, PrintWriter out)
       throws IOException {
@@ -89,12 +91,14 @@ public class BankClient {
   }
 
   /**
+   * Requests a transaction from bank server and outputs server response on
+   * standard output.
    *
-   *
-   * @param socket
-   * @param in
-   * @param out
-   * @param command
+   * @param socket the client socket which should be closed if the command
+   *               terminates client-server connection.
+   * @param in the server output buffer that the client is reading
+   * @param out the client output buffer
+   * @param command the transaction to be made
    */
   private void sendCommand(Socket socket, BufferedReader in, PrintWriter out,
       Transaction command) {
@@ -111,10 +115,10 @@ public class BankClient {
   }
 
   /**
+   * Prints server response on the standard output.
    *
-   *
-   * @param in
-   * @throws IOException
+   * @param in output stream of the server socket to which client is listening
+   * @throws IOException if an I/O error occurs when reading server buffer
    */
   private void showResponse(BufferedReader in) throws IOException {
     System.out.println(in.readLine());

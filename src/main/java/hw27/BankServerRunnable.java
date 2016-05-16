@@ -10,29 +10,29 @@ package edu.umb.cs681.hw27;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Scanner;
 
 /**
- *
+ * A bank server assigns every operation to a thread which receives the
+ * transaction command and tries to carry out the request, pritning
+ * information on the output as necessary.
  *
  * @author Pejman Ghorbanzade
  * @see BankServer
  */
 public final class BankServerRunnable implements Runnable {
 
-  /**
-   *
-   */
   private final Socket socket;
   private final BankAccount account;
 
   /**
+   * A thread needs to know to which socket it should listen and on which
+   * account it should operate.
    *
-   *
-   * @param socket
-   * @param account
+   * @param socket the socket to which the server listens
+   * @param account the account on which the transaction should be performed
    */
   public BankServerRunnable(Socket socket, BankAccount account) {
     this.socket = socket;
@@ -40,7 +40,8 @@ public final class BankServerRunnable implements Runnable {
   }
 
   /**
-   *
+   * A server thread simply reads a command from the socket and performs the
+   * operation the command specifies.
    */
   @Override
   public void run() {
@@ -48,7 +49,9 @@ public final class BankServerRunnable implements Runnable {
       try {
         Scanner in = new Scanner(this.socket.getInputStream(), "UTF-8");
         PrintWriter out = new PrintWriter(
-            new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8"), true
+            new OutputStreamWriter(
+                this.socket.getOutputStream(), "UTF-8"),
+                true
         );
         System.out.println("I/O setup done");
         while (true) {
@@ -73,11 +76,12 @@ public final class BankServerRunnable implements Runnable {
   }
 
   /**
+   * Reads a transaction command from socket and performs the requested
+   * operation on an account.
    *
-   *
-   * @param command
-   * @param in
-   * @param out
+   * @param command the string literal of the transaction to perform
+   * @param in the buffer from which transaction should be read
+   * @param out the buffer to which messages should be written
    */
   private void accessAccount(String command, Scanner in, PrintWriter out) {
     double amount;

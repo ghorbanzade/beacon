@@ -11,28 +11,26 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- *
+ * Defines the bank account for a client to which money can be deposited and
+ * from which money can be withdrawn.
  *
  * @author Pejman Ghorbanzade
  * @see BankServer
  */
 public class BankAccount {
 
-  /**
-   *
-   */
   private float balance = 0;
   private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
   private final Lock readLock = lock.readLock();
   private final Lock writeLock = lock.writeLock();
 
   /**
+   * Returns current available balance for this account.
    *
-   *
-   * @return
+   * @return the current available balance for this account
    */
   public float getBalance() {
-    float out = 0; 
+    float out = 0;
     this.readLock.lock();
     try {
       out = this.balance;
@@ -43,10 +41,11 @@ public class BankAccount {
   }
 
   /**
+   * Adds a given amount to this account and returns the remaining balance
+   * for this account.
    *
-   *
-   * @param amount
-   * @return
+   * @param amount amount to be added to this account
+   * @return balance of the account after deposit operation
    */
   public double deposit(double amount) {
     this.writeLock.lock();
@@ -59,10 +58,11 @@ public class BankAccount {
   }
 
   /**
+   * Deducts a given amount from this account and returns the remaining
+   * balance for the account.
    *
-   *
-   * @param amount
-   * @return
+   * @param amount amount to be deducted from this account
+   * @return balance of the account after withdrawal operation
    */
   public double withdraw(double amount) {
     this.writeLock.lock();

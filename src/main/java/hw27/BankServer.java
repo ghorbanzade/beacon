@@ -8,31 +8,34 @@
 package edu.umb.cs681.hw27;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.net.ServerSocket;
 
 /**
- *
+ * A bank server holds all account information and provides a listening
+ * socket for its clients through which they can perform multiple
+ * transactions.
  *
  * @author Pejman Ghorbanzade
- * @see BankClient
  * @see BankAccount
+ * @see BankClient
+ * @see BankServerRunnable
  */
 public final class BankServer {
 
-  /**
-   *
-   */
   private final BankAccount account = new BankAccount();
   private final int port;
   private final int timeout;
 
   /**
+   * A bank server needs the port on which it should listen for incoming
+   * client requests and the time it should wait before destroying its
+   * connection to clients.
    *
-   *
-   * @param port
-   * @param timeout
+   * @param port the port to which the server should listen
+   * @param timeout the time in ms that the server listens for incoming
+   *                requests before dropping the connection
    */
   public BankServer(int port, int timeout) {
     this.port = port;
@@ -40,7 +43,9 @@ public final class BankServer {
   }
 
   /**
-   *
+   * A bank server begins its operation by creating a socket and listening
+   * to it for client calls. Once a client request is received, the server
+   * initiates a thread that responds to that request.
    */
   public void init() {
     try (ServerSocket serverSocket = new ServerSocket(this.port)) {
@@ -64,9 +69,9 @@ public final class BankServer {
   }
 
   /**
+   * Returns the port on which the server is listening.
    *
-   *
-   * @return
+   * @return the port the server is listening on
    */
   public int getPort() {
     return this.port;

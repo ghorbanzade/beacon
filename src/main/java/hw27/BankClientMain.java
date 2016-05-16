@@ -8,22 +8,26 @@
 package edu.umb.cs681.hw27;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- *
+ * Demonstrates how the software handles multiple clients making multiple
+ * transactions from a single bank server at the same time.
  *
  * @author Pejman Ghorbanzade
+ * @see BankAccount
+ * @see BankClient
  * @see BankServer
  */
 public final class BankClientMain {
 
   /**
-   *
+   * This program creates several clients which will connect to the bank
+   * server to perform several transaction operations through a socket.
    *
    * @param args command line arguments
    */
