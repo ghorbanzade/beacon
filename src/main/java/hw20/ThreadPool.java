@@ -26,8 +26,8 @@ public final class ThreadPool {
    * threads.
    */
   private static ThreadPool instance;
-  private TaskQueue queue = null;
-  private Vector<ThreadPoolThread> availableThreads = null;
+  private final TaskQueue queue;
+  private final Vector<ThreadPoolThread> availableThreads;
 
   /**
    * This singleton class uses lazy instantiation to avoid the expensive

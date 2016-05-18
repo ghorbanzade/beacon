@@ -41,14 +41,15 @@ public final class ThreadPoolMain {
    * This method converts an id number to a corresponding string literal
    * such that 26 will be AA and 28 will be AC.
    *
-   * @param num the numeric 
+   * @param number the numeric value which should be converted
    * @return a string literal of an id number
    */
-  private static String getId(int num) {
+  private static String getId(int number) {
+    int num = number;
     StringBuilder sb = new StringBuilder();
     while (num > 0) {
       num--;
-      sb.insert(0, (char) ('A' + (num % 26))); 
+      sb.insert(0, (char) ('A' + (num % 26)));
       num = num / 26;
     }
     return sb.toString();

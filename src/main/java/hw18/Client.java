@@ -6,7 +6,7 @@
 //
 
 package edu.umb.cs681.hw18;
- 
+
 import java.util.Arrays;
 
 /**
@@ -16,7 +16,8 @@ import java.util.Arrays;
  * patience is ran out.
  *
  * @author Pejman Ghorbanzade
- * @see Pizza
+ * @see PizzaReal
+ * @see PizzaProxy
  */
 public final class Client implements Runnable {
 

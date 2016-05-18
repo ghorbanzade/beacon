@@ -16,6 +16,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * a placeholder for a real pizza until it is out of the oven.
  *
  * @author Pejman Ghorbanzade
+ * @see PizzaImage
+ * @see PizzaReal
  */
 public class PizzaProxy implements PizzaImage {
 
@@ -83,7 +85,7 @@ public class PizzaProxy implements PizzaImage {
    * In case the pizza is not ready yet, the client will have to wait
    * until the it changes the state.
    *
-   * @return the name of the ordered pizza 
+   * @return the name of the ordered pizza
    */
   public String getPizza() {
     String out = null;

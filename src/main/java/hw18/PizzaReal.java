@@ -12,8 +12,8 @@ package edu.umb.cs681.hw18;
  * what a real pizza is.
  *
  * @author Pejman Ghorbanzade
- * @see Pizza
  * @see PizzaProxy
+ * @see PizzaReal
  */
 public class PizzaReal implements PizzaImage {
 

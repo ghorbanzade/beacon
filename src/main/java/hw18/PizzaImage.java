@@ -6,14 +6,14 @@
 //
 
 package edu.umb.cs681.hw18;
- 
+
 /**
  * This interface allows conversion of a pizza placeholder to a real
  * pizza object according to the proxy design pattern after a certain
  * amount of time which is required for preparation of pizza.
  *
  * @author Pejman Ghorbanzade
- * @see RealPizza
+ * @see PizzaReal
  * @see PizzaProxy
  */
 public interface PizzaImage {

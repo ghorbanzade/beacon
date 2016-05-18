@@ -47,7 +47,7 @@ public class WebPageReader {
    */
   private String[] loadPages(String filePath) {
     ArrayList<String> list = new ArrayList<String>();
-    try (InputStream fis = WebServerMain.class.getResourceAsStream(filePath)) {
+    try (InputStream fis = WebPageReader.class.getResourceAsStream(filePath)) {
       BufferedReader bf = new BufferedReader(
           new InputStreamReader(fis, "UTF-8")
       );

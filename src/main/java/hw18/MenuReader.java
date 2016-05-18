@@ -32,7 +32,7 @@ public class MenuReader {
    * The constructor takes the path to the file containing menu items and
    * loads their name as an array of strings.
    *
-   * @param filePath the path to the file containing filenames
+   * @param path the path to the file containing filenames
    */
   public MenuReader(String path) {
     this.menu = this.loadMenu(path);

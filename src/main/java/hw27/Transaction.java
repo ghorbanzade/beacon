@@ -48,10 +48,10 @@ public class Transaction {
    */
   @Override
   public String toString() {
-    if (!this.hasAmount) {
-      return this.type.toString();
-    } else {
+    if (this.hasAmount) {
       return String.format("%s %.2f", this.type.toString(), this.amount);
+    } else {
+      return this.type.toString();
     }
   }
 

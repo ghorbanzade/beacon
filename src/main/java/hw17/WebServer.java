@@ -14,14 +14,9 @@ import java.nio.file.Paths;
  * A webpage is a wrapper object that holds the file cache.
  *
  * @author Pejman Ghorbanzade
- * @see AccessCounter
  */
 public class WebServer {
 
-  /**
-   * A web server has a file cache to save information about certain
-   * files in it based on the logic implemented in the file cache.
-   */
   private final FileCache fileCache;
 
   /**
@@ -29,7 +24,7 @@ public class WebServer {
    * file cache that provides logic for saving content and meta data
    * about certain files.
    *
-   * @param fileCache the file cache to be assigned to web server
+   * @param fc the file cache to be assigned to web server
    */
   public WebServer(FileCache fc) {
     this.fileCache = fc;
