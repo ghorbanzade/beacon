@@ -5,18 +5,16 @@
 ## Introduction
 
 This repository contains the source code developed for _CS681: Object-Oriented Software Development_ course at [University of Massachusetts Boston].
-It includes +4.5K high quality source lines of Java code that provide solution to 14 problems using different software design patterns.
+It includes +4.5K source lines of Java code that provide solution to 28 assignments.
 
 All solutions are unit tested with +95% coverage using JUnit, and source codes are extensively documented using Javadoc.
 
-The software uses `ant` and `make` build automation tools to build source codes and documentations, respectively.
+The software uses `ant` build automation tools to build source codes and documentations, respectively.
 The automation tool is configured to build the source code, package programs in separate jar files, run all unit tests, measure code coverage and initiate a number of other software development tools such as _javadoc_, _checkstyle_, _pmd_ and _findbugs_.
 
 ## Build Instructions
 
-### Building Java Codes
-
-You can build java programs by issuing one of `make`, `make code` or `ant` in the top-level directory.
+You can build java programs by issuing `ant` in the top-level directory.
 
 The package(s) needed for building java codes are listed below.
 
