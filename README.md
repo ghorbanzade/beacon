@@ -33,17 +33,6 @@ Once the build is complete, you can execute each program by adding the path to i
 java -cp UMB-CS681-2016S-hw01.jar edu.umb.cs681.hw01.CarMain
 ```
 
-### Building Documents
-
-You can build all documents by issuing `make docs` in the top-level directory.
-
-The following packages are needed to successfully build all documents.
-
-```
-sudo apt-get install texlive-latex-base
-sudo apt-get install texlive-latex-extra
-```
-
 ## Contribution
 
 Content of this repository is __not__ subject to change.
@@ -52,7 +41,6 @@ Bug reports however are immensely appreciated.
 ## License
 
 All source codes are released under the terms of the [MIT License].
-All documents are under [Creative Commons Attribution-ShareAlike 4.0 International License].
 
 ## Contact
 

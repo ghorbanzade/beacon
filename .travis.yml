@@ -1,9 +1,5 @@
 language: java
 sudo: false
-addons:
-  apt:
-    packages:
-    - texlive-latex-base
 jdk:
   - oraclejdk8
 before_install:
