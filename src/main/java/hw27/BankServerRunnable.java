@@ -49,9 +49,8 @@ public final class BankServerRunnable implements Runnable {
       try {
         Scanner in = new Scanner(this.socket.getInputStream(), "UTF-8");
         PrintWriter out = new PrintWriter(
-            new OutputStreamWriter(
-                this.socket.getOutputStream(), "UTF-8"),
-                true
+            new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8"),
+            true
         );
         System.out.println("I/O setup done");
         while (true) {

@@ -27,9 +27,10 @@ public final class ObserveMain {
   public static void main(String[] args) {
     Observable observable = new Observable();
     observable.addObserver((Observable obs, Object obj)-> {
-      System.out.println("Hello");
+      System.out.println(obj);
     });
-    observable.notifyObservers();
+    observable.setChanged();
+    observable.notifyObservers("Hi");
   }
 
   /**
