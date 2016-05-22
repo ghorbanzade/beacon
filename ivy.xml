@@ -2,6 +2,7 @@
 	<info organisation="org.apache" module="UMB-CS681-2016S"/>
 	<configurations>
 		<conf name="base"/>
+		<conf name="build"/>
 		<conf name="test"/>
 	</configurations>
 	<dependencies>
