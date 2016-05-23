@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.Vector;
 
 /**
  * Creates the web server that responds to client requests.
@@ -22,6 +23,7 @@ public class WebServer {
 
   private final ConfigReader cr;
   private final FileCache fc;
+  private final ThreadPool tp;
 
   /**
    * Creates a web server based on a given configuration file.
@@ -33,6 +35,9 @@ public class WebServer {
     this.fc = initFileCache(
         this.cr.get("filecache.method"),
         Integer.parseInt(this.cr.get("filecache.size"))
+    );
+    this.tp = new ThreadPool(
+        Integer.parseInt(this.cr.get("threadpool.size"))
     );
   }
 
@@ -55,9 +60,13 @@ public class WebServer {
             socket.getPort(), socket.getInetAddress().toString()
         );
         new Thread(new ConnectionHandler(this, socket)).start();
+        this.tp.execute(
+            new ConnectionHandler(this, socket)
+        );
       }
     } catch (SocketTimeoutException ex) {
       System.out.printf("connection timed out.%n");
+      this.tp.shutdown();
     } catch (IOException ex) {
       ex.printStackTrace();
     }
@@ -101,6 +110,83 @@ public class WebServer {
    */
   public byte[] request(File file) {
     return this.fc.fetch(file);
+  }
+
+  /**
+   * A threadpool is a singleton class that creates as many threads as
+   * specified in the configuration file and places them in a queue, the
+   * first time it is instantiated. The singleton class provides methods
+   * to use those threads to execute given tasks.
+   *
+   * @author Pejman Ghorbanzade
+   * @see ThreadPoolThread
+   */
+  public static final class ThreadPool {
+
+    /**
+     * The thread pool instance has a vector on which it places its threads
+     * and a queue on which it places the tasks awaiting execution by those
+     * threads.
+     */
+    private final TaskQueue queue;
+    private final Vector<ThreadPoolThread> availableThreads;
+
+    /**
+     * Singleton class should not be directly instantiated.
+     */
+    public ThreadPool(int size) {
+      queue = new TaskQueue();
+      availableThreads = new Vector<ThreadPoolThread>();
+      for (int i = 0; i < size; i++) {
+        ThreadPoolThread th = new ThreadPoolThread(queue, i);
+        availableThreads.add(th);
+        th.start();
+      }
+    }
+
+    /**
+     * This method is called by user when he needs a task to be executed.
+     * The task is placed on a queue waiting to be executed as soon as a
+     * thread is available.
+     *
+     * @param task the task to be executed
+     */
+    public void execute(ConnectionHandler task) {
+      this.queue.put(task);
+    }
+
+    /**
+     * This method allows user to see how many tasks are on the queue
+     * awaiting executino.
+     *
+     * @return the number of tasks on the queue awaiting execution
+     */
+    public int getTaskQueueSize() {
+      return this.queue.size();
+    }
+
+    /**
+     * This method allows user to see how many threads exist in the
+     * pool.
+     *
+     * @return the number of threads available to execute tasks
+     */
+    public int getThreadPoolSize() {
+      return this.availableThreads.size();
+    }
+
+    /**
+     * This method is called by user to stop all execution of all
+     * threads which itself will lead to a halt on execution of all
+     * tasks.
+     */
+    public void shutdown() {
+      for (ThreadPoolThread t: availableThreads) {
+        t.setFlag();
+        t.interrupt();
+      }
+    }
+
   }
 
 }

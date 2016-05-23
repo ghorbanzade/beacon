@@ -48,14 +48,21 @@ public final class HttpResponse {
     out.printf("HTTP/1.0 %s%n", this.getStatus());
     out.printf("Date: %s%n", this.getDate());
     out.printf("Content-Type: %s%n", this.getContentType());
-    out.printf("Content-Length: %d%n", this.request.getFile().length());
+    if (!this.request.isServlet()) {
+      out.printf("Content-Length: %d%n", this.request.getFile().length());
+    }
     if (this.request.getMethod() != HttpRequest.Method.HEAD) {
       out.printf("%n");
-      out.write(
-          this.ws.request(this.request.getFile()),
-          0,
-          (int) this.request.getFile().length()
-      );
+      String content;
+      if (this.request.isServlet()) {
+        out.printf("%s%n", this.request.getServlet().getOutput());
+      } else {
+        out.write(
+            this.ws.request(this.request.getFile()),
+            0,
+            (int) this.request.getFile().length()
+        );
+      }
     }
   }
 
@@ -76,7 +83,7 @@ public final class HttpResponse {
    * @return the http status for client request of a specific resource
    */
   private HttpResponse.Status getStatus() {
-    if (this.request.getFile().isFile()) {
+    if (this.request.getFile().isFile() || this.request.isServlet()) {
       return HttpResponse.Status.OK;
     } else {
       return HttpResponse.Status.NOT_FOUND;
@@ -89,6 +96,9 @@ public final class HttpResponse {
    * @return the mime type of the resource requested by the client
    */
   private String getContentType() {
+    if (this.request.isServlet()) {
+      return "text/html";
+    }
     StringTokenizer tokens = new StringTokenizer(
         this.request.getFile().getName(), ".", false
     );

@@ -27,6 +27,7 @@ public final class HttpRequest {
   private final File file;
   private final String version;
   private final HttpRequest.Method method;
+  private HttpServlet servlet;
 
   /**
    * Creates an object wrapper holding information about client's request.
@@ -48,6 +49,7 @@ public final class HttpRequest {
       this.file = new File(this.ws.getConfig("root.dir") + tokens.nextToken());
       this.version = tokens.nextToken();
       this.processClientRequest(in);
+      initServlet();
     } catch (IOException | NoSuchElementException | NullPointerException ex) {
       throw new InvalidRequestException();
     }
@@ -65,7 +67,7 @@ public final class HttpRequest {
     while ((line = in.readLine()) != null) {
       if (line.startsWith("Content-Length")) {
         contentLength = Integer.parseInt(
-          line.substring("Content-Length: ".length())
+            line.substring("Content-Length: ".length())
         );
       }
       if (line.isEmpty()) {
@@ -96,6 +98,28 @@ public final class HttpRequest {
   }
 
   /**
+   * checks whether client is asking for a valid servlet.
+   */
+  public void initServlet() {
+    this.servlet = null;
+    if (this.file.getPath().contains("servlet")) {
+      try {
+        String clsName = String.format("%s.%s",
+            this.getClass().getPackage().getName(),
+            this.file.getName()
+        );
+        Class cls = Class.forName(clsName);
+        Object obj = cls.newInstance();
+        this.servlet = (HttpServlet) obj;
+      } catch (ClassNotFoundException
+          | IllegalAccessException
+          | InstantiationException ex
+      ) {
+      }
+    }
+  }
+
+  /**
    * Returns the file requested by the client.
    *
    * @return the file requested by the client
@@ -121,6 +145,24 @@ public final class HttpRequest {
    */
   public HttpRequest.Method getMethod() {
     return this.method;
+  }
+
+  /**
+   * Returns the servlet subclass instance or null if page is not a servlet.
+   *
+   * @return the servlet subclass instance or null if page is not a servlet
+   */
+  public HttpServlet getServlet() {
+    return this.servlet;
+  }
+
+  /**
+   * Returns whether request is for an existing servlet.
+   *
+   * @return true if client is requesting a servlet
+   */
+  public boolean isServlet() {
+    return (this.servlet == null) ? false : true;
   }
 
   /**

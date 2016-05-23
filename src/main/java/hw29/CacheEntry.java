@@ -8,6 +8,7 @@
 package edu.umb.cs681.hw29;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -39,7 +40,7 @@ public class CacheEntry {
    */
   public CacheEntry(File file, byte[] content) {
     this.count = 1;
-    this.content = content;
+    this.content = (byte[]) content.clone();
     this.date = new Date();
   }
 
@@ -75,7 +76,7 @@ public class CacheEntry {
     boolean out = false;
     if (obj instanceof CacheEntry) {
       CacheEntry entry = (CacheEntry) obj;
-      out = this.getContent().equals(entry.getContent());
+      out = Arrays.equals(this.getContent(), entry.getContent());
     }
     return out;
   }
@@ -87,7 +88,7 @@ public class CacheEntry {
    */
   @Override
   public int hashCode() {
-    return this.content.hashCode();
+    return Arrays.hashCode(this.content);
   }
 
   /**
@@ -96,7 +97,7 @@ public class CacheEntry {
    * @return saved content of the webpage
    */
   public byte[] getContent() {
-    return this.content;
+    return (byte[]) this.content.clone();
   }
 
   /**
