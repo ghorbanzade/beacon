@@ -25,16 +25,16 @@ import java.net.SocketTimeoutException;
 public final class ConnectionHandler implements Runnable {
 
   private Socket socket;
-  private ConfigReader cr;
+  private WebServer ws;
 
   /**
    * Creates a runnable instance to handle a client request by a thread.
    *
-   * @param cr the web server configuration parameters
+   * @param ws the web server whose resource is requested
    * @param socket the socket with which to communicate with the client
    */
-  public ConnectionHandler(ConfigReader cr, Socket socket) {
-    this.cr = cr;
+  public ConnectionHandler(WebServer ws, Socket socket) {
+    this.ws = ws;
     this.socket = socket;
   }
 
@@ -43,7 +43,7 @@ public final class ConnectionHandler implements Runnable {
    */
   @Override
   public void run() {
-    int timeout = Integer.parseInt(this.cr.get("client.timeout"));
+    int timeout = Integer.parseInt(this.ws.getConfig("client.timeout"));
     try (
       BufferedReader in = new BufferedReader(
           new InputStreamReader(this.socket.getInputStream(), "UTF-8")
@@ -54,8 +54,8 @@ public final class ConnectionHandler implements Runnable {
     ) {
       try {
         this.socket.setSoTimeout(timeout);
-        HttpRequest request = new HttpRequest(this.cr, in);
-        HttpResponse response = new HttpResponse(request, out);
+        HttpRequest request = new HttpRequest(this.ws, in);
+        HttpResponse response = new HttpResponse(this.ws, request, out);
         response.sendResponse();
         out.flush();
       } catch (HttpRequest.InvalidRequestException ex) {

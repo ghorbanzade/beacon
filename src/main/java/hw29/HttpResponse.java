@@ -24,16 +24,19 @@ import java.util.StringTokenizer;
  */
 public final class HttpResponse {
 
+  private final WebServer ws;
   private final HttpRequest request;
   private final PrintStream out;
 
   /**
    * Creates an object to respond to a client's request.
    *
+   * @param ws the web server whose resource is requested
    * @param request the client request to be responded
    * @param out the output print stream to communicate with client
    */
-  public HttpResponse(HttpRequest request, PrintStream out) {
+  public HttpResponse(WebServer ws, HttpRequest request, PrintStream out) {
+    this.ws = ws;
     this.request = request;
     this.out = out;
   }
@@ -48,7 +51,11 @@ public final class HttpResponse {
     out.printf("Content-Length: %d%n", this.request.getFile().length());
     if (this.request.getMethod() != HttpRequest.Method.HEAD) {
       out.printf("%n");
-      out.write(this.getContent(), 0, (int) this.request.getFile().length());
+      out.write(
+          this.ws.request(this.request.getFile()),
+          0,
+          (int) this.request.getFile().length()
+      );
     }
   }
 
@@ -94,28 +101,6 @@ public final class HttpResponse {
     } else {
       return "text/html";
     }
-  }
-
-  /**
-   * Returns the content of the resource requested by the client in form of
-   * an array of bytes.
-   *
-   * @return content of the resource requested by the client
-   */
-  private byte[] getContent() {
-    int len = (int) this.request.getFile().length();
-    byte[] buf = new byte[len];
-    try (DataInputStream fin = new DataInputStream(
-        new FileInputStream(request.getFile())
-    )) {
-      fin.readFully(buf);
-    } catch (IOException ex) {
-      System.err.printf(
-          "unable to fetch file %s%n",
-          this.request.getFile().getName()
-      );
-    }
-    return buf;
   }
 
   /**

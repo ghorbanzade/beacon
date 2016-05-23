@@ -23,7 +23,7 @@ import java.util.StringTokenizer;
  */
 public final class HttpRequest {
 
-  private final ConfigReader cr;
+  private final WebServer ws;
   private final File file;
   private final String version;
   private final HttpRequest.Method method;
@@ -31,21 +31,21 @@ public final class HttpRequest {
   /**
    * Creates an object wrapper holding information about client's request.
    *
-   * @param cr configuration parameters of the web server
+   * @param ws the web server whose resource is requested
    * @param in the input stream of client's request
    * @throws InvalidRequestException if client's request is not properly
    *                                 formatted
    */
-  public HttpRequest(ConfigReader cr, BufferedReader in)
+  public HttpRequest(WebServer ws, BufferedReader in)
       throws InvalidRequestException {
-    this.cr = cr;
+    this.ws = ws;
     try {
       String line = in.readLine();
       System.out.println(line);
       Objects.requireNonNull(line);
       StringTokenizer tokens = new StringTokenizer(line);
       this.method = initMethod(tokens.nextToken());
-      this.file = new File(this.cr.get("root.dir") + tokens.nextToken());
+      this.file = new File(this.ws.getConfig("root.dir") + tokens.nextToken());
       this.version = tokens.nextToken();
       this.processClientRequest(in);
     } catch (IOException | NoSuchElementException | NullPointerException ex) {
