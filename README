@@ -19,6 +19,9 @@ BUILDING
         - pgf
         - ghostscript
 
+    You will also require kernlab package which could be installed using
+    RStudio package management tool.
+
     Once you have all packages, all you need is `make` to run the R script,
     generate figures and produce the documents.
 
