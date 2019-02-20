@@ -1,0 +1,21 @@
+\def \topDirectory {.}
+\def \docDirectory {\topDirectory/doc}
+\def \srcDirectory {\topDirectory/src}
+
+\documentclass[12pt,letterpaper,twoside]{article}
+\usepackage{\docDirectory/sty/directives}
+\usepackage{\docDirectory/sty/assignment}
+\input{\docDirectory/tex/config}
+
+\usepackage{\docDirectory/lib/pgf-umlcd/pgf-umlcd}
+
+\begin{document}
+
+\doc{title}{Solutions to Assignments}
+\doc{date-sub}{\today}
+
+\header
+
+\input{\docDirectory/tex/content}
+
+\end{document}

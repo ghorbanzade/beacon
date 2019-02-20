@@ -1,0 +1,148 @@
+\section{Question 1}
+
+Figure \ref{fig1} shown below has errors/typos.
+Identify the errors and explain them.
+Describe how the program design should have been to maximize the degree of encapsulation.
+
+\begin{figure}
+\centering
+	\begin{tikzpicture}
+		\begin{class}[text width=5cm]{Employee}{0, 0}
+			\attribute{- yearsOfService: float}
+			\attribute{- lastName: String}
+			\attribute{- firstName: String}
+			\attribute{- socSecNum: String}
+			\attribute{- employeeID: String}
+			\operation{...}
+		\end{class}
+	\end{tikzpicture}
+\caption{UML Diagram for Question 1}\label{fig1}
+\end{figure}
+
+\lstset{language=java, tabsize=4}
+\begin{lstlisting}[caption=]
+public class Employee {
+	public static void main(String[] args) {
+		private float yearsOfService;
+		public String lastName;
+		public String firstName;
+		public String socSecNum;
+		public String employeeID;
+		// ...
+	}
+}
+\end{lstlisting}
+
+\subsection*{Solution}
+
+The given code snippet is inconsistent with its corresponding UML diagram depicted in Figure \ref{fig1}.
+Even though all attributes are shown as private, they have been assigned \texttt{public} modifiers in the corresponding code snippet.
+In addition, attributes such as \texttt{socSecNum} and \texttt{employeeID} are declared with \texttt{String} data type whereas it makes more sense to declare them as \texttt{int}.
+Figure \ref{fig2} provides a revised version of the UML diagram in which a few possible methods have been included.
+
+\begin{figure}
+\centering
+	\begin{tikzpicture}
+		\begin{class}[text width=5cm]{Employee}{0, 0}
+			\attribute{- yearsOfService: float}
+			\attribute{- lastName: String}
+			\attribute{- firstName: String}
+			\attribute{- socSecNum: int}
+			\attribute{- employeeID: int}
+			\operation{+ getYears(): float}
+			\operation{+ getName: String}
+			\operation{+ getSecNum(): int}
+			\operation{+ getId(): int}
+			\operation{...}
+		\end{class}
+	\end{tikzpicture}
+\caption{Revised UML Diagram for Figure \ref{fig1}}\label{fig2}
+\end{figure}
+
+Java source code is also slightly modified to conform the revised UML diagram.
+
+\begin{lstlisting}
+public class Employee {
+	public static void main(String[] args) {
+		private float yearsOfService;
+		private String lastName;
+		private String firstName;
+		private int socSecNum;
+		private int employeeID;
+		// ...
+	}
+}
+\end{lstlisting}
+
+\section{Question 2}
+
+The following code snippet is syntactically correct.
+
+\begin{darkListing}
+ArrayList<Student> al = new ArrayList<Student>();
+al.add(new OutStateStudent(2000));
+System.out.println(al.get(0).getTuition());
+\end{darkListing}
+
+However, the code snippet given below has compilation errors and cannot be executed.
+
+\begin{darkListing}
+ArrayList al = new ArrayList();
+al.add(new OutStateStudent(2000));
+System.out.println(al.get(0).getTuition());
+\end{darkListing}
+
+Identify and resolve the compilation error in latter code snippet.
+
+\subsection*{Solution}
+
+Since Java v1.5 and introduction of Generics, the \texttt{ArrayList} class accepts a generic type \texttt{<E>}.
+To maintain backward compatibility, explicit type declartion for classes that accept generics is not required.
+
+Declaring the type of objects to be given to the \texttt{ArrayList}, as is done in the first code snippet, will necessitate compile-time type checking which may initially be regarded as an additional restriction.
+The advantage, however, is that compiler will \textit{understand} the type of objects the \texttt{ArrayList} is holding.
+As a result, all calls to methods defined for declared data type will thereafter be validated.
+This justifies why the method \texttt{getTuition()} in third statement of the first code snippet is acknowledged and validated by the compiler.
+
+As for the second code snippet, since the type of objects passed to \texttt{ArrayList} is not declared, the \texttt{ArrayList} will be regarded merely as container of \texttt{Objects}.
+Therefore, even if a subclass of \texttt{Student} is passes to the \texttt{ArrayList}, the compiler will treat all elements as \texttt{Objects} and none of the methods defined for \texttt{Student} will be recognized.
+
+A possible workaround to fix the compilation error caused due to illegal call to \texttt{getTuition()} is explicit type casting from \texttt{Object} to \texttt{Student} as is shown in the code below.
+
+\begin{lstlisting}
+import java.util.ArrayList;
+public class StudentTest {
+	public static void main(String[] args) {
+		ArrayList al = new ArrayList();
+		al.add(new Student("Pejman"));
+		Student student = (Student) al.get(0);
+		System.out.println(student.getName());
+	}
+}
+\end{lstlisting}
+
+Where Student class is simply defined as follows.
+
+\begin{lstlisting}
+public class Student {
+	private String name;
+	public Student(String name) {
+		this.name = name;
+	}
+	public String getName() {
+		return this.name;
+	}
+}
+\end{lstlisting}
+
+However such type casting is dangerous and the proposed workaround is not recommended.
+
+\section{Question 4}
+Explain how the Decorator design pattern can eliminate a long sequence of conditional statements.
+
+\subsection*{Solution}
+
+Using the decorator design pattern, objects of different classes that implement an interface can be wrapped into objects of a single class.
+This way, instead of passing objects of different classes, the wrapped object will be passed to other methods of concern.
+This removes the need for checking whether the passed object is of the certain class using conditional statements.
+In short, Decorator design pattern will add a level of abstraction to the design that will help hide the internal implementation of methods of concern and summarize the object to the methods other APIs are interested to work with.

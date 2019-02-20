@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:ant="antlib:net.sf.antcontrib" xmlns:jacoco="antlib:org.jacoco.ant" xmlns:cs="antlib:com.puppycrawl.tools.checkstyle.ant" name="UMB-CS680-2015F" default="dist" basedir=".">
+
+	<property file="build.properties"/>
+
+	<property name="ivy.install.version" value="2.4.0"/>
+	<condition property="ivy.home" value="${env.IVY_HOME}">
+		<isset property="env.IVY_HOME"/>
+	</condition>
+	<property name="ivy.home" value="${user.home}/.ant"/>
+	<property name="ivy.jar.dir" value="${ivy.home}/lib"/>
+	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
+
+	<target name="download-ivy" unless="offline">
+		<mkdir dir="${ivy.jar.dir}"/>
+		<get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" dest="${ivy.jar.file}" usetimestamp="true"/>
+	</target>
+
+	<target name="init-ivy" depends="download-ivy">
+		<path id="ivy.lib.path">
+			<fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+	</target>
+
+	<target name="resolve" depends="init-ivy">
+		<ivy:retrieve pattern="${antlib.dir}/[artifact]-[revision].[ext]"/>
+		<ivy:cachepath pathid="base.path" conf="base"/>
+		<ivy:cachepath pathid="test.path" conf="test"/>
+	</target>
+
+	<path id="classpath.test">
+		<pathelement location="${antlib.dir}/junit-4.12.jar"/>
+		<pathelement location="${antlib.dir}/hamcrest-all-1.3.jar"/>
+		<pathelement location="${antlib.dir}/mockito-core-1.10.19.jar"/>
+	</path>
+
+	<path id="classpath.lib">
+		<fileset dir="${antlib.dir}" includes="**/*.jar"/>
+	</path>
+
+	<target name="taskdefs" depends="resolve">
+		<taskdef classpathref="classpath.lib" uri="antlib:net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml"/>
+		<taskdef classpathref="classpath.lib" uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml"/>
+		<taskdef classpathref="classpath.lib" uri="antlib:com.puppycrawl.tools.checkstyle.ant" resource="com/puppycrawl/tools/checkstyle/ant/antlib.xml"/>
+		<taskdef classpathref="classpath.lib" name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
+		<taskdef classpathref="classpath.lib" name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"/>
+	</target>
+
+	<target name="compile" depends="taskdefs">
+		<mkdir dir="${class.dir}"/>
+		<ant:for list="${package-list}" param="package" trim="yes">
+			<sequential>
+				<javac srcdir="${java.main.src.dir}/@{package}" destdir="${class.dir}" debug="on" debuglevel="lines,vars,source" includeantruntime="false"/>
+			</sequential>
+		</ant:for>
+		<ant:for list="${test-list}" param="test" trim="yes">
+			<sequential>
+				<javac srcdir="${java.test.src.dir}/@{test}" destdir="${class.dir}" debug="on" debuglevel="lines,vars,source" includeantruntime="false" classpathref="classpath.test"/>
+			</sequential>
+		</ant:for>
+	</target>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}"/>
+		<ant:for list="${package-list}" param="package" trim="yes">
+			<sequential>
+				<mkdir dir="${resources.main.src.dir}/@{package}"/>
+				<jar destfile="${jar.dir}/${ant.project.name}-@{package}.jar">
+					<fileset dir="${class.dir}" includes="${organization-path}/@{package}/*.class" excludes="**/*Test.class"/>
+					<fileset dir="${resources.main.src.dir}/@{package}" includes="*.properties"/>
+				</jar>
+			</sequential>
+		</ant:for>
+		<ant:for list="${test-list}" param="test" trim="yes">
+			<sequential>
+				<mkdir dir="${resources.test.src.dir}/@{test}"/>
+				<jar destfile="${jar.dir}/${ant.project.name}-@{test}-test.jar">
+					<fileset dir="${class.dir}" includes="${organization-path}/@{test}/*.class" excludes="**/*Main.class"/>
+					<fileset dir="${resources.test.src.dir}/@{test}" includes="*.properties"/>
+				</jar>
+			</sequential>
+		</ant:for>
+	</target>
+
+	<target name="javadoc" depends="jar">
+		<mkdir dir="${javadoc.report.dir}"/>
+		<javadoc destdir="${javadoc.report.dir}" author="true" version="true" use="true" windowtitle="Test API">
+			<fileset dir="${java.main.src.dir}" defaultexcludes="yes">
+				<include name="**/*.java"/>
+				<exclude name="**/*Main.java"/>
+			</fileset>
+			<doctitle><![CDATA[<h1>${ant.project.name}</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2015 ${author}. Some Rights Reserved.</i>]]></bottom>
+		</javadoc>
+	</target>
+
+	<target name="run" depends="jar">
+	</target>
+
+	<target name="junit" depends="jar">
+		<mkdir dir="${junit.report.dir}"/>
+		<mkdir dir="${jacoco.report.dir}"/>
+		<ant:for list="${test-list}" param="test" trim="yes">
+			<sequential>
+			<jacoco:coverage destfile="${jacoco.report.file}">
+				<junit fork="yes" printsummary="yes" haltonfailure="yes" haltonerror="yes">
+					<classpath>
+						<path refid="classpath.test"/>
+						<pathelement location="${jar.dir}/${ant.project.name}-@{test}-test.jar"/>
+					</classpath>
+					<batchtest todir="${junit.report.dir}">
+						<fileset dir="${class.dir}" includes="${organization-path}/@{test}/*Test.class"/>
+					</batchtest>
+					<formatter type="xml"/>
+				</junit>
+			</jacoco:coverage>
+			</sequential>
+		</ant:for>
+		<junitreport todir="${junit.report.dir}">
+			<fileset dir="${junit.report.dir}" includes="TEST-*.xml"/>
+			<report todir="${junit.report.dir}"/>
+		</junitreport>
+		<jacoco:report>
+			<executiondata>
+				<file file="${jacoco.report.file}"/>
+			</executiondata>
+			<structure name="${ant.project.name}">
+				<classfiles>
+					<fileset dir="${jar.dir}" includes="*-test.jar"/>
+				</classfiles>
+				<sourcefiles>
+					<fileset dir="${java.main.src.dir}"/>
+				</sourcefiles>
+			</structure>
+			<html destdir="${jacoco.report.dir}"/>
+		</jacoco:report>
+	</target>
+
+	<target name="checkstyle" depends="jar">
+		<mkdir dir="${cs.report.dir}"/>
+		<get src="${cs.config.remote}" dest="${cs.config.file}" usetimestamp="true"/>
+		<get src="${cs.report.style.remote}" dest="${cs.report.style.file}" usetimestamp="true"/>
+		<cs:checkstyle config="${cs.config.file}" failOnViolation="false">
+			<fileset dir="${java.main.src.dir}" includes="**/*.java"/>
+			<formatter type="xml" toFile="${cs.report.xml}"/>
+		</cs:checkstyle>
+		<xslt in="${cs.report.xml}" out="${cs.report.html}" style="${cs.report.style.file}"/>
+	</target>
+
+	<target name="pmd" depends="jar">
+		<mkdir dir="${pmd.report.dir}"/>
+		<pmd rulesetfiles="rulesets/java/design.xml">
+			<formatter type="net.sourceforge.pmd.renderers.HTMLRenderer" toFile="${pmd.report.file}"/>
+			<fileset dir="${java.main.src.dir}"/>
+		</pmd>
+	</target>
+
+	<target name="init-findbugs">
+		<mkdir dir="${lib.dir}"/>
+		<available file="${findbugs.home.tar}" property="findbugs.home.present"/>
+	</target>
+
+	<target name="download-findbugs" depends="init-findbugs" unless="findbugs.home.present">
+		<get src="${findbugs.home.remote}" dest="${findbugs.home.dir}" usetimestamp="true"/>
+	</target>
+
+	<target name="findbugs" depends="jar, download-findbugs">
+		<mkdir dir="${findbugs.report.dir}"/>
+		<untar src="${findbugs.home.tar}" dest="${findbugs.home.dir}" compression="gzip"/>
+		<findbugs home="${findbugs.home.src}" output="xml:withMessages" outputFile="${findbugs.report.xml}">
+			<auxClasspath refid="classpath.test"/>
+			<sourcePath path="${java.main.src.dir}"/>
+			<class location="${class.dir}"/>
+		</findbugs>
+		<xslt in="${findbugs.report.xml}" out="${findbugs.report.html}" style="${findbugs.report.style}"/>
+	</target>
+
+	<target name="dist" depends="clean, javadoc, junit, checkstyle, pmd, findbugs">
+	</target>
+
+	<target name="clean">
+		<delete dir="${antlib.dir}"/>
+		<delete dir="${jar.dir}"/>
+		<delete dir="${report.dir}"/>
+		<delete dir="${class.dir}"/>
+		<delete dir="${findbugs.home.src}"/>
+	</target>
+
+	<target name="clean-all" depends="clean">
+		<ivy:cleancache/>
+	</target>
+
+</project>

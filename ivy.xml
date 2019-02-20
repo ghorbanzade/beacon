@@ -1,0 +1,17 @@
+<ivy-module version="2.0">
+	<info organisation="org.apache" module="UMB-CS680-2015F"/>
+	<configurations>
+		<conf name="base"/>
+		<conf name="test"/>
+	</configurations>
+	<dependencies>
+		<dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="base->default"/>
+		<dependency org="junit" name="junit" rev="4.12" conf="test->default"/>
+		<dependency org="org.hamcrest" name="hamcrest-all" rev="1.3" conf="test->default"/>
+		<dependency org="org.mockito" name="mockito-core" rev="1.10.19" conf="test->default"/>
+		<dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.5.201505241946" conf="test->default"/>
+		<dependency org="net.sourceforge.pmd" name="pmd" rev="5.1.2" conf="test->default"/>
+		<dependency org="com.puppycrawl.tools" name="checkstyle" rev="6.13" conf="test->default"/>
+		<dependency org="com.google.code.findbugs" name="findbugs" rev="3.0.1" conf="test->default"/>
+	</dependencies>
+</ivy-module>
