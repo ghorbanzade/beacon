@@ -1,0 +1,16 @@
+language: java
+sudo: false
+jdk:
+  - oraclejdk8
+before_install:
+  - ant init-ivy
+install:
+  - ant resolve
+script:
+  - ant
+notifications:
+  email:
+    recipients:
+      - mail@ghorbanzade.com
+    on_success: change
+    on_failure: always
