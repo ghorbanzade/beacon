@@ -1,0 +1,37 @@
+                Theory of Formal Languages
+                University of Massachusetts Boston
+                Spring 2015
+
+INTRODUCTION
+
+    This repository contains the source code developed for Theory of
+    Formal Languages course at University of Massachusetts Boston. It
+    includes solutions to three assignments.
+
+BUILDING
+
+    The package(s) needed for building source code are listed below.
+
+        - texlive-latex-base
+        - texlive-latex-extra
+        - texlive-latex3
+        - pgf
+        - ghostscript
+
+    Once you have all packages, all you need is `make` to produce all
+    documents.
+
+CONTRIBUTION
+
+    Content of this repository is not subject to change. Bug reports
+    however are immensely appreciated.
+
+LICENSE
+
+    All documents are under Creative Commons Attribution-ShareAlike 4.0
+    International License.
+
+CONTACT
+
+    Pejman Ghorbanzade
+    mail [at] ghorbanzade [dot] com

@@ -1,0 +1,40 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 5}
+
+Prove that the language $\{ a^n b^{n^2} \}$ is not context-free.
+
+\subsection*{Solution}
+
+Question is solved by proof of contradiction, taking advantage of \textit{The Pumping Lemma}.
+Assume $L$ is a context-free language.
+Based on the Pumping Lemma, there exists a number $n_G \in \mathbb{N}$ such that if $w \in L(G)$ and $|w| \geq n_G$, then we can write $w = xyzut$ such that $|y| \geq 1$ or $|u| \geq 1$, $|yzu| \leq n_G$ and $xy^nzu^nt \in L(G)$ for all $n \in \mathbb{N}$.
+Let $w = a^nb^{n^2}$.
+Let also $n_a$ and $n_b$ be defined as number of $a$s and $b$s in $w$ respectively, causing $n_b(w)$ = $n_a^2(w)$.
+We show that no matter how we define $y$ and $u$, we break the shape of the language and therefore $L$ cannot be context-free.
+
+\begin{enumerate}
+
+	\item
+	It is clear $y$ cannot contain both $a$s and $b$s simultaneously, for by pumping $y$, $a$s appear in the middle of $b$s and $w$ would no longer be in $L$.
+
+	\item
+	If $y$ contains only $b$s, it is inevitable that $u$ would contain only $b$s.
+	In consequence, by pumping $y$ and $u$, $n_a$ increases while $n_b$ stays unchanged.
+	Therefore, $n_a^2 \ge n_b$ thus shape of the language would break.
+	Similarly, it can be shown that $y$ and $u$ cannot both contain only $a$s.
+
+	\item
+	If $y$ contains only $a$s and $u$ contains only $bs$, let $n_a(y) = s$ and $n_b(u) = s^\prime$.
+	By pumping $y$ and $u$ to $y^j$ and $u^j$, it is possible that $(s^\prime j)^2 = (sj)$ by choosing proper $y$ and $u$.
+	Yet, by re-pumping $y$ and $u$ once more to $y^{j+1}$ and $u^{j+1}$, $(s^\prime(j+1))^2 \neq (s(j+1))$ and this would break the form of the language.
+
+\end{enumerate}
+
+Therefore, assuming $L$ is context-free is shown to lead to contradicting the pumping lemma.
+Hence, the assumption is invalid and $L$ cannot be context-free.

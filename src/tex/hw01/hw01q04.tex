@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+Two words $u, v \in A^*$ are \textit{conjugate} if we can write $u=xy$ and $v=yx$ for some words $x,y \in A^*$.
+Define the binary relation $\kappa$, where $\left( x,y \right) \in \kappa$, if they are conjugate.
+Prove that $\kappa$ is an equivalence relation on $A^* $.
+
+\subsection*{Solution}
+
+Binary relation $\kappa$ is an equivalence relation on $A^*$ if and only if it is reflexive, symmetric and transitive. These properties are investigated and proven for $\kappa$.
+
+\begin{itemize}
+\item Reflexivity: $\kappa$ is reflexive if and only if $\left( u,u \right) \in \kappa$ for any $u \in A^*$.
+
+Proof is straightforward by taking $x$ as $u$ and $y$ as $\lambda$.
+\begin{eqnarray}
+u = u\lambda = xy \label{4eq1}\\
+u = \lambda u = yx \label{4eq2}
+\end{eqnarray}
+From \eqref{4eq1} and \eqref{4eq2},
+\begin{equation}\label{4eq3}
+\left( u,u \right) \in \kappa
+\end{equation}
+\item Symmetry: $\kappa$ is symmetric if and only if $\left(v,u\right) \in \kappa$ when $\left( u,v \right) \in \kappa$.
+\begin{equation}\label{4eq4}
+\left( u,v \right) \in \kappa \Rightarrow u = xy, v = yx
+\end{equation}
+where $x,y \in A^*$. Assuming $x = y^\prime$ and $y = x^\prime$,
+\begin{equation}\label{4eq5}
+v = x^\prime y^\prime, u = y^\prime x^\prime \Rightarrow \left( v,u \right) \in \kappa
+\end{equation}
+From \eqref{4eq4} and \eqref{4eq5},
+\begin{equation}\label{4eq6}
+\left( u,v \right) \in \kappa \Rightarrow \left( v,u \right) \in \kappa
+\end{equation}
+\item Transitivity: $\kappa$ is transitive if and only if $\left( u,w \right) \in \kappa$ when $\left( u,v \right)\in \kappa$ and $\left( v,w \right) \in \kappa$.
+\begin{equation}\label{4eq7}
+\left( u , v \right) \in \kappa \Rightarrow \exists x,y \in A^* \mid u = xy, v = yx
+\end{equation}
+\begin{equation}\label{4eq8}
+\left( v , w \right) \in \kappa \Rightarrow \exists s,t \in A^* \mid v = st, w = ts\\
+\end{equation}
+From \eqref{4eq7} and \eqref{4eq8},
+\begin{equation}\label{4eq9}
+v = yx = st
+\end{equation}
+Possible cases will arise based on length of $y$ and $s$.
+\begin{enumerate}
+\item If $|y| = |s|$ it follows that $|x| = |t|$ and from \eqref{4eq9},
+\begin{equation}
+x = t, y = s \Rightarrow u = ts, w = ts
+\end{equation}
+Assuming $x^\prime = \lambda$ and $y^\prime = ts$,
+\begin{equation} \label{4eq11}
+u = \lambda ts = x^\prime y^\prime
+\end{equation}
+\begin{equation} \label{4eq12}
+w = ts \lambda = y^\prime x^\prime
+\end{equation}
+From \eqref{4eq11} and \eqref{4eq12},
+\begin{equation}\label{4eq13}
+\left( u,w \right) \in \kappa
+\end{equation}
+\item Assuming that $|y| > |s|$ it follows that $|t| > |x|$. We suppose $y = sy^\prime$ and $t = t^\prime x$. Thus,
+\begin{equation}\label{4eq14}
+v = sy^\prime x = st^\prime x \Rightarrow y^\prime = t^\prime
+\end{equation}
+$u$ and $w$ can be represented with the new notations.
+\begin{equation}
+u = xsy^\prime
+\end{equation}
+\begin{equation}
+w = t^\prime xs
+\end{equation}
+Assuming $x^\prime = xs$ and from \eqref{4eq14},
+\begin{equation}\label{4eq17}
+u = x^\prime y^\prime
+\end{equation}
+\begin{equation}\label{4eq18}
+w = y^\prime x^\prime
+\end{equation}
+From \eqref{4eq17} and \eqref{4eq18},
+\begin{equation}\label{4eq19}
+\left(u,w \right) \in \kappa
+\end{equation}
+\item Assuming that $|y| < |s|$ it follows that $|t| < |x|$. We suppose $s = ys^\prime$ and $x = x^\prime t$. Thus,
+\begin{equation} \label{4eq20}
+v = yx^\prime t = ys^\prime t \Rightarrow x^\prime = s^\prime
+\end{equation}
+$u$ and $v$ can be represented with the new notations.
+\begin{equation}
+u = x^\prime ty
+\end{equation}
+\begin{equation}
+w = ty s^\prime
+\end{equation}
+Assuming $y^\prime = ty$ and from \eqref{4eq20},
+\begin{equation}\label{4eq23}
+u = x^\prime y^\prime
+\end{equation}
+\begin{equation}\label{4eq24}
+w = y^\prime x^\prime
+\end{equation}
+From \eqref{4eq23} and \eqref{4eq24},
+\begin{equation}\label{4eq25}
+\left( u, w \right) \in \kappa
+\end{equation}
+\end{enumerate}
+As cases were inclusive, from \eqref{4eq13}, \eqref{4eq19} and \eqref{4eq25} we conclude
+\begin{equation}\label{4eq26}
+\left(u,v \right),\left(v,w\right) \in \kappa \Rightarrow \left(u,w\right) \in \kappa
+\end{equation}
+\end{itemize}
+
+Based on \eqref{4eq3}, \eqref{4eq6} and \eqref{4eq26}, it is concluded that $\kappa$ is reflexive, symmetric and transitive thus is an equivalence relation.

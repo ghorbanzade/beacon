@@ -1,0 +1,23 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS622: Theory of Formal Languages
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs622-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+Let $A = \{a,b\}$.
+Prove that there are no words $x, y \in A^*$ such that $xay = ybx$.
+Prove that there is no word $x \in \{a,b\}^*$ such that $ax = xb$.
+
+\subsection*{Solution}
+
+It is prerequisite of equality for any two words $u, v \in \{a,b\}^*$ to share an equal number of each symbols.
+It is shown that the two words $u=xay$ and $v=ybx$ fail to satisfy this prerequisite.
+
+Suppose there are $m$ total $a$ symbols and $n$ total $b$ symbols in x and y.
+Therefore, total number of $a$ symbols in $u$ is $m+1$ whereas total number of $a$ symbols in $v$ is $m$.
+Thus prerequisite is not met and $u \neq v$.
+
+Similarly, if $u = ax$ and $v = xb$, number of $a$ symbols in $u$ is always one more than number of $a$ symbols in $v$ thus $u \neq v$.
