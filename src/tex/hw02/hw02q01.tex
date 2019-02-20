@@ -1,0 +1,83 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Consider a database schema with three relations:
+
+\begin{terminal}
+Employee (@*\underline{eid}*@:integer, ename:string, age:integer)
+Works (@*\underline{eid}*@:integer, @*\underline{did}*@:integer, pct\_time:integer)
+Department (@*\underline{did}*@:integer, dname:string, budget:real, managerid:integer)
+\end{terminal}
+
+The keys are underlined in each relation.
+Relation \texttt{Employee} stores employee information such as unique identifier \texttt{eid}, employee name \texttt{ename}, \texttt{age} and \texttt{salary}.
+Relation \texttt{Department} stores the department unique identifier \texttt{did}, department name \texttt{dname}, the department \texttt{budget} and \texttt{managerid} which is the \texttt{eid} of the employee who is managing the department.
+The \texttt{managerid} value must always be found in the \texttt{eid} field of a record of the \texttt{Employee} relation.
+The \texttt{Works} relation tracks which employee works in which department, and what percentage of the time \texttt{pct\_time} s/he allocates to that department.
+Note that, an employee can work in several departments.
+
+Provide SQL statements for the following:
+
+\begin{enumerate}
+\item
+Write SQL declarations for creating the schema.
+Include necessary key constraints.
+
+\item
+Find the salaries of employees that work in a department whose name starts with \textit{Mar}.
+
+\item
+Find the ages of employees who work at least 30\% of their time in a single department.
+List each age only once.
+
+\item
+Find the salaries of employees who work only in departments that have budget more than \$500,000.
+List each salary value only once.
+
+\item
+Find the names of employees who are managers.
+
+\item
+Find the average salary over all employees.
+
+\item
+Find the ages of employees who work at least 10\% of their time in a department called \textit{Catering} but who do not work in any department with budget higher than \$500,000.
+
+\item
+Find the names of employees who work in all departments with budget higher than \$500,000.
+
+\item
+Find the name(s) of the department(s) with the highest budget.
+
+\item
+Find the maximum salary among employees 30 years old or younger for each department with at least 10 employees of any age.
+
+\item
+Find for each manager (listed in the output by \texttt{eid}) the average salary of employees working for that manager.
+
+\item
+Find the average age of employees for each department where every employee is 30 years old or younger.
+
+\item
+Find the name(s) of department(s) who have the highest average employee age.
+
+\item
+Find the age(s) that most employees have, i.e., best represented age(s) among employees that work in departments with budget larger than \$300,000.
+If an employee works in multiple such departments, his/her age is only counted once.
+
+\item Find the average salary among employees that work in all departments whose names starts with \textit{Ca}.
+
+\end{enumerate}
+
+\subsection*{Solution}
+
+\lstset{language=sql}
+\lstinputlisting[firstline=8]{
+	\topDirectory/src/sql/hw02/hw02q01.sql
+}

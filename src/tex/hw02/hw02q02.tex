@@ -1,0 +1,58 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Consider a database schema with three relations:\\
+
+\begin{terminal}
+Movies (@*\underline{movie\_id}*@:integer, title:string, year:integer, studio:string)
+StarsIn (@*\underline{actor\_id}*@:integer, @*\underline{movie\_id}*@:integer, character:string)
+Actors (@*\underline{actor\_id}*@:integer, name:string, nationality:string)
+\end{terminal}
+
+The keys are underlined in each relation.
+Relation \texttt{Movies} stores information such as unique movie identifier, title, year and producing studio.
+\texttt{Actors} contains unique actor identifier, actor name and nationality.
+Relation \texttt{StarsIn} tracks which actor starred in which movie, and the name of the character interpreted in that movie.
+Assume that one actor plays at most one character in the  same movie.
+
+Provide SQL statements for the following:
+
+\begin{enumerate}
+
+\item
+Write SQL declarations for creating the schema.
+Include necessary key constraints.
+
+\item
+Find the title and studio of movies starring actor \textit{Tom Hanks}.
+
+\item
+Find the names of actors of \textit{US} nationality.
+
+\item
+Find the nationalities of actors that star in some movie for all producing studios (another way to phrase this is "find the nationalities of actors that worked for all studios").
+Ensure that a nationality appears only once in the result.
+
+\item
+Find for each year the number of distinct actors that played a character that starts with letter \textit{G} and has at least three letters in the character name.
+
+\item
+Find the movie titles that are produced by \textit{Universal} studio and in which there are at least ten actors starring.
+
+\item
+Find the nationality (or nationalities) best represented (i.e., nationality of most actors) among actors that starred in movies produced in year 2011.
+
+\end{enumerate}
+
+\subsection*{Solution}
+
+\lstset{language=sql}
+\lstinputlisting[firstline=8]{
+	\topDirectory/src/sql/hw02/hw02q02.sql
+}

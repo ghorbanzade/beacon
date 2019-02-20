@@ -1,0 +1,65 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+For questions 1 to 3, you are given the following relational schema.
+
+\begin{terminal}
+Students (@*\underline{sid}*@:integer, sname:string, age:integer)
+Grades (@*\underline{sid}*@:integer, @*\underline{cid}*@:integer, grade:integer)
+Courses (@*\underline{cid}*@:integer, cname:string, credits:integer)
+\end{terminal}
+
+The meaning of attributes is as follows.
+
+\begin{enumerate}[topsep=0pt,itemsep=0ex,partopsep=5pt,parsep=0pt,label=-]
+\item \texttt{sid} : unique student identifier, primary key in table \texttt{Students}
+\item \texttt{cid} : unique course identifier, primary key in table \texttt{Courses}
+\item \texttt{sname} : student name
+\item \texttt{age} : student age
+\item \texttt{cname} : course name
+\item \texttt{credits} : number of credits for a course
+\item \texttt{grade} : the grade obtained by student identified by \texttt{sid} for course identified by \texttt{cid}; \texttt{sid} and \texttt{cid} are foreign keys referring to the \texttt{sid} and \texttt{cid} fields in the \texttt{Students} and \texttt{Courses} tables, respectively.
+\end{enumerate}
+
+\section*{Question 1}
+
+Write \textbf{relational algebra} expressions for the following queries given the schema above:
+
+\begin{enumerate}[label=(\alph*)]
+
+\item Find the grades that students of age 20 obtained in courses with 4 credits.
+
+\textbf{Solution:}
+
+$$ \pi_{G.grade}(((\sigma_{S.age=20}S)\Join G)\Join (\sigma_{C.credits=4}C)) $$
+
+\item Find the names of students who took a course named \textit{Calculus} and did not get a \textit{C} grade in any course.
+
+\textbf{Solution:}
+
+$$ \rho(S1,\pi_{G.sid}((\sigma_{C.cname='Calculus'}C)\Join G)) $$
+$$ \rho(S2,\pi_{G.sid}(\sigma_{G.grade='C'}G)) $$
+$$ \pi_{S.sname}((S1-S2)\Join S) $$
+
+\item Find the ages of students who got an \textit{A} in some course with 3 credits or who got a \textit{B} in any course.
+
+\textbf{Solution:}
+
+$$\rho(S1,\pi_{S.sid}((\sigma_{G.grade='A'}((\sigma_{C.credits=3}C)\Join G))\Join S)) $$
+$$\rho(S2,\pi_{G.sid}(\sigma_{G.grade='B'}G)) $$
+$$ \pi_{S.age} ((S1\cup S2)\Join S) $$
+
+\item Find the maximum age among students who took \textit{Calculus}.
+
+\textbf{Solution:}
+
+$$ \rho(S1,(((\sigma_{C.cname='Calculus'}Courses)\Join Grades)\Join Students) ) $$
+$$ \rho(S2(1\rightarrow sid2,2\rightarrow sname2, 3\rightarrow age2),S1) $$
+$$ \rho(S3(1\rightarrow sid), \pi_{S1.sid}(S1\Join_{S1.age<S2.age2} S2)) $$
+$$ \pi_{Students.age}((Students - S3)\Join Students ) $$
+
+\end{enumerate}

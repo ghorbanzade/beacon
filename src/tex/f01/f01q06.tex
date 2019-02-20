@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 6}
+
+Show the grant diagrams after steps 4 and 5 of the sequence of actions in Table \ref{table51}, where $A$ owns the relation on which the privilege $p$ is assigned.
+Can $C$ still exercise privilege $p$ after step 5? What about $E$?
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|l|}
+\hline
+Step & Executed by & Action\\
+\hline \hline
+1 & A & GRANT \textit{p} TO \textit{B} WITH GRANT OPTION\\
+2 & A & GRANT \textit{p} TO \textit{C} \\
+3 & B & GRANT \textit{p} TO \textit{D} WITH GRANT OPTION\\
+4 & D & GRANT \textit{p} TO \textit{E} \\
+5 & B & REVOKE \textit{p} FROM \textit{D} CASCADE\\
+\hline
+\end{tabular}
+\caption{Sequence of System Level Privilege Grants}\label{table51}
+\end{table}
+
+\subsection*{Solution}
+
+Figure \ref{fig1} provides grant diagram after step 4.
+As is shown, after step 4, $D$ is granted (only by $B$) both exercise and delegation of $\textit{p}$ to $E$.
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+distance=4cm,semithick]
+  \tikzstyle{system}=[circle,thick,draw=black,fill=gray!40,text=black]
+  \node[state,system] (0) {Sys};
+  \node[state] (1) [above of = 0] {A};
+  \node[state] (2) [right of = 1] {B};
+  \node[state] (3) [below of = 2] {C};
+  \node[state] (4) [right of = 2] {D};
+  \node[state] (5) [right of = 3] {E};
+  \path
+  (0) edge [bend left=0] node {AP, Y} (1)
+  (1) edge [bend left=0] node {\textit{p}, Y} (2)
+      edge [bend left=0] node {\textit{p}, N} (3)
+  (2) edge [bend left=0] node {\textit{p}, Y} (4)
+  (4) edge [bend left=0] node {\textit{p}, N} (5);
+\end{tikzpicture}
+\caption{Grant Diagram after step 4}\label{fig1}
+\end{figure}
+
+Figure \ref{fig52} provides grant diagram after step 5.
+After step 5, when $B$ revokes $\textit{p}$ from $D$ in cascade mode, $D$ is no longer authorized delegation of $p$.
+Therefore, grant $\textit{p}$ by $D$ to $E$ is also revoked.
+It is perfectly possible for $C$ to exercise $\textit{p}$, however, $E$ would no longer be able to exercise $\textit{p}$.
+
+\begin{figure}[H]\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+distance=4cm,semithick]
+  \tikzstyle{system}=[circle,thick,draw=black,fill=gray!40,text=black]
+  \node[state,system] (0) {Sys};
+  \node[state] (1) [above of = 0] {A};
+  \node[state] (2) [right of = 1] {B};
+  \node[state] (3) [below of = 2] {C};
+  \node[state] (4) [right of = 2] {D};
+  \node[state] (5) [right of = 3] {E};
+  \path
+  (0) edge [bend left=0] node {AP, Y} (1)
+  (1) edge [bend left=0] node {\textit{p}, Y} (2)
+      edge [bend left=0] node {\textit{p}, N} (3);
+\end{tikzpicture}
+\caption{Grant Diagram after step 5}\label{fig52}
+\end{figure}

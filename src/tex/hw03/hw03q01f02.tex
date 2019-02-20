@@ -1,0 +1,21 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{tikzpicture}[scale=0.7, transform shape, node distance=3cm, every edge/.style={link}]
+
+\node[entity] (prof) {Professor};
+\node[attribute] (ssn) [left of = prof] {\key{SSN}} edge (prof);
+\node[attribute] (name) [below left of = prof] {Name} edge (prof);
+\node[attribute] (phone) [above left of = prof] {Phone} edge (prof);
+\node[attribute] (address) [above of = prof] {Address} edge (prof);
+\node[relationship] (teaches) [right of = prof] {Teaches} edge [total] node[auto,swap] {1} (prof);
+\node[entity] (course) [right of = teaches] {Course} edge node[auto,swap] {1} (teaches);
+\node[attribute] (courseid) [right of=course] {\key{ID}} edge (course);
+\node[attribute] (name) [below right of =course] {Name} edge (course);
+\node[attribute] (credits) [above right of=course] {Credits} edge (course);
+
+\end{tikzpicture}

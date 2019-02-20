@@ -1,0 +1,80 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Consider a database schema with three relations:\\
+
+\begin{terminal}
+Movies (@*\underline{movie\_id}*@:integer, title:string, year:integer, studio:string)
+Actors (@*\underline{actor\_id}*@:integer, name:string, nationality:string)
+StarsIn(@*\underline{actor\_id}*@:integer, @*\underline{movie\_id}*@:integer, character:string)
+\end{terminal}
+
+The keys are underlined in each relation.
+Relation \texttt{Movies} stores information such as unique movie identifier, title, year and  producing studio.
+\texttt{Actors} contains unique actor identifier, actor name and nationality.
+Relation \texttt{StarsIn} tracks which actor starred in which movie, and the name of the character interpreted in that movie.
+Assume that one actor plays at most one character in the same movie.
+
+Write relational algebra expressions for the following queries:
+
+\begin{enumerate}
+\item Find the titles of movies produced by \textit{Universal} studio.
+
+\textbf{Solution:}
+$$\displaystyle \pi_{title}(\sigma_{studio="Universal"}Movies) $$
+
+\item Find the names of actors that played a character named \textit{Forrest Gump} in some movie.
+
+\textbf{Solution:}
+$$\displaystyle \pi_{name}(\pi_{actor\_id}(\sigma_{character="Forest\ Gump"}StarsIn)\Join Actors)$$
+
+\item Find the names of actors of nationality \textit{German}.
+
+\textbf{Solution:}
+$$\displaystyle \pi_{name}(\sigma_{nationality="German"}Actors)$$
+
+\item Find the nationality of actors who played a character named \textit{Forrest Gump} or who starred in a movie in year 1980.
+
+\textbf{Solution:}
+\begin{enumerate}
+\item A1 includes IDs of actors who played a character named \textit{Forest Gump}.
+$$ \rho(A1,\pi_{actor\_id}(\sigma_{character="Forest\ Gump"}StarsIn))$$
+\item A2 includes IDs of actors who starred in a movie in year 1980.
+$$ \rho(A2,\pi_{actor\_id}(\pi_{movie\_id}(\sigma_{year=1980}Movies)\Join StarsIn))$$
+\item Desired list includes nationality of actors whose ID is either in A1 or A2.
+$$ \pi_{nationality}((A1\cup A2)\Join Actors)$$
+\end{enumerate}
+
+\item Find the names of actors that star in exactly one movie.
+
+\textbf{Solution:}
+\begin{enumerate}
+\item A1 includes IDs of actors never starred in any movie.
+$$ \rho(A1,\pi_{actor\_id}Actors-\pi_{actor\_id}StarsIn) $$
+\item A2 includes IDs of actors starred in more than one movie.
+$$ \rho(S1(1\rightarrow actor\_id1,2\rightarrow movie\_id1,3\rightarrow character1),StarsIn) $$
+$$ \rho(S2(1\rightarrow actor\_id2,2\rightarrow movie\_id2,3\rightarrow character2),StarsIn) $$
+$$ \rho(A2(1\rightarrow actor\_id),\pi_{actor\_id1} (S1 \Join_{(actor\_id1=actor\_id2) \wedge (movie\_id1\neq movie\_id2)} S2)) $$
+\item Desired list includes names of actors who are neither in A1 nor in A2.
+$$ \pi_{name}((\pi_{actor\_id}Actors - A1 - A2) \Join Actors)  $$
+\end{enumerate}
+
+\item Find the names of actors who starred in some movie in or after year 1980, but who did not star in any role (ever) for a movie produced by \textit{Universal} studio.
+
+\textbf{Solution:}
+\begin{enumerate}
+\item A1 includes IDs of actors who starred in some movie in or after year 1980.
+$$ \rho(A1,\pi_{actor\_id}(\pi_{movie\_id}(\sigma_{year>1979}Movies) \Join StarsIn)) $$
+\item A2 includes IDs of actors who starred in some role for a movie produced by \textit{Universal} studio.
+$$ \rho(A2,\pi_{actor\_id}(\pi_{movie\_id}(\sigma_{studio="Universal"}Movies) \Join StarsIn)) $$
+\item Desired list includes names of actors whose ID is in A1 and not in A2.
+$$ \pi_{name}((A1-A2)\Join Actors) $$
+\end{enumerate}
+
+\end{enumerate}

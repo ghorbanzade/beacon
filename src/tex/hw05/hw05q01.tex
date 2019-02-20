@@ -1,0 +1,37 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS630: Database Management Systems
+% Copyright 2014 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs630-2014f
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Consider a database schema with three relations:\\
+
+\begin{terminal}
+Parts (@*\underline{pid}*@:integer, pname:string, year:integer, price:integer)
+Suppliers (@*\underline{sid}*@:integer, sname:string, state:string, zipcode:string)
+Orders (@*\underline{pid}*@:integer, @*\underline{sid}*@:integer, quantity:integer)
+\end{terminal}
+
+The description is as follows: a factory keeps a database with parts that it uses, the suppliers of those parts, and  purchase orders.
+Each part is uniquely identified by \texttt{pid}.
+Each part has a string description \texttt{pname}, \texttt{year} of fabrication and \texttt{price} per unit.
+Parts are provided by suppliers, and each supplier is uniquely identified by \texttt{sid}.
+Each supplier has a name \texttt{sname}, and it operates at the given \texttt{state} and \texttt{zipcode}.
+The company has a number of orders for parts, and each order contains the \texttt{pid} of the part ordered, the \texttt{sid} of the supplier from which the part is ordered, and the \texttt{quantity} ordered.
+You are allowed flexibility on the exact attribute types you use for your schema, as long as they reasonably match the specification above (e.g. in terms of number types, string types).
+Include the schema definition in your submission in a file called \texttt{schema.sql}.
+
+\section*{Question 1}
+
+Write a PL/SQL function that takes a price as argument and  returns the \texttt{pid} of the part that has the third-nearest price to the one given.
+Note that nearest can be either higher or lower.
+In case there are multiple parts with that property, choose the one with higher \texttt{year}.
+If there is still a tie, choose the one with highest \texttt{pid}.
+
+\subsection*{Solution}
+
+\lstset{language=SQL}
+\lstinputlisting[firstline=8]{
+	\topDirectory/src/pls/hw05/hw05q01.pls
+}
