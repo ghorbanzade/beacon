@@ -1,0 +1,92 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS671: Machine Learning
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Determine the interior, closure and border of the set $S = \{x \in \mathbb{R}^3 | x_1^2 + x_2^2 + x_3^2 < 1, x_1+x_2+x_3 = a, a > 0\}$.
+Note that the result depends on the value of $a$.
+
+\subsection*{Solution}
+
+Set $S$ can be represented as the intersection of two sets $S_{\text{sub}_1} = \{x \in \mathbb{R}^3 | x_1^2 + x_2^2 + x_3^2 < 1\}$ and $S_{\text{sub}_2} = \{x \in \mathbb{R}^3 | x_1 + x_2 + x_3 = a, a > 0\}$; the former consists of the set of points inside a sphere of radius 1 and the latter consists of the set of points on a plane whose x-,y- and z-intercepts are $a$.
+
+For clarification, define Point $P = (x_0, y_0, z_0)$ as the point at which the hyperplane $x + y + z = a$ would be tangent to the sphere of radius 1.
+This point is important in that all choices of $a$ larger than or equal to $x_0 + y_0 + z_0$ will make the plane to pass over the interior of the sphere represented by $S_{\text{sub}_1}$, resulting in $S_{\text{sub}_1} \cap S_{\text{sub}_2} = \emptyset$.
+On the other hand, in cases where $0 \leq a \leq x_0+y_0+z_0$, the plane would intersect with $S_{\text{sub}_1}$, making an open circle in $\mathbb{R}^3$.
+
+Our objective, is thus to attain coordinates of point $P$.
+Since this point is on the sphere and the hyperplane, we'll have
+
+\begin{equation}
+x_0^2 + y_0^2 + z_0^2 = 1
+\label{eq11}
+\end{equation}
+
+\begin{equation}
+x_0 + y_0 + z_0 = a
+\label{eq12}
+\end{equation}
+
+Substituting Eq. \ref{eq11} into Eq. \ref{eq12}, Eq. \ref{eq13} can be obtained.
+
+\begin{equation}
+x_0y_0 + x_0z_0 + y_0z_0 = \frac{a^2-1}{2}
+\label{eq13}
+\end{equation}
+
+However, since $x_0 + y_0 = a - z_0$, Eq. \ref{eq13} will lead to
+
+\begin{equation}
+z_0 = \frac{a}{2} \pm \sqrt{x_0y_0 + \frac{1}{2} - \frac{a^2}{4}}
+\label{eq14}
+\end{equation}
+
+Since there is only one point $P$ with unique coordinates, Eq. \ref{eq15} must hold.
+
+\begin{equation}
+x_0y_0 + \frac{1}{2} = \frac{a^2}{4}
+\label{eq15}
+\end{equation}
+
+And using $z_0 = \frac{1}{2}$,
+
+\begin{equation}
+\begin{aligned}
+a &= \sqrt{3}\\
+P(x_0, y_0, z_0) &= (\frac{1}{\sqrt{3}},\frac{1}{\sqrt{3}},\frac{1}{\sqrt{3}})
+\end{aligned}
+\label{eq16}
+\end{equation}
+
+Therefore, depending on the choice of $a$, two cases exist for the intersection of $S_{\text{sub}_1}$ and $S_{\text{sub}_2}$.
+\begin{itemize}\itemsep=0pt
+\item[] If $a \geq \sqrt{3}$, the hyperplane would pass over the interior of the sphere and the intersection would be empty, causing $I(S), K(S), \partial(S) = \emptyset$.
+Noteworthy that in the case where hyperplane is tangent to the closed sphere of radius 1, $S_{\text{sub}_1} \cap S_{\text{sub}_2} = \emptyset$ would still hold, since $S_{\text{sub}_1}$ only contains interior of the sphere of radius 1.
+\item[] If $0 \leq a < \sqrt{3}$, intersection of the hyperplane and interior of the sphere would be a filled but open circle in $\mathbb{R}^3$.
+In this case, interior of the set $S$ will be the filled but open circle in $\mathbb{R}^3$ described by Eq. \ref{eq17}.
+
+\begin{equation}
+I(S) = S = \{x \in \mathbb{R}^3 | x_1^2 + x_2^2 + x_3^2 < 1, x_1 + x_2 + x_3 = a\}
+\label{eq17}
+\end{equation}
+
+As $S$ is an open set, boundary of $S$, $\partial(S)$ will be the circle resulted as intersection of the plane and the sphere with radius 1.
+Therefore $\partial(S)$ can be described by Eq. \ref{eq18}.
+
+\begin{equation}
+\partial(S) = \{x \in \mathbb{R}^3 | x_1^2 + x_2^2 + x_3^2 = 1, x_1 + x_2 + x_3 = a\}
+\label{eq18}
+\end{equation}
+
+And since closure of any set is the union of its interior and its boundary, $K(S)$ can be expressed as given in Eq. \ref{eq19}.
+
+\begin{equation}
+K(S) = I(S) \cap \partial(S) = \{x \in \mathbb{R}^3 | x_1^2 + x_2^2 + x_3^2 \leq 1, x_1 + x_2 + x_3 = a\}
+\label{eq19}
+\end{equation}
+
+\end{itemize}

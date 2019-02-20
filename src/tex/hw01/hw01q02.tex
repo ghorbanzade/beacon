@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS671: Machine Learning
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 2}
+
+Let $\mathcal{X}$ be a set of examples.
+Suppose that the hypotheses space consists of \textit{all} functions $h : \mathcal{X} \longrightarrow \{-\infty, \infty \}$.
+Prove that any unobserved example satisfies exactly half of hypotheses in the current version space, regardless of which training examples had been observed.
+
+\subsection*{Solution}
+
+Prove is given by induction on the number $n$ of attributes.
+
+\begin{itemize}
+\item \textit{Base case} ($n = 1$)\\
+When we have only one attribute, the set of hypotheses $\mathcal{H}$ would only have two elements $h_1$ and $h_2$ where $h_1$ is $x_1$ and $h_2$ is $\bar{x_1}$.
+As set of possible unobserved examples has only two elements $x_1$ and $\bar{x_1}$, we argue that $x_1$ is either positive or negative but not both at the same time.
+If $x_1$ is positive, it only satisfies hypothesis $h_1$.
+If it is negative, it only satisfies $h_2$.
+Same argument can be made for $\bar{x_1}$.
+Thus exactly half of hypotheses in version space would be satisfied.
+
+\item \textit{Induction Step}\\
+When there are $k$ attributes, set of hypotheses space would have $2^k$ elements $h_i$ where $1 \leq i \leq 2^k$.
+We define set of unobserved examples in this case as $\mathcal{S}$.
+$\mathcal{S}$ would have $2^k$ elements as well.
+We form the inductive hypothesis as any unobserved example $c$ would satisfy exactly half of the possible hypotheses in current version space.
+Our objective now is to show that the statement would still hold true if we add one more attribute.
+
+By adding one more attribute $x_{k+1}$, number of hypotheses in set of hypotheses space as well as number of elements in set of possible unobserved examples $\mathcal{S}^{\prime}$ would change to $2^{k+1}$.
+We can write $\mathcal{S}^{\prime}$ as given by Equation \ref{eq21}.
+
+\begin{equation}\label{eq21}
+\mathcal{S}^{\prime} = \{c^{\prime} | c^{\prime} \in \{cx_{k+1}, c\overline{x_{k+1}}, \overline{c}x_{k+1}, \overline{c}\overline{x_{k+1}}\}, c \in \mathcal{S} \}
+\end{equation}
+
+Now we can argue, if $x_{k+1}$ is positive only hypotheses that are satisfied by examples of the form $cx_{k+1}$ or $\overline{c}x_{k+1}$ are satisfied and if $x_{k+1}$ is negative, only hypotheses that are satisfied by examples of the form $c\overline{x_{k+1}}$ or $\overline{c}\overline{x_{k+1}}$ are satisfied.
+Thus any concept $c$ would satisfy exactly half of hypotheses in $\mathcal{S}^{\prime}$.
+
+\end{itemize}

@@ -1,0 +1,65 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS671: Machine Learning
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+Let $f: \mathbb{R}^2 \rightarrow \mathbb{R}$ be the function defined by
+
+\begin{equation}
+f(x) = x_1^2 + 2x_1 x_2 - 10x_1 + 5x_2
+\label{eq31}
+\end{equation}
+
+Is $f$ convex, concave or neither? Why?
+
+\subsection*{Solution}
+
+We use the fact that $f(x)$ is a twice-differentiable continuous function for any $x\in \mathbb{R}^2$.
+Let $H_f$ be defined as Hessian matrix of the function $f$.
+We use the theorem that function $f$ is convex, if and only if, $H_f(x)$ is positive semidefinite for all $x\in \mathbb{R}^2$, and $f$ is concave if and only if $H_f$ is negative semidefinite for all $x\in \mathbb{R}^2$.
+Therefore, objective would be to obtain $H_f$ and verify whether it's positive semidefinite or negative semidefinite or neither.
+
+By definition, $H_f$ can be obtained using second partial derivatives of $f(x)$ as shown in Eq. \ref{eq32}.
+
+\begin{equation}
+H_f(\mathbf{x})
+= \begin{pmatrix}
+\frac{\partial^2 f}{\partial^2 x_1} & \frac{\partial^2 f}{\partial x_1 \partial x_2}\\[0.6em]
+\frac{\partial^2 f}{\partial x_2 \partial x_1} & \frac{\partial^2 f}{\partial^2 x_2}\\
+\end{pmatrix}
+\label{eq32}
+\end{equation}
+
+Using Eq. \ref{eq31}, partial derivatives of $H_f$ are obtained as given in Eq. \ref{eq33} and Eq. \ref{eq34}.
+
+\begin{equation}
+\frac{\partial f}{\partial x_1} = 2x_1 + 2x_2 - 10
+\label{eq33}
+\end{equation}
+\begin{equation}
+\frac{\partial f}{\partial x_2} = 2x_1 + 5
+\label{eq34}
+\end{equation}
+
+Substituting Eq. \ref{eq33} and Eq. \ref{eq34} into Eq. \ref{eq32},
+
+\begin{equation}
+H_f(\mathbf{x}) = \begin{pmatrix}2 & 2\\2 & 0\\\end{pmatrix}
+\end{equation}
+
+For $H_f(\mathbf{x})$ to be positive semidefinite, eigenvalues of $H_f$ must be non-negative.
+Similarly, for $H_f(\mathbf{x})$ to be negative semidefinite, eigenvalues of $H_f$ must be non-positive.
+To obtain Eigenvalues of $H_f$, characteristic polynomial of $H_f$ is constructed as shown in Eq. \ref{eq35}.
+
+\begin{equation}
+A-\lambda I = \begin{pmatrix}2-\lambda & 2\\ 2 & -\lambda\\\end{pmatrix}\Rightarrow \text{det}(A-\lambda I) = (\lambda - 1)^2 -5
+\label{eq35}
+\end{equation}
+
+As eigenvalues are solutions to Eq. \ref{eq35}, $H_f$ will have two eigenvalues $1+\sqrt{5} > 0$ and $1-\sqrt{5} < 0$.
+Therefore, $H_f$ is neither positive semidefinite nor negative semidefinite.
+Hence, function $f$ is neither convex nor concave.
