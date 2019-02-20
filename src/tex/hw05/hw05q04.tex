@@ -1,0 +1,133 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+Modify content of the object-oriented version of the Guitar Shop project as required to use the file \texttt{CategoryDAO.php}.
+
+\subsection*{Solution}
+
+\begin{enumerate}
+\item File \texttt{/product\_manager/index.php}
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+<?php
+require('../model/database.php');
+require('../model/category.php');
+require('../model/CategoryDAO.php');
+require('../model/product.php');
+require('../model/product_db.php');
+$action = filter_input(INPUT_POST, 'action');
+if ($action == NULL) {
+    $action = filter_input(INPUT_GET, 'action');
+    if ($action == NULL) {
+        $action = 'list_products';
+    }
+}
+$cdao = new CategoryDAO();
+if ($action == 'list_products') {
+    $category_id = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
+    if ($category_id == NULL || $category_id == FALSE) {
+        $category_id = 1;
+    }
+    // Get product and category data
+    $current_category = $cdao->getCategory($category_id);
+    $categories = $cdao->getCategories();
+    $products = ProductDB::getProductsByCategory($category_id);
+    // Display the product list
+    include('product_list.php');
+} else if ($action == 'delete_product') {
+    // Get the IDs
+    $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+    $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
+    // Delete the product
+    ProductDB::deleteProduct($product_id);
+    // Display the Product List page for the current category
+    header("Location: .?category_id=$category_id");
+} else if ($action == 'show_add_form') {
+    $categories = $cdao->getCategories();
+    include('product_add.php');
+} else if ($action == 'add_product') {
+    $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
+    $code = filter_input(INPUT_POST, 'code');
+    $name = filter_input(INPUT_POST, 'name');
+    $price = filter_input(INPUT_POST, 'price');
+    if ($category_id == NULL || $category_id == FALSE || $code == NULL || $name == NULL || $price == NULL || $price == FALSE) {
+        $error = "Invalid product data. Check all fields and try again.";
+        include('../errors/error.php');
+    } else {
+        $current_category = $cdao->getCategory($category_id);
+        $product = new Product($current_category, $code, $name, $price);
+        ProductDB::addProduct($product);
+        // Display the Product List page for the current category
+        header("Location: .?category_id=$category_id");
+    }
+}
+\end{lstlisting}
+\item File \texttt{/model/product\_db.php}
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+<?php
+class ProductDB {
+    public static function getProductsByCategory($category_id) {
+        $db = Database::getDB();
+        $cdao = new CategoryDAO();
+        $category = $cdao->getCategory($category_id);
+        $query = 'SELECT * FROM products WHERE products.categoryID = :category_id ORDER BY productID';
+        $statement = $db->prepare($query);
+        $statement->bindValue(":category_id", $category_id);
+        $statement->execute();
+        $rows = $statement->fetchAll();
+        $statement->closeCursor();
+        foreach ($rows as $row) {
+            $product = new Product($category, $row['productCode'], $row['productName'], $row['listPrice']);
+            $product->setId($row['productID']);
+            $products[] = $product;
+        }
+        return $products;
+    }
+    public static function getProduct($product_id) {
+        $db = Database::getDB();
+        $query = 'SELECT * FROM products WHERE productID = :product_id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(":product_id", $product_id);
+        $statement->execute();
+        $row = $statement->fetch();
+        $statement->closeCursor();
+        $cdao = new CategoryDAO();
+        $category = $cdao->getCategory($row['categoryID']);
+        $product = new Product($category, $row['productCode'], $row['productName'], $row['listPrice']);
+        $product->setID($row['productID']);
+        return $product;
+    }
+    public static function deleteProduct($product_id) {
+        $db = Database::getDB();
+        $query = 'DELETE FROM products WHERE productID = :product_id';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':product_id', $product_id);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+    public static function addProduct($product) {
+        $db = Database::getDB();
+        $category_id = $product->getCategory()->getID();
+        $code = $product->getCode();
+        $name = $product->getName();
+        $price = $product->getPrice();
+        $query = 'INSERT INTO products (categoryID, productCode, productName, listPrice) VALUES (:category_id, :code, :name, :price)';
+        $statement = $db->prepare($query);
+        $statement->bindValue(':category_id', $category_id);
+        $statement->bindValue(':code', $code);
+        $statement->bindValue(':name', $name);
+        $statement->bindValue(':price', $price);
+        $statement->execute();
+        $statement->closeCursor();
+    }
+}
+\end{lstlisting}
+
+\end{enumerate}

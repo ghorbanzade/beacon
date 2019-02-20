@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 5}
+
+Passing arrays to functions works differently in PHP with Java. Both languages use \textit{call by value}, but the value is the whole array in PHP and just the array reference in Java, unless you use \texttt{\&} on the array variable in the function definition to change to \textit{pass by reference}.
+
+Library \texttt{cart.php}:
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+<?php
+	// Add an item to the cart
+	function cart_add_item(&$cart, $name, $cost, $quantity) {
+		$total = $cost * $quantity;
+		$item = array(
+			'name' => $name,
+			'cost' => $cost,
+			'qty'  => $quantity,
+			'total'=> $total
+			);
+		$cart[] = $item;
+	}
+	// Update an item in the cart
+	function cart_update_item(&$cart, $key, $quantity) {
+		if (isset($cart[$key])) {
+			if ($quantity <= 0) {
+				unset($cart[$key]);
+			} else {
+				$cart[$key]['qty'] = $quantity;
+				$total = $cart[$key]['cost'] * $cart[$key]['qty'];
+				$cart[$key]['total'] = $total;
+			}
+		}
+	}
+	// Get cart subtotal
+	function cart_get_subtotal($cart) {
+		$subtotal = 0;
+		foreach ($cart as $item) {
+			$subtotal += $item['total'];
+		}
+		$subtotal = round($subtotal, 2);
+		$subtotal = number_format($subtotal, 2);
+		return $subtotal;
+	}
+?>
+\end{lstlisting}
+
+\begin{enumerate}
+\item Modify the parameters for the functions in the \texttt{cart.php} file, shown below, so the first parameter for each function is a cart array that's passed by value like the following.
+\lstset{language=php}
+\begin{lstlisting}
+function add_item($cart, $key, $quantity) {}
+function update_item($cart, $key, $quantity) {}
+function get_subtotal($cart) {}
+\end{lstlisting}
+
+After modifications, run the following code and explain why the printed cart is empty.
+
+File \texttt{test.php}:
+\lstset{language=php, tabsize=2}
+\begin{lstlisting}
+<?php
+	require_once('cart.php');
+	$cart = array();
+	cart_add_item($cart, 'Flute', 149.95, 1);
+	print_r($cart);
+	cart_update_item($cart, 0, 2);
+	$subtotal = cart_get_subtotal($cart);
+	echo 'This subtotal is $'.$subtotal;
+?>
+\end{lstlisting}
+
+\item Without changing the signatures in the modified function library \texttt{cart.php}, fix the problem such that the printed cart is not empty.
+
+\item Use variable parameters for all function libraries and explain why running the same \texttt{test.php} code will print the cart this time.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\begin{enumerate}
+\item To modify the library function as suggested in this part, it suffices to remvoe all the ampersand characters in front of the \texttt{\$cart} variable. As PHP is by default is a \textit{``call by value''} scripting language, running the function running the code snippet \texttt{test.php} will pass values of \texttt{\$cart} array to the functions. Therefore, the initial \texttt{\$cart} variable is not passed and is not affected by the function. At the same time, since no return value has been defined for the functions in \texttt{cart.php} library, the functions get a copy of \texttt{\$cart} variable and make changes on the copy but do not even return the modified variable. Therefore, after execution of line 4, the variable \texttt{\$cart} is exactly as initialized in line 3: an empty array. This is why running \texttt{test.php} script will not print \textit{(Flute, 149.95, 1, 149.95)}, as expected.
+
+\item The above-mentioned problem can be fixed in two ways if we insist on passing value of \texttt{\$cart} variable to the functions.
+\begin{enumerate}
+\item One way is to declare the \texttt{\$cart} variable as global by adding the following line before lines 4, 15 and 27 of modified version of \texttt{cart.php} as well as line 3 of \texttt{test.php} file.
+\lstset{language=php, numbers=none}
+\begin{lstlisting}
+global $cart;
+\end{lstlisting}
+This way the \texttt{\$cart} variable is declared as global and any modifications even inside functions will change the values stored in the variable. Therefore, printing the \texttt{\$cart} in line 5 of \texttt{test.php} will print \textit{(Flute, 149.95, 1, 149.95)} as expected.
+
+\item We can also fix the problem by making the functions to return the modified copy of the \texttt{\$cart} variable. This is achieved by adding the following line before lines 12 and 24 of modified version of \texttt{cart.php}.
+\lstset{language=php, numbers=none}
+\begin{lstlisting}
+return $cart;
+\end{lstlisting}
+
+We can then modify the \texttt{test.php} file to the following.
+\lstset{language=php, tabsize=2, numbers=left}
+\begin{lstlisting}
+<?php
+	require_once('cart.php');
+	$cart = array();
+	$cart = cart_add_item($cart, 'Flute', 149.95, 1);
+	print_r($cart);
+	$cart = cart_update_item($cart, 0, 2);
+	$subtotal = cart_get_subtotal($cart);
+	echo 'This subtotal is $'.$subtotal;
+?>
+\end{lstlisting}
+\end{enumerate}
+\item If we use the function library \texttt{cart.php} just as given in the question (passing reference variables to the functions), the output would be identical to that of previous part and the cart content will be printed, giving a non-zero subtotal.
+
+Using reference parameters will pass the \texttt{\$cart} variable by reference. Therefore, what is modified inside the functions will not be a copy of the \texttt{\$cart} variable but the reference to the \texttt{\$cart} variable itself. Hence, modifying the value of \texttt{\$cart} inside a function will no longer be limited to the scope of the function. This will have almost the same effect as declaring the variable as global.
+
+Although both Java and PHP programming languages are \textit{call by value}, the two languages are slightly different in implementation. As everything is (almost) an object in Java, calling by value is defined by passing the reference identifier of the object. This way, objects passed to a method will be accessible for modifications, just as in PHP when variables passed to a function with variable parameters are changed.
+\end{enumerate}

@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+Modify \texttt{pizza1} project to use a session variable for the room number and remove the mechanism previously implemented using hidden states. Elaborate your modifications.
+
+\subsection*{Solution}
+
+Changes made to allow \texttt{\$\_session} variable to replace the hidden inputs are as follows.
+
+\begin{enumerate}[itemsep=1mm]\parskip=0pt
+\item The following is added to \texttt{pizza/index.php}.
+\lstset{language=php}
+\begin{lstlisting}
+$session_start();
+if (isset($_POST['room'])) {
+  $_SESSION['room'] = filter_input(INPUT_POST, 'room', FILTER_VALIDATE_INT);
+  if ($_SESSION['room'] == NULL) {
+    $_SESSION['room'] = 1;
+  }
+}
+\end{lstlisting}
+
+\item The following is removed from \texttt{pizza/index.php}.
+\lstset{language=php}
+\begin{lstlisting}
+$room = filter_input(INPUT_POST,'room',FILTER_VALIDATE_INT);
+if ($room == NULL) {
+    $room = filter_input(INPUT_GET, 'room');
+    if ($room == NULL || $room == FALSE) {
+       $room = 1;
+    }
+}
+\end{lstlisting}
+\item All instances of \texttt{\$room} are replaced by \texttt{\$\_SESSION['room']}.
+
+\item \texttt{header("Location:.?room=\$room");} lines are replaced by \texttt{header("Location:.");}.
+
+\item Hyperlink for \textit{Order Pizza} is changed from \texttt{?action=order\_pizza\&room=\$room} to\\ \texttt{?action=order\_pizza}.
+\end{enumerate}
+An online implementation of session variable is readily available at the following link.
+
+\href{http://topcat.cs.umb.edu/cs637/pejman/gs/pizza/}{\texttt{http://topcat.cs.umb.edu/cs637/pejman/gs/pizza/}}.
+

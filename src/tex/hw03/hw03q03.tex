@@ -1,0 +1,167 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 3}
+
+Load both textbook databases into your mysql using \texttt{\_create\_db/create\_db.sql} if you haven't already.
+Write queries on \texttt{my\_guitar\_shop2} database as follows and show the queries and their output in your hw paper.
+You can use phpMyAdmin to try out the queries, or write a \texttt{.sql} file and use \texttt{mysql} at the command line.
+For queries, report the SQL and results, if any.
+
+\begin{enumerate}[label=(\alph*)]
+\item Find all customerIDs with email addresses ending with \textit{gmail.com}.
+\item Find all order-items of order 2 (invoiceID = 2) and list their product id and quantity.
+\item List all order ids and order dates for the customer with email christineb@solarone.com.
+\item Find all product ids purchased by the customer with email christineb@solarone.com (i.e., find the lineitems)
+\item Find all products (product codes) where the purchase preceded product’s date-added (to check data consistency).
+Avoid duplicates in the result.
+\item Find the product that was bought the highest number of times.
+\end{enumerate}
+
+\subsection*{Solution}
+
+\lstset{language=SQL}
+\begin{enumerate}[label=(\alph*)]
+\item Query:
+\begin{lstlisting}
+SELECT customerID
+FROM customers
+WHERE emailAddress LIKE '%gmail.com';
+\end{lstlisting}
+Result:
+\begin{table}[H]\centering
+\begin{tabular}{|c|}
+\hline customerID\\
+\hline 2\\
+\hline
+\end{tabular}
+\caption{MySQL Output for Query (a)}\label{tab31}
+\end{table}
+
+\item Query:
+\begin{lstlisting}
+SELECT orderID, productID, quantity
+FROM orderitems
+WHERE orderID = 2;
+\end{lstlisting}
+Result:
+\begin{table}[H]\centering
+\begin{tabular}{|c|c|c|}
+\hline
+orderID & productID & quantity\\
+\hline
+2 & 4 & 1\\
+\hline
+\end{tabular}
+\caption{MySQL Output for Query (b)}\label{tab32}
+\end{table}
+
+\item Query:
+\begin{lstlisting}
+SELECT orderID, orderDate
+FROM orders O, customers C
+WHERE C.customerID = O.customerID
+	AND C.emailAddress = 'christineb@solarone.com';
+\end{lstlisting}
+Result: Empty Set
+
+\item Query:
+\begin{lstlisting}
+Select P.productID
+FROM customers C, orders O, orderitems OI, products P
+WHERE C.customerID = O.customerID
+	AND O.orderID = OI.orderID
+	AND OI.productID = P.productID
+	AND C.emailAddress = 'christineb@solarone.com';
+\end{lstlisting}
+Result: Empty Set
+
+\item Query:
+\begin{lstlisting}
+SELECT DISTINCT P.productCode
+FROM orders O, orderitems OI, products P
+WHERE P.productID = OI.productID
+	AND OI.orderID = O.orderID
+	AND P.dateAdded > O.orderDate;
+\end{lstlisting}
+Result:
+\begin{table}[H]\centering
+\begin{tabular}{|c|}
+\hline
+productCode\\
+\hline
+rodriguez\\
+\hline
+\end{tabular}
+\caption{MySQL Output for Query (e)}\label{tab33}
+\end{table}
+
+\item Question can be interpreted in two different ways.
+\begin{enumerate}[label=(\arabic*)]
+\item In case we disregard the purchase quantity and look for the product which most appeared in customer orders query would be as follows.
+\begin{lstlisting}
+SELECT P.productID
+FROM products P, (
+	SELECT P.productID, COUNT(OI.orderID) AS freq
+	FROM products P, orderitems OI
+	WHERE P.productID = OI.productID
+	GROUP BY OI.orderID
+	) Temp
+WHERE P.productID = Temp.productID
+	AND Temp.freq = (
+		SELECT MAX(Temp.freq) FROM (
+			SELECT P.productID, COUNT(OI.orderID) AS freq
+			FROM products P, orderitems OI
+			WHERE P.productID = OI.productID
+			GROUP BY OI.orderID	
+			) Temp
+	);
+\end{lstlisting}
+Result:
+\begin{table}[H]\centering
+\begin{tabular}{|c|}
+\hline
+productID\\
+\hline
+3\\
+\hline
+\end{tabular}
+\caption{MySQL Output for Query (f) when purchase quantity is disregarded.}\label{tab34}
+\end{table}
+
+\item In case we take purchase quantity into account, to obtain the product with highest sale, query would be as follows.
+
+\begin{lstlisting}
+SELECT P.productID
+FROM products P, (
+	SELECT P.productID, SUM(OI.quantity) AS freq
+	FROM products P, orderitems OI
+	WHERE P.productID = OI.productID
+	GROUP BY OI.orderID
+	) Temp
+WHERE P.productID = Temp.productID AND Temp.freq = (
+	SELECT MAX(Temp.freq) FROM (
+		SELECT P.productID, SUM(OI.quantity) AS freq
+		FROM products P, orderitems OI
+		WHERE P.productID = OI.productID
+		GROUP BY OI.orderID 
+		) Temp
+	);
+\end{lstlisting}
+Result:
+\begin{table}[H]\centering
+\begin{tabular}{|c|}
+\hline
+productID\\
+\hline
+3\\
+\hline
+\end{tabular}
+\caption{MySQL Output for Query (f) when quantity is included.}\label{tab35}
+\end{table}
+\end{enumerate}
+\end{enumerate}

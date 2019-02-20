@@ -1,0 +1,80 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 4}
+
+Write a simple PHP program that calculates future value of a potential investment based on key parameters investment amount, yearly interest rate and number of years.
+
+\subsection*{Solution}
+
+Desired PHP program has been developed on \href{http://ghorbanzade.com/cs637?p=2&s=1}{Ghorbanzade.com/637} under the name of \textit{Future Value Calculator} and is readily available for evaluation.
+
+Following is the code snippet (slightly different than the one on the website) that calculates future value of an investment, upon submission of its related parameters.
+
+\lstset{language=PHP}
+\lstset{frame=tb}
+\lstset{numbers=left}
+\begin{lstlisting}
+if (is_numeric($_POST['invest'])) {
+	if (is_numeric($_POST['interest'])) {
+		if (is_numeric($_POST['year'])) {
+			$future_value = $_POST['invest'];
+			for ($i = 1; $i <= $_POST['year']; $i++) {
+				$future_value += $future_value * $_POST['interest'] * 0.01;
+			}
+			$future_value = number_format($future_value,2);
+			echo "Future value is $$future_value";
+		}
+		else {
+			echo "Year not valid.";
+		}
+	}
+	else {
+		echo "Interest rate not valid.";
+	}
+}
+else {
+	echo "Investment amount not valid.";
+}
+\end{lstlisting}
+
+\section*{Question 5}
+Write another simple non-web PHP program that counts and reports how many \textit{a}'s, \textit{e}'s, \textit{i}'s, \textit{o}'s and \textit{u}'s show up in a string set up at the start as \textit{this is a test, only a test}. Use an associative array with keys \textit{a}, \textit{e}, \textit{i}, \textit{o}, and \textit{u}. Use \texttt{strlen} function. You can test if a key exists in an associative array with \texttt{array\_key\_exists} function.
+
+\subsection*{Solution}
+Desired PHP program has been developed on \href{http://ghorbanzade.com/cs637?p=2&s=2}{Ghorbanzade.com/637} under the name of \textit{Vowel Counter} and is readily available for evaluation.
+
+Following is a code snippet that analyzes a given string, upon its submission, and gives the number of occurrences of each specified vowel.
+
+\begin{lstlisting}
+	// Get the string submitted by user
+	$string = $_POST['string'];
+	// Initialize array of vowels
+	$letter_desired = array("a","e","i","o","u");
+	$list = array_fill_keys($letter_desired, 0);
+	// Find occurance of each vowel
+	for ($i=0; $i < strlen($string); $i++) {
+		if (array_key_exists($string[$i], $list)) {
+			$list[$string[$i]] += 1;
+		}
+	}
+	// Sort array based on value in descending order 
+	arsort($list);
+	// Prepare message
+	$result = "There are ";
+	$i = 0;
+	foreach ($list as $char => $number) {
+		$result .= ($number == 0) ? "no" : $number;
+		$result .= " '<i>$char</i>'";
+		$result .= ($number != 1) ? "s": "";
+		$i++;
+		$result .= ($i == count($list)-1) ? " and " : ", ";
+	}
+	$result .= "in specified string.";
+	// Output message
+	echo $result;
+\end{lstlisting}

@@ -1,0 +1,215 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS637: Database-Backed Websites
+% Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Question 1}
+
+Write an object-oriented version of the \textit{Future Value Calculator} program that calculates future value of a potential investment based on key parameters: investment amount, yearly interest rate and number of years.
+Create an object class for an \textit{Investment}, with three private properties, a constructor taking three arguments and a public method that calculates the future value.
+
+\subsection*{Solution}
+
+The following code snippets is an object-oriented implementation of a simple PHP script that calculates future value of an investment, upon submission of its related parameters. Noteworthy that trivial preliminary HTML code for both files have been removed.
+
+\begin{enumerate}
+\item \texttt{index.php} file
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+<form class="formNorm" method="post" action="<?php echo "?p=$page&s=$section"; ?>" accept-charset="utf-8">
+	<div class='field'>
+		<label for="amount">Investment Amount</label>
+		<input type="text" id="amount" name="amount" value="<?php echo ($future_value)? "$_POST[amount]" : ""; ?>" tabindex="1">
+	</div>
+	<div class='field'>
+		<label for="interest">Yearly Interest Rate</label>
+		<input type="text" id="interest" name="interest" value="<?php echo ($future_value)? "$_POST[interest]" : ""; ?>" tabindex="2">
+	</div>
+	<div class='field'>
+		<label for="year">Number of Years</label>
+		<input type="text" id="year" name="year" value="<?php echo ($future_value)? "$_POST[year]" : ""; ?>" tabindex="3">
+	</div>
+	<input type="submit" value="Calculate" tabindex="4">
+	<input type="hidden" name="try" value="3">
+</form>
+\end{lstlisting}
+
+\item \texttt{display\_result.php} file
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+// Developing investment class
+class Investment {
+	private $amount;
+	private $interest;
+	private $year;
+	public function __construct($amount, $interest, $year) {
+		$this->amount = $amount;
+		$this->interest = $interest;
+		$this->year = $year;
+	}
+	public function findFutureValue() {
+		$future_value = $this->amount;
+		for ($i = 1; $i <= $this->year; $i++) {
+			$future_value += $future_value * ($this->interest) * 0.01;
+		}
+		$future_value = number_format($future_value,2);
+		return $future_value;
+	}
+}
+// Object instantiation and use
+if (is_numeric($_POST['amount']) && is_numeric($_POST['interest']) && is_numeric($_POST['year'])) {
+	$investment = new Investment($_POST['amount'], $_POST['interest'], $_POST['year']);
+	$future_value = $investment->findFutureValue();
+	// Prompt future value
+	// function notify() is a manually developed function
+	notify("Future value is $".$future_value.".");
+}
+else {
+	notify("Invalid input.");
+}
+\end{lstlisting}
+\end{enumerate}
+
+Object-oriented version of future value calculator is developed and deployed at \href{http://ghorbanzade.com/cs637}{\tt Ghorbanzade.com/cs637} for evaluation and presentation purposes.
+
+Also, to conform to the original model provided in the textbook for this question, files \texttt{index.php} and \texttt{display\_result.php} should be changed to the following.
+
+\begin{enumerate}
+\item \texttt{index.php} file
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+<?php 
+	//set default value of variables for initial page load
+	if (!isset($investment)) { $investment = ''; } 
+	if (!isset($interest_rate)) { $interest_rate = ''; } 
+	if (!isset($years)) { $years = ''; } 
+?> 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Future Value Calculator</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	<main>
+	<h1>Future Value Calculator</h1>
+	<?php if (!empty($error_message)) { ?>
+		<p class="error"><?php echo htmlspecialchars($error_message); ?></p>
+	<?php } ?>
+	<form action="display_results.php" method="post">
+		<div id="data">
+			<div class='field'>
+				<label for="investment">Investment Amount</label>
+				<input type="text" id="investment" name="investment" value="<?php echo ($future_value)? "$_POST[investment]" : ""; ?>" tabindex="1">
+			</div>
+			<div class='field'>
+				<label for="interest_rate">Yearly Interest Rate</label>
+				<input type="text" id="interest_rate" name="interest_rate" value="<?php echo ($future_value)? "$_POST[interest_rate]" : ""; ?>" tabindex="2">
+			</div>
+			<div class='field'>
+				<label for="years">Number of Years</label>
+				<input type="text" id="years" name="years" value="<?php echo ($future_value)? "$_POST[years]" : ""; ?>" tabindex="3">
+			</div>
+		</div>
+		<div id="buttons">
+			<label>&nbsp;</label>
+			<input type="submit" value="Calculate" tabindex="4">
+		</div>
+	</form>
+	</main>
+</body>
+</html>
+\end{lstlisting}
+
+\item \texttt{display\_result.php} file
+\lstset{language=php,tabsize=2}
+\begin{lstlisting}
+<?php
+	// get the data from the form
+	$investment = filter_input(INPUT_POST, 'investment', FILTER_VALIDATE_FLOAT);
+	$interest_rate = filter_input(INPUT_POST, 'interest_rate', FILTER_VALIDATE_FLOAT);
+	$years = filter_input(INPUT_POST, 'years', FILTER_VALIDATE_INT);
+	// validate investment
+	if ($investment === FALSE ) {
+		$error_message = 'Investment must be a valid number.'; 
+	} else if ( $investment <= 0 ) {
+		$error_message = 'Investment must be greater than zero.'; 
+	// validate interest rate
+	} else if ( $interest_rate === FALSE )  {
+		$error_message = 'Interest rate must be a valid number.'; 
+	} else if ( $interest_rate <= 0 ) {
+		$error_message = 'Interest rate must be greater than zero.'; 
+	// validate years
+	} else if ( $years === FALSE ) {
+		$error_message = 'Years must be a valid whole number.';
+	} else if ( $years <= 0 ) {
+		$error_message = 'Years must be greater than zero.';
+	} else if ( $years > 30 ) {
+		$error_message = 'Years must be less than 31.';
+	// set error message to empty string if no invalid entries
+	} else {
+		$error_message = ''; 
+	}
+	// if an error message exists, go to the index page
+	if ($error_message != '') {
+		include('index.php');
+		exit(); 
+	}
+	// calculate the future value
+	// Developing investment class
+	class Investment {
+		private $amount;
+		private $interest;
+		private $year;
+		public function __construct($amount, $interest, $year) {
+			$this->amount = $amount;
+			$this->interest = $interest;
+			$this->year = $year;
+		}
+		public function findFutureValue() {
+			$future_value = $this->amount;
+			for ($i = 1; $i <= $this->year; $i++) {
+				$future_value += $future_value * ($this->interest) * 0.01;
+			}
+			return $future_value;
+		}
+		public function getAmount() {
+			return $this->amount;
+		}
+		public function getInterest() {
+			return $this->interest;
+		}
+	}
+	// Object instantiation and use
+	$investment = new Investment($_POST['investment'], $_POST['interest_rate'], $_POST['years']);
+	$future_value = $investment->findFutureValue();
+	// apply currency and percent formatting
+	$investment_f = '$'.number_format($investment->getAmount(), 2);
+	$yearly_rate_f = $investment->getInterest().'%';
+	$future_value_f = '$'.number_format($future_value, 2);
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Future Value Calculator</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+	<main>
+		<h1>Future Value Calculator</h1>
+		<label>Investment Amount:</label>
+		<span><?php echo $investment_f; ?></span><br>
+		<label>Yearly Interest Rate:</label>
+		<span><?php echo $yearly_rate_f; ?></span><br>
+		<label>Number of Years:</label>
+		<span><?php echo $years; ?></span><br>
+		<label>Future Value:</label>
+		<span><?php echo $future_value_f; ?></span><br>
+	</main>
+</body>
+</html>
+\end{lstlisting}
+
+\end{enumerate}
