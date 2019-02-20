@@ -1,0 +1,93 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS638: Applied Machine Learning
+% Copyright 2016 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs638-2016s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{report}
+
+\usepackage{lastpage}
+\usepackage[letterpaper]{geometry}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{verbatimbox}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\title{\docTitle}
+\author{\myName}
+
+\newgeometry{hmargin=4cm,vmargin=3cm}
+\setlength{\headheight}{15pt}
+\fancyhead[C]{\courseUniversity, \courseDepartment}
+\fancyfoot[C]{\courseId: \courseName, \courseSemester}
+\fancyfoot[RO,LE]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+\renewcommand*\footnoterule{}
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{light-gray}{gray}{0.95}
+\lstset{frame=tb,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\tiny\color{black},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=5
+}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\pagestyle{fancy}
+
+\newcommand{\makeHeader}{
+	\begingroup
+	\begin{center}
+	\textbf{ \Large \docTitle }
+
+	\vspace{5pt}
+	{ \courseName, \courseSemester }
+
+	\vspace{10pt}
+	\small \myName\\
+	\texttt{\href{\myEmail}{\myEmail}}
+	\end{center}
+%	\vspace{0pt}
+%	\setlength{\parskip}{0pt}
+	\endgroup
+}
+
+\lstnewenvironment{terminal}
+{\lstset{
+	backgroundcolor=\color{light-gray},
+	basicstyle=\small\ttfamily,
+	numbers=none,
+	xleftmargin=1cm,
+	framexleftmargin=10mm,
+	framextopmargin=2mm,
+	framexbottommargin=2mm,
+	frame=tb,
+	framerule=0pt
+}}
+{}

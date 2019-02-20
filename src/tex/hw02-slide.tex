@@ -1,0 +1,72 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CS638: Applied Machine Learning
+% Copyright 2016 Pejman Ghorbanzade <mail@ghorbanzade.com>
+% Creative Commons Attribution-ShareAlike 4.0 International License
+% More info: https://bitbucket.org/ghorbanzade/umb-cs638-2016s
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def \topDirectory {../..}
+\def \srcDirectory {\topDirectory/src}
+\def \binDirectory {\topDirectory/bin}
+\def \texDirectory {\srcDirectory/tex}
+\def \pngDirectory {\binDirectory/png}
+
+\documentclass[aspectratio=169]{beamer}
+\mode<presentation>
+\usetheme{default}
+
+\usepackage{\texDirectory/directives}
+\input{\texDirectory/config}
+\usepackage{\texDirectory/slide}
+
+\date{\today}
+\author[pejman]{Pejman Ghorbanzade\\ \texttt{pejman@cs.umb.edu}}
+\title{Solution to Assignment 2}
+\institute[UMass]{Department of Computer Science\\ University of Massachusetts Boston}
+
+\begin{document}
+
+\begin{slide}
+
+	\begin{columns}
+	\column{0.5\textwidth}
+	\begin{figure}
+	\includegraphics[width=\textwidth]{\pngDirectory/hw02-08.png}
+	\end{figure}
+
+	\column{0.5\textwidth}
+	\begin{equation*}
+	\theta_0 = -3.9
+	\qquad
+	\theta_1 = 1.19
+	\end{equation*}
+	\begin{equation*}
+	J(\theta_0, \theta_1) = 4.48
+	\end{equation*}
+	\begin{equation*}
+	\mathit{Population}_\mathit{Boston} = 645966
+	\end{equation*}
+	\begin{equation*}
+	\mathit{Profit}_\mathit{Boston} = \$731701
+	\end{equation*}
+	\end{columns}
+
+\end{slide}
+
+\begin{slide}
+
+	\begin{columns}
+	\column{0.5\textwidth}
+	\begin{figure}
+	\includegraphics[width=\textwidth]{\pngDirectory/hw02-05.png}
+	\end{figure}
+
+	\column{0.5\textwidth}
+	\begin{figure}
+	\includegraphics[width=\textwidth]{\pngDirectory/hw02-07.png}
+	\end{figure}
+	\end{columns}
+
+\end{slide}
+
+\end{document}
