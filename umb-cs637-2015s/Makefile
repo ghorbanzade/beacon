@@ -1,14 +1,14 @@
 DOCS = hw01 hw02 hw03 hw04 hw05
-BIND_DOC = cs637
+COURSE_NAME_FULL = umb-cs637-2015s
 
-TOP_DIR = .
-BIN_DIR = $(TOP_DIR)/bin
-SRC_DIR = $(TOP_DIR)/src
+# find the path to directory where this Makefile lives
+ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+BIN_DIR = $(ROOT_DIR)/../bin/${COURSE_NAME_FULL}
+SRC_DIR = $(ROOT_DIR)/src
 TEX_DIR = $(SRC_DIR)/tex
-DOC_DIR = $(BIN_DIR)/doc
 
 DOC_TEX = $(foreach NUM, $(DOCS), $(TEX_DIR)/$(NUM)/$(NUM).tex)
-DOC_PDF = $(foreach NUM, $(DOCS), $(DOC_DIR)/$(NUM).pdf)
+DOC_PDF = $(foreach NUM, $(DOCS), $(BIN_DIR)/$(COURSE_NAME_FULL)-$(NUM)s.pdf)
 
 .PHONY: all dirs docs bind tidy clean
 
@@ -16,29 +16,28 @@ all: dirs docs bind tidy
 
 dirs:
 	@mkdir -p $(BIN_DIR)
-	@mkdir -p $(DOC_DIR)
 
 docs: $(DOC_PDF)
 
 $(DOC_PDF): $(DOC_TEX)
-	@echo -n "  $(@F)... "
-	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
-	@pdflatex -halt-on-error -output-directory $(DOC_DIR) $(TEX_DIR)/$(@F:.pdf=)/$(@F:.pdf=.tex) > /dev/null
+	@printf "  $(@F)... "
+	@pdflatex -halt-on-error -output-directory $(BIN_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%.tex) > /dev/null
+	@pdflatex -halt-on-error -output-directory $(BIN_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%.tex) > /dev/null
 	@echo "Done."
 
 bind:
-	@echo -n "  Binding documents... "
-	@gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$(BIN_DIR)/$(BIND_DOC).pdf $(DOC_PDF)
+	@printf "  Binding documents... "
+	@gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$(BIN_DIR)/$(COURSE_NAME_FULL).pdf $(DOC_PDF) > /dev/null
 	@echo "Done."
 
 tidy:
-	@echo -n "  Removing unneeded files... "
+	@printf "  Removing unneeded files... "
 	@find $(BIN_DIR) -name '*.log' -delete
 	@find $(BIN_DIR) -name '*.aux' -delete
 	@find $(BIN_DIR) -name '*.out' -delete
 	@echo "Done."
 
 clean:
-	@echo -n "  Removing $(BIN_DIR)... "
+	@printf "  Removing $(BIN_DIR)... "
 	@rm -rf $(BIN_DIR)
 	@echo "Done."
