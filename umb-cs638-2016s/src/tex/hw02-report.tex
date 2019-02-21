@@ -5,11 +5,11 @@
 % More info: https://bitbucket.org/ghorbanzade/umb-cs638-2016s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def \topDirectory {../..}
+\def \topDirectory {.}
 \def \srcDirectory {\topDirectory/src}
-\def \binDirectory {\topDirectory/bin}
+\def \binDirectory {\topDirectory/../bin/umb-cs638-2016s}
 \def \texDirectory {\srcDirectory/tex}
-\def \pngDirectory {\binDirectory/png}
+\def \pngDirectory {\binDirectory}
 
 \documentclass[12pt,letterpaper,twoside]{article}
 
@@ -38,7 +38,7 @@ Objective is to use the dataset to predict profit of the new store given populat
 To understand the data, profit of the stores based on population of the city they operate in is visualized in Figure \ref{fig1}.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-01.png}
+\includegraphics[width=0.8\textwidth]{\pngDirectory/umb-cs638-2016s-hw02-01.png}
 \caption{Profit of Coffee Shop based on Population of the City}\label{fig1}
 \end{figure}
 
@@ -67,7 +67,7 @@ theta <- coef(lm.out)
 Thus, the best fitted regression line will be as depicted in Fig. \ref{fig2}.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-03.png}
+\includegraphics[width=0.8\textwidth]{\pngDirectory/umb-cs638-2016s-hw02-03.png}
 \caption{Best-Fitted Regression Line for the Dataset}\label{fig2}
 \end{figure}
 
@@ -115,14 +115,14 @@ theta <- gradient_descent(data$population, data$profit, 0.005)
 To better illustrate the impact of the learning rate, Fig. \ref{fig3} is presented in which $\theta_i$ values obtained by applying gradient descent model with 500 iterations are plotted for different values of $\alpha$.
 
 \begin{figure}\centering
-\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-05.png}
+\includegraphics[width=0.8\textwidth]{\pngDirectory/umb-cs638-2016s-hw02-05.png}
 \caption{$\theta_0$ and $\theta_1$ values obtained from gradient descent algorithm for different learning rates and fixed number of iterations}\label{fig3}
 \end{figure}
 
 We can also investigate changes in normalized error of coefficient values obtained by gradient descent algorithm for different learning rates, as shown in Fig. \ref{fig4}.
 
 \begin{figure}\centering
-\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-06.png}
+\includegraphics[width=0.8\textwidth]{\pngDirectory/umb-cs638-2016s-hw02-06.png}
 \caption{Normalized error of gradient descent algorithm for different learning rates with fixed number of iterations}\label{fig4}
 \end{figure}
 
@@ -130,7 +130,7 @@ As is clearly deducted from Fig. \ref{fig4}, if the learning rate $\alpha$ is to
 To visualize this point, Fig. \ref{fig5} is provided where number if iterations to achieve errors of less than 1\% (compared to values obtained in Eq. \ref{eq2}) is plotted for different learning rates $\alpha$.
 
 \begin{figure}\centering
-\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-07.png}
+\includegraphics[width=0.8\textwidth]{\pngDirectory/umb-cs638-2016s-hw02-07.png}
 \caption{Number of required iterations for different learning rates to achieve the same level of accuracy}\label{fig5}
 \end{figure}
 
@@ -154,7 +154,7 @@ Therefore, based on current dataset, a new store for the coffee house chain is p
 Fig. \ref{fig6} visualizes the dataset along with the newly estimated profit for Boston branch.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.8\textwidth]{\pngDirectory/hw02-08.png}
+\includegraphics[width=0.8\textwidth]{\pngDirectory/umb-cs638-2016s-hw02-08.png}
 \caption{Dataset including the estimated profit for potential branch in Boston}\label{fig6}
 \end{figure}
 

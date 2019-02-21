@@ -8,8 +8,18 @@
 # clear workspace
 rm(list = ls())
 
+# enable traceback on error messages
+options(error=traceback)
+
 # remove all plots if there are any
 if (!is.null(dev.list())) trash <- dev.off()
+
+args = commandArgs(trailingOnly=TRUE)
+if (0 == length(args)) {
+  stop("expected path to root directory of course", call.=FALSE)
+}
+pngdir <- args[1]
+courseNameFull <- "umb-cs638-2016s"
 
 # loading database
 data = read.table("dat/hw02/data.txt", sep=",")
@@ -18,7 +28,7 @@ colnames(data) <- c('population', 'profit')
 ##
 # visualize dataset
 ##
-png(filename="bin/png/hw02-01.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw02-01", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(floor(min(data$population)/5)*5,
@@ -50,7 +60,7 @@ with(data, cor.test(data$population, data$profit, alternative="greater", conf.le
 ##
 # data variables in pairs to check for correlation easily
 ##
-png(filename="bin/png/hw02-02.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw02-02", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 pairs(data)
 trash <- dev.off()
@@ -64,7 +74,7 @@ summary(lm.out)
 ##
 # Plot regression line on the dataset
 ##
-png(filename="bin/png/hw02-03.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw02-03", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(floor(min(data$population)/5)*5,
@@ -92,7 +102,7 @@ trash <- dev.off()
 ##
 # plot linear regression model summary
 ##
-png(filename="bin/png/hw02-04.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw02-04", ".png", sep="")),
     height=768, width=1024, res=150, units="px", bg="white")
 par(mfrow=c(2,2))
 plot(lm.out)
@@ -149,7 +159,7 @@ for (i in 1:length(alpha)) {
 ##
 # Plot theta_0 and theta_1 for different learning rates
 ##
-png(filename="bin/png/hw02-05.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw02-05", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(min(alpha),
@@ -189,7 +199,7 @@ trash <- dev.off()
 ##
 # Plot normalized gradient descent error for different learning rates
 ##
-png(filename="bin/png/hw02-06.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw02-06", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(min(alpha), max(alpha), length.out=5)
@@ -246,7 +256,7 @@ for (i in 1:length(alpha)) {
 ##
 # plot required number of iterations for different learning rates
 ##
-png(filename="bin/png/hw02-07.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw02-07", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(min(alpha), max(alpha), length.out=5)
@@ -281,7 +291,7 @@ new_data <- rbind(data, new_row)
 ##
 # visualize dataset and include the estimated profit for Boston
 ##
-png(filename="bin/png/hw02-08.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw02-08", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(floor(min(new_data$population)/5)*5,

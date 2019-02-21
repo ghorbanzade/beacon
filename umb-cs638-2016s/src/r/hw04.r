@@ -14,6 +14,13 @@ options(error=traceback)
 # remove all plots if there are any
 if (!is.null(dev.list())) trash <- dev.off()
 
+args = commandArgs(trailingOnly=TRUE)
+if (0 == length(args)) {
+  stop("expected path to root directory of course", call.=FALSE)
+}
+pngdir <- args[1]
+courseNameFull <- "umb-cs638-2016s"
+
 # ---------------------------------------------------------
 # function declarations
 # ---------------------------------------------------------
@@ -78,7 +85,7 @@ data22 <- data2[data2[, "status"] == 0, , drop=FALSE]
 # visualize dataset 1
 # ---------------------------------------------------------
 
-png(filename="bin/png/hw04-11.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw04-11", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(floor(min(data1$exam1)/5)*5,
@@ -127,7 +134,7 @@ fit$params
 
 # plot cost function based on number of iterations of gradient descent
 # without feature scaling
-png(filename="bin/png/hw04-12.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw04-12", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(0, iters, length.out=6)
@@ -159,7 +166,7 @@ theta <- fit$params
 slope <- - theta[2] / theta[3]
 intercept <- - theta[1] / theta[3]
 
-png(filename="bin/png/hw04-13.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw04-13", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(floor(min(data1$exam1)/5)*5,
@@ -218,7 +225,7 @@ print(paste("Admission Chance: ", round(probability * 100, 2), "%"))
 #
 # plot student score relative to decision boundary
 #
-png(filename="bin/png/hw04-14.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw04-14", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(floor(min(data1$exam1)/5)*5,
@@ -264,7 +271,7 @@ trash <- dev.off()
 # visualize dataset 2
 # ---------------------------------------------------------
 
-png(filename="bin/png/hw04-21.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw04-21", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(floor(min(data2$test1)*4)/4,
@@ -329,7 +336,7 @@ for (i in 1:length(lambdas)) {
 
 # plot cost function based on number of iterations of gradient descent
 # without feature scaling
-png(filename="bin/png/hw04-22.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw04-22", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 xrange <- seq(0, iters, length.out=6)
@@ -393,7 +400,7 @@ for (i in 1:length(u)) {
 # plot decision boundaries for different lambda values
 # ---------------------------------------------------------
 
-png(filename="bin/png/hw04-23.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw04-23", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 contour(u, v, z1, nlevels=0, col="green", lty=2)
@@ -421,7 +428,7 @@ title(ylab="Test 2", col.lab='black')
 trash <- dev.off()
 
 # plot all contours on the same figure for comparison
-png(filename="bin/png/hw04-24.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-hw04-24", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 contour(u, v, z1, nlevels=0, col="green", lty=2)
