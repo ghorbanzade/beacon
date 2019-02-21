@@ -5,12 +5,13 @@
 INTRODUCTION
 
     This repository contains the source code developed for Analysis of
-    Algorithms course at University of Massachusetts Boston. It includes
-    solutions to six assignments and two midterm exams.
+    Algorithms course at University of Massachusetts Boston.
+    It includes solutions to six assignments and two midterm exams.
 
 BUILDING
 
-    The package(s) needed for building source code are listed below.
+    The package(s) needed for building source code on ubuntu trusty
+    platform are listed below.
 
         - texlive-latex-base
         - texlive-latex-extra
@@ -18,12 +19,13 @@ BUILDING
         - pgf
         - ghostscript
 
-    Once you have all packages, all you need is `make` to produce all documents.
+    Once you have all packages, all you need is `make` to produce all
+    documents.
 
 CONTRIBUTION
 
-    Content of this repository is not subject to change. Bug reports however
-    are immensely appreciated.
+    Content of this repository is not subject to change. Bug reports
+    however are appreciated.
 
 LICENSE
 
@@ -33,4 +35,4 @@ LICENSE
 CONTACT
 
     Pejman Ghorbanzade
-    mail [at] ghorbanzade [dot] com
+    pejman [at] ghorbanzade [dot] com
