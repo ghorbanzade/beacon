@@ -10,13 +10,24 @@
 # clear workspace
 rm(list = ls())
 
+# enable traceback on error messages
+options(error=traceback)
+
+# remove all plots if there are any
 if (!is.null(dev.list())) trash <- dev.off()
+
+args = commandArgs(trailingOnly=TRUE)
+if (0 == length(args)) {
+  stop("expected path to root directory of course", call.=FALSE)
+}
+pngdir <- args[1]
+courseNameFull <- "umb-cs671-2015s"
 
 # loading dataset from csv file
 training_set <- read.csv("dat/dataset_training.csv", header=TRUE, sep=",")
 
 # plot training dataset
-png(filename="bin/png/f01-01.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-f01-01", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 plot(0:10, 0:10, type = "n", ann=FALSE, axes=FALSE, xaxs="i", yaxs="i")
@@ -52,7 +63,7 @@ for (i in 1:length(kernels)) {
 exec_time <- exec_time[,1:3]
 
 # plot training_error for classifiers
-png(filename="bin/png/f01-02.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-f01-02", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 plot(1:length(kernels), training_error, type="o", col="blue", ann=F, axes=F)
@@ -69,7 +80,7 @@ title(main="Training Error for Different Kernels", font.main=1)
 trash <- dev.off()
 
 # plot execution time of classifiers
-png(filename="bin/png/f01-03.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-f01-03", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 plot(1:length(kernels), exec_time[,1], type="o", col="blue", ann=F, axes=F)
@@ -85,7 +96,7 @@ title(main="Execution Time of Constructing Different Kernels", font.main=1)
 trash <- dev.off()
 
 # plot execution time based on training error
-png(filename="bin/png/f01-04.png",
+png(filename=file.path(pngdir, paste(courseNameFull, "-f01-04", ".png", sep="")),
 	height=768, width=1024, res=150, units="px", bg="white")
 
 plot(training_error, exec_time[,1], type="o", col="blue", ann=F, axes=F)
