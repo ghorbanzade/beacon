@@ -5,7 +5,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-    ant ant-optional make texlive-latex-base \
+    ant ant-optional ghostscript make \
+    texlive-latex-base texlive-latex-extra \
   # we won't ever need lists
   && rm -rf /var/lib/apt/lists/*
 

@@ -6,9 +6,6 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ant ant-optional \
-    # g++ gfortran ghostscript liblapack-dev libopenblas-dev \
-    # make pgf r-base \
-    # texlive-latex-base texlive-latex-extra texlive-science wget \
   # we won't ever need lists
   && rm -rf /var/lib/apt/lists/*
 
