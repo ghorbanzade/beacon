@@ -1,32 +1,49 @@
-BIN_DIR = bin
-DOC_DIR = doc
+COURSE_NAME_FULL = umb-cs680-2015f
+
+# find the path to directory where this Makefile lives
+ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+BIN_DIR = $(ROOT_DIR)/../bin/${COURSE_NAME_FULL}
+DOC_DIR = ${ROOT_DIR}/doc
 OUT_DIR = $(BIN_DIR)/doc
 TEX_DIR = $(DOC_DIR)/tex
-TEX = $(TEX_DIR)/main.tex
-PDF = $(BIN_DIR)/doc/main.pdf
 
-.PHONY: all docs code tidy clean
+DOC_TEX = $(TEX_DIR)/main.tex
+DOC_PDF = $(BIN_DIR)/${COURSE_NAME_FULL}-main.pdf
 
-all: code
+.PHONY: all docs bind code tidy clean
 
-docs: directories $(PDF) tidy
+all: dirs code docs bind tidy
 
-directories: 
+docs: dirs $(DOC_PDF) tidy
+
+dirs:
 	@mkdir -p $(BIN_DIR)
-	@mkdir -p $(OUT_DIR)
 
-$(PDF): $(TEX)
-	@echo -n "  $(@F)... " && \
-	pdflatex -halt-on-error -output-directory $(OUT_DIR) $(TEX_DIR)/$(@F:.pdf=.tex) > /dev/null && \
-	pdflatex -halt-on-error -output-directory $(OUT_DIR) $(TEX_DIR)/$(@F:.pdf=.tex) > /dev/null
+$(DOC_PDF): $(DOC_TEX)
+	@printf "  $(@F)... "
+	@pdflatex -halt-on-error -output-directory $(BIN_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:${COURSE_NAME_FULL}-%.pdf=%.tex) > /dev/null
+	@pdflatex -halt-on-error -output-directory $(BIN_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:${COURSE_NAME_FULL}-%.pdf=%.tex) > /dev/null
 	@echo "Done."
+
+bind:
+	@printf "  Binding documents... "
+	@gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=$(BIN_DIR)/$(COURSE_NAME_FULL).pdf $(DOC_PDF) > /dev/null
+	@echo "Done."
+
 code:
-	@ant
+	@ant -buildfile ${ROOT_DIR}/build.xml init-ivy
+	@ant -buildfile ${ROOT_DIR}/build.xml dist
 
 tidy:
-	@find $(OUT_DIR) -name '*.log' -delete
-	@find $(OUT_DIR) -name '*.aux' -delete
+	@printf "  Removing unneeded files... "
+	@find $(BIN_DIR) -name '*.log' -delete
+	@find $(BIN_DIR) -name '*.aux' -delete
+	@echo "Done."
 
 clean:
-	@ant clean
+	@printf "  Removing $(BIN_DIR)... "
 	@rm -rf $(BIN_DIR)
+	@echo "Done."
+	@printf "  Removing Build Artifacts... "
+	@ant -buildfile ${ROOT_DIR}/build.xml clean >> /dev/null
+	@echo "Done."
