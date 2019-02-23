@@ -1,7 +1,5 @@
 # Object Oriented Software Development
 
-[![Build Status](https://travis-ci.com/ghorbanzade/UMB-CS681-2016S.svg?token=qeVsJz4jt7qobqTJazMT&branch=master)](https://travis-ci.com/ghorbanzade/UMB-CS681-2016S)
-
 ## Introduction
 
 This repository contains the source code developed for _CS681: Object-Oriented Software Development_ course at [University of Massachusetts Boston].
@@ -16,7 +14,7 @@ You can build java programs by issuing `ant` in the top-level directory.
 
 The package(s) needed for building java codes are listed below.
 
-```
+```bash
 sudo apt-get intsall ant
 sudo apt-get install oraclejdk8
 ```
@@ -25,7 +23,7 @@ All other dependencies will be handled using Apache Ivy tool that will be config
 
 Once the build is complete, you can execute each program by adding the path to its jar file in classpath of `java` command and providing the name of its `*Main.java` class as its argument, as shown in the following example:
 
-```
+```bash
 java -cp UMB-CS681-2016S-hw01.jar edu.umb.cs681.hw01.CarMain
 ```
 
