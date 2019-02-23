@@ -1,5 +1,4 @@
 DOCS = hw01 hw02 hw03
-COURSE_NAME_SHORT = cs622
 COURSE_NAME_FULL = umb-cs622-2015f
 
 # find the path to directory where this Makefile lives
@@ -21,7 +20,7 @@ dirs:
 docs: $(DOC_PDF)
 
 $(DOC_PDF): $(DOC_TEX)
-	@printf "  $(@F:.pdf=)... "
+	@printf "  $(@F)... "
 	@pdflatex -halt-on-error -output-directory $(BIN_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%.tex) > /dev/null
 	@openout_any=a bibtex $(BIN_DIR)/$(@F:.pdf=) > /dev/null
 	@pdflatex -halt-on-error -output-directory $(BIN_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%.tex) > /dev/null

@@ -1,0 +1,53 @@
+                Object-Oriented Design and Programming
+                University of Massachusetts Boston
+                Fall 2015
+
+INTRODUCTION
+
+    This repository contains the source code developed for Object-Oriented
+    Design and Programming course at University of Massachusetts Boston.
+    It includes solutions to fourteen problems using different software
+    design patterns.
+
+BUILDING
+
+    The package(s) needed for building source code on ubuntu trusty
+    platform are listed below.
+
+        - ant
+        - openjdk-7-jdk
+        - texlive-latex-base
+        - texlive-latex-extra
+
+    Once you have all packages, all you need is `make` to build all source
+    codes and documentations.
+
+    The build automation tool is configured to build the source code,
+    package programs in separate jar files, run all unit tests, measure
+    code coverage and initiate a number of other software development
+    tools such as javadoc, checkstyle, pmd and findbugs.
+
+RUNNING
+
+    Once the build process is complete, you can execute each program by
+    adding the path to its jar file in classpath of `java` command and
+    providing the name of its `*Main.java` class as its argument, as
+    shown in the following example:
+
+        java -cp UMB-CS680-2015F-hw12.jar edu.umb.cs680.hw12.FileSystemMain
+
+CONTRIBUTION
+
+    Content of this repository is not subject to change.
+    Bug reports however are appreciated.
+
+LICENSE
+
+    All source codes are released under the MIT license.
+    All documents are under Creative Commons Attribution-ShareAlike 4.0
+    International License.
+
+CONTACT
+
+    Pejman Ghorbanzade
+    pejman [at] ghorbanzade [dot] com
