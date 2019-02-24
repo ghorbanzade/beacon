@@ -1,9 +1,8 @@
-#
+#####################################################################
 # CS638: Applied Machine Learning
-# Copyright 2016 Pejman Ghorbanzade <mail@ghorbanzade.com>
-# Creative Commons Attribution-ShareAlike 4.0 International License
-# More info: https://bitbucket.org/ghorbanzade/umb-cs638-2016s
-#
+# Copyright 2016 Pejman Ghorbanzade <pejman@ghorbanzade.com>
+# More info: https://bitbucket.org/ghorbanzade/beacon
+#####################################################################
 
 # clear workspace
 rm(list = ls())
