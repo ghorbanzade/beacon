@@ -31,8 +31,10 @@ bind:
 	@echo "Done."
 
 code:
-	@ant -buildfile ${ROOT_DIR}/build.xml init-ivy
-	@ant -buildfile ${ROOT_DIR}/build.xml dist
+	@printf "  Building Source Code... "
+	@ant -buildfile ${ROOT_DIR}/build.xml init-ivy > /dev/null
+	@ant -buildfile ${ROOT_DIR}/build.xml dist > /dev/null
+	@echo "Done."
 
 tidy:
 	@printf "  Removing unneeded files... "
