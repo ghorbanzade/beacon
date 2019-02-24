@@ -15,6 +15,7 @@ BUILDING
 
         - texlive-latex-base
         - texlive-latex-extra
+        - texlive-generic-recommended
         - pgf
         - ghostscript
 

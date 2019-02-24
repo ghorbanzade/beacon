@@ -6,9 +6,11 @@ usage: $(basename "$0") [ -h | --long-options]
   --help                shows this message
 
   build modes:
-    --clear             removes build artifacts
     --native            use local build toolchain
     --docker            use docker as the build toolchain [default]
+
+  build options:
+    --clear             removes build artifacts
 
   components:
     --all               builds all courses

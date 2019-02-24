@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ghostscript make pgf \
-    texlive-latex-base texlive-latex-extra \
+    texlive-latex-base texlive-latex-extra texlive-generic-recommended \
   # we won't ever need lists
   && rm -rf /var/lib/apt/lists/*
 
