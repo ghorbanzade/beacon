@@ -1,9 +1,8 @@
-#
+#####################################################################
 # CS671: Machine Learning
-# Copyright 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
-# Creative Commons Attribution-ShareAlike 4.0 International License
-# More info: https://bitbucket.org/ghorbanzade/umb-cs671-2015f
-#
+# Copyright 2015 Pejman Ghorbanzade <pejman@ghorbanzade.com>
+# More info: https://bitbucket.org/ghorbanzade/beacon
+#####################################################################
 
 # load dataset
 letters <- read.csv("dat/letter.csv", header=TRUE, sep=",")
