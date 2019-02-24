@@ -1,7 +1,7 @@
 #####################################################################
 # CS638: Applied Machine Learning
 # Copyright 2016 Pejman Ghorbanzade <pejman@ghorbanzade.com>
-# More info: https://bitbucket.org/ghorbanzade/beacon
+# More info: https://github.com/ghorbanzade/beacon
 #####################################################################
 
 # clear workspace
