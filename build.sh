@@ -66,6 +66,32 @@ count_keys_if_set () {
     echo $sum
 }
 
+is_command_installed () {
+    if [ $# -eq 0 ]; then return 1; fi
+    for cmd in "$@"; do
+        if ! hash "$cmd" 2>/dev/null; then
+            log_warning "command $cmd is not installed"
+            return 1
+        fi
+    done
+    return 0
+}
+
+docker_image_exists () {
+    local out
+    out=$(docker image inspect "$1" >/dev/null 2>&1 && echo "0" || echo "1")
+    [ "$out" == "0" ]
+}
+
+remove_docker_image_if_exists () {
+    if [ $# -ne 1 ]; then return 1; fi
+    if docker_image_exists "$1"; then
+        log_info "removing docker image $1"
+        docker rmi "$1" > /dev/null
+        log_info "removed docker image $1"
+    fi
+}
+
 # more specific helper functions
 
 validate_arguments () {
@@ -120,21 +146,32 @@ build_components () {
             done
         fi
     elif [ "${modes["docker"]}" -eq 1 ]; then
+        if ! is_command_installed "docker"; then
+            log_error "docker is not installed"
+        fi
         if [ "${opts["clear"]}" -eq 1 ]; then
-            log_info "removing docker artifacts"
             for K in "${!components[@]}"; do
                 if [ "${components[$K]}" -eq 0 ]; then continue; fi
-                docker rmi "ghorbanzade/${K}"
+                remove_docker_image_if_exists "ghorbanzade/${K}"
             done
             log_info "removed docker artifacts"
         else
             log_info "using docker build toolchain"
             for K in "${!components[@]}"; do
                 if [ "${components[$K]}" -eq 0 ]; then continue; fi
+                local container="container-${K}"
+                local image="ghorbanzade/${K}"
                 log_info "building ${K}"
-                docker build -t "ghorbanzade/${K}" -f "${K}/Dockerfile" "${K}"
+                docker build -t "${image}" -f "${K}/Dockerfile" "${K}"
+                docker create --name "$container" "$image"
+                docker cp "${container}:/opt/bin/${K}" "${DIR_PROJECT_ROOT}/bin/${K}"
+                docker stop "${container}"
+                docker rm "${container}"
                 log_debug "built ${K}"
             done
+            if [ "${opts["ci"]}" -eq 1 ]; then
+                docker image prune --force --filter label=stage=intermediate
+            fi
         fi
     fi
 }
@@ -160,6 +197,7 @@ declare -A BUILD_MODES=(
 )
 
 declare -A BUILD_OPTS=(
+    ["ci"]=0
     ["clear"]=0
 )
 
@@ -170,6 +208,9 @@ for arg in "$@"; do
             ;;
         "--all")
             for K in "${!COMPONENTS[@]}"; do COMPONENTS[$K]=1; done
+            ;;
+        "--ci")
+            BUILD_OPTS["ci"]=1
             ;;
         "--clear")
             BUILD_OPTS["clear"]=1
