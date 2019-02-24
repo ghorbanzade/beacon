@@ -45,18 +45,6 @@
 	\fi
 }
 
-\newcommand{\instructor}[2]{
-	\def \argName {name}
-	\def \argEmail {email}
-	\def \argGiven {#1}
-	\ifx\argGiven\argName
-		\def \instructorName {#2}
-	\fi
-	\ifx\argGiven\argEmail
-		\def \instructorEmail {#2}
-	\fi
-}
-
 \newcommand{\doc}[2]{
 	\def \argTitle {title}
 	\def \argDatePub {date-pub}
