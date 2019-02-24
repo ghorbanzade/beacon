@@ -1,0 +1,12 @@
+language: generic
+services:
+  - docker
+before_install:
+  - ./build.sh --all --docker --ci
+install: true
+notifications:
+  email:
+    recipients:
+      - pejman@ghorbanzade.com
+    on_success: always
+    on_failure: always
