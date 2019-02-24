@@ -8,7 +8,6 @@ RUN apt-get update \
     g++ gfortran ghostscript liblapack-dev libopenblas-dev \
     make pgf r-base \
     texlive-latex-base texlive-latex-extra texlive-science wget \
-  # we won't ever need lists
   && rm -rf /var/lib/apt/lists/* \
   && wget http://cran.r-project.org/src/contrib/kernlab_0.9-27.tar.gz \
   && R CMD INSTALL kernlab_0.9-27.tar.gz

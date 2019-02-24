@@ -21,7 +21,7 @@ dirs:
 
 $(DOC_PDF): $(DOC_TEX)
 	@printf "  $(@F)... "
-	@pdflatex -halt-on-error -output-directory $(BIN_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:${COURSE_NAME_FULL}-%.pdf=%.tex) > /dev/null
+	@pdflatex -halt-on-error -output-directory $(BIN_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:${COURSE_NAME_FULL}-%.pdf=%.tex)
 	@pdflatex -halt-on-error -output-directory $(BIN_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:${COURSE_NAME_FULL}-%.pdf=%.tex) > /dev/null
 	@echo "Done."
 

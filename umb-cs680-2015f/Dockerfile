@@ -7,7 +7,6 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ant ant-optional ghostscript make \
     texlive-latex-base texlive-latex-extra \
-  # we won't ever need lists
   && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -r pejman && useradd -m -u 8002 --no-log-init -r -g pejman pejman
