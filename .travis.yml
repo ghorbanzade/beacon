@@ -1,8 +1,17 @@
 language: generic
 services:
   - docker
+env:
+  - COURSE="umb-cs622-2015f"
+  - COURSE="umb-cs624-2015s"
+  - COURSE="umb-cs630-2014f"
+  - COURSE="umb-cs637-2015s"
+  - COURSE="umb-cs638-2016s"
+  - COURSE="umb-cs671-2015s"
+  - COURSE="umb-cs680-2015f"
+  - COURSE="umb-cs681-2016s"
 before_install:
-  - ./build.sh --all --docker --ci
+  - docker build -t ghorbanzade/$COURSE -f $COURSE/Dockerfile $COURSE
 install: true
 notifications:
   email:
