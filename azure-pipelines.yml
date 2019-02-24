@@ -1,0 +1,24 @@
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+strategy:
+  matrix:
+    umb-cs622-2015f:
+      COURSE: 'umb-cs622-2015f'
+    umb-cs624-2015s:
+      COURSE: 'umb-cs624-2015s'
+    umb-cs630-2014f:
+      COURSE: 'umb-cs630-2014f'
+    umb-cs637-2015s:
+      COURSE: 'umb-cs637-2015s'
+    umb-cs638-2016s:
+      COURSE: 'umb-cs638-2016s'
+    umb-cs671-2015s:
+      COURSE: 'umb-cs671-2015s'
+    umb-cs680-2015f:
+      COURSE: 'umb-cs680-2015f'
+    umb-cs681-2016s:
+      COURSE: 'umb-cs681-2016s'
+
+steps:
+- script: docker build -t ghorbanzade/$(COURSE) -f $(COURSE)/Dockerfile $(COURSE)
