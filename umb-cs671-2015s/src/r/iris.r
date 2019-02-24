@@ -1,7 +1,7 @@
 #####################################################################
 # CS671: Machine Learning
 # Copyright 2015 Pejman Ghorbanzade <pejman@ghorbanzade.com>
-# More info: https://bitbucket.org/ghorbanzade/beacon
+# More info: https://github.com/ghorbanzade/beacon
 #####################################################################
 
 # Load dataset

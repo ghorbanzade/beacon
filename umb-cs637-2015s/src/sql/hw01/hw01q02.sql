@@ -1,10 +1,7 @@
 --
 -- CS637: Database Backed Websites
--- Copyleft 2015 Pejman Ghorbanzade <mail@ghorbanzade.com>
--- More info: https://bitbucket.org/ghorbanzade/umb-cs637-2015s
---
--- The author has placed this file in the public domain.
--- He makes no warranty and accepts no liability for this file.
+-- Copyright 2015 Pejman Ghorbanzade <pejman@ghorbanzade.com>
+-- More info: https://github.com/ghorbanzade/beacon
 --
 
 -- Query 1.2
