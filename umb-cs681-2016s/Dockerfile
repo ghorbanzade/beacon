@@ -2,11 +2,12 @@ FROM openjdk:8-slim as builder
 LABEL maintainer="pejman@ghorbanzade.com"
 LABEL stage=intermediate
 ENV DEBIAN_FRONTEND noninteractive
+ARG VERBOSE_BUILD_LOGS
+ENV VERBOSE_BUILD_LOGS ${VERBOSE_BUILD_LOGS:-false}
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     ant ant-optional \
-  # we won't ever need lists
   && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -r pejman && useradd -m -u 8002 --no-log-init -r -g pejman pejman
