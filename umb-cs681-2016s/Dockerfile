@@ -2,8 +2,6 @@ FROM openjdk:8-slim as builder
 LABEL maintainer="pejman@ghorbanzade.com"
 LABEL stage=intermediate
 ENV DEBIAN_FRONTEND noninteractive
-ARG VERBOSE_BUILD_LOGS
-ENV VERBOSE_BUILD_LOGS ${VERBOSE_BUILD_LOGS:-false}
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -23,4 +21,4 @@ RUN ant -buildfile /opt/umb-cs681-2016s/build.xml init-ivy \
 # ---- production ---
 
 FROM alpine:3.8
-COPY --from=builder /opt/bin /opt/bin
+COPY --from=builder /opt/build /opt/build
