@@ -1,4 +1,4 @@
-DOCS = hw02-slide hw02-report hw04-slide hw04-report
+DOCS = hw01-slide hw02-slide hw02-report hw04-slide hw04-report
 CODS = hw02 hw04
 COURSE_NAME_FULL = umb-cs638-2016s
 
