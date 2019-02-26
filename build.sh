@@ -163,7 +163,7 @@ build_components () {
                 log_info "building ${K}"
                 docker build -t "${image}" -f "${K}/Dockerfile" "${K}"
                 docker create --name "$container" "$image"
-                docker cp "${container}:/opt/bin/${K}" "${DIR_PROJECT_ROOT}/bin/${K}"
+                docker cp "${container}:/opt/build/${K}" "${DIR_PROJECT_ROOT}/build/${K}"
                 docker stop "${container}"
                 docker rm "${container}"
                 log_debug "built ${K}"

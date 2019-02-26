@@ -29,14 +29,14 @@ code: $(COD_PNG)
 
 $(COD_PNG): $(COD_SRC)
 	@printf "  Running $(@F:$(COURSE_NAME_FULL)-%-01.png=%.r)... "
-	@Rscript --vanilla $(COD_DIR)/$(@F:$(COURSE_NAME_FULL)-%-01.png=%.r) $(IMG_DIR) &> $(LOG_DIR)/$(@F:%-01.png=%.r.log)
+	@Rscript --vanilla $(COD_DIR)/$(@F:$(COURSE_NAME_FULL)-%-01.png=%.r) $(IMG_DIR) > $(LOG_DIR)/$(@F:%-01.png=%.r.log) 2>&1
 	@echo "Done."
 
 docs: $(DOC_PDF)
 
 $(DOC_PDF): $(DOC_TEX)
 	@printf "  $(@F)... "
-	@pdflatex -halt-on-error -output-directory $(DOC_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%.tex) &> $(LOG_DIR)/$(@F:.pdf=.tex.log)
+	@pdflatex -halt-on-error -output-directory $(DOC_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%.tex) > $(LOG_DIR)/$(@F:.pdf=.tex.log) 2>&1
 	@pdflatex -halt-on-error -output-directory $(DOC_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%)/$(@F:$(COURSE_NAME_FULL)-%s.pdf=%.tex) > /dev/null
 	@echo "Done."
 

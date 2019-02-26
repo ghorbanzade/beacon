@@ -22,7 +22,7 @@ dirs:
 
 $(DOC_PDF): $(DOC_TEX)
 	@printf "  $(@F)... "
-	@pdflatex -halt-on-error -output-directory $(DOC_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:$(COURSE_NAME_FULL)-%.pdf=%.tex) &> $(LOG_DIR)/$(@F:.pdf=.tex.log)
+	@pdflatex -halt-on-error -output-directory $(DOC_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:$(COURSE_NAME_FULL)-%.pdf=%.tex) > $(LOG_DIR)/$(@F:.pdf=.tex.log) 2>&1
 	@pdflatex -halt-on-error -output-directory $(DOC_DIR) --jobname=$(@F:.pdf=) $(TEX_DIR)/$(@F:${COURSE_NAME_FULL}-%.pdf=%.tex) > /dev/null
 	@echo "Done."
 
@@ -33,8 +33,8 @@ bind:
 
 code:
 	@printf "  Building Source Code... "
-	@ant -buildfile ${ROOT_DIR}/build.xml init-ivy &> $(LOG_DIR)/$(COURSE_NAME_FULL).ant.log
-	@ant -buildfile ${ROOT_DIR}/build.xml dist &> $(LOG_DIR)/$(COURSE_NAME_FULL).ant.log
+	@ant -buildfile ${ROOT_DIR}/build.xml init-ivy > $(LOG_DIR)/$(COURSE_NAME_FULL).ant.log 2>&1
+	@ant -buildfile ${ROOT_DIR}/build.xml dist > $(LOG_DIR)/$(COURSE_NAME_FULL).ant.log 2>&1
 	@echo "Done."
 
 tidy:

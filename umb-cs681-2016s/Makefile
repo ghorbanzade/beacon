@@ -14,8 +14,8 @@ dirs:
 
 code:
 	@printf "  Building Source Code... "
-	@ant -buildfile ${ROOT_DIR}/build.xml init-ivy &> $(LOG_DIR)/$(COURSE_NAME_FULL).ant.log
-	@ant -buildfile ${ROOT_DIR}/build.xml dist &> $(LOG_DIR)/$(COURSE_NAME_FULL).ant.log
+	@ant -buildfile ${ROOT_DIR}/build.xml init-ivy > $(LOG_DIR)/$(COURSE_NAME_FULL).ant.log 2>&1
+	@ant -buildfile ${ROOT_DIR}/build.xml dist > $(LOG_DIR)/$(COURSE_NAME_FULL).ant.log 2>&1
 	@echo "Done."
 
 clean:
