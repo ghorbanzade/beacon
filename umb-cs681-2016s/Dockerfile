@@ -4,6 +4,7 @@ LABEL stage=intermediate
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
+  && mkdir -p /usr/share/man/man1 \
   && apt-get install -y --no-install-recommends \
     ant ant-optional \
   && rm -rf /var/lib/apt/lists/*

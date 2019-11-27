@@ -9,7 +9,7 @@ RUN apt-get update \
     make pgf r-base \
     texlive-latex-base texlive-latex-extra texlive-science wget \
   && rm -rf /var/lib/apt/lists/* \
-  && wget http://cran.r-project.org/src/contrib/kernlab_0.9-27.tar.gz \
+  && wget http://cran.r-project.org/src/contrib/Archive/kernlab/kernlab_0.9-27.tar.gz \
   && R CMD INSTALL kernlab_0.9-27.tar.gz
 
 RUN groupadd -r pejman && useradd -u 8002 --no-log-init -r -g pejman pejman
